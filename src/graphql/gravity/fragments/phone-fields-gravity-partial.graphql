@@ -1,0 +1,16 @@
+fragment PhoneFieldsGravityPartial on PhoneField {
+  id
+  value
+  defaultValue
+  hasAutocomplete
+  pageNumber
+  autocompleteAttribute
+  inputName
+  inputType
+  label
+  description
+  cssClass
+  phoneFormat
+  isRequired
+  placeholder
+}

@@ -1,0 +1,15 @@
+# import ChoicePropertyFieldsGravityPartial from "./choice-property-fields-gravity-partial.graphql";
+# import NameInputFieldsGravityPartial from "../Fragments/name-input-fields-gravity-partial.graphql";
+fragment NameFieldsGravityPartial on NameField {
+  id
+
+  label
+  description
+  type
+  cssClass
+  inputs {
+    ...NameInputFieldsGravityPartial
+    choices {
+isSelected text value  __typename    }
+  }
+}

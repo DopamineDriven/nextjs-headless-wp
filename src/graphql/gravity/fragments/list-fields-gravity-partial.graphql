@@ -1,0 +1,24 @@
+# import ListChoicePropertyFieldsGravityPartial from "./list-choice-property-fields-gravity-partial.graphql";
+# import ListValuePropertyFieldsGravityPartial from "./list-value-property-fields-gravity-partial.graphql";
+
+fragment ListFieldsGravityPartial on ListField {
+  __typename
+  cssClass
+  inputType
+  inputName
+pageNumber
+ maxRows
+  id
+  label
+  addIconUrl
+  maxRows
+  description
+  type
+  errorMessage
+  listValues {
+    ...ListValuePropertyFieldsGravityPartial
+  }
+  choices {
+    ...ListChoicePropertyFieldsGravityPartial
+  }
+}

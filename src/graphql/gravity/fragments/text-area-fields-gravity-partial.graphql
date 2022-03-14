@@ -1,0 +1,21 @@
+fragment TextAreaFieldsGravityPartial on TextAreaField {
+  id
+  inputName
+  inputType
+  defaultValue
+  maxLength
+  label
+  hasRichTextEditor
+  description
+  cssClass
+  value
+  visibility
+  inputName
+  shouldAllowDuplicates
+  isRequired
+  placeholder
+  descriptionPlacement
+  isRequired
+  type
+  __typename
+}

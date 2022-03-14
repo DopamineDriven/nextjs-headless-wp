@@ -1,0 +1,12 @@
+fragment NameInputFieldsGravityPartial on NameInputProperty {
+  name
+  placeholder
+  id
+  label
+  autocompleteAttribute
+  key
+  hasChoiceValue
+  defaultValue
+  isHidden
+  __typename
+}

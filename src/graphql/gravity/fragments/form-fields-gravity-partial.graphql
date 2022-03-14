@@ -1,0 +1,8 @@
+fragment FormFieldsGravityPartial on FormField {
+  id
+displayOnly
+inputType
+pageNumber
+visibility
+  type
+}

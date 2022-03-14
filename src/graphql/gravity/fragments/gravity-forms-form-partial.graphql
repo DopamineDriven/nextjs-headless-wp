@@ -1,0 +1,14 @@
+fragment GravityFormsFormPartial on GfForm {
+  databaseId
+  nextFieldId
+  isActive
+  isTrash
+  firstPageCssClass
+  hasHoneypot
+  hasValidationSummary
+  markupVersion
+  id
+  title
+  description
+  __typename
+}

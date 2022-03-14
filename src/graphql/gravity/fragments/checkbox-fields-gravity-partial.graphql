@@ -1,0 +1,20 @@
+fragment CheckboxFieldsGravityPartial on CheckboxField {
+  id
+inputName
+inputType
+  label
+  description
+  cssClass
+  inputs {
+    id
+    label
+    name
+    __typename
+  }
+  choices {
+    text
+    value
+    isSelected
+    __typename
+  }
+}

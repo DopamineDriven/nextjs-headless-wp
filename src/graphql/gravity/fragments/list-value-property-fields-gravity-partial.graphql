@@ -1,0 +1,4 @@
+fragment ListValuePropertyFieldsGravityPartial on ListFieldValue {
+  __typename
+  values
+}

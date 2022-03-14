@@ -1,0 +1,21 @@
+fragment PostContentFieldsGravityPartial on PostContentField {
+  description
+  inputName
+  inputType
+  cssClass
+  pageNumber
+  maxLength
+  value
+  id
+  cssClass
+  defaultValue
+  placeholder
+  label
+  isRequired
+  type
+  visibility
+  description
+  errorMessage
+  inputName
+  __typename
+}

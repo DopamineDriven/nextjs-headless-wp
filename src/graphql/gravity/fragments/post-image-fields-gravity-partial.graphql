@@ -1,0 +1,31 @@
+fragment PostImageValuePropertyFieldsGravityPartial on ImageFieldValue {
+  altText
+  caption
+  description
+  title
+  url
+  __typename
+}
+
+fragment PostImageFieldsGravityPartial on PostImageField {
+  __typename
+  description
+  type
+  cssClass
+  id
+  hasTitle
+  inputType
+  hasAlt
+  hasCaption
+  isRequired
+  pageNumber
+  label
+  errorMessage
+  isFeaturedImage
+  allowedExtensions
+  displayOnly
+  hasDescription
+  imageValues {
+    ...PostImageValuePropertyFieldsGravityPartial
+  }
+}

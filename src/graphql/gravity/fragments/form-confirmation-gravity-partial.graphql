@@ -1,0 +1,7 @@
+fragment FormConfirmationGravityPartial on FormConfirmation {
+  queryString
+  isDefault
+  message
+  __typename
+  type
+}

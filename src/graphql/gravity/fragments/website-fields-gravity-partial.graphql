@@ -1,0 +1,17 @@
+fragment WebsiteFieldsGravityPartial on WebsiteField {
+  id
+  inputName
+  inputType
+  defaultValue
+  
+  label
+  description
+  value
+  size
+  type
+  __typename
+  errorMessage
+  cssClass
+  isRequired
+  placeholder
+}

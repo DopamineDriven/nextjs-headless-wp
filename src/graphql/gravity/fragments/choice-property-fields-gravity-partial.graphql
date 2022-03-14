@@ -1,0 +1,6 @@
+fragment ChoicePropertyFieldsGravityPartial on SelectFieldChoice {
+  isSelected
+  text
+  value
+  __typename
+}
