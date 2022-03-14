@@ -1,4 +1,5 @@
 fragment UserLoginPartial on User {
+  __typename
   id
   databaseId
   capabilities

@@ -14,5 +14,5 @@
       "dev": "https://www.andrewross.engineer/graphql"
     }
   },
-  "schema": "./src/server/NexusSchema/schema.gql"
+  "schema": "./src/graphql/generated/graphql.schema.gql"
 }

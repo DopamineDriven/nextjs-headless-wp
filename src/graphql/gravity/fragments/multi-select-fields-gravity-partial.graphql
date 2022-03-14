@@ -1,0 +1,16 @@
+fragment MultiSelectFieldsGravityPartial on MultiSelectField {
+  id
+  label
+  description
+  values
+  type
+  __typename
+  cssClass
+  isRequired
+  choices {
+    isSelected
+    text
+    value
+    __typename
+  }
+}

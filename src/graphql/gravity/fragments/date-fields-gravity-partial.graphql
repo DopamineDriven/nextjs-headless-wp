@@ -1,0 +1,14 @@
+fragment DateFieldsGravityPartial on DateField {
+  id
+  value
+  pageNumber
+  inputName
+  inputType
+  dateFormat
+  dateType
+  label
+  description
+  cssClass
+  isRequired
+  placeholder
+}

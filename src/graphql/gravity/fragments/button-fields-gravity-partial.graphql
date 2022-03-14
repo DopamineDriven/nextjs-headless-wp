@@ -1,0 +1,6 @@
+fragment ButtonFieldsGravityPartial on FormButton {
+  text
+  imageUrl
+  __typename
+  type
+}

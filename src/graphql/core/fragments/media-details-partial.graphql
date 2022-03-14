@@ -1,6 +1,6 @@
 fragment MediaDetailsPartial on MediaDetails {
   height
-  width
+  width 
   file
   __typename
 }

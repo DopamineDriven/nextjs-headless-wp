@@ -1,0 +1,89 @@
+# import AddressFieldsGravityPartial from "../fragments/address-fields-gravity-partial.graphql";
+# import ButtonFieldsGravityPartial from "../fragments/button-fields-gravity-partial.graphql";
+# import CheckboxFieldsGravityPartial from "../fragments/checkbox-fields-gravity-partial.graphql";
+# import DateFieldsGravityPartial from "../fragments/date-fields-gravity-partial.graphql";
+# import EmailFieldsGravityPartial from "../fragments/email-fields-gravity-partial.graphql";
+# import FileUploadFieldsGravityPartial from "../fragments/file-upload-fields-gravity-partial.graphql";
+# import FormConfirmationGravityPartial from "../fragments/form-confirmation-gravity-partial.graphql";
+# import FormFieldsGravityPartial from "../fragments/form-fields-gravity-partial.graphql";
+# import GravityFormsFormPartial from "../fragments/gravity-forms-form-partial.graphql";
+# import ListFieldsGravityPartial from "../fragments/list-fields-gravity-partial.graphql";
+# import MultiSelectFieldsGravityPartial from "../fragments/multi-select-fields-gravity-partial.graphql";
+# import NameFieldsGravityPartial from "../fragments/name-fields-gravity-partial.graphql";
+# import PhoneFieldsGravityPartial from "../fragments/phone-fields-gravity-partial.graphql";
+# import PostContentFieldsGravityPartial from "../fragments/post-content-fields-gravity-partial.graphql";
+# import PostImageFieldsGravityPartial from "../fragments/post-image-fields-gravity-partial.graphql";
+# import RadioFieldsGravityPartial from "../fragments/radio-fields-gravity-partial.graphql";
+# import SelectFieldsGravityPartial from "../fragments/select-fields-gravity-partial.graphql";
+# import TextAreaFieldsGravityPartial from "../fragments/text-area-fields-gravity-partial.graphql";
+# import TextFieldsGravityPartial from "../fragments/text-fields-gravity-partial.graphql";
+# import TimeFieldsGravityPartial from "../fragments/time-fields-gravity-partial.graphql";
+# import WebsiteFieldsGravityPartial from "../fragments/website-fields-gravity-partial.graphql";
+
+query GetGravityForm($formId: ID!, $idType: FormIdTypeEnum!, $first: Int!) {
+  gfForm(id: $formId, idType: $idType) {
+    ...GravityFormsFormPartial
+    button {
+      ...ButtonFieldsGravityPartial
+    }
+    confirmations {
+      ...FormConfirmationGravityPartial
+    }
+    formFields(first: $first) {
+      nodes {
+        ...FormFieldsGravityPartial
+        ... on AddressField {
+          ...AddressFieldsGravityPartial
+        }
+        ... on CheckboxField {
+          ...CheckboxFieldsGravityPartial
+        }
+        ... on DateField {
+          ...DateFieldsGravityPartial
+        }
+        ... on EmailField {
+          ...EmailFieldsGravityPartial
+        }
+        ... on FileUploadField {
+          ...FileUploadFieldsGravityPartial
+        }
+        ... on ListField {
+          ...ListFieldsGravityPartial
+        }
+        ... on MultiSelectField {
+          ...MultiSelectFieldsGravityPartial
+        }
+        ... on NameField {
+          ...NameFieldsGravityPartial
+        }
+        ... on PhoneField {
+          ...PhoneFieldsGravityPartial
+        }
+        ... on PostContentField {
+          ...PostContentFieldsGravityPartial
+        }
+        ... on PostImageField {
+          ...PostImageFieldsGravityPartial
+        }
+        ... on RadioField {
+          ...RadioFieldsGravityPartial
+        }
+        ... on SelectField {
+          ...SelectFieldsGravityPartial
+        }
+        ... on TextAreaField {
+          ...TextAreaFieldsGravityPartial
+        }
+        ... on TextField {
+          ...TextFieldsGravityPartial
+        }
+        ... on TimeField {
+          ...TimeFieldsGravityPartial
+        }
+        ... on WebsiteField {
+          ...WebsiteFieldsGravityPartial
+        }
+      }
+    }
+  }
+}

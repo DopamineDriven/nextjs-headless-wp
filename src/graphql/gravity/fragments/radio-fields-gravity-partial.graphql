@@ -1,0 +1,21 @@
+fragment RadioFieldsGravityPartial on RadioField {
+  id
+  pageNumber
+  value
+  type
+  hasOtherChoice
+  label
+  description
+  cssClass
+  choices {
+...RadioFieldChoicePartial
+  }
+}
+
+fragment RadioFieldChoicePartial on RadioFieldChoice {
+      text
+    value
+    isOtherChoice
+    isSelected
+    __typename
+}

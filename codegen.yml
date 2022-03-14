@@ -11,10 +11,6 @@ generates:
         - prettier --write
     plugins:
       - schema-ast
-    config:
-      includeIntrospectionTypes: true
-      commentDescriptions: true
-      includeDirectives: true
   ./src/graphql/generated/introspection.schema.json:
     schema:
       ${NEXT_GQL_ENDPOINT}:
@@ -27,21 +23,6 @@ generates:
         - prettier --write
     plugins:
       - introspection
-  ./src/graphql/generated/resolver-types.ts:
-    schema:
-      ${NEXT_GQL_ENDPOINT}:
-        headers:
-          Authorization: Bearer ${GRAPHQL_JWT_AUTH_SECRET_KEY_YML}
-
-    documents: "./src/graphql/**/*.graphql"
-    hooks:
-      afterOneFileWrite:
-        - prettier --write
-    plugins:
-      - typescript
-      - typescript-resolvers
-    config:
-      useIndexSignature: true
   ./src/graphql/generated/graphql.ts:
     schema:
       ${NEXT_GQL_ENDPOINT}:
@@ -58,11 +39,13 @@ generates:
           noExport: false
           enumPrefix: true
           numericEnums: false
+
           wrapFieldDefinitions: true
           skipTypename: false
           nonOptionalTypename: false
       - add:
           content:
+            - "import {ResolverContext} from '@/types/resolver-context';"
             - "import { Upload } from 'graphql-upload'"
             - "import { GraphQLDate, GraphQLDateTime, GraphQLTime, GraphQLHexadecimal, GraphQLJSON,GraphQLPhoneNumber,GraphQLUUID, GraphQLJSONObject, JSONResolver, GraphQLBigInt } from 'graphql-scalars';"
             - "import { DeepPartial } from 'utility-types';"
@@ -72,7 +55,8 @@ generates:
       - typescript-resolvers:
           defaultMapper: DeepPartial<{T}>
           optionalInfoArgument: true
-          contextType: any
+          contextType: ResolverContext
+          useIndexSignature: true
           makeResolverTypeCallable: true
           noSchemaStitching: false
         config:

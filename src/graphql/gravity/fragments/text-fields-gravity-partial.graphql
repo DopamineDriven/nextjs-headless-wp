@@ -1,0 +1,21 @@
+fragment TextFieldsGravityPartial on TextField {
+  id
+  defaultValue
+  autocompleteAttribute
+  isPasswordInput
+  hasAutocomplete
+  hasInputMask
+  inputName
+  inputType
+  canPrepopulate
+  type
+  pageNumber
+  label
+  description
+  cssClass
+  isRequired
+  placeholder
+  __typename
+  errorMessage
+  value
+}

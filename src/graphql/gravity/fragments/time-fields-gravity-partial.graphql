@@ -1,0 +1,21 @@
+fragment TimeFieldsGravityPartial on TimeField {
+  id
+  timeFormat
+  timeValues {
+    ...TimeFieldValuePartial
+  }
+  type
+  value
+  pageNumber
+  label
+  description
+  cssClass
+  isRequired
+}
+
+fragment TimeFieldValuePartial on TimeFieldValue {
+  amPm
+  displayValue
+  hours
+  minutes
+}

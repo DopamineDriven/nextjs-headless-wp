@@ -1,0 +1,49 @@
+fragment AddressFieldsGravityPartial on AddressField {
+  addressType
+  canPrepopulate
+  type
+  cssClass
+  description
+  hasAutocomplete
+  errorMessage
+  inputName
+  inputType
+  defaultProvince
+  defaultState
+  defaultCountry
+  copyValuesOptionLabel
+  pageNumber
+  isRequired
+  id
+  label
+  __typename
+  addressValues {
+    ...AddressFieldValuePartial
+  }
+  inputs {
+    ...AddressInputPropertyPartial
+  }
+}
+
+fragment AddressFieldValuePartial on AddressFieldValue {
+  street
+  lineTwo
+  city
+  state
+  zip
+  country
+  __typename
+}
+
+fragment AddressInputPropertyPartial on AddressInputProperty {
+  autocompleteAttribute
+  defaultValue
+  id
+  key
+  label
+  customLabel
+  isHidden
+  name
+  placeholder
+  __typename
+}

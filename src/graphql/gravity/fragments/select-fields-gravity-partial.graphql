@@ -1,0 +1,23 @@
+# import ChoicePropertyFieldsGravityPartial  from "./choice-property-fields-gravity-partial.graphql"l
+
+fragment SelectFieldsGravityPartial on SelectField {
+  id
+  hasChoiceValue
+  defaultValue
+  label
+  description
+  cssClass
+  value
+  defaultValue
+  pageNumber
+  inputName
+  type
+  visibility
+  isRequired
+  errorMessage
+  autocompleteAttribute
+  __typename
+  choices {
+    ...ChoicePropertyFieldsGravityPartial
+  }
+}

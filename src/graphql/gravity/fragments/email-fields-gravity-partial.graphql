@@ -1,0 +1,16 @@
+fragment EmailFieldsGravityPartial on EmailField {
+  id
+  type
+  canPrepopulate
+  value
+  hasEmailConfirmation
+  shouldAllowDuplicates
+  hasAutocomplete
+  inputType
+  label
+  description
+  cssClass
+  isRequired
+  placeholder
+  __typename
+}

@@ -1,0 +1,18 @@
+fragment FileUploadFieldsGravityPartial on FileUploadField {
+  __typename
+  type
+  description
+  errorMessage
+  isRequired
+   pageNumber
+   values
+  allowedExtensions
+  id
+  label
+  cssClass
+  values
+  layoutSpacerGridColumnSpan
+  canAcceptMultipleFiles
+  maxFiles
+  maxFileSize
+}
