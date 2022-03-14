@@ -1,0 +1,20 @@
+fragment MediaItemPartial on MediaItem {
+  __typename
+  id
+  databaseId
+  authorDatabaseId
+  authorId
+  caption
+  title
+  date
+  modified
+  uri
+  sourceUrl
+  srcSet
+  description
+  fileSize
+  mimeType
+  altText
+  sizes
+  mediaType
+}

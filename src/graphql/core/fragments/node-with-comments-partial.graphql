@@ -1,0 +1,5 @@
+fragment NodeWithCommentsPartial on NodeWithComments {
+  commentCount
+  commentStatus
+  __typename
+}

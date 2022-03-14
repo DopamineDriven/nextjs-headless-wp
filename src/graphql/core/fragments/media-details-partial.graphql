@@ -1,0 +1,6 @@
+fragment MediaDetailsPartial on MediaDetails {
+  height
+  width
+  file
+  __typename
+}

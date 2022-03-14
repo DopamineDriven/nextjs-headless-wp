@@ -1,0 +1,13 @@
+fragment AuthorPartial on User {
+  email
+  databaseId
+  username
+  __typename
+  uri
+  slug
+  id
+  capabilities
+  description
+  firstName
+  lastName
+}

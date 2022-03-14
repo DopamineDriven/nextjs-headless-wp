@@ -1,0 +1,49 @@
+# import MediaDetailsPartial from "../fragments/media-details-partial.graphql";
+# import MediaItemPartial from "../fragments/media-item-partial.graphql";
+# import PageInfoPartial from "../fragments/page-info-partial.graphql";
+# import PagePartial from "../fragments/page-partial.graphql";
+# import AvatarPartial from "../fragments/avatar-partial.graphql";
+# import AuthorPartial from "../fragments/author-partial.graphql";
+# import PostPartial from "../fragments/post-partial.graphql";
+# import SEOPageInfoSchemaPartial from "../fragments/seo-page-info-schema-partial.graphql";
+
+query ContentNodes {
+  contentNodes {
+    edges {
+   __typename
+    cursor
+      node {
+        ... on Page {
+          featuredImage {
+            node {
+              ...MediaItemPartial
+              mediaDetails {
+                ...MediaDetailsPartial
+              }
+            }
+          }
+          ...PagePartial
+          lastEditedBy {
+            node {
+              avatar {
+                ...AvatarPartial
+              }
+              ...AuthorPartial
+            }
+          }
+        }
+        ... on Post {
+          ...PostPartial
+        }
+      }
+    }
+    pageInfo {
+      ...PageInfoPartial
+      seo {
+        schema {
+          ...SEOPageInfoSchemaPartial
+        }
+      }
+    }
+  }
+}

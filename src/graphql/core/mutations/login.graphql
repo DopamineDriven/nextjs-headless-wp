@@ -1,0 +1,45 @@
+# import LoginPayloadPartial from "../fragments/login-payload-partial.graphql";
+# import UserLoginPartial from "../fragments/user-login-partial.graphql";
+# import AvatarPartial from "../fragments/avatar-partial.graphql";
+# import PageInfoPartial from "../fragments/page-info-partial.graphql";
+# import UserToCommentConnectionEdgePartial from "../fragments/user-to-comment-connection-edge-partial.graphql";
+# import CommentPartial from "../fragments/comment-partial.graphql";
+# import PostPartial from "../fragments/post-partial.graphql";
+# import PagePartial from "../fragments/page-partial.graphql";
+# import NodeWithCommentsPartial from "../fragments/node-with-comments-partial.graphql";
+
+mutation login($input: LoginInput!, $commentsTake: Int!) {
+  login(input: $input) {
+    ...LoginPayloadPartial
+    user {
+      ...UserLoginPartial
+      avatar {
+        ...AvatarPartial
+      }
+      comments(first: $commentsTake) {
+        pageInfo {
+          ...PageInfoPartial
+        }
+        edges {
+          ...UserToCommentConnectionEdgePartial
+          node {
+            ...CommentPartial
+            commentedOn {
+              node {
+                ... on Post {
+                  ...PostPartial
+                }
+                ... on Page {
+                  ...PagePartial
+                }
+                ... on NodeWithComments {
+                  ...NodeWithCommentsPartial
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

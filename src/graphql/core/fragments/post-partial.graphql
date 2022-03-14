@@ -1,0 +1,19 @@
+fragment PostPartial on Post {
+  __typename
+  authorDatabaseId
+  authorId
+  commentCount
+  toPing
+  uri
+  title
+  status
+  slug
+  pinged
+  pingStatus
+  modified
+  link
+  id
+  guid
+  featuredImageId
+  featuredImageDatabaseId
+}

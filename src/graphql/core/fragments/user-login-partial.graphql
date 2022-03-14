@@ -1,0 +1,18 @@
+fragment UserLoginPartial on User {
+  id
+  databaseId
+  capabilities
+  email
+  firstName
+  lastName
+  locale
+  registeredDate
+  username
+  uri
+  slug
+  jwtAuthExpiration
+  jwtUserSecret
+  jwtAuthToken
+  jwtRefreshToken
+  isJwtAuthSecretRevoked
+}

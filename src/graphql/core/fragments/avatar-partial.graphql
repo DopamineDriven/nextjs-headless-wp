@@ -1,0 +1,11 @@
+fragment AvatarPartial on Avatar {
+  width
+  height
+  default
+  foundAvatar
+  rating
+  size
+  url
+  extraAttr
+  __typename
+}

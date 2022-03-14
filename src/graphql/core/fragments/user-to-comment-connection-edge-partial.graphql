@@ -1,0 +1,4 @@
+fragment UserToCommentConnectionEdgePartial on UserToCommentConnectionEdge {
+  __typename
+  cursor
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Next-Prisma",
+  "documents": [
+    "./src/graphql/core/queries/**/*.graphql",
+    "./src/graphql/core/mutations/**/*.graphql",
+    "./src/graphql/core/fragments/**/*.graphql",
+    "./src/graphql/generated/**/*.ts"
+  ],
+  "extensions": {
+    "languageService": {
+      "useSchemaFileDefinitions": true
+    },
+    "endpoints": {
+      "dev": "https://www.andrewross.engineer/graphql"
+    }
+  },
+  "schema": "./src/server/NexusSchema/schema.gql"
+}

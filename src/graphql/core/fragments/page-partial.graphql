@@ -1,0 +1,14 @@
+fragment PagePartial on Page {
+  __typename
+  title
+  slug
+  parentId
+  id
+  databaseId
+  content
+  guid
+  status
+  isPreview
+  uri
+  isRestricted
+}

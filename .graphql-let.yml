@@ -1,0 +1,34 @@
+schema:
+  ${NEXT_GQL_ENDPOINT}:
+    headers:
+      Authorization: Bearer ${GRAPHQL_JWT_AUTH_SECRET_KEY_YML}
+documents:
+  - "!./src/graphql/generated/**/*.graphql"
+  - "./src/graphql/core/queries/**/*.graphql"
+  - "./src/graphql/core/mutations/**/*.graphql"
+  - "./src/graphql/core/fragments/**/*.graphql"
+hooks:
+  afterOneFileWrite:
+    - prettier --write
+respectGitIgnore: true
+config:
+  experimentalFragmentVariables: true
+  reactApolloVersion: 3
+  apolloReactComponentsImportFrom: "@apollo/client/react/components"
+  useIndexSignature: true
+  withHooks: true
+  withRefetchFn: true
+plugins:
+  - typescript-operations:
+      dedupeFragments: true
+    config:
+      maybeValue: "T"
+  - typescript-react-apollo:
+      addDocBlocks: true
+      reactApolloVersion: 3
+      withRefetchFn: true
+      withHooks: true
+      experimentalFragmentVariables: true
+      useTypeImports: true
+cacheDir: "./src/.cache"
+TSConfigFile: "./tsconfig.json"

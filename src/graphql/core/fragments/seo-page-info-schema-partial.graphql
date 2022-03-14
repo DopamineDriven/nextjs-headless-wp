@@ -1,0 +1,4 @@
+fragment SEOPageInfoSchemaPartial on SEOPageInfoSchema {
+  __typename
+  raw
+}

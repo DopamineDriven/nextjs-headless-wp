@@ -1,0 +1,8 @@
+fragment PageInfoPartial on WPPageInfo {
+  __typename
+  endCursor
+  hasNextPage
+  hasPreviousPage
+  startCursor
+  total
+}

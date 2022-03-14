@@ -1,0 +1,131 @@
+overwrite: true
+generates:
+  ./src/graphql/generated/graphql.schema.graphql:
+    schema:
+      ${NEXT_GQL_ENDPOINT}:
+        headers:
+          Authorization: Bearer ${GRAPHQL_JWT_AUTH_SECRET_KEY_YML}
+    documents: "./src/graphql/**/*.graphql"
+    hooks:
+      afterOneFileWrite:
+        - prettier --write
+    plugins:
+      - schema-ast
+    config:
+      includeIntrospectionTypes: true
+      commentDescriptions: true
+      includeDirectives: true
+  ./src/graphql/generated/introspection.schema.json:
+    schema:
+      ${NEXT_GQL_ENDPOINT}:
+        headers:
+          Authorization: Bearer ${GRAPHQL_JWT_AUTH_SECRET_KEY_YML}
+
+    documents: "./src/graphql/**/*.graphql"
+    hooks:
+      afterOneFileWrite:
+        - prettier --write
+    plugins:
+      - introspection
+  ./src/graphql/generated/resolver-types.ts:
+    schema:
+      ${NEXT_GQL_ENDPOINT}:
+        headers:
+          Authorization: Bearer ${GRAPHQL_JWT_AUTH_SECRET_KEY_YML}
+
+    documents: "./src/graphql/**/*.graphql"
+    hooks:
+      afterOneFileWrite:
+        - prettier --write
+    plugins:
+      - typescript
+      - typescript-resolvers
+    config:
+      useIndexSignature: true
+  ./src/graphql/generated/graphql.ts:
+    schema:
+      ${NEXT_GQL_ENDPOINT}:
+        headers:
+          Authorization: Bearer ${GRAPHQL_JWT_AUTH_SECRET_KEY_YML}
+
+    documents: "./src/graphql/**/*.graphql"
+    hooks:
+      afterOneFileWrite:
+        - prettier --write
+    plugins:
+      - typescript:
+          namingConvention: keep
+          noExport: false
+          enumPrefix: true
+          numericEnums: false
+          wrapFieldDefinitions: true
+          skipTypename: false
+          nonOptionalTypename: false
+      - add:
+          content:
+            - "import { Upload } from 'graphql-upload'"
+            - "import { GraphQLDate, GraphQLDateTime, GraphQLTime, GraphQLHexadecimal, GraphQLJSON,GraphQLPhoneNumber,GraphQLUUID, GraphQLJSONObject, JSONResolver, GraphQLBigInt } from 'graphql-scalars';"
+            - "import { DeepPartial } from 'utility-types';"
+      - typescript-document-nodes:
+          strictScalars: true
+          gqlImport: "@apollo/client#gql"
+      - typescript-resolvers:
+          defaultMapper: DeepPartial<{T}>
+          optionalInfoArgument: true
+          contextType: any
+          makeResolverTypeCallable: true
+          noSchemaStitching: false
+        config:
+          maybeValue: "T | null"
+      - typescript-operations:
+          dedupeFragments: true
+      - typescript-react-apollo:
+          addDocBlocks: true
+          reactApolloVersion: 3
+          withRefetchFn: true
+      - named-operations-object
+    config:
+      useIndexSignature: true
+      scalars:
+        Hexadecimal: typeof GraphQLHexadecimal
+        Json: typeof GraphQLJSON
+        JSONObject: typeof GraphQLJSONObject
+        Upload: File
+        Date: typeof GraphQLDate
+        DateTime: Date
+        Time: typeof GraphQLTime
+        BigInt: typeof GraphQLBigInt
+        UUID: typeof GraphQLUUID
+        PhoneNumber: typeof GraphQLPhoneNumber
+      reactApolloVersion: 3
+      withHooks: true
+      numericEnums: false
+      namingConvention: keep
+      addDocBlocks: true
+  ./src/apollo/fragment-matcher.ts:
+    schema:
+      ${NEXT_GQL_ENDPOINT}:
+        headers:
+          Authorization: Bearer ${GRAPHQL_JWT_AUTH_SECRET_KEY_YML}
+
+    documents: "./src/graphql/**/*.graphql"
+    hooks:
+      afterOneFileWrite:
+        - prettier --write
+    plugins:
+      - fragment-matcher
+    config:
+      useExplicitTyping: true
+      apolloClientVersion: 3
+  ./src/apollo/helpers.ts:
+    schema:
+      ${NEXT_GQL_ENDPOINT}:
+        headers:
+          Authorization: Bearer ${GRAPHQL_JWT_AUTH_SECRET_KEY_YML}
+
+    documents: "./src/graphql/**/*.graphql"
+    hooks:
+      afterOneFileWrite:
+        - prettier --write
+    plugins:
+      - typescript-apollo-client-helpers

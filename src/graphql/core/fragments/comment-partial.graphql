@@ -1,0 +1,17 @@
+fragment CommentPartial on Comment {
+  agent
+  approved
+  type
+  parentId
+  parentDatabaseId
+  karma
+  isRestricted
+  id
+  parentId
+  approved
+  authorIp
+  databaseId
+  dateGmt
+  date
+  content
+}
