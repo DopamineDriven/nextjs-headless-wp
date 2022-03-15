@@ -1,0 +1,11 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /_*
+Disallow: /api
+
+# Host
+Host: https://www.andrewross.tech
+
+# Sitemaps
+Sitemap: https://www.andrewross.tech/sitemap.xml
