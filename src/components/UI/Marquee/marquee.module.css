@@ -1,0 +1,19 @@
+.root {
+  @apply w-full min-w-full relative flex flex-row items-center overflow-hidden py-0 max-h-[320px];
+}
+
+.root > div {
+  @apply max-h-[320px] p-0 m-0;
+}
+
+.root > div > * > *:nth-child(2) * {
+  @apply max-h-[100%];
+}
+
+.primary {
+  @apply bg-accents-6;
+}
+
+.secondary {
+  @apply bg-accents-9;
+}

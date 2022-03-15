@@ -1,5 +1,6 @@
 import { FC } from "react";
 import cn from "classnames";
+
 const DataInspector: FC<{ className?: string }> = ({
   children,
   className

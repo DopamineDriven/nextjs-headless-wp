@@ -1,4 +1,4 @@
-import { MouseEventHandler, FC, memo } from "react";
+import { MouseEventHandler, FC, memo, ReactNode } from "react";
 import { ArrowLeft, ArrowRight } from "@/components/Icons";
 import css from "./keen-styles.module.css";
 

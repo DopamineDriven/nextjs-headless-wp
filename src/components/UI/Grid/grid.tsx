@@ -2,7 +2,7 @@ import cn from "classnames";
 import { FC, ReactNode, Component } from "react";
 import css from "./grid.module.css";
 
-interface GridProps {
+export interface GridProps {
   className?: string;
   children?: Array<ReactNode> | Component[] | any[];
   layout?: "A" | "B" | "C" | "D" | "normal";
