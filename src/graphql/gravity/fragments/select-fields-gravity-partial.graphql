@@ -1,4 +1,4 @@
-# import ChoicePropertyFieldsGravityPartial  from "./choice-property-fields-gravity-partial.graphql"l
+# import ChoicePropertyFieldsGravityPartial  from "./choice-property-fields-gravity-partial.graphql";
 
 fragment SelectFieldsGravityPartial on SelectField {
   id

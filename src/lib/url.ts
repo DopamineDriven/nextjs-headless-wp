@@ -60,10 +60,10 @@ export function base64Decode(decode: string): string {
   }
   // is serverside
   if (typeof window === "undefined") {
-    return Buffer.from(decode, "base64").toString("utf8");
+    return buf(decode, "base64", "utf-8");
   }
 
-  return btoa(decode);
+  return window.btoa(decode);
 }
 
 /**
@@ -75,10 +75,10 @@ export function base64Decode(decode: string): string {
  */
 export function base64Encode(encode: string): string {
   if (typeof window === "undefined") {
-    return Buffer.from(encode, "utf8").toString("base64");
+    return buf(encode, "utf-8", "base64");
   }
 
-  return btoa(encode);
+  return window.btoa(encode);
 }
 /**
  * All possible URL forms as depcited in Regex
@@ -188,10 +188,7 @@ export function stripPreviewFromUrlPath(urlPath: string): string {
  * @param {string} [prefix]
  * @returns
  */
-export function resolvePrefixedUrlPath(
-  url: string,
-  prefix?: string
-): string {
+export function resolvePrefixedUrlPath(url: string, prefix?: string): string {
   let resolvedUrl = url;
 
   if (prefix) {
@@ -212,9 +209,7 @@ export function resolvePrefixedUrlPath(
  * @param {(string | undefined)} str
  * @returns
  */
-export function trimLeadingSlash(
-  str: string | undefined
-): string | undefined {
+export function trimLeadingSlash(str: string | undefined): string | undefined {
   if (!str) {
     return str;
   }
@@ -259,6 +254,7 @@ export function trimOriginFromUrl(url: string): string {
 
     return url.replace(parsedUrl.origin, "");
   } catch (e) {
+    console.log(e ?? "no e");
     return url;
   }
 }

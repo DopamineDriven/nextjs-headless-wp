@@ -1,8 +1,12 @@
-# import ChoicePropertyFieldsGravityPartial from "./choice-property-fields-gravity-partial.graphql";
-# import NameInputFieldsGravityPartial from "../Fragments/name-input-fields-gravity-partial.graphql";
+# import NameInputFieldsGravityPartial from "./name-input-property-fields-gravity-partial.graphql";
+
 fragment NameFieldsGravityPartial on NameField {
   id
-
+  value
+  canPrepopulate
+  visibility
+  errorMessage
+  hasAutocomplete
   label
   description
   type

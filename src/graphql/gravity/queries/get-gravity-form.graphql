@@ -1,5 +1,6 @@
 # import AddressFieldsGravityPartial from "../fragments/address-fields-gravity-partial.graphql";
 # import ButtonFieldsGravityPartial from "../fragments/button-fields-gravity-partial.graphql";
+# import CaptchaPartial from "../fragments/captcha-partial.graphql";
 # import CheckboxFieldsGravityPartial from "../fragments/checkbox-fields-gravity-partial.graphql";
 # import DateFieldsGravityPartial from "../fragments/date-fields-gravity-partial.graphql";
 # import EmailFieldsGravityPartial from "../fragments/email-fields-gravity-partial.graphql";
@@ -28,12 +29,17 @@ query GetGravityForm($formId: ID!, $idType: FormIdTypeEnum!, $first: Int!) {
     }
     confirmations {
       ...FormConfirmationGravityPartial
+
     }
+
     formFields(first: $first) {
       nodes {
         ...FormFieldsGravityPartial
         ... on AddressField {
           ...AddressFieldsGravityPartial
+        }
+        ...on CaptchaField {
+          ...CaptchaPartial
         }
         ... on CheckboxField {
           ...CheckboxFieldsGravityPartial
@@ -68,6 +74,7 @@ query GetGravityForm($formId: ID!, $idType: FormIdTypeEnum!, $first: Int!) {
         ... on RadioField {
           ...RadioFieldsGravityPartial
         }
+
         ... on SelectField {
           ...SelectFieldsGravityPartial
         }

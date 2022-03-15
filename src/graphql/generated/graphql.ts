@@ -13,7 +13,11 @@ import {
   GraphQLBigInt
 } from "graphql-scalars";
 import { DeepPartial } from "utility-types";
-import { GraphQLResolveInfo } from "graphql";
+import {
+  GraphQLResolveInfo,
+  GraphQLScalarType,
+  GraphQLScalarTypeConfig
+} from "graphql";
 import { gql } from "@apollo/client";
 import * as Apollo from "@apollo/client";
 export type Maybe<T> = T | null;
@@ -40,6 +44,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The `Upload` special type represents a file to be uploaded in the same HTTP request as specified by [graphql-multipart-request-spec](https://github.com/jaydenseric/graphql-multipart-request-spec). */
+  Upload: File;
 };
 
 /** A Gravity Forms   field. */
@@ -3278,6 +3284,8 @@ export enum FormFieldTypeEnum {
   RANK = "RANK",
   /** A Gravity Forms rating field. */
   RATING = "RATING",
+  /** A Gravity Forms recaptcha field. */
+  RECAPTCHA = "RECAPTCHA",
   /** A Gravity Forms remember_me field. */
   REMEMBER_ME = "REMEMBER_ME",
   /** A Gravity Forms section field. */
@@ -3306,8 +3314,12 @@ export type FormFieldValuesInput = {
   checkboxValues?: InputMaybe<Array<InputMaybe<CheckboxFieldInput>>>;
   /** The form field values for Email fields. */
   emailValues?: InputMaybe<EmailFieldInput>;
+  /** The form field values for file upload fields. */
+  fileUploadValues?: InputMaybe<Array<InputMaybe<Scalars["Upload"]>>>;
   /** The field id. */
   id: Scalars["Int"];
+  /** The form field values for post image fields. */
+  imageValues?: InputMaybe<ImageInput>;
   /** The form field values for List fields. */
   listValues?: InputMaybe<Array<InputMaybe<ListFieldInput>>>;
   /** The form field values for Name fields. */
@@ -4501,6 +4513,20 @@ export type ImageFieldValue = {
   title?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The image url. */
   url?: Maybe<FieldWrapper<Scalars["String"]>>;
+};
+
+/** Input fields for a single post Image. */
+export type ImageInput = {
+  /** The image alt text. */
+  altText?: InputMaybe<Scalars["String"]>;
+  /** The image caption. */
+  caption?: InputMaybe<Scalars["String"]>;
+  /** The image description. */
+  description?: InputMaybe<Scalars["String"]>;
+  /** The image to be uploaded. */
+  image: Scalars["Upload"];
+  /** The image title. */
+  title?: InputMaybe<Scalars["String"]>;
 };
 
 /** A Gravity Forms   field. */
@@ -10273,6 +10299,27 @@ export type ReadingSettings = {
   postsPerPage?: Maybe<FieldWrapper<Scalars["Int"]>>;
 };
 
+/** A Gravity Forms   field. */
+export type RecaptchaField = FormField & {
+  __typename?: "RecaptchaField";
+  /** Indicates the field is only displayed and its contents are not submitted with the form/saved with the entry. This is set to true. */
+  displayOnly?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
+  /** Field ID. */
+  id: FieldWrapper<Scalars["Int"]>;
+  /** The base form field type used to display the input. A good example is the Post Custom Field that can be displayed as various different types of fields. */
+  inputType?: Maybe<FieldWrapper<FormFieldTypeEnum>>;
+  /** The number of CSS grid columns the field should span. */
+  layoutGridColumnSpan?: Maybe<FieldWrapper<Scalars["Int"]>>;
+  /** The number of CSS grid columns the spacer field following this one should span. */
+  layoutSpacerGridColumnSpan?: Maybe<FieldWrapper<Scalars["Int"]>>;
+  /** The form page this field is located on. Default is 1. */
+  pageNumber?: Maybe<FieldWrapper<Scalars["Int"]>>;
+  /** The type of field to be displayed. */
+  type?: Maybe<FieldWrapper<FormFieldTypeEnum>>;
+  /** Field visibility. */
+  visibility?: Maybe<FieldWrapper<FormFieldVisibilityEnum>>;
+};
+
 /** Input for the refreshJwtAuthToken mutation */
 export type RefreshJwtAuthTokenInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -15108,6 +15155,26 @@ export const ButtonFieldsGravityPartial = gql`
     type
   }
 `;
+export const CaptchaPartial = gql`
+  fragment CaptchaPartial on CaptchaField {
+    captchaBadgePosition
+    captchaLanguage
+    captchaTheme
+    captchaType
+    description
+    value
+    visibility
+    type
+    id
+    label
+    inputType
+    errorMessage
+    displayOnly
+    simpleCaptchaBackgroundColor
+    simpleCaptchaFontColor
+    simpleCaptchaSize
+  }
+`;
 export const CheckboxFieldsGravityPartial = gql`
   fragment CheckboxFieldsGravityPartial on CheckboxField {
     id
@@ -15408,6 +15475,16 @@ export const RadioFieldsGravityPartial = gql`
     }
   }
   ${RadioFieldChoicePartial}
+`;
+export const RecaptchaPartial = gql`
+  fragment RecaptchaPartial on RecaptchaField {
+    id
+    visibility
+    type
+    inputType
+    displayOnly
+    __typename
+  }
 `;
 export const ChoicePropertyFieldsGravityPartial = gql`
   fragment ChoicePropertyFieldsGravityPartial on SelectFieldChoice {
@@ -16173,6 +16250,7 @@ export type ResolversTypes = ResolversObject<{
     | ResolversTypes["RadioField"]
     | ResolversTypes["RankField"]
     | ResolversTypes["RatingField"]
+    | ResolversTypes["RecaptchaField"]
     | ResolversTypes["RememberMeField"]
     | ResolversTypes["SectionField"]
     | ResolversTypes["SelectField"]
@@ -16331,6 +16409,7 @@ export type ResolversTypes = ResolversObject<{
   HtmlField: ResolverTypeWrapper<DeepPartial<HtmlField>>;
   ID: ResolverTypeWrapper<DeepPartial<Scalars["ID"]>>;
   ImageFieldValue: ResolverTypeWrapper<DeepPartial<ImageFieldValue>>;
+  ImageInput: ResolverTypeWrapper<DeepPartial<ImageInput>>;
   Int: ResolverTypeWrapper<DeepPartial<Scalars["Int"]>>;
   LikertField: ResolverTypeWrapper<DeepPartial<LikertField>>;
   ListField: ResolverTypeWrapper<DeepPartial<ListField>>;
@@ -16756,6 +16835,7 @@ export type ResolversTypes = ResolversObject<{
   RatingField: ResolverTypeWrapper<DeepPartial<RatingField>>;
   RatingFieldChoice: ResolverTypeWrapper<DeepPartial<RatingFieldChoice>>;
   ReadingSettings: ResolverTypeWrapper<DeepPartial<ReadingSettings>>;
+  RecaptchaField: ResolverTypeWrapper<DeepPartial<RecaptchaField>>;
   RefreshJwtAuthTokenInput: ResolverTypeWrapper<
     DeepPartial<RefreshJwtAuthTokenInput>
   >;
@@ -17144,6 +17224,7 @@ export type ResolversTypes = ResolversObject<{
   UpdateTagPayload: ResolverTypeWrapper<DeepPartial<UpdateTagPayload>>;
   UpdateUserInput: ResolverTypeWrapper<DeepPartial<UpdateUserInput>>;
   UpdateUserPayload: ResolverTypeWrapper<DeepPartial<UpdateUserPayload>>;
+  Upload: ResolverTypeWrapper<DeepPartial<Scalars["Upload"]>>;
   User: ResolverTypeWrapper<DeepPartial<User>>;
   UserNodeIdTypeEnum: ResolverTypeWrapper<DeepPartial<UserNodeIdTypeEnum>>;
   UserRole: ResolverTypeWrapper<DeepPartial<UserRole>>;
@@ -17424,6 +17505,7 @@ export type ResolversParentTypes = ResolversObject<{
     | ResolversParentTypes["RadioField"]
     | ResolversParentTypes["RankField"]
     | ResolversParentTypes["RatingField"]
+    | ResolversParentTypes["RecaptchaField"]
     | ResolversParentTypes["RememberMeField"]
     | ResolversParentTypes["SectionField"]
     | ResolversParentTypes["SelectField"]
@@ -17491,6 +17573,7 @@ export type ResolversParentTypes = ResolversObject<{
   HtmlField: DeepPartial<HtmlField>;
   ID: DeepPartial<Scalars["ID"]>;
   ImageFieldValue: DeepPartial<ImageFieldValue>;
+  ImageInput: DeepPartial<ImageInput>;
   Int: DeepPartial<Scalars["Int"]>;
   LikertField: DeepPartial<LikertField>;
   ListField: DeepPartial<ListField>;
@@ -17730,6 +17813,7 @@ export type ResolversParentTypes = ResolversObject<{
   RatingField: DeepPartial<RatingField>;
   RatingFieldChoice: DeepPartial<RatingFieldChoice>;
   ReadingSettings: DeepPartial<ReadingSettings>;
+  RecaptchaField: DeepPartial<RecaptchaField>;
   RefreshJwtAuthTokenInput: DeepPartial<RefreshJwtAuthTokenInput>;
   RefreshJwtAuthTokenPayload: DeepPartial<RefreshJwtAuthTokenPayload>;
   RegisterUserInput: DeepPartial<RegisterUserInput>;
@@ -17913,6 +17997,7 @@ export type ResolversParentTypes = ResolversObject<{
   UpdateTagPayload: DeepPartial<UpdateTagPayload>;
   UpdateUserInput: DeepPartial<UpdateUserInput>;
   UpdateUserPayload: DeepPartial<UpdateUserPayload>;
+  Upload: DeepPartial<Scalars["Upload"]>;
   User: DeepPartial<User>;
   UserRole: DeepPartial<UserRole>;
   UserToCommentConnection: DeepPartial<UserToCommentConnection>;
@@ -20383,6 +20468,7 @@ export type FormFieldResolvers<
     | "RadioField"
     | "RankField"
     | "RatingField"
+    | "RecaptchaField"
     | "RememberMeField"
     | "SectionField"
     | "SelectField"
@@ -29774,6 +29860,45 @@ export type ReadingSettingsResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type RecaptchaFieldResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["RecaptchaField"] = ResolversParentTypes["RecaptchaField"]
+> = ResolversObject<{
+  displayOnly?: Resolver<
+    Maybe<ResolversTypes["Boolean"]>,
+    ParentType,
+    ContextType
+  >;
+  id?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  inputType?: Resolver<
+    Maybe<ResolversTypes["FormFieldTypeEnum"]>,
+    ParentType,
+    ContextType
+  >;
+  layoutGridColumnSpan?: Resolver<
+    Maybe<ResolversTypes["Int"]>,
+    ParentType,
+    ContextType
+  >;
+  layoutSpacerGridColumnSpan?: Resolver<
+    Maybe<ResolversTypes["Int"]>,
+    ParentType,
+    ContextType
+  >;
+  pageNumber?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  type?: Resolver<
+    Maybe<ResolversTypes["FormFieldTypeEnum"]>,
+    ParentType,
+    ContextType
+  >;
+  visibility?: Resolver<
+    Maybe<ResolversTypes["FormFieldVisibilityEnum"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type RefreshJwtAuthTokenPayloadResolvers<
   ContextType = ResolverContext,
   ParentType extends ResolversParentTypes["RefreshJwtAuthTokenPayload"] = ResolversParentTypes["RefreshJwtAuthTokenPayload"]
@@ -33499,6 +33624,11 @@ export type UpdateUserPayloadResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export interface UploadScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["Upload"], any> {
+  name: "Upload";
+}
+
 export type UserResolvers<
   ContextType = ResolverContext,
   ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
@@ -34485,6 +34615,7 @@ export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   RatingField?: RatingFieldResolvers<ContextType>;
   RatingFieldChoice?: RatingFieldChoiceResolvers<ContextType>;
   ReadingSettings?: ReadingSettingsResolvers<ContextType>;
+  RecaptchaField?: RecaptchaFieldResolvers<ContextType>;
   RefreshJwtAuthTokenPayload?: RefreshJwtAuthTokenPayloadResolvers<ContextType>;
   RegisterUserPayload?: RegisterUserPayloadResolvers<ContextType>;
   RememberMeField?: RememberMeFieldResolvers<ContextType>;
@@ -34609,6 +34740,7 @@ export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   UpdateSettingsPayload?: UpdateSettingsPayloadResolvers<ContextType>;
   UpdateTagPayload?: UpdateTagPayloadResolvers<ContextType>;
   UpdateUserPayload?: UpdateUserPayloadResolvers<ContextType>;
+  Upload?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
   UserRole?: UserRoleResolvers<ContextType>;
   UserToCommentConnection?: UserToCommentConnectionResolvers<ContextType>;
@@ -35120,6 +35252,26 @@ export type ButtonFieldsGravityPartialFragment = {
   text?: string | null;
   imageUrl?: string | null;
   type?: FormButtonTypeEnum | null;
+};
+
+export type CaptchaPartialFragment = {
+  __typename?: "CaptchaField";
+  captchaBadgePosition?: CaptchaFieldBadgePositionEnum | null;
+  captchaLanguage?: string | null;
+  captchaTheme?: CaptchaFieldThemeEnum | null;
+  captchaType?: CaptchaFieldTypeEnum | null;
+  description?: string | null;
+  value?: string | null;
+  visibility?: FormFieldVisibilityEnum | null;
+  type?: FormFieldTypeEnum | null;
+  id: number;
+  label?: string | null;
+  inputType?: FormFieldTypeEnum | null;
+  errorMessage?: string | null;
+  displayOnly?: boolean | null;
+  simpleCaptchaBackgroundColor?: string | null;
+  simpleCaptchaFontColor?: string | null;
+  simpleCaptchaSize?: FormFieldSizeEnum | null;
 };
 
 export type CheckboxFieldsGravityPartialFragment = {
@@ -35730,6 +35882,16 @@ type FormFieldsGravityPartial_RatingField_Fragment = {
   type?: FormFieldTypeEnum | null;
 };
 
+type FormFieldsGravityPartial_RecaptchaField_Fragment = {
+  __typename?: "RecaptchaField";
+  id: number;
+  displayOnly?: boolean | null;
+  inputType?: FormFieldTypeEnum | null;
+  pageNumber?: number | null;
+  visibility?: FormFieldVisibilityEnum | null;
+  type?: FormFieldTypeEnum | null;
+};
+
 type FormFieldsGravityPartial_RememberMeField_Fragment = {
   __typename?: "RememberMeField";
   id: number;
@@ -35873,6 +36035,7 @@ export type FormFieldsGravityPartialFragment =
   | FormFieldsGravityPartial_RadioField_Fragment
   | FormFieldsGravityPartial_RankField_Fragment
   | FormFieldsGravityPartial_RatingField_Fragment
+  | FormFieldsGravityPartial_RecaptchaField_Fragment
   | FormFieldsGravityPartial_RememberMeField_Fragment
   | FormFieldsGravityPartial_SectionField_Fragment
   | FormFieldsGravityPartial_SelectField_Fragment
@@ -36089,6 +36252,15 @@ export type RadioFieldChoicePartialFragment = {
   value?: string | null;
   isOtherChoice?: boolean | null;
   isSelected?: boolean | null;
+};
+
+export type RecaptchaPartialFragment = {
+  __typename: "RecaptchaField";
+  id: number;
+  visibility?: FormFieldVisibilityEnum | null;
+  type?: FormFieldTypeEnum | null;
+  inputType?: FormFieldTypeEnum | null;
+  displayOnly?: boolean | null;
 };
 
 export type SelectFieldsGravityPartialFragment = {
@@ -36888,6 +37060,15 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
+            __typename?: "RecaptchaField";
+            id: number;
+            displayOnly?: boolean | null;
+            inputType?: FormFieldTypeEnum | null;
+            pageNumber?: number | null;
+            visibility?: FormFieldVisibilityEnum | null;
+            type?: FormFieldTypeEnum | null;
+          }
+        | {
             __typename?: "RememberMeField";
             id: number;
             displayOnly?: boolean | null;
@@ -37274,6 +37455,26 @@ export const ButtonFieldsGravityPartialFragmentDoc = gql`
     type
   }
 `;
+export const CaptchaPartialFragmentDoc = gql`
+  fragment CaptchaPartial on CaptchaField {
+    captchaBadgePosition
+    captchaLanguage
+    captchaTheme
+    captchaType
+    description
+    value
+    visibility
+    type
+    id
+    label
+    inputType
+    errorMessage
+    displayOnly
+    simpleCaptchaBackgroundColor
+    simpleCaptchaFontColor
+    simpleCaptchaSize
+  }
+`;
 export const CheckboxFieldsGravityPartialFragmentDoc = gql`
   fragment CheckboxFieldsGravityPartial on CheckboxField {
     id
@@ -37574,6 +37775,16 @@ export const RadioFieldsGravityPartialFragmentDoc = gql`
     }
   }
   ${RadioFieldChoicePartialFragmentDoc}
+`;
+export const RecaptchaPartialFragmentDoc = gql`
+  fragment RecaptchaPartial on RecaptchaField {
+    id
+    visibility
+    type
+    inputType
+    displayOnly
+    __typename
+  }
 `;
 export const ChoicePropertyFieldsGravityPartialFragmentDoc = gql`
   fragment ChoicePropertyFieldsGravityPartial on SelectFieldChoice {
@@ -38062,6 +38273,7 @@ export const namedOperations = {
     AddressFieldValuePartial: "AddressFieldValuePartial",
     AddressInputPropertyPartial: "AddressInputPropertyPartial",
     ButtonFieldsGravityPartial: "ButtonFieldsGravityPartial",
+    CaptchaPartial: "CaptchaPartial",
     CheckboxFieldsGravityPartial: "CheckboxFieldsGravityPartial",
     ChoicePropertyFieldsGravityPartial: "ChoicePropertyFieldsGravityPartial",
     DateFieldsGravityPartial: "DateFieldsGravityPartial",
@@ -38085,6 +38297,7 @@ export const namedOperations = {
     PostImageFieldsGravityPartial: "PostImageFieldsGravityPartial",
     RadioFieldsGravityPartial: "RadioFieldsGravityPartial",
     RadioFieldChoicePartial: "RadioFieldChoicePartial",
+    RecaptchaPartial: "RecaptchaPartial",
     SelectFieldsGravityPartial: "SelectFieldsGravityPartial",
     TextAreaFieldsGravityPartial: "TextAreaFieldsGravityPartial",
     TextFieldsGravityPartial: "TextFieldsGravityPartial",

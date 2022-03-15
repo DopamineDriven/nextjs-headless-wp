@@ -6433,6 +6433,27 @@ export type ReadingSettingsKeySpecifier = (
 export type ReadingSettingsFieldPolicy = {
   postsPerPage?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type RecaptchaFieldKeySpecifier = (
+  | "displayOnly"
+  | "id"
+  | "inputType"
+  | "layoutGridColumnSpan"
+  | "layoutSpacerGridColumnSpan"
+  | "pageNumber"
+  | "type"
+  | "visibility"
+  | RecaptchaFieldKeySpecifier
+)[];
+export type RecaptchaFieldFieldPolicy = {
+  displayOnly?: FieldPolicy<any> | FieldReadFunction<any>;
+  id?: FieldPolicy<any> | FieldReadFunction<any>;
+  inputType?: FieldPolicy<any> | FieldReadFunction<any>;
+  layoutGridColumnSpan?: FieldPolicy<any> | FieldReadFunction<any>;
+  layoutSpacerGridColumnSpan?: FieldPolicy<any> | FieldReadFunction<any>;
+  pageNumber?: FieldPolicy<any> | FieldReadFunction<any>;
+  type?: FieldPolicy<any> | FieldReadFunction<any>;
+  visibility?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type RefreshJwtAuthTokenPayloadKeySpecifier = (
   | "authToken"
   | "clientMutationId"
@@ -10832,6 +10853,13 @@ export type StrictTypedTypePolicies = {
       | ReadingSettingsKeySpecifier
       | (() => undefined | ReadingSettingsKeySpecifier);
     fields?: ReadingSettingsFieldPolicy;
+  };
+  RecaptchaField?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | RecaptchaFieldKeySpecifier
+      | (() => undefined | RecaptchaFieldKeySpecifier);
+    fields?: RecaptchaFieldFieldPolicy;
   };
   RefreshJwtAuthTokenPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:

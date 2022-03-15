@@ -1,0 +1,18 @@
+fragment CaptchaPartial on CaptchaField {
+  captchaBadgePosition
+  captchaLanguage
+  captchaTheme
+  captchaType
+  description
+  value
+  visibility
+  type
+  id
+  label
+  inputType
+  errorMessage
+  displayOnly
+  simpleCaptchaBackgroundColor
+  simpleCaptchaFontColor
+  simpleCaptchaSize
+}
