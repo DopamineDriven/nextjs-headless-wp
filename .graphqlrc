@@ -1,5 +1,5 @@
 {
-  "name": "Next-Prisma",
+  "name": "Nextjs-Headless-WordPress",
   "documents": [
     "./src/graphql/core/queries/**/*.graphql",
     "./src/graphql/core/mutations/**/*.graphql",

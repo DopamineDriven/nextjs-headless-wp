@@ -1,0 +1,138 @@
+.root {
+  @apply grid grid-cols-1 gap-0;
+
+  & > * {
+    @apply row-span-1 bg-transparent box-border overflow-hidden h-[500px] max-h-[800px];
+  }
+}
+
+@screen lg {
+  .root {
+    @apply grid-cols-3 grid-rows-2;
+
+    & > * {
+      @apply col-span-1;
+      height: inherit;
+    }
+  }
+}
+
+.default {
+  & > * {
+    @apply bg-transparent;
+  }
+}
+
+.layoutNormal {
+  @apply gap-3;
+}
+
+@screen md {
+  .layoutNormal > * {
+    max-height: min-content !important;
+  }
+}
+
+@screen lg {
+  .layoutNormal > * {
+    @apply max-h-[400px];
+  }
+}
+
+.layoutA {
+  & > *:nth-child(6n + 1),
+  & > *:nth-child(6n + 5) {
+    @apply row-span-2 lg:col-span-2;
+    height: var(--row-height);
+  }
+
+  &.filled {
+    & > *:nth-child(6n + 1) {
+      @apply bg-[#7928ca];
+    }
+
+    & > *:nth-child(6n + 2) {
+      @apply bg-[#da3c3c];
+    }
+
+    & > *:nth-child(6n + 3) {
+      @apply bg-[#ff0080];
+    }
+
+    & > *:nth-child(6n + 6) {
+      @apply bg-[#22b8cf];
+    }
+  }
+}
+
+.layoutB {
+  & > *:nth-child(6n + 2),
+  & > *:nth-child(6n + 4) {
+    @apply row-span-2 lg:col-span-2;
+    height: var(--row-height);
+  }
+
+  &.filled {
+    & > *:nth-child(6n + 1) {
+      @apply bg-[#7928ca];
+    }
+
+    & > *:nth-child(6n + 2) {
+      @apply bg-accents-8;
+    }
+
+    & > *:nth-child(6n + 3) {
+      @apply bg-[#ff0080];
+    }
+
+    & > *:nth-child(6n + 6) {
+      @apply bg-[#22b8cf];
+    }
+  }
+}
+
+.layoutC {
+  & > *:nth-child(12n + 1),
+  & > *:nth-child(12n + 8) {
+    @apply row-span-2 lg:col-span-2;
+    height: var(--row-height);
+  }
+
+  &.filled {
+    & > *:nth-child(12n + 1) {
+      @apply bg-[#7928ca];
+      height: var(--row-height);
+    }
+
+    & > *:nth-child(12n + 8) {
+      @apply bg-[#22b8cf];
+      height: var(--row-height);
+    }
+
+    & > *:nth-child(6n + 3) {
+      @apply bg-[#ff0080];
+    }
+  }
+}
+
+.layoutD {
+  & > *:nth-child(12n + 2),
+  & > *:nth-child(12n + 7) {
+    @apply row-span-2 lg:col-span-2;
+    height: var(--row-height);
+  }
+
+  &.filled {
+    & > *:nth-child(12n + 2) {
+      @apply bg-[#7928ca];
+    }
+
+    & > *:nth-child(12n + 7) {
+      @apply bg-[#22b8cf];
+    }
+
+    & > *:nth-child(6n + 3) {
+      @apply bg-[#ff0080];
+    }
+  }
+}

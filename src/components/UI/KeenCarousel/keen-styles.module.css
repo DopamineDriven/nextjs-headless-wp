@@ -1,0 +1,83 @@
+.control {
+  @apply lg:bg-opacity-75 lg:bg-gray-900 lg:absolute lg:bottom-10 lg:right-10 lg:flex
+  lg:flex-row lg:ring-gray-300 lg:ring-inset lg:ring lg:text-gray-300 lg:z-30
+  lg:shadow-xl lg:select-none lg:h-12 hidden;
+}
+
+.leftControl,
+.rightControl {
+  @apply px-9 cursor-pointer;
+  transition: background-color 0.2s ease;
+}
+
+.leftControl:hover,
+.rightControl:hover {
+  @apply bg-opacity-90;
+}
+
+.leftControl:focus,
+.rightControl:focus {
+  @apply outline-none;
+}
+
+.leftControl {
+  @apply -ml-0.25;
+}
+
+.root {
+  @apply relative w-full h-full select-none;
+  overflow: hidden;
+}
+
+.slider {
+  @apply relative h-full transition-opacity duration-150;
+  opacity: 0;
+}
+
+.slider.show {
+  opacity: 1;
+}
+
+.thumb {
+  @apply transition-all ease-linear duration-75
+  overflow-hidden inline-block cursor-pointer h-full;
+  width: 125px;
+  width: calc(100% / 3);
+}
+
+.thumb.selected {
+  @apply bg-white;
+}
+
+.thumb img {
+  height: 85% !important;
+}
+
+.album {
+  @apply bg-opacity-90 w-[100%] h-[100%] box-content
+  overflow-y-hidden overflow-x-auto whitespace-nowrap;
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.album::-webkit-scrollbar {
+  display: none;
+}
+
+@screen md {
+  .thumb:hover {
+    transform: scale(1.02);
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .thumb.selected {
+    @apply bg-transparent ring-black ring-inset ring-2;
+  }
+
+  .album {
+    @apply h-[182px];
+  }
+  .thumb {
+    @apply w-[235px];
+  }
+}
