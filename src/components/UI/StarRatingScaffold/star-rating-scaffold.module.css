@@ -1,0 +1,30 @@
+.twinkleStars {
+  animation: pulse 10s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.rootBG {
+  &.twinkleStars {
+    @keyframes pulse {
+      0%,
+      100% {
+        opacity: 1;
+      }
+      75% {
+        opacity: 0.75;
+      }
+    }
+  }
+}
+
+.root {
+  & > div {
+    @apply flex items-center;
+    & > *:nth-child(5n + 1),
+    & > *:nth-child(5n + 2),
+    & > *:nth-child(5n + 3),
+    & > *:nth-child(5n + 4),
+    & > *:nth-child(5n + 5) {
+      @apply shrink-0 inline-block mx-auto h-8 w-8;
+    }
+  }
+}

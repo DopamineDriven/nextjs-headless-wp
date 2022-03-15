@@ -21,6 +21,7 @@ export { default as MenuIcon } from "./menu-icon";
 export { default as PaperClip } from "./paper-clip";
 export { default as Phone } from "./phone";
 export { default as Search } from "./search";
+export { default as StarIcon } from "./star";
 export { default as Users } from "./users";
 export { default as XIcon } from "./x-icon";
 export { default as Vercel } from "./vercel";

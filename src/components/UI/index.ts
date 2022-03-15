@@ -8,5 +8,6 @@ export { default as KeenCarousel } from "./KeenCarousel";
 export { default as LoadingSpinner } from "./LoadingSpinner";
 export { default as PhoneShell } from "./PhoneShell";
 export { default as Search } from "./Search";
+export { default as StarRating } from "./StarRatingScaffold";
 export { default as Table } from "./Table";
 export { default as ThreadTime } from "./ThreadTime";
