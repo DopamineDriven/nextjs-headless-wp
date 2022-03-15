@@ -5,6 +5,9 @@ schema:
 documents:
   - "!./src/graphql/generated/**/*.graphql"
   - "./src/graphql/core/queries/**/*.graphql"
+  - "./src/graphql/gravity/fragments/**/*.graphql"
+  - "./src/graphql/gravity/queries/**/*.graphql"
+  - "./src/graphql/gravity/mutations/**/*.graphql"
   - "./src/graphql/core/mutations/**/*.graphql"
   - "./src/graphql/core/fragments/**/*.graphql"
 hooks:

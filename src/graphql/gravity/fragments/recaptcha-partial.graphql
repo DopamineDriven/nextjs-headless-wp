@@ -1,0 +1,8 @@
+fragment RecaptchaPartial on RecaptchaField {
+  id
+  visibility
+  type
+  inputType
+  displayOnly
+  __typename
+}

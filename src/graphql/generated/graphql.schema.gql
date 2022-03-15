@@ -7068,6 +7068,11 @@ enum FormFieldTypeEnum {
   RATING
 
   """
+  A Gravity Forms recaptcha field.
+  """
+  RECAPTCHA
+
+  """
   A Gravity Forms remember_me field.
   """
   REMEMBER_ME
@@ -7133,9 +7138,19 @@ input FormFieldValuesInput {
   emailValues: EmailFieldInput
 
   """
+  The form field values for file upload fields.
+  """
+  fileUploadValues: [Upload]
+
+  """
   The field id.
   """
   id: Int!
+
+  """
+  The form field values for post image fields.
+  """
+  imageValues: ImageInput
 
   """
   The form field values for List fields.
@@ -9638,6 +9653,36 @@ type ImageFieldValue {
   The image url.
   """
   url: String
+}
+
+"""
+Input fields for a single post Image.
+"""
+input ImageInput {
+  """
+  The image alt text.
+  """
+  altText: String
+
+  """
+  The image caption.
+  """
+  caption: String
+
+  """
+  The image description.
+  """
+  description: String
+
+  """
+  The image to be uploaded.
+  """
+  image: Upload!
+
+  """
+  The image title.
+  """
+  title: String
 }
 
 """
@@ -22314,6 +22359,51 @@ type ReadingSettings {
 }
 
 """
+A Gravity Forms   field.
+"""
+type RecaptchaField implements FormField {
+  """
+  Indicates the field is only displayed and its contents are not submitted with the form/saved with the entry. This is set to true.
+  """
+  displayOnly: Boolean
+
+  """
+  Field ID.
+  """
+  id: Int!
+
+  """
+  The base form field type used to display the input. A good example is the Post Custom Field that can be displayed as various different types of fields.
+  """
+  inputType: FormFieldTypeEnum
+
+  """
+  The number of CSS grid columns the field should span.
+  """
+  layoutGridColumnSpan: Int
+
+  """
+  The number of CSS grid columns the spacer field following this one should span.
+  """
+  layoutSpacerGridColumnSpan: Int
+
+  """
+  The form page this field is located on. Default is 1.
+  """
+  pageNumber: Int
+
+  """
+  The type of field to be displayed.
+  """
+  type: FormFieldTypeEnum
+
+  """
+  Field visibility.
+  """
+  visibility: FormFieldVisibilityEnum
+}
+
+"""
 Input for the refreshJwtAuthToken mutation
 """
 input RefreshJwtAuthTokenInput {
@@ -29884,6 +29974,11 @@ type UpdateUserPayload {
   """
   user: User
 }
+
+"""
+The `Upload` special type represents a file to be uploaded in the same HTTP request as specified by [graphql-multipart-request-spec](https://github.com/jaydenseric/graphql-multipart-request-spec).
+"""
+scalar Upload
 
 """
 A User object
