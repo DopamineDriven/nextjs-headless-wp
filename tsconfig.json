@@ -1,8 +1,13 @@
 {
   "compilerOptions": {
-    "module": "ES2022",
+    "module": "esnext",
     "target": "ES2015",
-    "lib": ["DOM", "DOM.Iterable", "ESNext", "ESNext.AsyncIterable"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext",
+      "ESNext.AsyncIterable"
+    ],
     "declaration": true,
     "strict": true,
     "pretty": true,
@@ -38,18 +43,42 @@
     "isolatedModules": true,
     "incremental": true,
     "paths": {
-      "@/apollo/*": ["src/apollo/*"],
-      "@/cache/*": ["src/.cache/*"],
-      "@/components/*": ["src/components/*"],
-      "@/context/*": ["src/context/*"],
-      "@/graphql/*": ["src/graphql/*"],
-      "@/hooks/*": ["src/hooks/*"],
-      "@/lib/*": ["src/lib/*"],
-      "@/pages/*": ["src/pages/*"],
-      "@/server/*": ["src/server/*"],
-      "@/styles/*": ["src/styles/*"],
-      "@/types/*": ["src/types/*"],
-      "@/utils/*": ["src/utils/*"]
+      "@/apollo/*": [
+        "src/apollo/*"
+      ],
+      "@/cache/*": [
+        "src/.cache/*"
+      ],
+      "@/components/*": [
+        "src/components/*"
+      ],
+      "@/context/*": [
+        "src/context/*"
+      ],
+      "@/graphql/*": [
+        "src/graphql/*"
+      ],
+      "@/hooks/*": [
+        "src/hooks/*"
+      ],
+      "@/lib/*": [
+        "src/lib/*"
+      ],
+      "@/pages/*": [
+        "src/pages/*"
+      ],
+      "@/server/*": [
+        "src/server/*"
+      ],
+      "@/styles/*": [
+        "src/styles/*"
+      ],
+      "@/types/*": [
+        "src/types/*"
+      ],
+      "@/utils/*": [
+        "src/utils/*"
+      ]
     }
   },
   "include": [
@@ -66,5 +95,7 @@
     "src/**/*.js",
     "schema.gql"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
