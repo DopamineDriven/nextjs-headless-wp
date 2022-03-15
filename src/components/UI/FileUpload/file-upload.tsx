@@ -1,8 +1,6 @@
 import { FileUpload } from "graphql-upload";
 import {
   useCallback,
-  useEffect,
-  useRef,
   useState,
   ChangeEvent,
   FC
