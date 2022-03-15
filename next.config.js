@@ -61,7 +61,7 @@ module.exports = withSuperjson()({
     defaultLocale: "en-US",
     domains: [
       {
-        domain: "www.andrewross.app",
+        domain: "www.andrewross.tech",
         defaultLocale: "en-US"
       }
     ]
@@ -72,6 +72,12 @@ module.exports = withSuperjson()({
       "secure.gravatar.com",
       "pbs.twimg.com",
       "en.gravatar.com",
+      "www.andrewross.engineer",
+      "www.andrewross.tech",
+      "andrewross.tech",
+      "andrewross.engineer",
+      "www.asrossheadless.wpengine.com",
+      "asrossheadless.wpengine.com",
       "c.tenor.com",
       "unsplash.com",
       "images.unsplash.com",
