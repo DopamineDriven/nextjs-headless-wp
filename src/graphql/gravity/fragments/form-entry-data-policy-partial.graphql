@@ -1,0 +1,6 @@
+fragment FormEntryDataPolicyPartial on FormEntryDataPolicy {
+  key
+  shouldErase
+  shouldExport
+  __typename
+}

@@ -1,4 +1,7 @@
 fragment AvatarPartial on Avatar {
+  forceDefault
+  scheme
+  isRestricted
   width
   height
   default

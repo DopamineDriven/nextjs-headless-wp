@@ -1,0 +1,5 @@
+fragment FormDataPoliciesPartial on FormDataPolicies {
+  identificationFieldDatabaseId
+  canExportAndErase
+  __typename
+}

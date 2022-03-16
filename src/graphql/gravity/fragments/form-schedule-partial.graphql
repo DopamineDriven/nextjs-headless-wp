@@ -1,0 +1,6 @@
+fragment FormSchedulePartial on FormSchedule {
+  closedMessage
+  hasSchedule
+  pendingMessage
+  __typename
+}

@@ -1,0 +1,5 @@
+fragment SubmitGfFormPayloadPartial on SubmitGfFormPayload{
+  clientMutationId
+  resumeUrl
+  __typename
+}

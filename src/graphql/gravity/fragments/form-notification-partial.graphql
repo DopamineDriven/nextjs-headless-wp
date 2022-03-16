@@ -1,0 +1,18 @@
+fragment FormNotificationPartial on FormNotification {
+  bcc
+  event
+  from
+  fromName
+  isAutoformatted
+  id
+  isActive
+  message
+  name
+  replyTo
+  service
+  shouldSendAttachments
+  subject
+  to
+  toType
+  __typename
+}

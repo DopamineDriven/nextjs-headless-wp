@@ -1,0 +1,5 @@
+fragment FormSaveAndContinuePartial on FormSaveAndContinue {
+  buttonText
+  hasSaveAndContinue
+  __typename
+}

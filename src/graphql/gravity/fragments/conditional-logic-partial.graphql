@@ -1,0 +1,5 @@
+fragment ConditionalLogicPartial on ConditionalLogic {
+  actionType
+  logicType
+  __typename
+}

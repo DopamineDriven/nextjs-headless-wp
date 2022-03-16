@@ -1,0 +1,7 @@
+fragment FormNotificationRoutingPartial on FormNotificationRouting {
+  email
+  fieldId
+  operator
+  value
+  __typename
+}

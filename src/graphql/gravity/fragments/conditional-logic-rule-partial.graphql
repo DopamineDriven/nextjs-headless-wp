@@ -1,0 +1,6 @@
+fragment ConditionalLogicRulePartial on ConditionalLogicRule {
+  fieldId
+  operator
+  value
+  __typename
+}

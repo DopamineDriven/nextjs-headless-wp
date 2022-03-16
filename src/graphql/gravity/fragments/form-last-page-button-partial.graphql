@@ -1,0 +1,6 @@
+fragment FormLastPageButtonPartial on FormLastPageButton {
+  imageUrl
+  text
+  type
+  __typename
+}

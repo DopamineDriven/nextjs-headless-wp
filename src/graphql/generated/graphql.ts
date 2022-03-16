@@ -2722,6 +2722,33 @@ export enum DraftEntryIdTypeEnum {
 }
 
 /** A Gravity Forms   field. */
+export type DropboxField = FormField & {
+  __typename?: "DropboxField";
+  /** Indicates the field is only displayed and its contents are not submitted with the form/saved with the entry. This is set to true. */
+  displayOnly?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
+  /** Field ID. */
+  id: FieldWrapper<Scalars["Int"]>;
+  /** The base form field type used to display the input. A good example is the Post Custom Field that can be displayed as various different types of fields. */
+  inputType?: Maybe<FieldWrapper<FormFieldTypeEnum>>;
+  /** Field label that will be displayed on the form and on the admin pages. */
+  label?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** The number of CSS grid columns the field should span. */
+  layoutGridColumnSpan?: Maybe<FieldWrapper<Scalars["Int"]>>;
+  /** The number of CSS grid columns the spacer field following this one should span. */
+  layoutSpacerGridColumnSpan?: Maybe<FieldWrapper<Scalars["Int"]>>;
+  /** The form page this field is located on. Default is 1. */
+  pageNumber?: Maybe<FieldWrapper<Scalars["Int"]>>;
+  /** The form field-specifc policies for exporting and erasing personal data. */
+  personalData?: Maybe<FieldWrapper<FormFieldDataPolicy>>;
+  /** The type of field to be displayed. */
+  type?: Maybe<FieldWrapper<FormFieldTypeEnum>>;
+  /** The string-formatted entry value for the `formField`. For complex fields this might be a JSON-encoded or serialized array. */
+  value?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** Field visibility. */
+  visibility?: Maybe<FieldWrapper<FormFieldVisibilityEnum>>;
+};
+
+/** A Gravity Forms   field. */
 export type EmailField = FormField & {
   __typename?: "EmailField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
@@ -3236,6 +3263,8 @@ export enum FormFieldTypeEnum {
   CONSENT = "CONSENT",
   /** A Gravity Forms date field. */
   DATE = "DATE",
+  /** A Gravity Forms dropbox field. */
+  DROPBOX = "DROPBOX",
   /** A Gravity Forms email field. */
   EMAIL = "EMAIL",
   /** A Gravity Forms fileupload field. */
@@ -14927,16 +14956,24 @@ export const AuthorPartial = gql`
     username
     __typename
     uri
+    registeredDate
+    locale
     slug
     id
     capabilities
     description
     firstName
     lastName
+    jwtAuthToken
+    capKey
+    jwtAuthExpiration
   }
 `;
 export const AvatarPartial = gql`
   fragment AvatarPartial on Avatar {
+    forceDefault
+    scheme
+    isRestricted
     width
     height
     default
@@ -15151,8 +15188,8 @@ export const ButtonFieldsGravityPartial = gql`
   fragment ButtonFieldsGravityPartial on FormButton {
     text
     imageUrl
-    __typename
     type
+    __typename
   }
 `;
 export const CaptchaPartial = gql`
@@ -15173,6 +15210,7 @@ export const CaptchaPartial = gql`
     simpleCaptchaBackgroundColor
     simpleCaptchaFontColor
     simpleCaptchaSize
+    __typename
   }
 `;
 export const CheckboxFieldsGravityPartial = gql`
@@ -15205,6 +15243,21 @@ export const CheckboxFieldValuePartial = gql`
     __typename
   }
 `;
+export const ConditionalLogicPartial = gql`
+  fragment ConditionalLogicPartial on ConditionalLogic {
+    actionType
+    logicType
+    __typename
+  }
+`;
+export const ConditionalLogicRulePartial = gql`
+  fragment ConditionalLogicRulePartial on ConditionalLogicRule {
+    fieldId
+    operator
+    value
+    __typename
+  }
+`;
 export const DateFieldsGravityPartial = gql`
   fragment DateFieldsGravityPartial on DateField {
     id
@@ -15229,6 +15282,7 @@ export const DateFieldsGravityPartial = gql`
     cssClass
     isRequired
     placeholder
+    __typename
   }
 `;
 export const EmailFieldsGravityPartial = gql`
@@ -15246,6 +15300,13 @@ export const EmailFieldsGravityPartial = gql`
     cssClass
     isRequired
     placeholder
+    __typename
+  }
+`;
+export const FieldErrorPartial = gql`
+  fragment FieldErrorPartial on FieldError {
+    id
+    message
     __typename
   }
 `;
@@ -15271,11 +15332,39 @@ export const FileUploadFieldsGravityPartial = gql`
 `;
 export const FormConfirmationGravityPartial = gql`
   fragment FormConfirmationGravityPartial on FormConfirmation {
-    queryString
+    id
+    isActive
     isDefault
     message
-    __typename
+    name
+    pageId
+    queryString
     type
+    url
+    __typename
+  }
+`;
+export const FormDataPoliciesPartial = gql`
+  fragment FormDataPoliciesPartial on FormDataPolicies {
+    identificationFieldDatabaseId
+    canExportAndErase
+    __typename
+  }
+`;
+export const FormEntryDataPolicyPartial = gql`
+  fragment FormEntryDataPolicyPartial on FormEntryDataPolicy {
+    key
+    shouldErase
+    shouldExport
+    __typename
+  }
+`;
+export const FormFieldDataPolicyPartial = gql`
+  fragment FormFieldDataPolicyPartial on FormFieldDataPolicy {
+    isIdentificationField
+    shouldErase
+    shouldExport
+    __typename
   }
 `;
 export const FormFieldsGravityPartial = gql`
@@ -15286,28 +15375,140 @@ export const FormFieldsGravityPartial = gql`
     pageNumber
     visibility
     type
+    __typename
+  }
+`;
+export const FormLastPageButtonPartial = gql`
+  fragment FormLastPageButtonPartial on FormLastPageButton {
+    imageUrl
+    text
+    type
+    __typename
+  }
+`;
+export const FormLoginPartial = gql`
+  fragment FormLoginPartial on FormLogin {
+    isLoginRequired
+    loginRequiredMessage
+    __typename
+  }
+`;
+export const FormNotificationPartial = gql`
+  fragment FormNotificationPartial on FormNotification {
+    bcc
+    event
+    from
+    fromName
+    isAutoformatted
+    id
+    isActive
+    message
+    name
+    replyTo
+    service
+    shouldSendAttachments
+    subject
+    to
+    toType
+    __typename
+  }
+`;
+export const FormNotificationRoutingPartial = gql`
+  fragment FormNotificationRoutingPartial on FormNotificationRouting {
+    email
+    fieldId
+    operator
+    value
+    __typename
+  }
+`;
+export const FormPersonalDataPartial = gql`
+  fragment FormPersonalDataPartial on FormPersonalData {
+    retentionPolicy
+    daysToRetain
+    shouldSaveIP
+    __typename
+  }
+`;
+export const FormSaveAndContinuePartial = gql`
+  fragment FormSaveAndContinuePartial on FormSaveAndContinue {
+    buttonText
+    hasSaveAndContinue
+    __typename
+  }
+`;
+export const FormScheduleDetailsPartial = gql`
+  fragment FormScheduleDetailsPartial on FormScheduleDetails {
+    amPm
+    date
+    dateGmt
+    hour
+    minute
+    __typename
+  }
+`;
+export const FormSchedulePartial = gql`
+  fragment FormSchedulePartial on FormSchedule {
+    closedMessage
+    hasSchedule
+    pendingMessage
+    __typename
+  }
+`;
+export const GravityFormEntryPartial = gql`
+  fragment GravityFormEntryPartial on GfEntry {
+    __typename
+    formDatabaseId
+    formId
+    id
+    ip
+    isDraft
+    isSubmitted
+    sourceUrl
+    userAgent
+    createdByDatabaseId
+    createdById
+    dateCreated
   }
 `;
 export const GravityFormsFormPartial = gql`
   fragment GravityFormsFormPartial on GfForm {
+    id
     databaseId
-    nextFieldId
+    customRequiredIndicator
+    cssClass
+    dateCreated
+    description
+    descriptionPlacement
+    hasValidationSummary
+    firstPageCssClass
+    hasConditionalLogicAnimation
+    hasHoneypot
     isActive
     isTrash
-    firstPageCssClass
-    hasHoneypot
-    hasValidationSummary
+    labelPlacement
     markupVersion
-    id
+    nextFieldId
+    requiredIndicator
+    subLabelPlacement
     title
-    description
+    version
     __typename
   }
 `;
-export const ListValuePropertyFieldsGravityPartial = gql`
-  fragment ListValuePropertyFieldsGravityPartial on ListFieldValue {
+export const LikertFieldPartial = gql`
+  fragment LikertFieldPartial on LikertField {
+    displayOnly
+    id
+    inputType
+    isRequired
+    layoutGridColumnSpan
+    layoutSpacerGridColumnSpan
+    pageNumber
+    type
+    value
+    visibility
     __typename
-    values
   }
 `;
 export const ListChoicePropertyFieldsGravityPartial = gql`
@@ -15332,15 +15533,13 @@ export const ListFieldsGravityPartial = gql`
     description
     type
     errorMessage
-    listValues {
-      ...ListValuePropertyFieldsGravityPartial
-    }
-    choices {
-      ...ListChoicePropertyFieldsGravityPartial
-    }
   }
-  ${ListValuePropertyFieldsGravityPartial}
-  ${ListChoicePropertyFieldsGravityPartial}
+`;
+export const ListValuePropertyFieldsGravityPartial = gql`
+  fragment ListValuePropertyFieldsGravityPartial on ListFieldValue {
+    __typename
+    values
+  }
 `;
 export const MultiSelectFieldsGravityPartial = gql`
   fragment MultiSelectFieldsGravityPartial on MultiSelectField {
@@ -15397,6 +15596,18 @@ export const NameFieldsGravityPartial = gql`
     }
   }
   ${NameInputFieldsGravityPartial}
+`;
+export const PaginationPartial = gql`
+  fragment PaginationPartial on FormPagination {
+    backgroundColor
+    color
+    hasProgressbarOnConfirmation
+    pageNames
+    progressbarCompletionText
+    style
+    type
+    __typename
+  }
 `;
 export const PasswordFieldInputPartial = gql`
   fragment PasswordFieldInputPartial on PasswordInputProperty {
@@ -15724,6 +15935,33 @@ export const SelectFieldsGravityPartial = gql`
   }
   ${ChoicePropertyFieldsGravityPartial}
 `;
+export const SubmitGfFormPayloadPartial = gql`
+  fragment SubmitGfFormPayloadPartial on SubmitGfFormPayload {
+    clientMutationId
+    resumeUrl
+    __typename
+  }
+`;
+export const SurveyFieldPartial = gql`
+  fragment SurveyFieldPartial on SurveyField {
+    adminLabel
+    canPrepopulate
+    cssClass
+    description
+    descriptionPlacement
+    displayOnly
+    errorMessage
+    id
+    inputName
+    inputType
+    labelPlacement
+    pageNumber
+    type
+    value
+    visibility
+    __typename
+  }
+`;
 export const TextAreaFieldsGravityPartial = gql`
   fragment TextAreaFieldsGravityPartial on TextAreaField {
     id
@@ -15909,22 +16147,102 @@ export const ContentNodes = gql`
   ${PageInfoPartial}
   ${SEOPageInfoSchemaPartial}
 `;
+export const SubmitGravityForm = gql`
+  mutation SubmitGravityForm($input: SubmitGfFormInput!) {
+    submitGfForm(input: $input) {
+      ...SubmitGfFormPayloadPartial
+      entry {
+        createdBy {
+          avatar {
+            ...AvatarPartial
+          }
+          ...AuthorPartial
+        }
+        ...GravityFormEntryPartial
+      }
+      errors {
+        ...FieldErrorPartial
+      }
+    }
+  }
+  ${SubmitGfFormPayloadPartial}
+  ${AvatarPartial}
+  ${AuthorPartial}
+  ${GravityFormEntryPartial}
+  ${FieldErrorPartial}
+`;
 export const GetGravityForm = gql`
   query GetGravityForm(
     $formId: ID!
     $idType: FormIdTypeEnum!
     $first: Int!
+    $pageNumber: Int
     $formFieldType: [FormFieldTypeEnum]
   ) {
     gfForm(id: $formId, idType: $idType) {
       ...GravityFormsFormPartial
       button {
         ...ButtonFieldsGravityPartial
+        conditionalLogic {
+          ...ConditionalLogicPartial
+          rules {
+            ...ConditionalLogicRulePartial
+          }
+        }
+      }
+      personalData {
+        dataPolicies {
+          entryData {
+            ...FormEntryDataPolicyPartial
+          }
+          ...FormDataPoliciesPartial
+        }
+        ...FormPersonalDataPartial
+      }
+      saveAndContinue {
+        ...FormSaveAndContinuePartial
+      }
+      lastPageButton {
+        ...FormLastPageButtonPartial
+      }
+      login {
+        ...FormLoginPartial
       }
       confirmations {
         ...FormConfirmationGravityPartial
       }
-      formFields(first: $first, where: { fieldTypes: $formFieldType }) {
+      pagination {
+        ...PaginationPartial
+      }
+      notifications {
+        ...FormNotificationPartial
+        conditionalLogic {
+          ...ConditionalLogicPartial
+          rules {
+            ...ConditionalLogicRulePartial
+          }
+        }
+        routing {
+          ...FormNotificationRoutingPartial
+        }
+      }
+      scheduling {
+        ...FormSchedulePartial
+        endDetails {
+          ...FormScheduleDetailsPartial
+        }
+        startDetails {
+          ...FormScheduleDetailsPartial
+        }
+      }
+      formFields(
+        first: $first
+        where: { fieldTypes: $formFieldType, pageNumber: $pageNumber }
+      ) {
+        pageInfo {
+          ...PageInfoPartial
+        }
+        __typename
         nodes {
           ...FormFieldsGravityPartial
           ... on AddressField {
@@ -15945,8 +16263,20 @@ export const GetGravityForm = gql`
           ... on FileUploadField {
             ...FileUploadFieldsGravityPartial
           }
+          ... on LikertField {
+            personalData {
+              ...FormFieldDataPolicyPartial
+            }
+            ...LikertFieldPartial
+          }
           ... on ListField {
             ...ListFieldsGravityPartial
+            listValues {
+              ...ListValuePropertyFieldsGravityPartial
+            }
+            choices {
+              ...ListChoicePropertyFieldsGravityPartial
+            }
           }
           ... on MultiSelectField {
             ...MultiSelectFieldsGravityPartial
@@ -15962,6 +16292,9 @@ export const GetGravityForm = gql`
           }
           ... on PhoneField {
             ...PhoneFieldsGravityPartial
+          }
+          ... on PollField {
+            ...PollFieldPartial
           }
           ... on PostContentField {
             ...PostContentFieldsGravityPartial
@@ -16008,6 +16341,9 @@ export const GetGravityForm = gql`
           ... on SelectField {
             ...SelectFieldsGravityPartial
           }
+          ... on SurveyField {
+            ...SurveyFieldPartial
+          }
           ... on TextAreaField {
             ...TextAreaFieldsGravityPartial
           }
@@ -16026,7 +16362,21 @@ export const GetGravityForm = gql`
   }
   ${GravityFormsFormPartial}
   ${ButtonFieldsGravityPartial}
+  ${ConditionalLogicPartial}
+  ${ConditionalLogicRulePartial}
+  ${FormEntryDataPolicyPartial}
+  ${FormDataPoliciesPartial}
+  ${FormPersonalDataPartial}
+  ${FormSaveAndContinuePartial}
+  ${FormLastPageButtonPartial}
+  ${FormLoginPartial}
   ${FormConfirmationGravityPartial}
+  ${PaginationPartial}
+  ${FormNotificationPartial}
+  ${FormNotificationRoutingPartial}
+  ${FormSchedulePartial}
+  ${FormScheduleDetailsPartial}
+  ${PageInfoPartial}
   ${FormFieldsGravityPartial}
   ${AddressFieldsGravityPartial}
   ${CaptchaPartial}
@@ -16034,12 +16384,17 @@ export const GetGravityForm = gql`
   ${DateFieldsGravityPartial}
   ${EmailFieldsGravityPartial}
   ${FileUploadFieldsGravityPartial}
+  ${FormFieldDataPolicyPartial}
+  ${LikertFieldPartial}
   ${ListFieldsGravityPartial}
+  ${ListValuePropertyFieldsGravityPartial}
+  ${ListChoicePropertyFieldsGravityPartial}
   ${MultiSelectFieldsGravityPartial}
   ${NameFieldsGravityPartial}
   ${PasswordFieldInputPartial}
   ${PasswordFieldPartial}
   ${PhoneFieldsGravityPartial}
+  ${PollFieldPartial}
   ${PostContentFieldsGravityPartial}
   ${PostImageFieldsGravityPartial}
   ${QuizFieldPartial}
@@ -16052,6 +16407,7 @@ export const GetGravityForm = gql`
   ${RadioFieldsGravityPartial}
   ${RecaptchaPartial}
   ${SelectFieldsGravityPartial}
+  ${SurveyFieldPartial}
   ${TextAreaFieldsGravityPartial}
   ${TextFieldsGravityPartial}
   ${TimeFieldsGravityPartial}
@@ -16421,6 +16777,7 @@ export type ResolversTypes = ResolversObject<{
   DeleteUserPayload: ResolverTypeWrapper<DeepPartial<DeleteUserPayload>>;
   DiscussionSettings: ResolverTypeWrapper<DeepPartial<DiscussionSettings>>;
   DraftEntryIdTypeEnum: ResolverTypeWrapper<DeepPartial<DraftEntryIdTypeEnum>>;
+  DropboxField: ResolverTypeWrapper<DeepPartial<DropboxField>>;
   EmailField: ResolverTypeWrapper<DeepPartial<EmailField>>;
   EmailFieldInput: ResolverTypeWrapper<DeepPartial<EmailFieldInput>>;
   EmailInputProperty: ResolverTypeWrapper<DeepPartial<EmailInputProperty>>;
@@ -16467,6 +16824,7 @@ export type ResolversTypes = ResolversObject<{
     | ResolversTypes["CheckboxField"]
     | ResolversTypes["ConsentField"]
     | ResolversTypes["DateField"]
+    | ResolversTypes["DropboxField"]
     | ResolversTypes["EmailField"]
     | ResolversTypes["FileUploadField"]
     | ResolversTypes["HiddenField"]
@@ -17696,6 +18054,7 @@ export type ResolversParentTypes = ResolversObject<{
   DeleteUserInput: DeepPartial<DeleteUserInput>;
   DeleteUserPayload: DeepPartial<DeleteUserPayload>;
   DiscussionSettings: DeepPartial<DiscussionSettings>;
+  DropboxField: DeepPartial<DropboxField>;
   EmailField: DeepPartial<EmailField>;
   EmailFieldInput: DeepPartial<EmailFieldInput>;
   EmailInputProperty: DeepPartial<EmailInputProperty>;
@@ -17722,6 +18081,7 @@ export type ResolversParentTypes = ResolversObject<{
     | ResolversParentTypes["CheckboxField"]
     | ResolversParentTypes["ConsentField"]
     | ResolversParentTypes["DateField"]
+    | ResolversParentTypes["DropboxField"]
     | ResolversParentTypes["EmailField"]
     | ResolversParentTypes["FileUploadField"]
     | ResolversParentTypes["HiddenField"]
@@ -20223,6 +20583,52 @@ export type DiscussionSettingsResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type DropboxFieldResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["DropboxField"] = ResolversParentTypes["DropboxField"]
+> = ResolversObject<{
+  displayOnly?: Resolver<
+    Maybe<ResolversTypes["Boolean"]>,
+    ParentType,
+    ContextType
+  >;
+  id?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  inputType?: Resolver<
+    Maybe<ResolversTypes["FormFieldTypeEnum"]>,
+    ParentType,
+    ContextType
+  >;
+  label?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  layoutGridColumnSpan?: Resolver<
+    Maybe<ResolversTypes["Int"]>,
+    ParentType,
+    ContextType
+  >;
+  layoutSpacerGridColumnSpan?: Resolver<
+    Maybe<ResolversTypes["Int"]>,
+    ParentType,
+    ContextType
+  >;
+  pageNumber?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  personalData?: Resolver<
+    Maybe<ResolversTypes["FormFieldDataPolicy"]>,
+    ParentType,
+    ContextType
+  >;
+  type?: Resolver<
+    Maybe<ResolversTypes["FormFieldTypeEnum"]>,
+    ParentType,
+    ContextType
+  >;
+  value?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  visibility?: Resolver<
+    Maybe<ResolversTypes["FormFieldVisibilityEnum"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type EmailFieldResolvers<
   ContextType = ResolverContext,
   ParentType extends ResolversParentTypes["EmailField"] = ResolversParentTypes["EmailField"]
@@ -20685,6 +21091,7 @@ export type FormFieldResolvers<
     | "CheckboxField"
     | "ConsentField"
     | "DateField"
+    | "DropboxField"
     | "EmailField"
     | "FileUploadField"
     | "HiddenField"
@@ -34685,6 +35092,7 @@ export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   DeleteTagPayload?: DeleteTagPayloadResolvers<ContextType>;
   DeleteUserPayload?: DeleteUserPayloadResolvers<ContextType>;
   DiscussionSettings?: DiscussionSettingsResolvers<ContextType>;
+  DropboxField?: DropboxFieldResolvers<ContextType>;
   EmailField?: EmailFieldResolvers<ContextType>;
   EmailInputProperty?: EmailInputPropertyResolvers<ContextType>;
   EnqueuedAsset?: EnqueuedAssetResolvers<ContextType>;
@@ -35035,16 +35443,24 @@ export type AuthorPartialFragment = {
   databaseId: number;
   username?: string | null;
   uri?: string | null;
+  registeredDate?: string | null;
+  locale?: string | null;
   slug?: string | null;
   id: string;
   capabilities?: Array<string | null> | null;
   description?: string | null;
   firstName?: string | null;
   lastName?: string | null;
+  jwtAuthToken?: string | null;
+  capKey?: string | null;
+  jwtAuthExpiration?: string | null;
 };
 
 export type AvatarPartialFragment = {
   __typename: "Avatar";
+  forceDefault?: boolean | null;
+  scheme?: string | null;
+  isRestricted?: boolean | null;
   width?: number | null;
   height?: number | null;
   default?: string | null;
@@ -35236,6 +35652,9 @@ export type loginMutation = {
       isJwtAuthSecretRevoked: boolean;
       avatar?: {
         __typename: "Avatar";
+        forceDefault?: boolean | null;
+        scheme?: string | null;
+        isRestricted?: boolean | null;
         width?: number | null;
         height?: number | null;
         default?: string | null;
@@ -35387,14 +35806,22 @@ export type ContentNodesQuery = {
                 databaseId: number;
                 username?: string | null;
                 uri?: string | null;
+                registeredDate?: string | null;
+                locale?: string | null;
                 slug?: string | null;
                 id: string;
                 capabilities?: Array<string | null> | null;
                 description?: string | null;
                 firstName?: string | null;
                 lastName?: string | null;
+                jwtAuthToken?: string | null;
+                capKey?: string | null;
+                jwtAuthExpiration?: string | null;
                 avatar?: {
                   __typename: "Avatar";
+                  forceDefault?: boolean | null;
+                  scheme?: string | null;
+                  isRestricted?: boolean | null;
                   width?: number | null;
                   height?: number | null;
                   default?: string | null;
@@ -35519,7 +35946,7 @@ export type ButtonFieldsGravityPartialFragment = {
 };
 
 export type CaptchaPartialFragment = {
-  __typename?: "CaptchaField";
+  __typename: "CaptchaField";
   captchaBadgePosition?: CaptchaFieldBadgePositionEnum | null;
   captchaLanguage?: string | null;
   captchaTheme?: CaptchaFieldThemeEnum | null;
@@ -35574,8 +36001,21 @@ export type ChoicePropertyFieldsGravityPartialFragment = {
   value?: string | null;
 };
 
+export type ConditionalLogicPartialFragment = {
+  __typename: "ConditionalLogic";
+  actionType?: ConditionalLogicActionTypeEnum | null;
+  logicType?: ConditionalLogicLogicTypeEnum | null;
+};
+
+export type ConditionalLogicRulePartialFragment = {
+  __typename: "ConditionalLogicRule";
+  fieldId?: number | null;
+  operator?: FormRuleOperatorEnum | null;
+  value?: string | null;
+};
+
 export type DateFieldsGravityPartialFragment = {
-  __typename?: "DateField";
+  __typename: "DateField";
   id: number;
   value?: string | null;
   pageNumber?: number | null;
@@ -35616,6 +36056,12 @@ export type EmailFieldsGravityPartialFragment = {
   placeholder?: string | null;
 };
 
+export type FieldErrorPartialFragment = {
+  __typename: "FieldError";
+  id?: number | null;
+  message?: string | null;
+};
+
 export type FileUploadFieldsGravityPartialFragment = {
   __typename: "FileUploadField";
   type?: FormFieldTypeEnum | null;
@@ -35636,14 +36082,39 @@ export type FileUploadFieldsGravityPartialFragment = {
 
 export type FormConfirmationGravityPartialFragment = {
   __typename: "FormConfirmation";
-  queryString?: string | null;
+  id?: string | null;
+  isActive?: boolean | null;
   isDefault?: boolean | null;
   message?: string | null;
+  name?: string | null;
+  pageId?: number | null;
+  queryString?: string | null;
   type?: FormConfirmationTypeEnum | null;
+  url?: string | null;
+};
+
+export type FormDataPoliciesPartialFragment = {
+  __typename: "FormDataPolicies";
+  identificationFieldDatabaseId?: number | null;
+  canExportAndErase?: boolean | null;
+};
+
+export type FormEntryDataPolicyPartialFragment = {
+  __typename: "FormEntryDataPolicy";
+  key?: string | null;
+  shouldErase?: boolean | null;
+  shouldExport?: boolean | null;
+};
+
+export type FormFieldDataPolicyPartialFragment = {
+  __typename: "FormFieldDataPolicy";
+  isIdentificationField?: boolean | null;
+  shouldErase?: boolean | null;
+  shouldExport?: boolean | null;
 };
 
 type FormFieldsGravityPartial_AddressField_Fragment = {
-  __typename?: "AddressField";
+  __typename: "AddressField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35653,7 +36124,7 @@ type FormFieldsGravityPartial_AddressField_Fragment = {
 };
 
 type FormFieldsGravityPartial_CaptchaField_Fragment = {
-  __typename?: "CaptchaField";
+  __typename: "CaptchaField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35663,7 +36134,7 @@ type FormFieldsGravityPartial_CaptchaField_Fragment = {
 };
 
 type FormFieldsGravityPartial_CheckboxField_Fragment = {
-  __typename?: "CheckboxField";
+  __typename: "CheckboxField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35673,7 +36144,7 @@ type FormFieldsGravityPartial_CheckboxField_Fragment = {
 };
 
 type FormFieldsGravityPartial_ConsentField_Fragment = {
-  __typename?: "ConsentField";
+  __typename: "ConsentField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35683,7 +36154,17 @@ type FormFieldsGravityPartial_ConsentField_Fragment = {
 };
 
 type FormFieldsGravityPartial_DateField_Fragment = {
-  __typename?: "DateField";
+  __typename: "DateField";
+  id: number;
+  displayOnly?: boolean | null;
+  inputType?: FormFieldTypeEnum | null;
+  pageNumber?: number | null;
+  visibility?: FormFieldVisibilityEnum | null;
+  type?: FormFieldTypeEnum | null;
+};
+
+type FormFieldsGravityPartial_DropboxField_Fragment = {
+  __typename: "DropboxField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35693,7 +36174,7 @@ type FormFieldsGravityPartial_DateField_Fragment = {
 };
 
 type FormFieldsGravityPartial_EmailField_Fragment = {
-  __typename?: "EmailField";
+  __typename: "EmailField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35703,7 +36184,7 @@ type FormFieldsGravityPartial_EmailField_Fragment = {
 };
 
 type FormFieldsGravityPartial_FileUploadField_Fragment = {
-  __typename?: "FileUploadField";
+  __typename: "FileUploadField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35713,7 +36194,7 @@ type FormFieldsGravityPartial_FileUploadField_Fragment = {
 };
 
 type FormFieldsGravityPartial_HiddenField_Fragment = {
-  __typename?: "HiddenField";
+  __typename: "HiddenField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35723,7 +36204,7 @@ type FormFieldsGravityPartial_HiddenField_Fragment = {
 };
 
 type FormFieldsGravityPartial_HtmlField_Fragment = {
-  __typename?: "HtmlField";
+  __typename: "HtmlField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35733,7 +36214,7 @@ type FormFieldsGravityPartial_HtmlField_Fragment = {
 };
 
 type FormFieldsGravityPartial_LikertField_Fragment = {
-  __typename?: "LikertField";
+  __typename: "LikertField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35743,7 +36224,7 @@ type FormFieldsGravityPartial_LikertField_Fragment = {
 };
 
 type FormFieldsGravityPartial_ListField_Fragment = {
-  __typename?: "ListField";
+  __typename: "ListField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35753,7 +36234,7 @@ type FormFieldsGravityPartial_ListField_Fragment = {
 };
 
 type FormFieldsGravityPartial_MultiSelectField_Fragment = {
-  __typename?: "MultiSelectField";
+  __typename: "MultiSelectField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35763,7 +36244,7 @@ type FormFieldsGravityPartial_MultiSelectField_Fragment = {
 };
 
 type FormFieldsGravityPartial_NameField_Fragment = {
-  __typename?: "NameField";
+  __typename: "NameField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35773,7 +36254,7 @@ type FormFieldsGravityPartial_NameField_Fragment = {
 };
 
 type FormFieldsGravityPartial_NumberField_Fragment = {
-  __typename?: "NumberField";
+  __typename: "NumberField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35783,7 +36264,7 @@ type FormFieldsGravityPartial_NumberField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PageField_Fragment = {
-  __typename?: "PageField";
+  __typename: "PageField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35793,7 +36274,7 @@ type FormFieldsGravityPartial_PageField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PasswordField_Fragment = {
-  __typename?: "PasswordField";
+  __typename: "PasswordField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35803,7 +36284,7 @@ type FormFieldsGravityPartial_PasswordField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PhoneField_Fragment = {
-  __typename?: "PhoneField";
+  __typename: "PhoneField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35813,7 +36294,7 @@ type FormFieldsGravityPartial_PhoneField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PollField_Fragment = {
-  __typename?: "PollField";
+  __typename: "PollField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35823,7 +36304,7 @@ type FormFieldsGravityPartial_PollField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostCategoryCheckboxField_Fragment = {
-  __typename?: "PostCategoryCheckboxField";
+  __typename: "PostCategoryCheckboxField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35833,7 +36314,7 @@ type FormFieldsGravityPartial_PostCategoryCheckboxField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostCategoryMultiSelectField_Fragment = {
-  __typename?: "PostCategoryMultiSelectField";
+  __typename: "PostCategoryMultiSelectField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35843,7 +36324,7 @@ type FormFieldsGravityPartial_PostCategoryMultiSelectField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostCategoryRadioField_Fragment = {
-  __typename?: "PostCategoryRadioField";
+  __typename: "PostCategoryRadioField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35853,7 +36334,7 @@ type FormFieldsGravityPartial_PostCategoryRadioField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostCategorySelectField_Fragment = {
-  __typename?: "PostCategorySelectField";
+  __typename: "PostCategorySelectField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35863,7 +36344,7 @@ type FormFieldsGravityPartial_PostCategorySelectField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostContentField_Fragment = {
-  __typename?: "PostContentField";
+  __typename: "PostContentField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35873,7 +36354,7 @@ type FormFieldsGravityPartial_PostContentField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostCustomCheckboxField_Fragment = {
-  __typename?: "PostCustomCheckboxField";
+  __typename: "PostCustomCheckboxField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35883,7 +36364,7 @@ type FormFieldsGravityPartial_PostCustomCheckboxField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostCustomDateField_Fragment = {
-  __typename?: "PostCustomDateField";
+  __typename: "PostCustomDateField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35893,7 +36374,7 @@ type FormFieldsGravityPartial_PostCustomDateField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostCustomEmailField_Fragment = {
-  __typename?: "PostCustomEmailField";
+  __typename: "PostCustomEmailField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35903,7 +36384,7 @@ type FormFieldsGravityPartial_PostCustomEmailField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostCustomFileuploadField_Fragment = {
-  __typename?: "PostCustomFileuploadField";
+  __typename: "PostCustomFileuploadField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35913,7 +36394,7 @@ type FormFieldsGravityPartial_PostCustomFileuploadField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostCustomHiddenField_Fragment = {
-  __typename?: "PostCustomHiddenField";
+  __typename: "PostCustomHiddenField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35923,7 +36404,7 @@ type FormFieldsGravityPartial_PostCustomHiddenField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostCustomListField_Fragment = {
-  __typename?: "PostCustomListField";
+  __typename: "PostCustomListField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35933,7 +36414,7 @@ type FormFieldsGravityPartial_PostCustomListField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostCustomMultiSelectField_Fragment = {
-  __typename?: "PostCustomMultiSelectField";
+  __typename: "PostCustomMultiSelectField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35943,7 +36424,7 @@ type FormFieldsGravityPartial_PostCustomMultiSelectField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostCustomNumberField_Fragment = {
-  __typename?: "PostCustomNumberField";
+  __typename: "PostCustomNumberField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35953,7 +36434,7 @@ type FormFieldsGravityPartial_PostCustomNumberField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostCustomPhoneField_Fragment = {
-  __typename?: "PostCustomPhoneField";
+  __typename: "PostCustomPhoneField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35963,7 +36444,7 @@ type FormFieldsGravityPartial_PostCustomPhoneField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostCustomRadioField_Fragment = {
-  __typename?: "PostCustomRadioField";
+  __typename: "PostCustomRadioField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35973,7 +36454,7 @@ type FormFieldsGravityPartial_PostCustomRadioField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostCustomSelectField_Fragment = {
-  __typename?: "PostCustomSelectField";
+  __typename: "PostCustomSelectField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35983,7 +36464,7 @@ type FormFieldsGravityPartial_PostCustomSelectField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostCustomTextAreaField_Fragment = {
-  __typename?: "PostCustomTextAreaField";
+  __typename: "PostCustomTextAreaField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -35993,7 +36474,7 @@ type FormFieldsGravityPartial_PostCustomTextAreaField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostCustomTextField_Fragment = {
-  __typename?: "PostCustomTextField";
+  __typename: "PostCustomTextField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36003,7 +36484,7 @@ type FormFieldsGravityPartial_PostCustomTextField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostCustomTimeField_Fragment = {
-  __typename?: "PostCustomTimeField";
+  __typename: "PostCustomTimeField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36013,7 +36494,7 @@ type FormFieldsGravityPartial_PostCustomTimeField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostCustomWebsiteField_Fragment = {
-  __typename?: "PostCustomWebsiteField";
+  __typename: "PostCustomWebsiteField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36023,7 +36504,7 @@ type FormFieldsGravityPartial_PostCustomWebsiteField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostExcerptField_Fragment = {
-  __typename?: "PostExcerptField";
+  __typename: "PostExcerptField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36033,7 +36514,7 @@ type FormFieldsGravityPartial_PostExcerptField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostImageField_Fragment = {
-  __typename?: "PostImageField";
+  __typename: "PostImageField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36043,7 +36524,7 @@ type FormFieldsGravityPartial_PostImageField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostTagsCheckboxField_Fragment = {
-  __typename?: "PostTagsCheckboxField";
+  __typename: "PostTagsCheckboxField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36053,7 +36534,7 @@ type FormFieldsGravityPartial_PostTagsCheckboxField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostTagsMultiSelectField_Fragment = {
-  __typename?: "PostTagsMultiSelectField";
+  __typename: "PostTagsMultiSelectField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36063,7 +36544,7 @@ type FormFieldsGravityPartial_PostTagsMultiSelectField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostTagsRadioField_Fragment = {
-  __typename?: "PostTagsRadioField";
+  __typename: "PostTagsRadioField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36073,7 +36554,7 @@ type FormFieldsGravityPartial_PostTagsRadioField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostTagsSelectField_Fragment = {
-  __typename?: "PostTagsSelectField";
+  __typename: "PostTagsSelectField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36083,7 +36564,7 @@ type FormFieldsGravityPartial_PostTagsSelectField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostTagsTextField_Fragment = {
-  __typename?: "PostTagsTextField";
+  __typename: "PostTagsTextField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36093,7 +36574,7 @@ type FormFieldsGravityPartial_PostTagsTextField_Fragment = {
 };
 
 type FormFieldsGravityPartial_PostTitleField_Fragment = {
-  __typename?: "PostTitleField";
+  __typename: "PostTitleField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36103,7 +36584,7 @@ type FormFieldsGravityPartial_PostTitleField_Fragment = {
 };
 
 type FormFieldsGravityPartial_QuizCheckboxField_Fragment = {
-  __typename?: "QuizCheckboxField";
+  __typename: "QuizCheckboxField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36113,7 +36594,7 @@ type FormFieldsGravityPartial_QuizCheckboxField_Fragment = {
 };
 
 type FormFieldsGravityPartial_QuizRadioField_Fragment = {
-  __typename?: "QuizRadioField";
+  __typename: "QuizRadioField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36123,7 +36604,7 @@ type FormFieldsGravityPartial_QuizRadioField_Fragment = {
 };
 
 type FormFieldsGravityPartial_QuizSelectField_Fragment = {
-  __typename?: "QuizSelectField";
+  __typename: "QuizSelectField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36133,7 +36614,7 @@ type FormFieldsGravityPartial_QuizSelectField_Fragment = {
 };
 
 type FormFieldsGravityPartial_RadioField_Fragment = {
-  __typename?: "RadioField";
+  __typename: "RadioField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36143,7 +36624,7 @@ type FormFieldsGravityPartial_RadioField_Fragment = {
 };
 
 type FormFieldsGravityPartial_RankField_Fragment = {
-  __typename?: "RankField";
+  __typename: "RankField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36153,7 +36634,7 @@ type FormFieldsGravityPartial_RankField_Fragment = {
 };
 
 type FormFieldsGravityPartial_RatingField_Fragment = {
-  __typename?: "RatingField";
+  __typename: "RatingField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36163,7 +36644,7 @@ type FormFieldsGravityPartial_RatingField_Fragment = {
 };
 
 type FormFieldsGravityPartial_RecaptchaField_Fragment = {
-  __typename?: "RecaptchaField";
+  __typename: "RecaptchaField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36173,7 +36654,7 @@ type FormFieldsGravityPartial_RecaptchaField_Fragment = {
 };
 
 type FormFieldsGravityPartial_RememberMeField_Fragment = {
-  __typename?: "RememberMeField";
+  __typename: "RememberMeField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36183,7 +36664,7 @@ type FormFieldsGravityPartial_RememberMeField_Fragment = {
 };
 
 type FormFieldsGravityPartial_SectionField_Fragment = {
-  __typename?: "SectionField";
+  __typename: "SectionField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36193,7 +36674,7 @@ type FormFieldsGravityPartial_SectionField_Fragment = {
 };
 
 type FormFieldsGravityPartial_SelectField_Fragment = {
-  __typename?: "SelectField";
+  __typename: "SelectField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36203,7 +36684,7 @@ type FormFieldsGravityPartial_SelectField_Fragment = {
 };
 
 type FormFieldsGravityPartial_SurveyField_Fragment = {
-  __typename?: "SurveyField";
+  __typename: "SurveyField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36213,7 +36694,7 @@ type FormFieldsGravityPartial_SurveyField_Fragment = {
 };
 
 type FormFieldsGravityPartial_TextAreaField_Fragment = {
-  __typename?: "TextAreaField";
+  __typename: "TextAreaField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36223,7 +36704,7 @@ type FormFieldsGravityPartial_TextAreaField_Fragment = {
 };
 
 type FormFieldsGravityPartial_TextField_Fragment = {
-  __typename?: "TextField";
+  __typename: "TextField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36233,7 +36714,7 @@ type FormFieldsGravityPartial_TextField_Fragment = {
 };
 
 type FormFieldsGravityPartial_TimeField_Fragment = {
-  __typename?: "TimeField";
+  __typename: "TimeField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36243,7 +36724,7 @@ type FormFieldsGravityPartial_TimeField_Fragment = {
 };
 
 type FormFieldsGravityPartial_UsernameField_Fragment = {
-  __typename?: "UsernameField";
+  __typename: "UsernameField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36253,7 +36734,7 @@ type FormFieldsGravityPartial_UsernameField_Fragment = {
 };
 
 type FormFieldsGravityPartial_WebsiteField_Fragment = {
-  __typename?: "WebsiteField";
+  __typename: "WebsiteField";
   id: number;
   displayOnly?: boolean | null;
   inputType?: FormFieldTypeEnum | null;
@@ -36268,6 +36749,7 @@ export type FormFieldsGravityPartialFragment =
   | FormFieldsGravityPartial_CheckboxField_Fragment
   | FormFieldsGravityPartial_ConsentField_Fragment
   | FormFieldsGravityPartial_DateField_Fragment
+  | FormFieldsGravityPartial_DropboxField_Fragment
   | FormFieldsGravityPartial_EmailField_Fragment
   | FormFieldsGravityPartial_FileUploadField_Fragment
   | FormFieldsGravityPartial_HiddenField_Fragment
@@ -36326,19 +36808,145 @@ export type FormFieldsGravityPartialFragment =
   | FormFieldsGravityPartial_UsernameField_Fragment
   | FormFieldsGravityPartial_WebsiteField_Fragment;
 
+export type FormLastPageButtonPartialFragment = {
+  __typename: "FormLastPageButton";
+  imageUrl?: string | null;
+  text?: string | null;
+  type?: FormButtonTypeEnum | null;
+};
+
+export type FormLoginPartialFragment = {
+  __typename: "FormLogin";
+  isLoginRequired?: boolean | null;
+  loginRequiredMessage?: string | null;
+};
+
+export type FormNotificationPartialFragment = {
+  __typename: "FormNotification";
+  bcc?: string | null;
+  event?: string | null;
+  from?: string | null;
+  fromName?: string | null;
+  isAutoformatted?: boolean | null;
+  id?: string | null;
+  isActive?: boolean | null;
+  message?: string | null;
+  name?: string | null;
+  replyTo?: string | null;
+  service?: string | null;
+  shouldSendAttachments?: boolean | null;
+  subject?: string | null;
+  to?: string | null;
+  toType?: FormNotificationToTypeEnum | null;
+};
+
+export type FormNotificationRoutingPartialFragment = {
+  __typename: "FormNotificationRouting";
+  email?: string | null;
+  fieldId?: number | null;
+  operator?: FormRuleOperatorEnum | null;
+  value?: string | null;
+};
+
+export type FormPersonalDataPartialFragment = {
+  __typename: "FormPersonalData";
+  retentionPolicy?: FormRetentionPolicyEnum | null;
+  daysToRetain?: number | null;
+  shouldSaveIP?: boolean | null;
+};
+
+export type FormSaveAndContinuePartialFragment = {
+  __typename: "FormSaveAndContinue";
+  buttonText?: string | null;
+  hasSaveAndContinue?: boolean | null;
+};
+
+export type FormScheduleDetailsPartialFragment = {
+  __typename: "FormScheduleDetails";
+  amPm?: AmPmEnum | null;
+  date?: string | null;
+  dateGmt?: string | null;
+  hour?: number | null;
+  minute?: number | null;
+};
+
+export type FormSchedulePartialFragment = {
+  __typename: "FormSchedule";
+  closedMessage?: string | null;
+  hasSchedule?: boolean | null;
+  pendingMessage?: string | null;
+};
+
+type GravityFormEntryPartial_GfDraftEntry_Fragment = {
+  __typename: "GfDraftEntry";
+  formDatabaseId?: number | null;
+  formId?: string | null;
+  id: string;
+  ip?: string | null;
+  isDraft?: boolean | null;
+  isSubmitted?: boolean | null;
+  sourceUrl?: string | null;
+  userAgent?: string | null;
+  createdByDatabaseId?: number | null;
+  createdById?: string | null;
+  dateCreated?: string | null;
+};
+
+type GravityFormEntryPartial_GfSubmittedEntry_Fragment = {
+  __typename: "GfSubmittedEntry";
+  formDatabaseId?: number | null;
+  formId?: string | null;
+  id: string;
+  ip?: string | null;
+  isDraft?: boolean | null;
+  isSubmitted?: boolean | null;
+  sourceUrl?: string | null;
+  userAgent?: string | null;
+  createdByDatabaseId?: number | null;
+  createdById?: string | null;
+  dateCreated?: string | null;
+};
+
+export type GravityFormEntryPartialFragment =
+  | GravityFormEntryPartial_GfDraftEntry_Fragment
+  | GravityFormEntryPartial_GfSubmittedEntry_Fragment;
+
 export type GravityFormsFormPartialFragment = {
   __typename: "GfForm";
+  id: string;
   databaseId: number;
-  nextFieldId?: number | null;
+  customRequiredIndicator?: string | null;
+  cssClass?: string | null;
+  dateCreated?: string | null;
+  description?: string | null;
+  descriptionPlacement?: FormDescriptionPlacementEnum | null;
+  hasValidationSummary?: boolean | null;
+  firstPageCssClass?: string | null;
+  hasConditionalLogicAnimation?: boolean | null;
+  hasHoneypot?: boolean | null;
   isActive?: boolean | null;
   isTrash?: boolean | null;
-  firstPageCssClass?: string | null;
-  hasHoneypot?: boolean | null;
-  hasValidationSummary?: boolean | null;
+  labelPlacement?: FormLabelPlacementEnum | null;
   markupVersion?: number | null;
-  id: string;
+  nextFieldId?: number | null;
+  requiredIndicator?: FormFieldRequiredIndicatorEnum | null;
+  subLabelPlacement?: FormSubLabelPlacementEnum | null;
   title?: string | null;
-  description?: string | null;
+  version?: string | null;
+};
+
+export type LikertFieldPartialFragment = {
+  __typename: "LikertField";
+  displayOnly?: boolean | null;
+  id: number;
+  inputType?: FormFieldTypeEnum | null;
+  isRequired?: boolean | null;
+  layoutGridColumnSpan?: number | null;
+  layoutSpacerGridColumnSpan?: number | null;
+  pageNumber?: number | null;
+  type?: FormFieldTypeEnum | null;
+  value?: string | null;
+  visibility?: FormFieldVisibilityEnum | null;
 };
 
 export type ListChoicePropertyFieldsGravityPartialFragment = {
@@ -36360,15 +36968,6 @@ export type ListFieldsGravityPartialFragment = {
   description?: string | null;
   type?: FormFieldTypeEnum | null;
   errorMessage?: string | null;
-  listValues?: Array<{
-    __typename: "ListFieldValue";
-    values?: Array<string | null> | null;
-  } | null> | null;
-  choices?: Array<{
-    __typename: "ListFieldChoice";
-    value?: string | null;
-    text?: string | null;
-  } | null> | null;
 };
 
 export type ListValuePropertyFieldsGravityPartialFragment = {
@@ -36436,6 +37035,17 @@ export type NameInputFieldsGravityPartialFragment = {
   hasChoiceValue?: boolean | null;
   defaultValue?: string | null;
   isHidden?: boolean | null;
+};
+
+export type PaginationPartialFragment = {
+  __typename: "FormPagination";
+  backgroundColor?: string | null;
+  color?: string | null;
+  hasProgressbarOnConfirmation?: boolean | null;
+  pageNames?: Array<string | null> | null;
+  progressbarCompletionText?: string | null;
+  style?: FormPageProgressStyleEnum | null;
+  type?: FormPageProgressTypeEnum | null;
 };
 
 export type PasswordFieldInputPartialFragment = {
@@ -36803,6 +37413,31 @@ export type SelectFieldsGravityPartialFragment = {
   } | null> | null;
 };
 
+export type SubmitGfFormPayloadPartialFragment = {
+  __typename: "SubmitGfFormPayload";
+  clientMutationId?: string | null;
+  resumeUrl?: string | null;
+};
+
+export type SurveyFieldPartialFragment = {
+  __typename: "SurveyField";
+  adminLabel?: string | null;
+  canPrepopulate?: boolean | null;
+  cssClass?: string | null;
+  description?: string | null;
+  descriptionPlacement?: FormFieldDescriptionPlacementEnum | null;
+  displayOnly?: boolean | null;
+  errorMessage?: string | null;
+  id: number;
+  inputName?: string | null;
+  inputType?: FormFieldTypeEnum | null;
+  labelPlacement?: FormFieldLabelPlacementEnum | null;
+  pageNumber?: number | null;
+  type?: FormFieldTypeEnum | null;
+  value?: string | null;
+  visibility?: FormFieldVisibilityEnum | null;
+};
+
 export type TextAreaFieldsGravityPartialFragment = {
   __typename: "TextAreaField";
   id: number;
@@ -36890,10 +37525,123 @@ export type WebsiteFieldsGravityPartialFragment = {
   placeholder?: string | null;
 };
 
+export type SubmitGravityFormMutationVariables = Exact<{
+  input: SubmitGfFormInput;
+}>;
+
+export type SubmitGravityFormMutation = {
+  __typename?: "RootMutation";
+  submitGfForm?: {
+    __typename: "SubmitGfFormPayload";
+    clientMutationId?: string | null;
+    resumeUrl?: string | null;
+    entry?:
+      | {
+          __typename: "GfDraftEntry";
+          formDatabaseId?: number | null;
+          formId?: string | null;
+          id: string;
+          ip?: string | null;
+          isDraft?: boolean | null;
+          isSubmitted?: boolean | null;
+          sourceUrl?: string | null;
+          userAgent?: string | null;
+          createdByDatabaseId?: number | null;
+          createdById?: string | null;
+          dateCreated?: string | null;
+          createdBy?: {
+            __typename: "User";
+            email?: string | null;
+            databaseId: number;
+            username?: string | null;
+            uri?: string | null;
+            registeredDate?: string | null;
+            locale?: string | null;
+            slug?: string | null;
+            id: string;
+            capabilities?: Array<string | null> | null;
+            description?: string | null;
+            firstName?: string | null;
+            lastName?: string | null;
+            jwtAuthToken?: string | null;
+            capKey?: string | null;
+            jwtAuthExpiration?: string | null;
+            avatar?: {
+              __typename: "Avatar";
+              forceDefault?: boolean | null;
+              scheme?: string | null;
+              isRestricted?: boolean | null;
+              width?: number | null;
+              height?: number | null;
+              default?: string | null;
+              foundAvatar?: boolean | null;
+              rating?: string | null;
+              size?: number | null;
+              url?: string | null;
+              extraAttr?: string | null;
+            } | null;
+          } | null;
+        }
+      | {
+          __typename: "GfSubmittedEntry";
+          formDatabaseId?: number | null;
+          formId?: string | null;
+          id: string;
+          ip?: string | null;
+          isDraft?: boolean | null;
+          isSubmitted?: boolean | null;
+          sourceUrl?: string | null;
+          userAgent?: string | null;
+          createdByDatabaseId?: number | null;
+          createdById?: string | null;
+          dateCreated?: string | null;
+          createdBy?: {
+            __typename: "User";
+            email?: string | null;
+            databaseId: number;
+            username?: string | null;
+            uri?: string | null;
+            registeredDate?: string | null;
+            locale?: string | null;
+            slug?: string | null;
+            id: string;
+            capabilities?: Array<string | null> | null;
+            description?: string | null;
+            firstName?: string | null;
+            lastName?: string | null;
+            jwtAuthToken?: string | null;
+            capKey?: string | null;
+            jwtAuthExpiration?: string | null;
+            avatar?: {
+              __typename: "Avatar";
+              forceDefault?: boolean | null;
+              scheme?: string | null;
+              isRestricted?: boolean | null;
+              width?: number | null;
+              height?: number | null;
+              default?: string | null;
+              foundAvatar?: boolean | null;
+              rating?: string | null;
+              size?: number | null;
+              url?: string | null;
+              extraAttr?: string | null;
+            } | null;
+          } | null;
+        }
+      | null;
+    errors?: Array<{
+      __typename: "FieldError";
+      id?: number | null;
+      message?: string | null;
+    } | null> | null;
+  } | null;
+};
+
 export type GetGravityFormQueryVariables = Exact<{
   formId: Scalars["ID"];
   idType: FormIdTypeEnum;
   first: Scalars["Int"];
+  pageNumber?: InputMaybe<Scalars["Int"]>;
   formFieldType?: InputMaybe<
     Array<InputMaybe<FormFieldTypeEnum>> | InputMaybe<FormFieldTypeEnum>
   >;
@@ -36903,32 +37651,166 @@ export type GetGravityFormQuery = {
   __typename?: "RootQuery";
   gfForm?: {
     __typename: "GfForm";
+    id: string;
     databaseId: number;
-    nextFieldId?: number | null;
+    customRequiredIndicator?: string | null;
+    cssClass?: string | null;
+    dateCreated?: string | null;
+    description?: string | null;
+    descriptionPlacement?: FormDescriptionPlacementEnum | null;
+    hasValidationSummary?: boolean | null;
+    firstPageCssClass?: string | null;
+    hasConditionalLogicAnimation?: boolean | null;
+    hasHoneypot?: boolean | null;
     isActive?: boolean | null;
     isTrash?: boolean | null;
-    firstPageCssClass?: string | null;
-    hasHoneypot?: boolean | null;
-    hasValidationSummary?: boolean | null;
+    labelPlacement?: FormLabelPlacementEnum | null;
     markupVersion?: number | null;
-    id: string;
+    nextFieldId?: number | null;
+    requiredIndicator?: FormFieldRequiredIndicatorEnum | null;
+    subLabelPlacement?: FormSubLabelPlacementEnum | null;
     title?: string | null;
-    description?: string | null;
+    version?: string | null;
     button?: {
       __typename: "FormButton";
       text?: string | null;
       imageUrl?: string | null;
       type?: FormButtonTypeEnum | null;
+      conditionalLogic?: {
+        __typename: "ConditionalLogic";
+        actionType?: ConditionalLogicActionTypeEnum | null;
+        logicType?: ConditionalLogicLogicTypeEnum | null;
+        rules?: Array<{
+          __typename: "ConditionalLogicRule";
+          fieldId?: number | null;
+          operator?: FormRuleOperatorEnum | null;
+          value?: string | null;
+        } | null> | null;
+      } | null;
+    } | null;
+    personalData?: {
+      __typename: "FormPersonalData";
+      retentionPolicy?: FormRetentionPolicyEnum | null;
+      daysToRetain?: number | null;
+      shouldSaveIP?: boolean | null;
+      dataPolicies?: {
+        __typename: "FormDataPolicies";
+        identificationFieldDatabaseId?: number | null;
+        canExportAndErase?: boolean | null;
+        entryData?: Array<{
+          __typename: "FormEntryDataPolicy";
+          key?: string | null;
+          shouldErase?: boolean | null;
+          shouldExport?: boolean | null;
+        } | null> | null;
+      } | null;
+    } | null;
+    saveAndContinue?: {
+      __typename: "FormSaveAndContinue";
+      buttonText?: string | null;
+      hasSaveAndContinue?: boolean | null;
+    } | null;
+    lastPageButton?: {
+      __typename: "FormLastPageButton";
+      imageUrl?: string | null;
+      text?: string | null;
+      type?: FormButtonTypeEnum | null;
+    } | null;
+    login?: {
+      __typename: "FormLogin";
+      isLoginRequired?: boolean | null;
+      loginRequiredMessage?: string | null;
     } | null;
     confirmations?: Array<{
       __typename: "FormConfirmation";
-      queryString?: string | null;
+      id?: string | null;
+      isActive?: boolean | null;
       isDefault?: boolean | null;
       message?: string | null;
+      name?: string | null;
+      pageId?: number | null;
+      queryString?: string | null;
       type?: FormConfirmationTypeEnum | null;
+      url?: string | null;
     } | null> | null;
+    pagination?: {
+      __typename: "FormPagination";
+      backgroundColor?: string | null;
+      color?: string | null;
+      hasProgressbarOnConfirmation?: boolean | null;
+      pageNames?: Array<string | null> | null;
+      progressbarCompletionText?: string | null;
+      style?: FormPageProgressStyleEnum | null;
+      type?: FormPageProgressTypeEnum | null;
+    } | null;
+    notifications?: Array<{
+      __typename: "FormNotification";
+      bcc?: string | null;
+      event?: string | null;
+      from?: string | null;
+      fromName?: string | null;
+      isAutoformatted?: boolean | null;
+      id?: string | null;
+      isActive?: boolean | null;
+      message?: string | null;
+      name?: string | null;
+      replyTo?: string | null;
+      service?: string | null;
+      shouldSendAttachments?: boolean | null;
+      subject?: string | null;
+      to?: string | null;
+      toType?: FormNotificationToTypeEnum | null;
+      conditionalLogic?: {
+        __typename: "ConditionalLogic";
+        actionType?: ConditionalLogicActionTypeEnum | null;
+        logicType?: ConditionalLogicLogicTypeEnum | null;
+        rules?: Array<{
+          __typename: "ConditionalLogicRule";
+          fieldId?: number | null;
+          operator?: FormRuleOperatorEnum | null;
+          value?: string | null;
+        } | null> | null;
+      } | null;
+      routing?: Array<{
+        __typename: "FormNotificationRouting";
+        email?: string | null;
+        fieldId?: number | null;
+        operator?: FormRuleOperatorEnum | null;
+        value?: string | null;
+      } | null> | null;
+    } | null> | null;
+    scheduling?: {
+      __typename: "FormSchedule";
+      closedMessage?: string | null;
+      hasSchedule?: boolean | null;
+      pendingMessage?: string | null;
+      endDetails?: {
+        __typename: "FormScheduleDetails";
+        amPm?: AmPmEnum | null;
+        date?: string | null;
+        dateGmt?: string | null;
+        hour?: number | null;
+        minute?: number | null;
+      } | null;
+      startDetails?: {
+        __typename: "FormScheduleDetails";
+        amPm?: AmPmEnum | null;
+        date?: string | null;
+        dateGmt?: string | null;
+        hour?: number | null;
+        minute?: number | null;
+      } | null;
+    } | null;
     formFields?: {
-      __typename?: "GfFormToFormFieldConnection";
+      __typename: "GfFormToFormFieldConnection";
+      pageInfo?: {
+        __typename: "WPPageInfo";
+        endCursor?: string | null;
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        total?: number | null;
+      } | null;
       nodes?: Array<
         | {
             __typename: "AddressField";
@@ -36974,7 +37856,7 @@ export type GetGravityFormQuery = {
             } | null> | null;
           }
         | {
-            __typename?: "CaptchaField";
+            __typename: "CaptchaField";
             captchaBadgePosition?: CaptchaFieldBadgePositionEnum | null;
             captchaLanguage?: string | null;
             captchaTheme?: CaptchaFieldThemeEnum | null;
@@ -36994,7 +37876,7 @@ export type GetGravityFormQuery = {
             pageNumber?: number | null;
           }
         | {
-            __typename?: "CheckboxField";
+            __typename: "CheckboxField";
             id: number;
             inputName?: string | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37019,7 +37901,7 @@ export type GetGravityFormQuery = {
             } | null> | null;
           }
         | {
-            __typename?: "ConsentField";
+            __typename: "ConsentField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37028,7 +37910,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "DateField";
+            __typename: "DateField";
             id: number;
             value?: string | null;
             pageNumber?: number | null;
@@ -37050,6 +37932,15 @@ export type GetGravityFormQuery = {
             description?: string | null;
             cssClass?: string | null;
             placeholder?: string | null;
+            visibility?: FormFieldVisibilityEnum | null;
+            type?: FormFieldTypeEnum | null;
+          }
+        | {
+            __typename: "DropboxField";
+            id: number;
+            displayOnly?: boolean | null;
+            inputType?: FormFieldTypeEnum | null;
+            pageNumber?: number | null;
             visibility?: FormFieldVisibilityEnum | null;
             type?: FormFieldTypeEnum | null;
           }
@@ -37093,7 +37984,7 @@ export type GetGravityFormQuery = {
             visibility?: FormFieldVisibilityEnum | null;
           }
         | {
-            __typename?: "HiddenField";
+            __typename: "HiddenField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37102,7 +37993,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "HtmlField";
+            __typename: "HtmlField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37111,13 +38002,23 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "LikertField";
-            id: number;
+            __typename: "LikertField";
             displayOnly?: boolean | null;
+            id: number;
             inputType?: FormFieldTypeEnum | null;
+            isRequired?: boolean | null;
+            layoutGridColumnSpan?: number | null;
+            layoutSpacerGridColumnSpan?: number | null;
             pageNumber?: number | null;
-            visibility?: FormFieldVisibilityEnum | null;
             type?: FormFieldTypeEnum | null;
+            value?: string | null;
+            visibility?: FormFieldVisibilityEnum | null;
+            personalData?: {
+              __typename: "FormFieldDataPolicy";
+              isIdentificationField?: boolean | null;
+              shouldErase?: boolean | null;
+              shouldExport?: boolean | null;
+            } | null;
           }
         | {
             __typename: "ListField";
@@ -37165,7 +38066,7 @@ export type GetGravityFormQuery = {
             } | null> | null;
           }
         | {
-            __typename?: "NameField";
+            __typename: "NameField";
             id: number;
             value?: string | null;
             canPrepopulate?: boolean | null;
@@ -37199,7 +38100,7 @@ export type GetGravityFormQuery = {
             } | null> | null;
           }
         | {
-            __typename?: "NumberField";
+            __typename: "NumberField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37208,7 +38109,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PageField";
+            __typename: "PageField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37248,7 +38149,7 @@ export type GetGravityFormQuery = {
             } | null> | null;
           }
         | {
-            __typename?: "PhoneField";
+            __typename: "PhoneField";
             id: number;
             value?: string | null;
             defaultValue?: string | null;
@@ -37268,7 +38169,17 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PollField";
+            __typename: "PollField";
+            displayOnly?: boolean | null;
+            id: number;
+            inputType?: FormFieldTypeEnum | null;
+            type?: FormFieldTypeEnum | null;
+            visibility?: FormFieldVisibilityEnum | null;
+            value?: string | null;
+            pageNumber?: number | null;
+          }
+        | {
+            __typename: "PostCategoryCheckboxField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37277,7 +38188,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostCategoryCheckboxField";
+            __typename: "PostCategoryMultiSelectField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37286,7 +38197,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostCategoryMultiSelectField";
+            __typename: "PostCategoryRadioField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37295,16 +38206,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostCategoryRadioField";
-            id: number;
-            displayOnly?: boolean | null;
-            inputType?: FormFieldTypeEnum | null;
-            pageNumber?: number | null;
-            visibility?: FormFieldVisibilityEnum | null;
-            type?: FormFieldTypeEnum | null;
-          }
-        | {
-            __typename?: "PostCategorySelectField";
+            __typename: "PostCategorySelectField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37332,7 +38234,7 @@ export type GetGravityFormQuery = {
             displayOnly?: boolean | null;
           }
         | {
-            __typename?: "PostCustomCheckboxField";
+            __typename: "PostCustomCheckboxField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37341,7 +38243,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostCustomDateField";
+            __typename: "PostCustomDateField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37350,7 +38252,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostCustomEmailField";
+            __typename: "PostCustomEmailField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37359,7 +38261,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostCustomFileuploadField";
+            __typename: "PostCustomFileuploadField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37368,7 +38270,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostCustomHiddenField";
+            __typename: "PostCustomHiddenField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37377,7 +38279,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostCustomListField";
+            __typename: "PostCustomListField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37386,7 +38288,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostCustomMultiSelectField";
+            __typename: "PostCustomMultiSelectField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37395,7 +38297,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostCustomNumberField";
+            __typename: "PostCustomNumberField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37404,7 +38306,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostCustomPhoneField";
+            __typename: "PostCustomPhoneField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37413,7 +38315,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostCustomRadioField";
+            __typename: "PostCustomRadioField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37422,7 +38324,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostCustomSelectField";
+            __typename: "PostCustomSelectField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37431,7 +38333,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostCustomTextAreaField";
+            __typename: "PostCustomTextAreaField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37440,7 +38342,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostCustomTextField";
+            __typename: "PostCustomTextField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37449,7 +38351,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostCustomTimeField";
+            __typename: "PostCustomTimeField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37458,7 +38360,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostCustomWebsiteField";
+            __typename: "PostCustomWebsiteField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37467,7 +38369,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostExcerptField";
+            __typename: "PostExcerptField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37504,7 +38406,7 @@ export type GetGravityFormQuery = {
             } | null;
           }
         | {
-            __typename?: "PostTagsCheckboxField";
+            __typename: "PostTagsCheckboxField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37513,7 +38415,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostTagsMultiSelectField";
+            __typename: "PostTagsMultiSelectField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37522,7 +38424,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostTagsRadioField";
+            __typename: "PostTagsRadioField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37531,7 +38433,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostTagsSelectField";
+            __typename: "PostTagsSelectField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37540,7 +38442,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostTagsTextField";
+            __typename: "PostTagsTextField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37549,7 +38451,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PostTitleField";
+            __typename: "PostTitleField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37660,7 +38562,7 @@ export type GetGravityFormQuery = {
             } | null> | null;
           }
         | {
-            __typename?: "RadioField";
+            __typename: "RadioField";
             id: number;
             pageNumber?: number | null;
             value?: string | null;
@@ -37681,7 +38583,7 @@ export type GetGravityFormQuery = {
             } | null> | null;
           }
         | {
-            __typename?: "RankField";
+            __typename: "RankField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37690,7 +38592,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "RatingField";
+            __typename: "RatingField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37708,7 +38610,7 @@ export type GetGravityFormQuery = {
             pageNumber?: number | null;
           }
         | {
-            __typename?: "RememberMeField";
+            __typename: "RememberMeField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37717,7 +38619,7 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "SectionField";
+            __typename: "SectionField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37751,13 +38653,22 @@ export type GetGravityFormQuery = {
             } | null> | null;
           }
         | {
-            __typename?: "SurveyField";
-            id: number;
+            __typename: "SurveyField";
+            adminLabel?: string | null;
+            canPrepopulate?: boolean | null;
+            cssClass?: string | null;
+            description?: string | null;
+            descriptionPlacement?: FormFieldDescriptionPlacementEnum | null;
             displayOnly?: boolean | null;
+            errorMessage?: string | null;
+            id: number;
+            inputName?: string | null;
             inputType?: FormFieldTypeEnum | null;
+            labelPlacement?: FormFieldLabelPlacementEnum | null;
             pageNumber?: number | null;
-            visibility?: FormFieldVisibilityEnum | null;
             type?: FormFieldTypeEnum | null;
+            value?: string | null;
+            visibility?: FormFieldVisibilityEnum | null;
           }
         | {
             __typename: "TextAreaField";
@@ -37804,7 +38715,7 @@ export type GetGravityFormQuery = {
             visibility?: FormFieldVisibilityEnum | null;
           }
         | {
-            __typename?: "TimeField";
+            __typename: "TimeField";
             id: number;
             timeFormat?: TimeFieldFormatEnum | null;
             type?: FormFieldTypeEnum | null;
@@ -37826,7 +38737,7 @@ export type GetGravityFormQuery = {
             } | null;
           }
         | {
-            __typename?: "UsernameField";
+            __typename: "UsernameField";
             id: number;
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
@@ -37866,16 +38777,24 @@ export const AuthorPartialFragmentDoc = gql`
     username
     __typename
     uri
+    registeredDate
+    locale
     slug
     id
     capabilities
     description
     firstName
     lastName
+    jwtAuthToken
+    capKey
+    jwtAuthExpiration
   }
 `;
 export const AvatarPartialFragmentDoc = gql`
   fragment AvatarPartial on Avatar {
+    forceDefault
+    scheme
+    isRestricted
     width
     height
     default
@@ -38090,8 +39009,8 @@ export const ButtonFieldsGravityPartialFragmentDoc = gql`
   fragment ButtonFieldsGravityPartial on FormButton {
     text
     imageUrl
-    __typename
     type
+    __typename
   }
 `;
 export const CaptchaPartialFragmentDoc = gql`
@@ -38112,6 +39031,7 @@ export const CaptchaPartialFragmentDoc = gql`
     simpleCaptchaBackgroundColor
     simpleCaptchaFontColor
     simpleCaptchaSize
+    __typename
   }
 `;
 export const CheckboxFieldsGravityPartialFragmentDoc = gql`
@@ -38144,6 +39064,21 @@ export const CheckboxFieldValuePartialFragmentDoc = gql`
     __typename
   }
 `;
+export const ConditionalLogicPartialFragmentDoc = gql`
+  fragment ConditionalLogicPartial on ConditionalLogic {
+    actionType
+    logicType
+    __typename
+  }
+`;
+export const ConditionalLogicRulePartialFragmentDoc = gql`
+  fragment ConditionalLogicRulePartial on ConditionalLogicRule {
+    fieldId
+    operator
+    value
+    __typename
+  }
+`;
 export const DateFieldsGravityPartialFragmentDoc = gql`
   fragment DateFieldsGravityPartial on DateField {
     id
@@ -38168,6 +39103,7 @@ export const DateFieldsGravityPartialFragmentDoc = gql`
     cssClass
     isRequired
     placeholder
+    __typename
   }
 `;
 export const EmailFieldsGravityPartialFragmentDoc = gql`
@@ -38185,6 +39121,13 @@ export const EmailFieldsGravityPartialFragmentDoc = gql`
     cssClass
     isRequired
     placeholder
+    __typename
+  }
+`;
+export const FieldErrorPartialFragmentDoc = gql`
+  fragment FieldErrorPartial on FieldError {
+    id
+    message
     __typename
   }
 `;
@@ -38210,11 +39153,39 @@ export const FileUploadFieldsGravityPartialFragmentDoc = gql`
 `;
 export const FormConfirmationGravityPartialFragmentDoc = gql`
   fragment FormConfirmationGravityPartial on FormConfirmation {
-    queryString
+    id
+    isActive
     isDefault
     message
-    __typename
+    name
+    pageId
+    queryString
     type
+    url
+    __typename
+  }
+`;
+export const FormDataPoliciesPartialFragmentDoc = gql`
+  fragment FormDataPoliciesPartial on FormDataPolicies {
+    identificationFieldDatabaseId
+    canExportAndErase
+    __typename
+  }
+`;
+export const FormEntryDataPolicyPartialFragmentDoc = gql`
+  fragment FormEntryDataPolicyPartial on FormEntryDataPolicy {
+    key
+    shouldErase
+    shouldExport
+    __typename
+  }
+`;
+export const FormFieldDataPolicyPartialFragmentDoc = gql`
+  fragment FormFieldDataPolicyPartial on FormFieldDataPolicy {
+    isIdentificationField
+    shouldErase
+    shouldExport
+    __typename
   }
 `;
 export const FormFieldsGravityPartialFragmentDoc = gql`
@@ -38225,28 +39196,140 @@ export const FormFieldsGravityPartialFragmentDoc = gql`
     pageNumber
     visibility
     type
+    __typename
+  }
+`;
+export const FormLastPageButtonPartialFragmentDoc = gql`
+  fragment FormLastPageButtonPartial on FormLastPageButton {
+    imageUrl
+    text
+    type
+    __typename
+  }
+`;
+export const FormLoginPartialFragmentDoc = gql`
+  fragment FormLoginPartial on FormLogin {
+    isLoginRequired
+    loginRequiredMessage
+    __typename
+  }
+`;
+export const FormNotificationPartialFragmentDoc = gql`
+  fragment FormNotificationPartial on FormNotification {
+    bcc
+    event
+    from
+    fromName
+    isAutoformatted
+    id
+    isActive
+    message
+    name
+    replyTo
+    service
+    shouldSendAttachments
+    subject
+    to
+    toType
+    __typename
+  }
+`;
+export const FormNotificationRoutingPartialFragmentDoc = gql`
+  fragment FormNotificationRoutingPartial on FormNotificationRouting {
+    email
+    fieldId
+    operator
+    value
+    __typename
+  }
+`;
+export const FormPersonalDataPartialFragmentDoc = gql`
+  fragment FormPersonalDataPartial on FormPersonalData {
+    retentionPolicy
+    daysToRetain
+    shouldSaveIP
+    __typename
+  }
+`;
+export const FormSaveAndContinuePartialFragmentDoc = gql`
+  fragment FormSaveAndContinuePartial on FormSaveAndContinue {
+    buttonText
+    hasSaveAndContinue
+    __typename
+  }
+`;
+export const FormScheduleDetailsPartialFragmentDoc = gql`
+  fragment FormScheduleDetailsPartial on FormScheduleDetails {
+    amPm
+    date
+    dateGmt
+    hour
+    minute
+    __typename
+  }
+`;
+export const FormSchedulePartialFragmentDoc = gql`
+  fragment FormSchedulePartial on FormSchedule {
+    closedMessage
+    hasSchedule
+    pendingMessage
+    __typename
+  }
+`;
+export const GravityFormEntryPartialFragmentDoc = gql`
+  fragment GravityFormEntryPartial on GfEntry {
+    __typename
+    formDatabaseId
+    formId
+    id
+    ip
+    isDraft
+    isSubmitted
+    sourceUrl
+    userAgent
+    createdByDatabaseId
+    createdById
+    dateCreated
   }
 `;
 export const GravityFormsFormPartialFragmentDoc = gql`
   fragment GravityFormsFormPartial on GfForm {
+    id
     databaseId
-    nextFieldId
+    customRequiredIndicator
+    cssClass
+    dateCreated
+    description
+    descriptionPlacement
+    hasValidationSummary
+    firstPageCssClass
+    hasConditionalLogicAnimation
+    hasHoneypot
     isActive
     isTrash
-    firstPageCssClass
-    hasHoneypot
-    hasValidationSummary
+    labelPlacement
     markupVersion
-    id
+    nextFieldId
+    requiredIndicator
+    subLabelPlacement
     title
-    description
+    version
     __typename
   }
 `;
-export const ListValuePropertyFieldsGravityPartialFragmentDoc = gql`
-  fragment ListValuePropertyFieldsGravityPartial on ListFieldValue {
+export const LikertFieldPartialFragmentDoc = gql`
+  fragment LikertFieldPartial on LikertField {
+    displayOnly
+    id
+    inputType
+    isRequired
+    layoutGridColumnSpan
+    layoutSpacerGridColumnSpan
+    pageNumber
+    type
+    value
+    visibility
     __typename
-    values
   }
 `;
 export const ListChoicePropertyFieldsGravityPartialFragmentDoc = gql`
@@ -38271,15 +39354,13 @@ export const ListFieldsGravityPartialFragmentDoc = gql`
     description
     type
     errorMessage
-    listValues {
-      ...ListValuePropertyFieldsGravityPartial
-    }
-    choices {
-      ...ListChoicePropertyFieldsGravityPartial
-    }
   }
-  ${ListValuePropertyFieldsGravityPartialFragmentDoc}
-  ${ListChoicePropertyFieldsGravityPartialFragmentDoc}
+`;
+export const ListValuePropertyFieldsGravityPartialFragmentDoc = gql`
+  fragment ListValuePropertyFieldsGravityPartial on ListFieldValue {
+    __typename
+    values
+  }
 `;
 export const MultiSelectFieldsGravityPartialFragmentDoc = gql`
   fragment MultiSelectFieldsGravityPartial on MultiSelectField {
@@ -38336,6 +39417,18 @@ export const NameFieldsGravityPartialFragmentDoc = gql`
     }
   }
   ${NameInputFieldsGravityPartialFragmentDoc}
+`;
+export const PaginationPartialFragmentDoc = gql`
+  fragment PaginationPartial on FormPagination {
+    backgroundColor
+    color
+    hasProgressbarOnConfirmation
+    pageNames
+    progressbarCompletionText
+    style
+    type
+    __typename
+  }
 `;
 export const PasswordFieldInputPartialFragmentDoc = gql`
   fragment PasswordFieldInputPartial on PasswordInputProperty {
@@ -38663,6 +39756,33 @@ export const SelectFieldsGravityPartialFragmentDoc = gql`
   }
   ${ChoicePropertyFieldsGravityPartialFragmentDoc}
 `;
+export const SubmitGfFormPayloadPartialFragmentDoc = gql`
+  fragment SubmitGfFormPayloadPartial on SubmitGfFormPayload {
+    clientMutationId
+    resumeUrl
+    __typename
+  }
+`;
+export const SurveyFieldPartialFragmentDoc = gql`
+  fragment SurveyFieldPartial on SurveyField {
+    adminLabel
+    canPrepopulate
+    cssClass
+    description
+    descriptionPlacement
+    displayOnly
+    errorMessage
+    id
+    inputName
+    inputType
+    labelPlacement
+    pageNumber
+    type
+    value
+    visibility
+    __typename
+  }
+`;
 export const TextAreaFieldsGravityPartialFragmentDoc = gql`
   fragment TextAreaFieldsGravityPartial on TextAreaField {
     id
@@ -38944,22 +40064,145 @@ export function refetchContentNodesQuery(
 ) {
   return { query: ContentNodesDocument, variables: variables };
 }
+export const SubmitGravityFormDocument = gql`
+  mutation SubmitGravityForm($input: SubmitGfFormInput!) {
+    submitGfForm(input: $input) {
+      ...SubmitGfFormPayloadPartial
+      entry {
+        createdBy {
+          avatar {
+            ...AvatarPartial
+          }
+          ...AuthorPartial
+        }
+        ...GravityFormEntryPartial
+      }
+      errors {
+        ...FieldErrorPartial
+      }
+    }
+  }
+  ${SubmitGfFormPayloadPartialFragmentDoc}
+  ${AvatarPartialFragmentDoc}
+  ${AuthorPartialFragmentDoc}
+  ${GravityFormEntryPartialFragmentDoc}
+  ${FieldErrorPartialFragmentDoc}
+`;
+export type SubmitGravityFormMutationFn = Apollo.MutationFunction<
+  SubmitGravityFormMutation,
+  SubmitGravityFormMutationVariables
+>;
+
+/**
+ * __useSubmitGravityFormMutation__
+ *
+ * To run a mutation, you first call `useSubmitGravityFormMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSubmitGravityFormMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [submitGravityFormMutation, { data, loading, error }] = useSubmitGravityFormMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSubmitGravityFormMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    SubmitGravityFormMutation,
+    SubmitGravityFormMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    SubmitGravityFormMutation,
+    SubmitGravityFormMutationVariables
+  >(SubmitGravityFormDocument, options);
+}
+export type SubmitGravityFormMutationHookResult = ReturnType<
+  typeof useSubmitGravityFormMutation
+>;
+export type SubmitGravityFormMutationResult =
+  Apollo.MutationResult<SubmitGravityFormMutation>;
+export type SubmitGravityFormMutationOptions = Apollo.BaseMutationOptions<
+  SubmitGravityFormMutation,
+  SubmitGravityFormMutationVariables
+>;
 export const GetGravityFormDocument = gql`
   query GetGravityForm(
     $formId: ID!
     $idType: FormIdTypeEnum!
     $first: Int!
+    $pageNumber: Int
     $formFieldType: [FormFieldTypeEnum]
   ) {
     gfForm(id: $formId, idType: $idType) {
       ...GravityFormsFormPartial
       button {
         ...ButtonFieldsGravityPartial
+        conditionalLogic {
+          ...ConditionalLogicPartial
+          rules {
+            ...ConditionalLogicRulePartial
+          }
+        }
+      }
+      personalData {
+        dataPolicies {
+          entryData {
+            ...FormEntryDataPolicyPartial
+          }
+          ...FormDataPoliciesPartial
+        }
+        ...FormPersonalDataPartial
+      }
+      saveAndContinue {
+        ...FormSaveAndContinuePartial
+      }
+      lastPageButton {
+        ...FormLastPageButtonPartial
+      }
+      login {
+        ...FormLoginPartial
       }
       confirmations {
         ...FormConfirmationGravityPartial
       }
-      formFields(first: $first, where: { fieldTypes: $formFieldType }) {
+      pagination {
+        ...PaginationPartial
+      }
+      notifications {
+        ...FormNotificationPartial
+        conditionalLogic {
+          ...ConditionalLogicPartial
+          rules {
+            ...ConditionalLogicRulePartial
+          }
+        }
+        routing {
+          ...FormNotificationRoutingPartial
+        }
+      }
+      scheduling {
+        ...FormSchedulePartial
+        endDetails {
+          ...FormScheduleDetailsPartial
+        }
+        startDetails {
+          ...FormScheduleDetailsPartial
+        }
+      }
+      formFields(
+        first: $first
+        where: { fieldTypes: $formFieldType, pageNumber: $pageNumber }
+      ) {
+        pageInfo {
+          ...PageInfoPartial
+        }
+        __typename
         nodes {
           ...FormFieldsGravityPartial
           ... on AddressField {
@@ -38980,8 +40223,20 @@ export const GetGravityFormDocument = gql`
           ... on FileUploadField {
             ...FileUploadFieldsGravityPartial
           }
+          ... on LikertField {
+            personalData {
+              ...FormFieldDataPolicyPartial
+            }
+            ...LikertFieldPartial
+          }
           ... on ListField {
             ...ListFieldsGravityPartial
+            listValues {
+              ...ListValuePropertyFieldsGravityPartial
+            }
+            choices {
+              ...ListChoicePropertyFieldsGravityPartial
+            }
           }
           ... on MultiSelectField {
             ...MultiSelectFieldsGravityPartial
@@ -38997,6 +40252,9 @@ export const GetGravityFormDocument = gql`
           }
           ... on PhoneField {
             ...PhoneFieldsGravityPartial
+          }
+          ... on PollField {
+            ...PollFieldPartial
           }
           ... on PostContentField {
             ...PostContentFieldsGravityPartial
@@ -39043,6 +40301,9 @@ export const GetGravityFormDocument = gql`
           ... on SelectField {
             ...SelectFieldsGravityPartial
           }
+          ... on SurveyField {
+            ...SurveyFieldPartial
+          }
           ... on TextAreaField {
             ...TextAreaFieldsGravityPartial
           }
@@ -39061,7 +40322,21 @@ export const GetGravityFormDocument = gql`
   }
   ${GravityFormsFormPartialFragmentDoc}
   ${ButtonFieldsGravityPartialFragmentDoc}
+  ${ConditionalLogicPartialFragmentDoc}
+  ${ConditionalLogicRulePartialFragmentDoc}
+  ${FormEntryDataPolicyPartialFragmentDoc}
+  ${FormDataPoliciesPartialFragmentDoc}
+  ${FormPersonalDataPartialFragmentDoc}
+  ${FormSaveAndContinuePartialFragmentDoc}
+  ${FormLastPageButtonPartialFragmentDoc}
+  ${FormLoginPartialFragmentDoc}
   ${FormConfirmationGravityPartialFragmentDoc}
+  ${PaginationPartialFragmentDoc}
+  ${FormNotificationPartialFragmentDoc}
+  ${FormNotificationRoutingPartialFragmentDoc}
+  ${FormSchedulePartialFragmentDoc}
+  ${FormScheduleDetailsPartialFragmentDoc}
+  ${PageInfoPartialFragmentDoc}
   ${FormFieldsGravityPartialFragmentDoc}
   ${AddressFieldsGravityPartialFragmentDoc}
   ${CaptchaPartialFragmentDoc}
@@ -39069,12 +40344,17 @@ export const GetGravityFormDocument = gql`
   ${DateFieldsGravityPartialFragmentDoc}
   ${EmailFieldsGravityPartialFragmentDoc}
   ${FileUploadFieldsGravityPartialFragmentDoc}
+  ${FormFieldDataPolicyPartialFragmentDoc}
+  ${LikertFieldPartialFragmentDoc}
   ${ListFieldsGravityPartialFragmentDoc}
+  ${ListValuePropertyFieldsGravityPartialFragmentDoc}
+  ${ListChoicePropertyFieldsGravityPartialFragmentDoc}
   ${MultiSelectFieldsGravityPartialFragmentDoc}
   ${NameFieldsGravityPartialFragmentDoc}
   ${PasswordFieldInputPartialFragmentDoc}
   ${PasswordFieldPartialFragmentDoc}
   ${PhoneFieldsGravityPartialFragmentDoc}
+  ${PollFieldPartialFragmentDoc}
   ${PostContentFieldsGravityPartialFragmentDoc}
   ${PostImageFieldsGravityPartialFragmentDoc}
   ${QuizFieldPartialFragmentDoc}
@@ -39087,6 +40367,7 @@ export const GetGravityFormDocument = gql`
   ${RadioFieldsGravityPartialFragmentDoc}
   ${RecaptchaPartialFragmentDoc}
   ${SelectFieldsGravityPartialFragmentDoc}
+  ${SurveyFieldPartialFragmentDoc}
   ${TextAreaFieldsGravityPartialFragmentDoc}
   ${TextFieldsGravityPartialFragmentDoc}
   ${TimeFieldsGravityPartialFragmentDoc}
@@ -39108,6 +40389,7 @@ export const GetGravityFormDocument = gql`
  *      formId: // value for 'formId'
  *      idType: // value for 'idType'
  *      first: // value for 'first'
+ *      pageNumber: // value for 'pageNumber'
  *      formFieldType: // value for 'formFieldType'
  *   },
  * });
@@ -39157,7 +40439,8 @@ export const namedOperations = {
     GetGravityForm: "GetGravityForm"
   },
   Mutation: {
-    login: "login"
+    login: "login",
+    SubmitGravityForm: "SubmitGravityForm"
   },
   Fragment: {
     AuthorPartial: "AuthorPartial",
@@ -39181,12 +40464,28 @@ export const namedOperations = {
     CheckboxFieldsGravityPartial: "CheckboxFieldsGravityPartial",
     CheckboxFieldValuePartial: "CheckboxFieldValuePartial",
     ChoicePropertyFieldsGravityPartial: "ChoicePropertyFieldsGravityPartial",
+    ConditionalLogicPartial: "ConditionalLogicPartial",
+    ConditionalLogicRulePartial: "ConditionalLogicRulePartial",
     DateFieldsGravityPartial: "DateFieldsGravityPartial",
     EmailFieldsGravityPartial: "EmailFieldsGravityPartial",
+    FieldErrorPartial: "FieldErrorPartial",
     FileUploadFieldsGravityPartial: "FileUploadFieldsGravityPartial",
     FormConfirmationGravityPartial: "FormConfirmationGravityPartial",
+    FormDataPoliciesPartial: "FormDataPoliciesPartial",
+    FormEntryDataPolicyPartial: "FormEntryDataPolicyPartial",
+    FormFieldDataPolicyPartial: "FormFieldDataPolicyPartial",
     FormFieldsGravityPartial: "FormFieldsGravityPartial",
+    FormLastPageButtonPartial: "FormLastPageButtonPartial",
+    FormLoginPartial: "FormLoginPartial",
+    FormNotificationPartial: "FormNotificationPartial",
+    FormNotificationRoutingPartial: "FormNotificationRoutingPartial",
+    FormPersonalDataPartial: "FormPersonalDataPartial",
+    FormSaveAndContinuePartial: "FormSaveAndContinuePartial",
+    FormScheduleDetailsPartial: "FormScheduleDetailsPartial",
+    FormSchedulePartial: "FormSchedulePartial",
+    GravityFormEntryPartial: "GravityFormEntryPartial",
     GravityFormsFormPartial: "GravityFormsFormPartial",
+    LikertFieldPartial: "LikertFieldPartial",
     ListChoicePropertyFieldsGravityPartial:
       "ListChoicePropertyFieldsGravityPartial",
     ListFieldsGravityPartial: "ListFieldsGravityPartial",
@@ -39195,6 +40494,7 @@ export const namedOperations = {
     MultiSelectFieldsGravityPartial: "MultiSelectFieldsGravityPartial",
     NameFieldsGravityPartial: "NameFieldsGravityPartial",
     NameInputFieldsGravityPartial: "NameInputFieldsGravityPartial",
+    PaginationPartial: "PaginationPartial",
     PasswordFieldInputPartial: "PasswordFieldInputPartial",
     PasswordFieldPartial: "PasswordFieldPartial",
     PhoneFieldsGravityPartial: "PhoneFieldsGravityPartial",
@@ -39213,6 +40513,8 @@ export const namedOperations = {
     RadioFieldChoicePartial: "RadioFieldChoicePartial",
     RecaptchaPartial: "RecaptchaPartial",
     SelectFieldsGravityPartial: "SelectFieldsGravityPartial",
+    SubmitGfFormPayloadPartial: "SubmitGfFormPayloadPartial",
+    SurveyFieldPartial: "SurveyFieldPartial",
     TextAreaFieldsGravityPartial: "TextAreaFieldsGravityPartial",
     TextFieldsGravityPartial: "TextFieldsGravityPartial",
     TimeFieldsGravityPartial: "TimeFieldsGravityPartial",

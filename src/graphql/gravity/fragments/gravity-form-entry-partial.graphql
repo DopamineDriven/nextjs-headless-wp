@@ -1,0 +1,14 @@
+fragment GravityFormEntryPartial on GfEntry {
+  __typename
+  formDatabaseId
+  formId
+  id
+  ip
+  isDraft
+  isSubmitted
+  sourceUrl
+  userAgent
+  createdByDatabaseId
+  createdById
+  dateCreated
+}

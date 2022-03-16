@@ -1,0 +1,6 @@
+fragment FormFieldDataPolicyPartial on FormFieldDataPolicy {
+  isIdentificationField
+  shouldErase
+  shouldExport
+  __typename
+}
