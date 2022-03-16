@@ -2,7 +2,6 @@ import { NextFetchEvent, NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 export default function Middleware(req: NextRequest) {
-  const userAgent = req.ua;
   const { ua, geo, ip, headers } = req;
   const nonProxiedIp = headers.get("x-forwarded-for") as string;
   const returnFirstRealIp = nonProxiedIp
@@ -14,10 +13,10 @@ export default function Middleware(req: NextRequest) {
     lng: geo?.longitude ?? "no lng",
     country: geo?.country ?? "no pais",
     region: geo?.region ?? "no region",
-    userAgent: JSON.stringify(ua ?? "no ua", null, 2),
+    userAgent: ua ?? "no ua",
     ipAddress: returnFirstRealIp
   };
-  console.log(userAgent ?? "no userAgent");
+  console.log(userData ?? "no userData");
   const response = NextResponse.next();
 
   response.headers.set("Referrer-Policy", "Strict-Origin-When-Cross-Origin");
@@ -43,5 +42,5 @@ export default function Middleware(req: NextRequest) {
     "Origin, X-Requested-With, Content-Type, Accept, Connection, Cookie, Host, User-Agent, Accept-Encoding, Accept-Language, apollo-federation-include-trace, Authorization, Cache-Control"
   );
 
-  return { response: response, userData: userData ?? "no userData here folks" };
+  return response
 }
