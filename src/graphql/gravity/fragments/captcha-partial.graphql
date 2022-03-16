@@ -15,4 +15,5 @@ fragment CaptchaPartial on CaptchaField {
   simpleCaptchaBackgroundColor
   simpleCaptchaFontColor
   simpleCaptchaSize
+  __typename
 }

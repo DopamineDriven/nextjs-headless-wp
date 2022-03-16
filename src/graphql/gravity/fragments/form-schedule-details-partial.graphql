@@ -1,0 +1,8 @@
+fragment FormScheduleDetailsPartial on FormScheduleDetails {
+  amPm
+  date
+  dateGmt
+  hour
+  minute
+  __typename
+}

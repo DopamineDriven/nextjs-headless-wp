@@ -1,0 +1,10 @@
+fragment PaginationPartial on FormPagination {
+  backgroundColor
+  color
+  hasProgressbarOnConfirmation
+  pageNames
+  progressbarCompletionText
+  style
+  type
+  __typename
+}

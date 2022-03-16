@@ -1,7 +1,12 @@
 fragment FormConfirmationGravityPartial on FormConfirmation {
-  queryString
+  id
+  isActive
   isDefault
   message
-  __typename
+  name
+  pageId
+  queryString
   type
+  url
+  __typename
 }

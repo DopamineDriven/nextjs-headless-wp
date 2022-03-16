@@ -1,0 +1,6 @@
+fragment FormPersonalDataPartial on FormPersonalData {
+  retentionPolicy
+  daysToRetain
+  shouldSaveIP
+  __typename
+}

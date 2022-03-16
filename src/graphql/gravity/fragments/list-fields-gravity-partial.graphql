@@ -15,10 +15,4 @@ pageNumber
   description
   type
   errorMessage
-  listValues {
-    ...ListValuePropertyFieldsGravityPartial
-  }
-  choices {
-    ...ListChoicePropertyFieldsGravityPartial
-  }
 }

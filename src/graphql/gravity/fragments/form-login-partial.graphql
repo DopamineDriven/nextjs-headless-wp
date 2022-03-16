@@ -1,0 +1,5 @@
+fragment FormLoginPartial on FormLogin {
+  isLoginRequired
+  loginRequiredMessage
+  __typename
+}

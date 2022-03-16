@@ -1146,6 +1146,33 @@ export type DiscussionSettingsFieldPolicy = {
   defaultCommentStatus?: FieldPolicy<any> | FieldReadFunction<any>;
   defaultPingStatus?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type DropboxFieldKeySpecifier = (
+  | "displayOnly"
+  | "id"
+  | "inputType"
+  | "label"
+  | "layoutGridColumnSpan"
+  | "layoutSpacerGridColumnSpan"
+  | "pageNumber"
+  | "personalData"
+  | "type"
+  | "value"
+  | "visibility"
+  | DropboxFieldKeySpecifier
+)[];
+export type DropboxFieldFieldPolicy = {
+  displayOnly?: FieldPolicy<any> | FieldReadFunction<any>;
+  id?: FieldPolicy<any> | FieldReadFunction<any>;
+  inputType?: FieldPolicy<any> | FieldReadFunction<any>;
+  label?: FieldPolicy<any> | FieldReadFunction<any>;
+  layoutGridColumnSpan?: FieldPolicy<any> | FieldReadFunction<any>;
+  layoutSpacerGridColumnSpan?: FieldPolicy<any> | FieldReadFunction<any>;
+  pageNumber?: FieldPolicy<any> | FieldReadFunction<any>;
+  personalData?: FieldPolicy<any> | FieldReadFunction<any>;
+  type?: FieldPolicy<any> | FieldReadFunction<any>;
+  value?: FieldPolicy<any> | FieldReadFunction<any>;
+  visibility?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type EmailFieldKeySpecifier = (
   | "adminLabel"
   | "canPrepopulate"
@@ -9439,6 +9466,13 @@ export type StrictTypedTypePolicies = {
       | DiscussionSettingsKeySpecifier
       | (() => undefined | DiscussionSettingsKeySpecifier);
     fields?: DiscussionSettingsFieldPolicy;
+  };
+  DropboxField?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | DropboxFieldKeySpecifier
+      | (() => undefined | DropboxFieldKeySpecifier);
+    fields?: DropboxFieldFieldPolicy;
   };
   EmailField?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:

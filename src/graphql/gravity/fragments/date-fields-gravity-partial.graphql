@@ -21,4 +21,5 @@ fragment DateFieldsGravityPartial on DateField {
   cssClass
   isRequired
   placeholder
+  __typename
 }

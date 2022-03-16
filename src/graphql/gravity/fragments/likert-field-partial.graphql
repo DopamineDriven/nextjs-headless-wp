@@ -1,0 +1,13 @@
+fragment LikertFieldPartial on LikertField {
+  displayOnly
+  id
+  inputType
+  isRequired
+  layoutGridColumnSpan
+  layoutSpacerGridColumnSpan
+  pageNumber
+  type
+  value
+  visibility
+  __typename
+}

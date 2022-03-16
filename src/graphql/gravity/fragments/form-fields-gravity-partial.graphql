@@ -1,8 +1,9 @@
 fragment FormFieldsGravityPartial on FormField {
-  id
+id
 displayOnly
 inputType
 pageNumber
 visibility
-  type
+type
+__typename
 }
