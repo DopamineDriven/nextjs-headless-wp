@@ -1,0 +1,5 @@
+fragment FieldErrorPartial on FieldError {
+  id
+  message
+  __typename
+}

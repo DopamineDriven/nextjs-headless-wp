@@ -1,0 +1,22 @@
+# import AuthorPartial from "../../core/fragments/author-partial.graphql";
+# import AvatarPartial from "../../core/fragments/avatar-partial.graphql";
+# import FieldErrorPartial from "../fragments/field-error-partial.graphql";
+# import GravityFormEntryPartial from "../fragments/gravity-form-entry-partial.graphql";
+# import SubmitGfFormPayloadPartial from "../fragments/submit-gravity-form-payload-partial.graphql"
+mutation SubmitGravityForm($input: SubmitGfFormInput!) {
+  submitGfForm(input: $input) {
+    ...SubmitGfFormPayloadPartial
+    entry {
+      createdBy {
+        avatar {
+          ...AvatarPartial
+        }
+        ...AuthorPartial
+      }
+      ...GravityFormEntryPartial
+    } 
+    errors {
+      ...FieldErrorPartial
+    }
+  }
+}

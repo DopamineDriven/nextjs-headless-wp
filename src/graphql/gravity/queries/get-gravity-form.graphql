@@ -121,6 +121,7 @@ query GetGravityForm(
       pageInfo {
         ...PageInfoPartial
       }
+      __typename
       nodes {
         ...FormFieldsGravityPartial
         ... on AddressField {

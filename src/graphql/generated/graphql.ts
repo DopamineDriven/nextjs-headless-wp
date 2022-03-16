@@ -14956,16 +14956,24 @@ export const AuthorPartial = gql`
     username
     __typename
     uri
+    registeredDate
+    locale
     slug
     id
     capabilities
     description
     firstName
     lastName
+    jwtAuthToken
+    capKey
+    jwtAuthExpiration
   }
 `;
 export const AvatarPartial = gql`
   fragment AvatarPartial on Avatar {
+    forceDefault
+    scheme
+    isRestricted
     width
     height
     default
@@ -15295,6 +15303,13 @@ export const EmailFieldsGravityPartial = gql`
     __typename
   }
 `;
+export const FieldErrorPartial = gql`
+  fragment FieldErrorPartial on FieldError {
+    id
+    message
+    __typename
+  }
+`;
 export const FileUploadFieldsGravityPartial = gql`
   fragment FileUploadFieldsGravityPartial on FileUploadField {
     __typename
@@ -15438,6 +15453,22 @@ export const FormSchedulePartial = gql`
     hasSchedule
     pendingMessage
     __typename
+  }
+`;
+export const GravityFormEntryPartial = gql`
+  fragment GravityFormEntryPartial on GfEntry {
+    __typename
+    formDatabaseId
+    formId
+    id
+    ip
+    isDraft
+    isSubmitted
+    sourceUrl
+    userAgent
+    createdByDatabaseId
+    createdById
+    dateCreated
   }
 `;
 export const GravityFormsFormPartial = gql`
@@ -15904,6 +15935,13 @@ export const SelectFieldsGravityPartial = gql`
   }
   ${ChoicePropertyFieldsGravityPartial}
 `;
+export const SubmitGfFormPayloadPartial = gql`
+  fragment SubmitGfFormPayloadPartial on SubmitGfFormPayload {
+    clientMutationId
+    resumeUrl
+    __typename
+  }
+`;
 export const SurveyFieldPartial = gql`
   fragment SurveyFieldPartial on SurveyField {
     adminLabel
@@ -16109,6 +16147,30 @@ export const ContentNodes = gql`
   ${PageInfoPartial}
   ${SEOPageInfoSchemaPartial}
 `;
+export const SubmitGravityForm = gql`
+  mutation SubmitGravityForm($input: SubmitGfFormInput!) {
+    submitGfForm(input: $input) {
+      ...SubmitGfFormPayloadPartial
+      entry {
+        createdBy {
+          avatar {
+            ...AvatarPartial
+          }
+          ...AuthorPartial
+        }
+        ...GravityFormEntryPartial
+      }
+      errors {
+        ...FieldErrorPartial
+      }
+    }
+  }
+  ${SubmitGfFormPayloadPartial}
+  ${AvatarPartial}
+  ${AuthorPartial}
+  ${GravityFormEntryPartial}
+  ${FieldErrorPartial}
+`;
 export const GetGravityForm = gql`
   query GetGravityForm(
     $formId: ID!
@@ -16180,6 +16242,7 @@ export const GetGravityForm = gql`
         pageInfo {
           ...PageInfoPartial
         }
+        __typename
         nodes {
           ...FormFieldsGravityPartial
           ... on AddressField {
@@ -35380,16 +35443,24 @@ export type AuthorPartialFragment = {
   databaseId: number;
   username?: string | null;
   uri?: string | null;
+  registeredDate?: string | null;
+  locale?: string | null;
   slug?: string | null;
   id: string;
   capabilities?: Array<string | null> | null;
   description?: string | null;
   firstName?: string | null;
   lastName?: string | null;
+  jwtAuthToken?: string | null;
+  capKey?: string | null;
+  jwtAuthExpiration?: string | null;
 };
 
 export type AvatarPartialFragment = {
   __typename: "Avatar";
+  forceDefault?: boolean | null;
+  scheme?: string | null;
+  isRestricted?: boolean | null;
   width?: number | null;
   height?: number | null;
   default?: string | null;
@@ -35581,6 +35652,9 @@ export type loginMutation = {
       isJwtAuthSecretRevoked: boolean;
       avatar?: {
         __typename: "Avatar";
+        forceDefault?: boolean | null;
+        scheme?: string | null;
+        isRestricted?: boolean | null;
         width?: number | null;
         height?: number | null;
         default?: string | null;
@@ -35732,14 +35806,22 @@ export type ContentNodesQuery = {
                 databaseId: number;
                 username?: string | null;
                 uri?: string | null;
+                registeredDate?: string | null;
+                locale?: string | null;
                 slug?: string | null;
                 id: string;
                 capabilities?: Array<string | null> | null;
                 description?: string | null;
                 firstName?: string | null;
                 lastName?: string | null;
+                jwtAuthToken?: string | null;
+                capKey?: string | null;
+                jwtAuthExpiration?: string | null;
                 avatar?: {
                   __typename: "Avatar";
+                  forceDefault?: boolean | null;
+                  scheme?: string | null;
+                  isRestricted?: boolean | null;
                   width?: number | null;
                   height?: number | null;
                   default?: string | null;
@@ -35972,6 +36054,12 @@ export type EmailFieldsGravityPartialFragment = {
   cssClass?: string | null;
   isRequired?: boolean | null;
   placeholder?: string | null;
+};
+
+export type FieldErrorPartialFragment = {
+  __typename: "FieldError";
+  id?: number | null;
+  message?: string | null;
 };
 
 export type FileUploadFieldsGravityPartialFragment = {
@@ -36789,6 +36877,40 @@ export type FormSchedulePartialFragment = {
   pendingMessage?: string | null;
 };
 
+type GravityFormEntryPartial_GfDraftEntry_Fragment = {
+  __typename: "GfDraftEntry";
+  formDatabaseId?: number | null;
+  formId?: string | null;
+  id: string;
+  ip?: string | null;
+  isDraft?: boolean | null;
+  isSubmitted?: boolean | null;
+  sourceUrl?: string | null;
+  userAgent?: string | null;
+  createdByDatabaseId?: number | null;
+  createdById?: string | null;
+  dateCreated?: string | null;
+};
+
+type GravityFormEntryPartial_GfSubmittedEntry_Fragment = {
+  __typename: "GfSubmittedEntry";
+  formDatabaseId?: number | null;
+  formId?: string | null;
+  id: string;
+  ip?: string | null;
+  isDraft?: boolean | null;
+  isSubmitted?: boolean | null;
+  sourceUrl?: string | null;
+  userAgent?: string | null;
+  createdByDatabaseId?: number | null;
+  createdById?: string | null;
+  dateCreated?: string | null;
+};
+
+export type GravityFormEntryPartialFragment =
+  | GravityFormEntryPartial_GfDraftEntry_Fragment
+  | GravityFormEntryPartial_GfSubmittedEntry_Fragment;
+
 export type GravityFormsFormPartialFragment = {
   __typename: "GfForm";
   id: string;
@@ -37291,6 +37413,12 @@ export type SelectFieldsGravityPartialFragment = {
   } | null> | null;
 };
 
+export type SubmitGfFormPayloadPartialFragment = {
+  __typename: "SubmitGfFormPayload";
+  clientMutationId?: string | null;
+  resumeUrl?: string | null;
+};
+
 export type SurveyFieldPartialFragment = {
   __typename: "SurveyField";
   adminLabel?: string | null;
@@ -37395,6 +37523,118 @@ export type WebsiteFieldsGravityPartialFragment = {
   cssClass?: string | null;
   isRequired?: boolean | null;
   placeholder?: string | null;
+};
+
+export type SubmitGravityFormMutationVariables = Exact<{
+  input: SubmitGfFormInput;
+}>;
+
+export type SubmitGravityFormMutation = {
+  __typename?: "RootMutation";
+  submitGfForm?: {
+    __typename: "SubmitGfFormPayload";
+    clientMutationId?: string | null;
+    resumeUrl?: string | null;
+    entry?:
+      | {
+          __typename: "GfDraftEntry";
+          formDatabaseId?: number | null;
+          formId?: string | null;
+          id: string;
+          ip?: string | null;
+          isDraft?: boolean | null;
+          isSubmitted?: boolean | null;
+          sourceUrl?: string | null;
+          userAgent?: string | null;
+          createdByDatabaseId?: number | null;
+          createdById?: string | null;
+          dateCreated?: string | null;
+          createdBy?: {
+            __typename: "User";
+            email?: string | null;
+            databaseId: number;
+            username?: string | null;
+            uri?: string | null;
+            registeredDate?: string | null;
+            locale?: string | null;
+            slug?: string | null;
+            id: string;
+            capabilities?: Array<string | null> | null;
+            description?: string | null;
+            firstName?: string | null;
+            lastName?: string | null;
+            jwtAuthToken?: string | null;
+            capKey?: string | null;
+            jwtAuthExpiration?: string | null;
+            avatar?: {
+              __typename: "Avatar";
+              forceDefault?: boolean | null;
+              scheme?: string | null;
+              isRestricted?: boolean | null;
+              width?: number | null;
+              height?: number | null;
+              default?: string | null;
+              foundAvatar?: boolean | null;
+              rating?: string | null;
+              size?: number | null;
+              url?: string | null;
+              extraAttr?: string | null;
+            } | null;
+          } | null;
+        }
+      | {
+          __typename: "GfSubmittedEntry";
+          formDatabaseId?: number | null;
+          formId?: string | null;
+          id: string;
+          ip?: string | null;
+          isDraft?: boolean | null;
+          isSubmitted?: boolean | null;
+          sourceUrl?: string | null;
+          userAgent?: string | null;
+          createdByDatabaseId?: number | null;
+          createdById?: string | null;
+          dateCreated?: string | null;
+          createdBy?: {
+            __typename: "User";
+            email?: string | null;
+            databaseId: number;
+            username?: string | null;
+            uri?: string | null;
+            registeredDate?: string | null;
+            locale?: string | null;
+            slug?: string | null;
+            id: string;
+            capabilities?: Array<string | null> | null;
+            description?: string | null;
+            firstName?: string | null;
+            lastName?: string | null;
+            jwtAuthToken?: string | null;
+            capKey?: string | null;
+            jwtAuthExpiration?: string | null;
+            avatar?: {
+              __typename: "Avatar";
+              forceDefault?: boolean | null;
+              scheme?: string | null;
+              isRestricted?: boolean | null;
+              width?: number | null;
+              height?: number | null;
+              default?: string | null;
+              foundAvatar?: boolean | null;
+              rating?: string | null;
+              size?: number | null;
+              url?: string | null;
+              extraAttr?: string | null;
+            } | null;
+          } | null;
+        }
+      | null;
+    errors?: Array<{
+      __typename: "FieldError";
+      id?: number | null;
+      message?: string | null;
+    } | null> | null;
+  } | null;
 };
 
 export type GetGravityFormQueryVariables = Exact<{
@@ -37562,7 +37802,7 @@ export type GetGravityFormQuery = {
       } | null;
     } | null;
     formFields?: {
-      __typename?: "GfFormToFormFieldConnection";
+      __typename: "GfFormToFormFieldConnection";
       pageInfo?: {
         __typename: "WPPageInfo";
         endCursor?: string | null;
@@ -38537,16 +38777,24 @@ export const AuthorPartialFragmentDoc = gql`
     username
     __typename
     uri
+    registeredDate
+    locale
     slug
     id
     capabilities
     description
     firstName
     lastName
+    jwtAuthToken
+    capKey
+    jwtAuthExpiration
   }
 `;
 export const AvatarPartialFragmentDoc = gql`
   fragment AvatarPartial on Avatar {
+    forceDefault
+    scheme
+    isRestricted
     width
     height
     default
@@ -38876,6 +39124,13 @@ export const EmailFieldsGravityPartialFragmentDoc = gql`
     __typename
   }
 `;
+export const FieldErrorPartialFragmentDoc = gql`
+  fragment FieldErrorPartial on FieldError {
+    id
+    message
+    __typename
+  }
+`;
 export const FileUploadFieldsGravityPartialFragmentDoc = gql`
   fragment FileUploadFieldsGravityPartial on FileUploadField {
     __typename
@@ -39019,6 +39274,22 @@ export const FormSchedulePartialFragmentDoc = gql`
     hasSchedule
     pendingMessage
     __typename
+  }
+`;
+export const GravityFormEntryPartialFragmentDoc = gql`
+  fragment GravityFormEntryPartial on GfEntry {
+    __typename
+    formDatabaseId
+    formId
+    id
+    ip
+    isDraft
+    isSubmitted
+    sourceUrl
+    userAgent
+    createdByDatabaseId
+    createdById
+    dateCreated
   }
 `;
 export const GravityFormsFormPartialFragmentDoc = gql`
@@ -39485,6 +39756,13 @@ export const SelectFieldsGravityPartialFragmentDoc = gql`
   }
   ${ChoicePropertyFieldsGravityPartialFragmentDoc}
 `;
+export const SubmitGfFormPayloadPartialFragmentDoc = gql`
+  fragment SubmitGfFormPayloadPartial on SubmitGfFormPayload {
+    clientMutationId
+    resumeUrl
+    __typename
+  }
+`;
 export const SurveyFieldPartialFragmentDoc = gql`
   fragment SurveyFieldPartial on SurveyField {
     adminLabel
@@ -39786,6 +40064,73 @@ export function refetchContentNodesQuery(
 ) {
   return { query: ContentNodesDocument, variables: variables };
 }
+export const SubmitGravityFormDocument = gql`
+  mutation SubmitGravityForm($input: SubmitGfFormInput!) {
+    submitGfForm(input: $input) {
+      ...SubmitGfFormPayloadPartial
+      entry {
+        createdBy {
+          avatar {
+            ...AvatarPartial
+          }
+          ...AuthorPartial
+        }
+        ...GravityFormEntryPartial
+      }
+      errors {
+        ...FieldErrorPartial
+      }
+    }
+  }
+  ${SubmitGfFormPayloadPartialFragmentDoc}
+  ${AvatarPartialFragmentDoc}
+  ${AuthorPartialFragmentDoc}
+  ${GravityFormEntryPartialFragmentDoc}
+  ${FieldErrorPartialFragmentDoc}
+`;
+export type SubmitGravityFormMutationFn = Apollo.MutationFunction<
+  SubmitGravityFormMutation,
+  SubmitGravityFormMutationVariables
+>;
+
+/**
+ * __useSubmitGravityFormMutation__
+ *
+ * To run a mutation, you first call `useSubmitGravityFormMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSubmitGravityFormMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [submitGravityFormMutation, { data, loading, error }] = useSubmitGravityFormMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSubmitGravityFormMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    SubmitGravityFormMutation,
+    SubmitGravityFormMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    SubmitGravityFormMutation,
+    SubmitGravityFormMutationVariables
+  >(SubmitGravityFormDocument, options);
+}
+export type SubmitGravityFormMutationHookResult = ReturnType<
+  typeof useSubmitGravityFormMutation
+>;
+export type SubmitGravityFormMutationResult =
+  Apollo.MutationResult<SubmitGravityFormMutation>;
+export type SubmitGravityFormMutationOptions = Apollo.BaseMutationOptions<
+  SubmitGravityFormMutation,
+  SubmitGravityFormMutationVariables
+>;
 export const GetGravityFormDocument = gql`
   query GetGravityForm(
     $formId: ID!
@@ -39857,6 +40202,7 @@ export const GetGravityFormDocument = gql`
         pageInfo {
           ...PageInfoPartial
         }
+        __typename
         nodes {
           ...FormFieldsGravityPartial
           ... on AddressField {
@@ -40093,7 +40439,8 @@ export const namedOperations = {
     GetGravityForm: "GetGravityForm"
   },
   Mutation: {
-    login: "login"
+    login: "login",
+    SubmitGravityForm: "SubmitGravityForm"
   },
   Fragment: {
     AuthorPartial: "AuthorPartial",
@@ -40121,6 +40468,7 @@ export const namedOperations = {
     ConditionalLogicRulePartial: "ConditionalLogicRulePartial",
     DateFieldsGravityPartial: "DateFieldsGravityPartial",
     EmailFieldsGravityPartial: "EmailFieldsGravityPartial",
+    FieldErrorPartial: "FieldErrorPartial",
     FileUploadFieldsGravityPartial: "FileUploadFieldsGravityPartial",
     FormConfirmationGravityPartial: "FormConfirmationGravityPartial",
     FormDataPoliciesPartial: "FormDataPoliciesPartial",
@@ -40135,6 +40483,7 @@ export const namedOperations = {
     FormSaveAndContinuePartial: "FormSaveAndContinuePartial",
     FormScheduleDetailsPartial: "FormScheduleDetailsPartial",
     FormSchedulePartial: "FormSchedulePartial",
+    GravityFormEntryPartial: "GravityFormEntryPartial",
     GravityFormsFormPartial: "GravityFormsFormPartial",
     LikertFieldPartial: "LikertFieldPartial",
     ListChoicePropertyFieldsGravityPartial:
@@ -40164,6 +40513,7 @@ export const namedOperations = {
     RadioFieldChoicePartial: "RadioFieldChoicePartial",
     RecaptchaPartial: "RecaptchaPartial",
     SelectFieldsGravityPartial: "SelectFieldsGravityPartial",
+    SubmitGfFormPayloadPartial: "SubmitGfFormPayloadPartial",
     SurveyFieldPartial: "SurveyFieldPartial",
     TextAreaFieldsGravityPartial: "TextAreaFieldsGravityPartial",
     TextFieldsGravityPartial: "TextFieldsGravityPartial",

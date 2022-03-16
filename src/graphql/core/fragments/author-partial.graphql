@@ -4,10 +4,16 @@ fragment AuthorPartial on User {
   username
   __typename
   uri
+  registeredDate
+  locale
   slug
   id
   capabilities
   description
   firstName
   lastName
+  jwtAuthToken
+  capKey
+  jwtAuthExpiration
+
 }
