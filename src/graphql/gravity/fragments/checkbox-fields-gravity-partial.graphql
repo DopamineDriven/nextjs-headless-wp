@@ -18,3 +18,9 @@ inputType
     __typename
   }
 }
+fragment CheckboxFieldValuePartial on CheckboxFieldValue {
+  inputId
+  text
+  value
+  __typename
+}

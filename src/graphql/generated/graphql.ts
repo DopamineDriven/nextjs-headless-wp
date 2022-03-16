@@ -15197,6 +15197,14 @@ export const CheckboxFieldsGravityPartial = gql`
     }
   }
 `;
+export const CheckboxFieldValuePartial = gql`
+  fragment CheckboxFieldValuePartial on CheckboxFieldValue {
+    inputId
+    text
+    value
+    __typename
+  }
+`;
 export const DateFieldsGravityPartial = gql`
   fragment DateFieldsGravityPartial on DateField {
     id
@@ -15204,6 +15212,16 @@ export const DateFieldsGravityPartial = gql`
     pageNumber
     inputName
     inputType
+    adminLabel
+    descriptionPlacement
+    displayOnly
+    errorMessage
+    isRequired
+    calendarIconType
+    defaultValue
+    calendarIconUrl
+    canPrepopulate
+    shouldAllowDuplicates
     dateFormat
     dateType
     label
@@ -15359,6 +15377,11 @@ export const NameInputFieldsGravityPartial = gql`
 export const NameFieldsGravityPartial = gql`
   fragment NameFieldsGravityPartial on NameField {
     id
+    value
+    canPrepopulate
+    visibility
+    errorMessage
+    hasAutocomplete
     label
     description
     type
@@ -15374,6 +15397,40 @@ export const NameFieldsGravityPartial = gql`
     }
   }
   ${NameInputFieldsGravityPartial}
+`;
+export const PasswordFieldInputPartial = gql`
+  fragment PasswordFieldInputPartial on PasswordInputProperty {
+    customLabel
+    id
+    isHidden
+    label
+    placeholder
+    __typename
+  }
+`;
+export const PasswordFieldPartial = gql`
+  fragment PasswordFieldPartial on PasswordField {
+    adminLabel
+    cssClass
+    visibility
+    description
+    descriptionPlacement
+    displayOnly
+    errorMessage
+    hasPasswordStrengthIndicator
+    hasPasswordVisibilityToggle
+    id
+    type
+    inputType
+    isRequired
+    label
+    labelPlacement
+    minPasswordStrength
+    size
+    subLabelPlacement
+    value
+    __typename
+  }
 `;
 export const PhoneFieldsGravityPartial = gql`
   fragment PhoneFieldsGravityPartial on PhoneField {
@@ -15391,6 +15448,18 @@ export const PhoneFieldsGravityPartial = gql`
     phoneFormat
     isRequired
     placeholder
+  }
+`;
+export const PollFieldPartial = gql`
+  fragment PollFieldPartial on PollField {
+    displayOnly
+    id
+    inputType
+    type
+    visibility
+    value
+    pageNumber
+    __typename
   }
 `;
 export const PostContentFieldsGravityPartial = gql`
@@ -15450,6 +15519,143 @@ export const PostImageFieldsGravityPartial = gql`
     }
   }
   ${PostImageValuePropertyFieldsGravityPartial}
+`;
+export const QuizInputPropertyPartial = gql`
+  fragment QuizInputPropertyPartial on QuizInputProperty {
+    id
+    label
+    name
+    __typename
+  }
+`;
+export const QuizFieldChoicePartial = gql`
+  fragment QuizFieldChoicePartial on QuizFieldChoice {
+    isCorrect
+    isOtherChoice
+    isSelected
+    text
+    value
+    weight
+    __typename
+  }
+`;
+export const QuizRadioFieldPartial = gql`
+  fragment QuizRadioFieldPartial on QuizRadioField {
+    adminLabel
+    answerExplanation
+    canPrepopulate
+    cssClass
+    description
+    descriptionPlacement
+    displayOnly
+    errorMessage
+    hasChoiceValue
+    hasOtherChoice
+    hasWeightedScore
+    id
+    inputName
+    inputType
+    isRequired
+    label
+    labelPlacement
+    pageNumber
+    shouldAllowDuplicates
+    shouldRandomizeQuizChoices
+    shouldShowAnswerExplanation
+    type
+    value
+    visibility
+    __typename
+  }
+`;
+export const QuizSelectFieldPartial = gql`
+  fragment QuizSelectFieldPartial on QuizSelectField {
+    adminLabel
+    answerExplanation
+    autocompleteAttribute
+    canPrepopulate
+    cssClass
+    defaultValue
+    description
+    descriptionPlacement
+    displayOnly
+    errorMessage
+    hasAutocomplete
+    hasChoiceValue
+    hasEnhancedUI
+    hasWeightedScore
+    id
+    inputName
+    inputType
+    isRequired
+    label
+    labelPlacement
+    pageNumber
+    placeholder
+    shouldAllowDuplicates
+    shouldRandomizeQuizChoices
+    shouldShowAnswerExplanation
+    size
+    type
+    value
+    visibility
+    __typename
+  }
+`;
+export const QuizFieldPartial = gql`
+  fragment QuizFieldPartial on QuizField {
+    adminLabel
+    answerExplanation
+    canPrepopulate
+    cssClass
+    description
+    descriptionPlacement
+    displayOnly
+    errorMessage
+    hasChoiceValue
+    hasWeightedScore
+    id
+    inputName
+    inputType
+    isRequired
+    label
+    labelPlacement
+    pageNumber
+    shouldRandomizeQuizChoices
+    shouldShowAnswerExplanation
+    type
+    value
+    visibility
+    __typename
+  }
+`;
+export const QuizCheckboxFieldPartial = gql`
+  fragment QuizCheckboxFieldPartial on QuizCheckboxField {
+    adminLabel
+    answerExplanation
+    canPrepopulate
+    cssClass
+    description
+    descriptionPlacement
+    displayOnly
+    errorMessage
+    hasChoiceValue
+    hasSelectAll
+    hasWeightedScore
+    id
+    inputName
+    inputType
+    isRequired
+    label
+    labelPlacement
+    pageNumber
+    shouldRandomizeQuizChoices
+    shouldShowAnswerExplanation
+    type
+    value
+    visibility
+    __typename
+  }
 `;
 export const RadioFieldChoicePartial = gql`
   fragment RadioFieldChoicePartial on RadioFieldChoice {
@@ -15704,7 +15910,12 @@ export const ContentNodes = gql`
   ${SEOPageInfoSchemaPartial}
 `;
 export const GetGravityForm = gql`
-  query GetGravityForm($formId: ID!, $idType: FormIdTypeEnum!, $first: Int!) {
+  query GetGravityForm(
+    $formId: ID!
+    $idType: FormIdTypeEnum!
+    $first: Int!
+    $formFieldType: [FormFieldTypeEnum]
+  ) {
     gfForm(id: $formId, idType: $idType) {
       ...GravityFormsFormPartial
       button {
@@ -15713,11 +15924,14 @@ export const GetGravityForm = gql`
       confirmations {
         ...FormConfirmationGravityPartial
       }
-      formFields(first: $first) {
+      formFields(first: $first, where: { fieldTypes: $formFieldType }) {
         nodes {
           ...FormFieldsGravityPartial
           ... on AddressField {
             ...AddressFieldsGravityPartial
+          }
+          ... on CaptchaField {
+            ...CaptchaPartial
           }
           ... on CheckboxField {
             ...CheckboxFieldsGravityPartial
@@ -15740,6 +15954,12 @@ export const GetGravityForm = gql`
           ... on NameField {
             ...NameFieldsGravityPartial
           }
+          ... on PasswordField {
+            inputs {
+              ...PasswordFieldInputPartial
+            }
+            ...PasswordFieldPartial
+          }
           ... on PhoneField {
             ...PhoneFieldsGravityPartial
           }
@@ -15749,8 +15969,41 @@ export const GetGravityForm = gql`
           ... on PostImageField {
             ...PostImageFieldsGravityPartial
           }
+          ... on QuizField {
+            ...QuizFieldPartial
+            choices {
+              ...QuizFieldChoicePartial
+            }
+            ... on QuizSelectField {
+              ...QuizSelectFieldPartial
+              choices {
+                ...QuizFieldChoicePartial
+              }
+            }
+            ... on QuizRadioField {
+              ...QuizRadioFieldPartial
+              choices {
+                ...QuizFieldChoicePartial
+              }
+            }
+            ... on QuizCheckboxField {
+              choices {
+                ...QuizFieldChoicePartial
+              }
+              inputs {
+                ...QuizInputPropertyPartial
+              }
+              checkboxValues {
+                ...CheckboxFieldValuePartial
+              }
+              ...QuizCheckboxFieldPartial
+            }
+          }
           ... on RadioField {
             ...RadioFieldsGravityPartial
+          }
+          ... on RecaptchaField {
+            ...RecaptchaPartial
           }
           ... on SelectField {
             ...SelectFieldsGravityPartial
@@ -15776,6 +16029,7 @@ export const GetGravityForm = gql`
   ${FormConfirmationGravityPartial}
   ${FormFieldsGravityPartial}
   ${AddressFieldsGravityPartial}
+  ${CaptchaPartial}
   ${CheckboxFieldsGravityPartial}
   ${DateFieldsGravityPartial}
   ${EmailFieldsGravityPartial}
@@ -15783,10 +16037,20 @@ export const GetGravityForm = gql`
   ${ListFieldsGravityPartial}
   ${MultiSelectFieldsGravityPartial}
   ${NameFieldsGravityPartial}
+  ${PasswordFieldInputPartial}
+  ${PasswordFieldPartial}
   ${PhoneFieldsGravityPartial}
   ${PostContentFieldsGravityPartial}
   ${PostImageFieldsGravityPartial}
+  ${QuizFieldPartial}
+  ${QuizFieldChoicePartial}
+  ${QuizSelectFieldPartial}
+  ${QuizRadioFieldPartial}
+  ${QuizInputPropertyPartial}
+  ${CheckboxFieldValuePartial}
+  ${QuizCheckboxFieldPartial}
   ${RadioFieldsGravityPartial}
+  ${RecaptchaPartial}
   ${SelectFieldsGravityPartial}
   ${TextAreaFieldsGravityPartial}
   ${TextFieldsGravityPartial}
@@ -35296,6 +35560,13 @@ export type CheckboxFieldsGravityPartialFragment = {
   } | null> | null;
 };
 
+export type CheckboxFieldValuePartialFragment = {
+  __typename: "CheckboxFieldValue";
+  inputId?: number | null;
+  text?: string | null;
+  value?: string | null;
+};
+
 export type ChoicePropertyFieldsGravityPartialFragment = {
   __typename: "SelectFieldChoice";
   isSelected?: boolean | null;
@@ -35310,12 +35581,21 @@ export type DateFieldsGravityPartialFragment = {
   pageNumber?: number | null;
   inputName?: string | null;
   inputType?: FormFieldTypeEnum | null;
+  adminLabel?: string | null;
+  descriptionPlacement?: FormFieldDescriptionPlacementEnum | null;
+  displayOnly?: boolean | null;
+  errorMessage?: string | null;
+  isRequired?: boolean | null;
+  calendarIconType?: FormFieldCalendarIconTypeEnum | null;
+  defaultValue?: string | null;
+  calendarIconUrl?: string | null;
+  canPrepopulate?: boolean | null;
+  shouldAllowDuplicates?: boolean | null;
   dateFormat?: DateFieldFormatEnum | null;
   dateType?: DateFieldTypeEnum | null;
   label?: string | null;
   description?: string | null;
   cssClass?: string | null;
-  isRequired?: boolean | null;
   placeholder?: string | null;
 };
 
@@ -36116,6 +36396,11 @@ export type MultiSelectFieldsGravityPartialFragment = {
 export type NameFieldsGravityPartialFragment = {
   __typename?: "NameField";
   id: number;
+  value?: string | null;
+  canPrepopulate?: boolean | null;
+  visibility?: FormFieldVisibilityEnum | null;
+  errorMessage?: string | null;
+  hasAutocomplete?: boolean | null;
   label?: string | null;
   description?: string | null;
   type?: FormFieldTypeEnum | null;
@@ -36153,6 +36438,38 @@ export type NameInputFieldsGravityPartialFragment = {
   isHidden?: boolean | null;
 };
 
+export type PasswordFieldInputPartialFragment = {
+  __typename: "PasswordInputProperty";
+  customLabel?: string | null;
+  id?: number | null;
+  isHidden?: boolean | null;
+  label?: string | null;
+  placeholder?: string | null;
+};
+
+export type PasswordFieldPartialFragment = {
+  __typename: "PasswordField";
+  adminLabel?: string | null;
+  cssClass?: string | null;
+  visibility?: FormFieldVisibilityEnum | null;
+  description?: string | null;
+  descriptionPlacement?: FormFieldDescriptionPlacementEnum | null;
+  displayOnly?: boolean | null;
+  errorMessage?: string | null;
+  hasPasswordStrengthIndicator?: boolean | null;
+  hasPasswordVisibilityToggle?: boolean | null;
+  id: number;
+  type?: FormFieldTypeEnum | null;
+  inputType?: FormFieldTypeEnum | null;
+  isRequired?: boolean | null;
+  label?: string | null;
+  labelPlacement?: FormFieldLabelPlacementEnum | null;
+  minPasswordStrength?: PasswordFieldMinStrengthEnum | null;
+  size?: FormFieldSizeEnum | null;
+  subLabelPlacement?: FormFieldSubLabelPlacementEnum | null;
+  value?: string | null;
+};
+
 export type PhoneFieldsGravityPartialFragment = {
   __typename?: "PhoneField";
   id: number;
@@ -36169,6 +36486,17 @@ export type PhoneFieldsGravityPartialFragment = {
   phoneFormat?: PhoneFieldFormatEnum | null;
   isRequired?: boolean | null;
   placeholder?: string | null;
+};
+
+export type PollFieldPartialFragment = {
+  __typename: "PollField";
+  displayOnly?: boolean | null;
+  id: number;
+  inputType?: FormFieldTypeEnum | null;
+  type?: FormFieldTypeEnum | null;
+  visibility?: FormFieldVisibilityEnum | null;
+  value?: string | null;
+  pageNumber?: number | null;
 };
 
 export type PostContentFieldsGravityPartialFragment = {
@@ -36225,6 +36553,194 @@ export type PostImageFieldsGravityPartialFragment = {
     title?: string | null;
     url?: string | null;
   } | null;
+};
+
+export type QuizInputPropertyPartialFragment = {
+  __typename: "QuizInputProperty";
+  id?: number | null;
+  label?: string | null;
+  name?: string | null;
+};
+
+export type QuizFieldChoicePartialFragment = {
+  __typename: "QuizFieldChoice";
+  isCorrect?: boolean | null;
+  isOtherChoice?: boolean | null;
+  isSelected?: boolean | null;
+  text?: string | null;
+  value?: string | null;
+  weight?: number | null;
+};
+
+export type QuizRadioFieldPartialFragment = {
+  __typename: "QuizRadioField";
+  adminLabel?: string | null;
+  answerExplanation?: string | null;
+  canPrepopulate?: boolean | null;
+  cssClass?: string | null;
+  description?: string | null;
+  descriptionPlacement?: FormFieldDescriptionPlacementEnum | null;
+  displayOnly?: boolean | null;
+  errorMessage?: string | null;
+  hasChoiceValue?: boolean | null;
+  hasOtherChoice?: boolean | null;
+  hasWeightedScore?: boolean | null;
+  id: number;
+  inputName?: string | null;
+  inputType?: FormFieldTypeEnum | null;
+  isRequired?: boolean | null;
+  label?: string | null;
+  labelPlacement?: FormFieldLabelPlacementEnum | null;
+  pageNumber?: number | null;
+  shouldAllowDuplicates?: boolean | null;
+  shouldRandomizeQuizChoices?: boolean | null;
+  shouldShowAnswerExplanation?: boolean | null;
+  type?: FormFieldTypeEnum | null;
+  value?: string | null;
+  visibility?: FormFieldVisibilityEnum | null;
+};
+
+export type QuizSelectFieldPartialFragment = {
+  __typename: "QuizSelectField";
+  adminLabel?: string | null;
+  answerExplanation?: string | null;
+  autocompleteAttribute?: string | null;
+  canPrepopulate?: boolean | null;
+  cssClass?: string | null;
+  defaultValue?: string | null;
+  description?: string | null;
+  descriptionPlacement?: FormFieldDescriptionPlacementEnum | null;
+  displayOnly?: boolean | null;
+  errorMessage?: string | null;
+  hasAutocomplete?: boolean | null;
+  hasChoiceValue?: boolean | null;
+  hasEnhancedUI?: boolean | null;
+  hasWeightedScore?: boolean | null;
+  id: number;
+  inputName?: string | null;
+  inputType?: FormFieldTypeEnum | null;
+  isRequired?: boolean | null;
+  label?: string | null;
+  labelPlacement?: FormFieldLabelPlacementEnum | null;
+  pageNumber?: number | null;
+  placeholder?: string | null;
+  shouldAllowDuplicates?: boolean | null;
+  shouldRandomizeQuizChoices?: boolean | null;
+  shouldShowAnswerExplanation?: boolean | null;
+  size?: FormFieldSizeEnum | null;
+  type?: FormFieldTypeEnum | null;
+  value?: string | null;
+  visibility?: FormFieldVisibilityEnum | null;
+};
+
+type QuizFieldPartial_QuizCheckboxField_Fragment = {
+  __typename: "QuizCheckboxField";
+  adminLabel?: string | null;
+  answerExplanation?: string | null;
+  canPrepopulate?: boolean | null;
+  cssClass?: string | null;
+  description?: string | null;
+  descriptionPlacement?: FormFieldDescriptionPlacementEnum | null;
+  displayOnly?: boolean | null;
+  errorMessage?: string | null;
+  hasChoiceValue?: boolean | null;
+  hasWeightedScore?: boolean | null;
+  id: number;
+  inputName?: string | null;
+  inputType?: FormFieldTypeEnum | null;
+  isRequired?: boolean | null;
+  label?: string | null;
+  labelPlacement?: FormFieldLabelPlacementEnum | null;
+  pageNumber?: number | null;
+  shouldRandomizeQuizChoices?: boolean | null;
+  shouldShowAnswerExplanation?: boolean | null;
+  type?: FormFieldTypeEnum | null;
+  value?: string | null;
+  visibility?: FormFieldVisibilityEnum | null;
+};
+
+type QuizFieldPartial_QuizRadioField_Fragment = {
+  __typename: "QuizRadioField";
+  adminLabel?: string | null;
+  answerExplanation?: string | null;
+  canPrepopulate?: boolean | null;
+  cssClass?: string | null;
+  description?: string | null;
+  descriptionPlacement?: FormFieldDescriptionPlacementEnum | null;
+  displayOnly?: boolean | null;
+  errorMessage?: string | null;
+  hasChoiceValue?: boolean | null;
+  hasWeightedScore?: boolean | null;
+  id: number;
+  inputName?: string | null;
+  inputType?: FormFieldTypeEnum | null;
+  isRequired?: boolean | null;
+  label?: string | null;
+  labelPlacement?: FormFieldLabelPlacementEnum | null;
+  pageNumber?: number | null;
+  shouldRandomizeQuizChoices?: boolean | null;
+  shouldShowAnswerExplanation?: boolean | null;
+  type?: FormFieldTypeEnum | null;
+  value?: string | null;
+  visibility?: FormFieldVisibilityEnum | null;
+};
+
+type QuizFieldPartial_QuizSelectField_Fragment = {
+  __typename: "QuizSelectField";
+  adminLabel?: string | null;
+  answerExplanation?: string | null;
+  canPrepopulate?: boolean | null;
+  cssClass?: string | null;
+  description?: string | null;
+  descriptionPlacement?: FormFieldDescriptionPlacementEnum | null;
+  displayOnly?: boolean | null;
+  errorMessage?: string | null;
+  hasChoiceValue?: boolean | null;
+  hasWeightedScore?: boolean | null;
+  id: number;
+  inputName?: string | null;
+  inputType?: FormFieldTypeEnum | null;
+  isRequired?: boolean | null;
+  label?: string | null;
+  labelPlacement?: FormFieldLabelPlacementEnum | null;
+  pageNumber?: number | null;
+  shouldRandomizeQuizChoices?: boolean | null;
+  shouldShowAnswerExplanation?: boolean | null;
+  type?: FormFieldTypeEnum | null;
+  value?: string | null;
+  visibility?: FormFieldVisibilityEnum | null;
+};
+
+export type QuizFieldPartialFragment =
+  | QuizFieldPartial_QuizCheckboxField_Fragment
+  | QuizFieldPartial_QuizRadioField_Fragment
+  | QuizFieldPartial_QuizSelectField_Fragment;
+
+export type QuizCheckboxFieldPartialFragment = {
+  __typename: "QuizCheckboxField";
+  adminLabel?: string | null;
+  answerExplanation?: string | null;
+  canPrepopulate?: boolean | null;
+  cssClass?: string | null;
+  description?: string | null;
+  descriptionPlacement?: FormFieldDescriptionPlacementEnum | null;
+  displayOnly?: boolean | null;
+  errorMessage?: string | null;
+  hasChoiceValue?: boolean | null;
+  hasSelectAll?: boolean | null;
+  hasWeightedScore?: boolean | null;
+  id: number;
+  inputName?: string | null;
+  inputType?: FormFieldTypeEnum | null;
+  isRequired?: boolean | null;
+  label?: string | null;
+  labelPlacement?: FormFieldLabelPlacementEnum | null;
+  pageNumber?: number | null;
+  shouldRandomizeQuizChoices?: boolean | null;
+  shouldShowAnswerExplanation?: boolean | null;
+  type?: FormFieldTypeEnum | null;
+  value?: string | null;
+  visibility?: FormFieldVisibilityEnum | null;
 };
 
 export type RadioFieldsGravityPartialFragment = {
@@ -36378,6 +36894,9 @@ export type GetGravityFormQueryVariables = Exact<{
   formId: Scalars["ID"];
   idType: FormIdTypeEnum;
   first: Scalars["Int"];
+  formFieldType?: InputMaybe<
+    Array<InputMaybe<FormFieldTypeEnum>> | InputMaybe<FormFieldTypeEnum>
+  >;
 }>;
 
 export type GetGravityFormQuery = {
@@ -36456,12 +36975,23 @@ export type GetGravityFormQuery = {
           }
         | {
             __typename?: "CaptchaField";
-            id: number;
-            displayOnly?: boolean | null;
-            inputType?: FormFieldTypeEnum | null;
-            pageNumber?: number | null;
+            captchaBadgePosition?: CaptchaFieldBadgePositionEnum | null;
+            captchaLanguage?: string | null;
+            captchaTheme?: CaptchaFieldThemeEnum | null;
+            captchaType?: CaptchaFieldTypeEnum | null;
+            description?: string | null;
+            value?: string | null;
             visibility?: FormFieldVisibilityEnum | null;
             type?: FormFieldTypeEnum | null;
+            id: number;
+            label?: string | null;
+            inputType?: FormFieldTypeEnum | null;
+            errorMessage?: string | null;
+            displayOnly?: boolean | null;
+            simpleCaptchaBackgroundColor?: string | null;
+            simpleCaptchaFontColor?: string | null;
+            simpleCaptchaSize?: FormFieldSizeEnum | null;
+            pageNumber?: number | null;
           }
         | {
             __typename?: "CheckboxField";
@@ -36504,14 +37034,22 @@ export type GetGravityFormQuery = {
             pageNumber?: number | null;
             inputName?: string | null;
             inputType?: FormFieldTypeEnum | null;
+            adminLabel?: string | null;
+            descriptionPlacement?: FormFieldDescriptionPlacementEnum | null;
+            displayOnly?: boolean | null;
+            errorMessage?: string | null;
+            isRequired?: boolean | null;
+            calendarIconType?: FormFieldCalendarIconTypeEnum | null;
+            defaultValue?: string | null;
+            calendarIconUrl?: string | null;
+            canPrepopulate?: boolean | null;
+            shouldAllowDuplicates?: boolean | null;
             dateFormat?: DateFieldFormatEnum | null;
             dateType?: DateFieldTypeEnum | null;
             label?: string | null;
             description?: string | null;
             cssClass?: string | null;
-            isRequired?: boolean | null;
             placeholder?: string | null;
-            displayOnly?: boolean | null;
             visibility?: FormFieldVisibilityEnum | null;
             type?: FormFieldTypeEnum | null;
           }
@@ -36629,6 +37167,11 @@ export type GetGravityFormQuery = {
         | {
             __typename?: "NameField";
             id: number;
+            value?: string | null;
+            canPrepopulate?: boolean | null;
+            visibility?: FormFieldVisibilityEnum | null;
+            errorMessage?: string | null;
+            hasAutocomplete?: boolean | null;
             label?: string | null;
             description?: string | null;
             type?: FormFieldTypeEnum | null;
@@ -36636,7 +37179,6 @@ export type GetGravityFormQuery = {
             displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
             pageNumber?: number | null;
-            visibility?: FormFieldVisibilityEnum | null;
             inputs?: Array<{
               __typename: "NameInputProperty";
               name?: string | null;
@@ -36675,13 +37217,35 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "PasswordField";
-            id: number;
-            displayOnly?: boolean | null;
-            inputType?: FormFieldTypeEnum | null;
-            pageNumber?: number | null;
+            __typename: "PasswordField";
+            adminLabel?: string | null;
+            cssClass?: string | null;
             visibility?: FormFieldVisibilityEnum | null;
+            description?: string | null;
+            descriptionPlacement?: FormFieldDescriptionPlacementEnum | null;
+            displayOnly?: boolean | null;
+            errorMessage?: string | null;
+            hasPasswordStrengthIndicator?: boolean | null;
+            hasPasswordVisibilityToggle?: boolean | null;
+            id: number;
             type?: FormFieldTypeEnum | null;
+            inputType?: FormFieldTypeEnum | null;
+            isRequired?: boolean | null;
+            label?: string | null;
+            labelPlacement?: FormFieldLabelPlacementEnum | null;
+            minPasswordStrength?: PasswordFieldMinStrengthEnum | null;
+            size?: FormFieldSizeEnum | null;
+            subLabelPlacement?: FormFieldSubLabelPlacementEnum | null;
+            value?: string | null;
+            pageNumber?: number | null;
+            inputs?: Array<{
+              __typename: "PasswordInputProperty";
+              customLabel?: string | null;
+              id?: number | null;
+              isHidden?: boolean | null;
+              label?: string | null;
+              placeholder?: string | null;
+            } | null> | null;
           }
         | {
             __typename?: "PhoneField";
@@ -36994,31 +37558,106 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "QuizCheckboxField";
-            id: number;
+            __typename: "QuizCheckboxField";
+            adminLabel?: string | null;
+            answerExplanation?: string | null;
+            canPrepopulate?: boolean | null;
+            cssClass?: string | null;
+            description?: string | null;
+            descriptionPlacement?: FormFieldDescriptionPlacementEnum | null;
             displayOnly?: boolean | null;
+            errorMessage?: string | null;
+            hasChoiceValue?: boolean | null;
+            hasWeightedScore?: boolean | null;
+            id: number;
+            inputName?: string | null;
             inputType?: FormFieldTypeEnum | null;
+            isRequired?: boolean | null;
+            label?: string | null;
+            labelPlacement?: FormFieldLabelPlacementEnum | null;
             pageNumber?: number | null;
-            visibility?: FormFieldVisibilityEnum | null;
+            shouldRandomizeQuizChoices?: boolean | null;
+            shouldShowAnswerExplanation?: boolean | null;
             type?: FormFieldTypeEnum | null;
+            value?: string | null;
+            visibility?: FormFieldVisibilityEnum | null;
+            choices?: Array<{
+              __typename: "QuizFieldChoice";
+              isCorrect?: boolean | null;
+              isOtherChoice?: boolean | null;
+              isSelected?: boolean | null;
+              text?: string | null;
+              value?: string | null;
+              weight?: number | null;
+            } | null> | null;
           }
         | {
-            __typename?: "QuizRadioField";
-            id: number;
+            __typename: "QuizRadioField";
+            adminLabel?: string | null;
+            answerExplanation?: string | null;
+            canPrepopulate?: boolean | null;
+            cssClass?: string | null;
+            description?: string | null;
+            descriptionPlacement?: FormFieldDescriptionPlacementEnum | null;
             displayOnly?: boolean | null;
+            errorMessage?: string | null;
+            hasChoiceValue?: boolean | null;
+            hasWeightedScore?: boolean | null;
+            id: number;
+            inputName?: string | null;
             inputType?: FormFieldTypeEnum | null;
+            isRequired?: boolean | null;
+            label?: string | null;
+            labelPlacement?: FormFieldLabelPlacementEnum | null;
             pageNumber?: number | null;
-            visibility?: FormFieldVisibilityEnum | null;
+            shouldRandomizeQuizChoices?: boolean | null;
+            shouldShowAnswerExplanation?: boolean | null;
             type?: FormFieldTypeEnum | null;
+            value?: string | null;
+            visibility?: FormFieldVisibilityEnum | null;
+            choices?: Array<{
+              __typename: "QuizFieldChoice";
+              isCorrect?: boolean | null;
+              isOtherChoice?: boolean | null;
+              isSelected?: boolean | null;
+              text?: string | null;
+              value?: string | null;
+              weight?: number | null;
+            } | null> | null;
           }
         | {
-            __typename?: "QuizSelectField";
-            id: number;
+            __typename: "QuizSelectField";
+            adminLabel?: string | null;
+            answerExplanation?: string | null;
+            canPrepopulate?: boolean | null;
+            cssClass?: string | null;
+            description?: string | null;
+            descriptionPlacement?: FormFieldDescriptionPlacementEnum | null;
             displayOnly?: boolean | null;
+            errorMessage?: string | null;
+            hasChoiceValue?: boolean | null;
+            hasWeightedScore?: boolean | null;
+            id: number;
+            inputName?: string | null;
             inputType?: FormFieldTypeEnum | null;
+            isRequired?: boolean | null;
+            label?: string | null;
+            labelPlacement?: FormFieldLabelPlacementEnum | null;
             pageNumber?: number | null;
-            visibility?: FormFieldVisibilityEnum | null;
+            shouldRandomizeQuizChoices?: boolean | null;
+            shouldShowAnswerExplanation?: boolean | null;
             type?: FormFieldTypeEnum | null;
+            value?: string | null;
+            visibility?: FormFieldVisibilityEnum | null;
+            choices?: Array<{
+              __typename: "QuizFieldChoice";
+              isCorrect?: boolean | null;
+              isOtherChoice?: boolean | null;
+              isSelected?: boolean | null;
+              text?: string | null;
+              value?: string | null;
+              weight?: number | null;
+            } | null> | null;
           }
         | {
             __typename?: "RadioField";
@@ -37060,13 +37699,13 @@ export type GetGravityFormQuery = {
             type?: FormFieldTypeEnum | null;
           }
         | {
-            __typename?: "RecaptchaField";
+            __typename: "RecaptchaField";
             id: number;
-            displayOnly?: boolean | null;
-            inputType?: FormFieldTypeEnum | null;
-            pageNumber?: number | null;
             visibility?: FormFieldVisibilityEnum | null;
             type?: FormFieldTypeEnum | null;
+            inputType?: FormFieldTypeEnum | null;
+            displayOnly?: boolean | null;
+            pageNumber?: number | null;
           }
         | {
             __typename?: "RememberMeField";
@@ -37497,6 +38136,14 @@ export const CheckboxFieldsGravityPartialFragmentDoc = gql`
     }
   }
 `;
+export const CheckboxFieldValuePartialFragmentDoc = gql`
+  fragment CheckboxFieldValuePartial on CheckboxFieldValue {
+    inputId
+    text
+    value
+    __typename
+  }
+`;
 export const DateFieldsGravityPartialFragmentDoc = gql`
   fragment DateFieldsGravityPartial on DateField {
     id
@@ -37504,6 +38151,16 @@ export const DateFieldsGravityPartialFragmentDoc = gql`
     pageNumber
     inputName
     inputType
+    adminLabel
+    descriptionPlacement
+    displayOnly
+    errorMessage
+    isRequired
+    calendarIconType
+    defaultValue
+    calendarIconUrl
+    canPrepopulate
+    shouldAllowDuplicates
     dateFormat
     dateType
     label
@@ -37659,6 +38316,11 @@ export const NameInputFieldsGravityPartialFragmentDoc = gql`
 export const NameFieldsGravityPartialFragmentDoc = gql`
   fragment NameFieldsGravityPartial on NameField {
     id
+    value
+    canPrepopulate
+    visibility
+    errorMessage
+    hasAutocomplete
     label
     description
     type
@@ -37674,6 +38336,40 @@ export const NameFieldsGravityPartialFragmentDoc = gql`
     }
   }
   ${NameInputFieldsGravityPartialFragmentDoc}
+`;
+export const PasswordFieldInputPartialFragmentDoc = gql`
+  fragment PasswordFieldInputPartial on PasswordInputProperty {
+    customLabel
+    id
+    isHidden
+    label
+    placeholder
+    __typename
+  }
+`;
+export const PasswordFieldPartialFragmentDoc = gql`
+  fragment PasswordFieldPartial on PasswordField {
+    adminLabel
+    cssClass
+    visibility
+    description
+    descriptionPlacement
+    displayOnly
+    errorMessage
+    hasPasswordStrengthIndicator
+    hasPasswordVisibilityToggle
+    id
+    type
+    inputType
+    isRequired
+    label
+    labelPlacement
+    minPasswordStrength
+    size
+    subLabelPlacement
+    value
+    __typename
+  }
 `;
 export const PhoneFieldsGravityPartialFragmentDoc = gql`
   fragment PhoneFieldsGravityPartial on PhoneField {
@@ -37691,6 +38387,18 @@ export const PhoneFieldsGravityPartialFragmentDoc = gql`
     phoneFormat
     isRequired
     placeholder
+  }
+`;
+export const PollFieldPartialFragmentDoc = gql`
+  fragment PollFieldPartial on PollField {
+    displayOnly
+    id
+    inputType
+    type
+    visibility
+    value
+    pageNumber
+    __typename
   }
 `;
 export const PostContentFieldsGravityPartialFragmentDoc = gql`
@@ -37750,6 +38458,143 @@ export const PostImageFieldsGravityPartialFragmentDoc = gql`
     }
   }
   ${PostImageValuePropertyFieldsGravityPartialFragmentDoc}
+`;
+export const QuizInputPropertyPartialFragmentDoc = gql`
+  fragment QuizInputPropertyPartial on QuizInputProperty {
+    id
+    label
+    name
+    __typename
+  }
+`;
+export const QuizFieldChoicePartialFragmentDoc = gql`
+  fragment QuizFieldChoicePartial on QuizFieldChoice {
+    isCorrect
+    isOtherChoice
+    isSelected
+    text
+    value
+    weight
+    __typename
+  }
+`;
+export const QuizRadioFieldPartialFragmentDoc = gql`
+  fragment QuizRadioFieldPartial on QuizRadioField {
+    adminLabel
+    answerExplanation
+    canPrepopulate
+    cssClass
+    description
+    descriptionPlacement
+    displayOnly
+    errorMessage
+    hasChoiceValue
+    hasOtherChoice
+    hasWeightedScore
+    id
+    inputName
+    inputType
+    isRequired
+    label
+    labelPlacement
+    pageNumber
+    shouldAllowDuplicates
+    shouldRandomizeQuizChoices
+    shouldShowAnswerExplanation
+    type
+    value
+    visibility
+    __typename
+  }
+`;
+export const QuizSelectFieldPartialFragmentDoc = gql`
+  fragment QuizSelectFieldPartial on QuizSelectField {
+    adminLabel
+    answerExplanation
+    autocompleteAttribute
+    canPrepopulate
+    cssClass
+    defaultValue
+    description
+    descriptionPlacement
+    displayOnly
+    errorMessage
+    hasAutocomplete
+    hasChoiceValue
+    hasEnhancedUI
+    hasWeightedScore
+    id
+    inputName
+    inputType
+    isRequired
+    label
+    labelPlacement
+    pageNumber
+    placeholder
+    shouldAllowDuplicates
+    shouldRandomizeQuizChoices
+    shouldShowAnswerExplanation
+    size
+    type
+    value
+    visibility
+    __typename
+  }
+`;
+export const QuizFieldPartialFragmentDoc = gql`
+  fragment QuizFieldPartial on QuizField {
+    adminLabel
+    answerExplanation
+    canPrepopulate
+    cssClass
+    description
+    descriptionPlacement
+    displayOnly
+    errorMessage
+    hasChoiceValue
+    hasWeightedScore
+    id
+    inputName
+    inputType
+    isRequired
+    label
+    labelPlacement
+    pageNumber
+    shouldRandomizeQuizChoices
+    shouldShowAnswerExplanation
+    type
+    value
+    visibility
+    __typename
+  }
+`;
+export const QuizCheckboxFieldPartialFragmentDoc = gql`
+  fragment QuizCheckboxFieldPartial on QuizCheckboxField {
+    adminLabel
+    answerExplanation
+    canPrepopulate
+    cssClass
+    description
+    descriptionPlacement
+    displayOnly
+    errorMessage
+    hasChoiceValue
+    hasSelectAll
+    hasWeightedScore
+    id
+    inputName
+    inputType
+    isRequired
+    label
+    labelPlacement
+    pageNumber
+    shouldRandomizeQuizChoices
+    shouldShowAnswerExplanation
+    type
+    value
+    visibility
+    __typename
+  }
 `;
 export const RadioFieldChoicePartialFragmentDoc = gql`
   fragment RadioFieldChoicePartial on RadioFieldChoice {
@@ -38100,7 +38945,12 @@ export function refetchContentNodesQuery(
   return { query: ContentNodesDocument, variables: variables };
 }
 export const GetGravityFormDocument = gql`
-  query GetGravityForm($formId: ID!, $idType: FormIdTypeEnum!, $first: Int!) {
+  query GetGravityForm(
+    $formId: ID!
+    $idType: FormIdTypeEnum!
+    $first: Int!
+    $formFieldType: [FormFieldTypeEnum]
+  ) {
     gfForm(id: $formId, idType: $idType) {
       ...GravityFormsFormPartial
       button {
@@ -38109,11 +38959,14 @@ export const GetGravityFormDocument = gql`
       confirmations {
         ...FormConfirmationGravityPartial
       }
-      formFields(first: $first) {
+      formFields(first: $first, where: { fieldTypes: $formFieldType }) {
         nodes {
           ...FormFieldsGravityPartial
           ... on AddressField {
             ...AddressFieldsGravityPartial
+          }
+          ... on CaptchaField {
+            ...CaptchaPartial
           }
           ... on CheckboxField {
             ...CheckboxFieldsGravityPartial
@@ -38136,6 +38989,12 @@ export const GetGravityFormDocument = gql`
           ... on NameField {
             ...NameFieldsGravityPartial
           }
+          ... on PasswordField {
+            inputs {
+              ...PasswordFieldInputPartial
+            }
+            ...PasswordFieldPartial
+          }
           ... on PhoneField {
             ...PhoneFieldsGravityPartial
           }
@@ -38145,8 +39004,41 @@ export const GetGravityFormDocument = gql`
           ... on PostImageField {
             ...PostImageFieldsGravityPartial
           }
+          ... on QuizField {
+            ...QuizFieldPartial
+            choices {
+              ...QuizFieldChoicePartial
+            }
+            ... on QuizSelectField {
+              ...QuizSelectFieldPartial
+              choices {
+                ...QuizFieldChoicePartial
+              }
+            }
+            ... on QuizRadioField {
+              ...QuizRadioFieldPartial
+              choices {
+                ...QuizFieldChoicePartial
+              }
+            }
+            ... on QuizCheckboxField {
+              choices {
+                ...QuizFieldChoicePartial
+              }
+              inputs {
+                ...QuizInputPropertyPartial
+              }
+              checkboxValues {
+                ...CheckboxFieldValuePartial
+              }
+              ...QuizCheckboxFieldPartial
+            }
+          }
           ... on RadioField {
             ...RadioFieldsGravityPartial
+          }
+          ... on RecaptchaField {
+            ...RecaptchaPartial
           }
           ... on SelectField {
             ...SelectFieldsGravityPartial
@@ -38172,6 +39064,7 @@ export const GetGravityFormDocument = gql`
   ${FormConfirmationGravityPartialFragmentDoc}
   ${FormFieldsGravityPartialFragmentDoc}
   ${AddressFieldsGravityPartialFragmentDoc}
+  ${CaptchaPartialFragmentDoc}
   ${CheckboxFieldsGravityPartialFragmentDoc}
   ${DateFieldsGravityPartialFragmentDoc}
   ${EmailFieldsGravityPartialFragmentDoc}
@@ -38179,10 +39072,20 @@ export const GetGravityFormDocument = gql`
   ${ListFieldsGravityPartialFragmentDoc}
   ${MultiSelectFieldsGravityPartialFragmentDoc}
   ${NameFieldsGravityPartialFragmentDoc}
+  ${PasswordFieldInputPartialFragmentDoc}
+  ${PasswordFieldPartialFragmentDoc}
   ${PhoneFieldsGravityPartialFragmentDoc}
   ${PostContentFieldsGravityPartialFragmentDoc}
   ${PostImageFieldsGravityPartialFragmentDoc}
+  ${QuizFieldPartialFragmentDoc}
+  ${QuizFieldChoicePartialFragmentDoc}
+  ${QuizSelectFieldPartialFragmentDoc}
+  ${QuizRadioFieldPartialFragmentDoc}
+  ${QuizInputPropertyPartialFragmentDoc}
+  ${CheckboxFieldValuePartialFragmentDoc}
+  ${QuizCheckboxFieldPartialFragmentDoc}
   ${RadioFieldsGravityPartialFragmentDoc}
+  ${RecaptchaPartialFragmentDoc}
   ${SelectFieldsGravityPartialFragmentDoc}
   ${TextAreaFieldsGravityPartialFragmentDoc}
   ${TextFieldsGravityPartialFragmentDoc}
@@ -38205,6 +39108,7 @@ export const GetGravityFormDocument = gql`
  *      formId: // value for 'formId'
  *      idType: // value for 'idType'
  *      first: // value for 'first'
+ *      formFieldType: // value for 'formFieldType'
  *   },
  * });
  */
@@ -38275,6 +39179,7 @@ export const namedOperations = {
     ButtonFieldsGravityPartial: "ButtonFieldsGravityPartial",
     CaptchaPartial: "CaptchaPartial",
     CheckboxFieldsGravityPartial: "CheckboxFieldsGravityPartial",
+    CheckboxFieldValuePartial: "CheckboxFieldValuePartial",
     ChoicePropertyFieldsGravityPartial: "ChoicePropertyFieldsGravityPartial",
     DateFieldsGravityPartial: "DateFieldsGravityPartial",
     EmailFieldsGravityPartial: "EmailFieldsGravityPartial",
@@ -38290,11 +39195,20 @@ export const namedOperations = {
     MultiSelectFieldsGravityPartial: "MultiSelectFieldsGravityPartial",
     NameFieldsGravityPartial: "NameFieldsGravityPartial",
     NameInputFieldsGravityPartial: "NameInputFieldsGravityPartial",
+    PasswordFieldInputPartial: "PasswordFieldInputPartial",
+    PasswordFieldPartial: "PasswordFieldPartial",
     PhoneFieldsGravityPartial: "PhoneFieldsGravityPartial",
+    PollFieldPartial: "PollFieldPartial",
     PostContentFieldsGravityPartial: "PostContentFieldsGravityPartial",
     PostImageValuePropertyFieldsGravityPartial:
       "PostImageValuePropertyFieldsGravityPartial",
     PostImageFieldsGravityPartial: "PostImageFieldsGravityPartial",
+    QuizInputPropertyPartial: "QuizInputPropertyPartial",
+    QuizFieldChoicePartial: "QuizFieldChoicePartial",
+    QuizRadioFieldPartial: "QuizRadioFieldPartial",
+    QuizSelectFieldPartial: "QuizSelectFieldPartial",
+    QuizFieldPartial: "QuizFieldPartial",
+    QuizCheckboxFieldPartial: "QuizCheckboxFieldPartial",
     RadioFieldsGravityPartial: "RadioFieldsGravityPartial",
     RadioFieldChoicePartial: "RadioFieldChoicePartial",
     RecaptchaPartial: "RecaptchaPartial",

@@ -1,14 +1,23 @@
 fragment GravityFormsFormPartial on GfForm {
+  id
   databaseId
-  nextFieldId
+  customRequiredIndicator
+  cssClass
+  dateCreated
+  description
+  descriptionPlacement
+  hasValidationSummary
+  firstPageCssClass
+  hasConditionalLogicAnimation
+  hasHoneypot
   isActive
   isTrash
-  firstPageCssClass
-  hasHoneypot
-  hasValidationSummary
+  labelPlacement
   markupVersion
-  id
+  nextFieldId
+  requiredIndicator
+  subLabelPlacement
   title
-  description
+  version
   __typename
 }

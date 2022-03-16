@@ -1,0 +1,130 @@
+fragment QuizInputPropertyPartial on QuizInputProperty {
+  id
+  label
+  name
+  __typename
+}
+
+fragment QuizFieldChoicePartial on QuizFieldChoice {
+  isCorrect
+  isOtherChoice
+  isSelected
+  text
+  value
+  weight
+  __typename
+}
+
+fragment QuizRadioFieldPartial on QuizRadioField {
+  adminLabel
+  answerExplanation
+  canPrepopulate
+  cssClass
+  description
+  descriptionPlacement
+  displayOnly
+  errorMessage
+  hasChoiceValue
+  hasOtherChoice
+  hasWeightedScore
+  id
+  inputName
+  inputType
+  isRequired
+  label
+  labelPlacement
+  pageNumber
+  shouldAllowDuplicates
+  shouldRandomizeQuizChoices
+  shouldShowAnswerExplanation
+  type
+  value
+  visibility
+  __typename
+}
+
+fragment QuizSelectFieldPartial on QuizSelectField {
+  adminLabel
+  answerExplanation
+  autocompleteAttribute
+  canPrepopulate
+  cssClass
+  defaultValue
+  description
+  descriptionPlacement
+  displayOnly
+  errorMessage
+  hasAutocomplete
+  hasChoiceValue
+  hasEnhancedUI
+  hasWeightedScore
+  id
+  inputName
+  inputType
+  isRequired
+  label
+  labelPlacement
+  pageNumber
+  placeholder
+  shouldAllowDuplicates
+  shouldRandomizeQuizChoices
+  shouldShowAnswerExplanation
+  size
+  type
+  value
+  visibility
+  __typename
+}
+
+fragment QuizFieldPartial on QuizField {
+  adminLabel
+  answerExplanation
+  canPrepopulate
+  cssClass
+  description
+  descriptionPlacement
+  displayOnly
+  errorMessage
+  hasChoiceValue
+  hasWeightedScore
+  id
+  inputName
+  inputType
+  isRequired
+  label
+  labelPlacement
+  pageNumber
+  shouldRandomizeQuizChoices
+  shouldShowAnswerExplanation
+  type
+  value
+  visibility
+  __typename
+}
+
+fragment QuizCheckboxFieldPartial on QuizCheckboxField {
+  adminLabel
+  answerExplanation
+  canPrepopulate
+  cssClass
+  description
+  descriptionPlacement
+  displayOnly
+  errorMessage
+  hasChoiceValue
+  hasSelectAll
+  hasWeightedScore
+  id
+  inputName
+  inputType
+  isRequired
+  label
+  labelPlacement
+  pageNumber
+  shouldRandomizeQuizChoices
+  shouldShowAnswerExplanation
+  type
+  value
+  visibility
+  __typename
+}

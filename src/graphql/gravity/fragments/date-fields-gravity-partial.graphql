@@ -4,6 +4,16 @@ fragment DateFieldsGravityPartial on DateField {
   pageNumber
   inputName
   inputType
+  adminLabel
+  descriptionPlacement
+  displayOnly
+  errorMessage
+  isRequired
+  calendarIconType
+  defaultValue
+  calendarIconUrl
+  canPrepopulate
+  shouldAllowDuplicates
   dateFormat
   dateType
   label
