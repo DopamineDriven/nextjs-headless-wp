@@ -1,0 +1,12 @@
+name: Nextjs-Headless-WordPress
+documents:
+  - ./src/graphql/**/*.graphql
+extensions:
+  languageService:
+    useSchemaFileDefinitions: true
+  endpoints:
+    dev:
+      - "${NEXT_GQL_ENDPOINT}":
+          headers:
+            Authorization: Bearer ${GRAPHQL_JWT_AUTH_SECRET_KEY_YML}
+schema: ./src/graphql/generated/graphql.schema.gql

@@ -14,6 +14,10 @@ fragment NameFieldsGravityPartial on NameField {
   inputs {
     ...NameInputFieldsGravityPartial
     choices {
-isSelected text value  __typename    }
+      isSelected
+      text
+      value
+      __typename
+    }
   }
 }

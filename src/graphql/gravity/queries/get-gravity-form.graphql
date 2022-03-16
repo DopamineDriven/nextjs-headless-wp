@@ -2,6 +2,7 @@
 # import ButtonFieldsGravityPartial from "../fragments/button-fields-gravity-partial.graphql";
 # import CaptchaPartial from "../fragments/captcha-partial.graphql";
 # import CheckboxFieldsGravityPartial from "../fragments/checkbox-fields-gravity-partial.graphql";
+# import CheckboxFieldValuePartial from "../fragments/checkbox-fields-gravity-partial.graphql";
 # import DateFieldsGravityPartial from "../fragments/date-fields-gravity-partial.graphql";
 # import EmailFieldsGravityPartial from "../fragments/email-fields-gravity-partial.graphql";
 # import FileUploadFieldsGravityPartial from "../fragments/file-upload-fields-gravity-partial.graphql";
@@ -11,17 +12,33 @@
 # import ListFieldsGravityPartial from "../fragments/list-fields-gravity-partial.graphql";
 # import MultiSelectFieldsGravityPartial from "../fragments/multi-select-fields-gravity-partial.graphql";
 # import NameFieldsGravityPartial from "../fragments/name-fields-gravity-partial.graphql";
+# import PasswordFieldPartial from "../fragments/password-field-partial.graphql";
+# import PasswordFieldInputPartial from "../fragments/password-field-partial.graphql";
 # import PhoneFieldsGravityPartial from "../fragments/phone-fields-gravity-partial.graphql";
+# import PollFieldPartial from "../fragments/poll-field-partial.graphql";
 # import PostContentFieldsGravityPartial from "../fragments/post-content-fields-gravity-partial.graphql";
 # import PostImageFieldsGravityPartial from "../fragments/post-image-fields-gravity-partial.graphql";
+# import QuizInputPropertyPartial from "../fragments/quiz-field-partial.graphql";
+# import QuizFieldChoicePartial from "../fragments/quiz-field-partial.graphql";
+# import QuizRadioFieldPartial from "../fragments/quiz-field-partial.graphql";
+# import QuizSelectFieldPartial from "../fragments/quiz-field-partial.graphql";
+# import QuizFieldPartial from "../fragments/quiz-field-partial.graphql";
+# import QuizCheckboxFieldPartial from "../fragments/quiz-field-partial.graphql";
 # import RadioFieldsGravityPartial from "../fragments/radio-fields-gravity-partial.graphql";
+# import RecaptchaPartial from "../fragments/recaptcha-partial.graphql";
 # import SelectFieldsGravityPartial from "../fragments/select-fields-gravity-partial.graphql";
+# import SurveyFieldPartial from "../fragments/survey-field-partial.graphql";
 # import TextAreaFieldsGravityPartial from "../fragments/text-area-fields-gravity-partial.graphql";
 # import TextFieldsGravityPartial from "../fragments/text-fields-gravity-partial.graphql";
 # import TimeFieldsGravityPartial from "../fragments/time-fields-gravity-partial.graphql";
 # import WebsiteFieldsGravityPartial from "../fragments/website-fields-gravity-partial.graphql";
 
-query GetGravityForm($formId: ID!, $idType: FormIdTypeEnum!, $first: Int!) {
+query GetGravityForm(
+  $formId: ID!
+  $idType: FormIdTypeEnum!
+  $first: Int!
+  $formFieldType: [FormFieldTypeEnum]
+) {
   gfForm(id: $formId, idType: $idType) {
     ...GravityFormsFormPartial
     button {
@@ -29,16 +46,14 @@ query GetGravityForm($formId: ID!, $idType: FormIdTypeEnum!, $first: Int!) {
     }
     confirmations {
       ...FormConfirmationGravityPartial
-
     }
-
-    formFields(first: $first) {
+    formFields(first: $first, where: { fieldTypes: $formFieldType }) {
       nodes {
         ...FormFieldsGravityPartial
         ... on AddressField {
           ...AddressFieldsGravityPartial
         }
-        ...on CaptchaField {
+        ... on CaptchaField {
           ...CaptchaPartial
         }
         ... on CheckboxField {
@@ -62,8 +77,17 @@ query GetGravityForm($formId: ID!, $idType: FormIdTypeEnum!, $first: Int!) {
         ... on NameField {
           ...NameFieldsGravityPartial
         }
+        ... on PasswordField {
+          inputs {
+            ...PasswordFieldInputPartial
+          }
+          ...PasswordFieldPartial
+        }
         ... on PhoneField {
           ...PhoneFieldsGravityPartial
+        }
+        ...on PollField {
+          ...PollFieldPartial
         }
         ... on PostContentField {
           ...PostContentFieldsGravityPartial
@@ -71,12 +95,47 @@ query GetGravityForm($formId: ID!, $idType: FormIdTypeEnum!, $first: Int!) {
         ... on PostImageField {
           ...PostImageFieldsGravityPartial
         }
+        ... on QuizField {
+          ...QuizFieldPartial
+          choices {
+            ...QuizFieldChoicePartial
+          }
+          ... on QuizSelectField {
+            ...QuizSelectFieldPartial
+            choices {
+              ...QuizFieldChoicePartial
+            }
+          }
+          ... on QuizRadioField {
+            ...QuizRadioFieldPartial
+            choices {
+              ...QuizFieldChoicePartial
+            }
+          }
+          ... on QuizCheckboxField {
+            choices {
+              ...QuizFieldChoicePartial
+            }
+            inputs {
+              ...QuizInputPropertyPartial
+            }
+            checkboxValues {
+              ...CheckboxFieldValuePartial
+            }
+            ...QuizCheckboxFieldPartial
+          }
+        }
         ... on RadioField {
           ...RadioFieldsGravityPartial
         }
-
+        ... on RecaptchaField {
+          ...RecaptchaPartial
+        }
         ... on SelectField {
           ...SelectFieldsGravityPartial
+        }
+        ...on SurveyField {
+          ...SurveyFieldPartial
         }
         ... on TextAreaField {
           ...TextAreaFieldsGravityPartial

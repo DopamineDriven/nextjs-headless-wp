@@ -1,0 +1,18 @@
+fragment SurveyFieldPartial on SurveyField {
+  adminLabel
+  canPrepopulate
+  cssClass
+  description
+  descriptionPlacement
+  displayOnly
+  errorMessage
+  id
+  inputName
+  inputType
+  labelPlacement
+  pageNumber
+  type
+  value
+  visibility
+  __typename
+}

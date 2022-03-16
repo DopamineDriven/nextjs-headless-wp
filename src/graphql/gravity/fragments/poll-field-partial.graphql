@@ -1,0 +1,10 @@
+fragment PollFieldPartial on PollField {
+  displayOnly
+  id
+  inputType
+  type
+  visibility
+  value
+  pageNumber
+  __typename
+}
