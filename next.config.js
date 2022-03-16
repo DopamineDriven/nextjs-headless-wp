@@ -49,7 +49,6 @@ module.exports = withSuperjson()({
   },
   reactStrictMode: true,
   swcMinify: true,
-  webpack5: true,
   sourceMaps: {
     productionBrowserSourceMaps: true
   },

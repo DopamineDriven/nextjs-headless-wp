@@ -50,7 +50,7 @@ export type Scalars = {
 
 /** A Gravity Forms   field. */
 export type AddressField = FormField & {
-  __typename?: "AddressField";
+  __typename: "AddressField";
   /** Determines the type of address to be displayed. */
   addressType?: Maybe<FieldWrapper<AddressFieldTypeEnum>>;
   /** Address field value. */
@@ -647,7 +647,7 @@ export enum AddressFieldTypeEnum {
 
 /** The individual properties for each element of the address value field. */
 export type AddressFieldValue = {
-  __typename?: "AddressFieldValue";
+  __typename: "AddressFieldValue";
   /** Address city. */
   city?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Address country. */
@@ -664,7 +664,7 @@ export type AddressFieldValue = {
 
 /** Address input values. */
 export type AddressInputProperty = {
-  __typename?: "AddressInputProperty";
+  __typename: "AddressInputProperty";
   /** The autocomplete attribute for the field. */
   autocompleteAttribute?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The custom label for the input. When set, this is used in place of the label. */
@@ -695,7 +695,7 @@ export enum AmPmEnum {
 
 /** Avatars are profile images for users. WordPress by default uses the Gravatar service to host and fetch avatars from. */
 export type Avatar = {
-  __typename?: "Avatar";
+  __typename: "Avatar";
   /** URL for the default image or a default type. Accepts &#039;404&#039; (return a 404 instead of a default image), &#039;retro&#039; (8bit), &#039;monsterid&#039; (monster), &#039;wavatar&#039; (cartoon face), &#039;indenticon&#039; (the &#039;quilt&#039;), &#039;mystery&#039;, &#039;mm&#039;, or &#039;mysteryman&#039; (The Oyster Man), &#039;blank&#039; (transparent GIF), or &#039;gravatar_default&#039; (the Gravatar logo). */
   default?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** HTML attributes to insert in the IMG element. Is not sanitized. */
@@ -734,7 +734,7 @@ export enum AvatarRatingEnum {
 
 /** A Gravity Forms   field. */
 export type CaptchaField = FormField & {
-  __typename?: "CaptchaField";
+  __typename: "CaptchaField";
   /** The language used when the captcha is displayed. This property is available when the captchaType is “captcha”, the default. The possible values are the language codes used by WordPress. */
   captchaBadgePosition?: Maybe<FieldWrapper<CaptchaFieldBadgePositionEnum>>;
   /** The language used when the captcha is displayed. This property is available when the captchaType is “captcha”, the default. The possible values are the language codes used by WordPress. */
@@ -818,7 +818,7 @@ export type Category = DatabaseIdentifier &
   Node &
   TermNode &
   UniformResourceIdentifiable & {
-    __typename?: "Category";
+    __typename: "Category";
     /** The ancestors of the node. Default ordered as lowest (closest to the child) to highest (closest to the root). */
     ancestors?: Maybe<FieldWrapper<CategoryToAncestorsCategoryConnection>>;
     /**
@@ -945,7 +945,7 @@ export enum CategoryIdType {
 
 /** Connection between the category type and the category type */
 export type CategoryToAncestorsCategoryConnection = {
-  __typename?: "CategoryToAncestorsCategoryConnection";
+  __typename: "CategoryToAncestorsCategoryConnection";
   /** Edges for the CategoryToAncestorsCategoryConnection connection */
   edges?: Maybe<
     Array<Maybe<FieldWrapper<CategoryToAncestorsCategoryConnectionEdge>>>
@@ -958,7 +958,7 @@ export type CategoryToAncestorsCategoryConnection = {
 
 /** An edge in a connection */
 export type CategoryToAncestorsCategoryConnectionEdge = {
-  __typename?: "CategoryToAncestorsCategoryConnectionEdge";
+  __typename: "CategoryToAncestorsCategoryConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -967,7 +967,7 @@ export type CategoryToAncestorsCategoryConnectionEdge = {
 
 /** Connection between the category type and the category type */
 export type CategoryToCategoryConnection = {
-  __typename?: "CategoryToCategoryConnection";
+  __typename: "CategoryToCategoryConnection";
   /** Edges for the CategoryToCategoryConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<CategoryToCategoryConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -978,7 +978,7 @@ export type CategoryToCategoryConnection = {
 
 /** An edge in a connection */
 export type CategoryToCategoryConnectionEdge = {
-  __typename?: "CategoryToCategoryConnectionEdge";
+  __typename: "CategoryToCategoryConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -1031,7 +1031,7 @@ export type CategoryToCategoryConnectionWhereArgs = {
 
 /** Connection between the category type and the ContentNode type */
 export type CategoryToContentNodeConnection = {
-  __typename?: "CategoryToContentNodeConnection";
+  __typename: "CategoryToContentNodeConnection";
   /** Edges for the CategoryToContentNodeConnection connection */
   edges?: Maybe<
     Array<Maybe<FieldWrapper<CategoryToContentNodeConnectionEdge>>>
@@ -1044,7 +1044,7 @@ export type CategoryToContentNodeConnection = {
 
 /** An edge in a connection */
 export type CategoryToContentNodeConnectionEdge = {
-  __typename?: "CategoryToContentNodeConnectionEdge";
+  __typename: "CategoryToContentNodeConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -1093,14 +1093,14 @@ export type CategoryToContentNodeConnectionWhereArgs = {
 
 /** Connection between the category type and the category type */
 export type CategoryToParentCategoryConnectionEdge = {
-  __typename?: "CategoryToParentCategoryConnectionEdge";
+  __typename: "CategoryToParentCategoryConnectionEdge";
   /** The node of the connection, without the edges */
   node?: Maybe<FieldWrapper<Category>>;
 };
 
 /** Connection between the category type and the post type */
 export type CategoryToPostConnection = {
-  __typename?: "CategoryToPostConnection";
+  __typename: "CategoryToPostConnection";
   /** Edges for the CategoryToPostConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<CategoryToPostConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -1111,7 +1111,7 @@ export type CategoryToPostConnection = {
 
 /** An edge in a connection */
 export type CategoryToPostConnectionEdge = {
-  __typename?: "CategoryToPostConnectionEdge";
+  __typename: "CategoryToPostConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -1186,14 +1186,14 @@ export type CategoryToPostConnectionWhereArgs = {
 
 /** Connection between the category type and the Taxonomy type */
 export type CategoryToTaxonomyConnectionEdge = {
-  __typename?: "CategoryToTaxonomyConnectionEdge";
+  __typename: "CategoryToTaxonomyConnectionEdge";
   /** The node of the connection, without the edges */
   node?: Maybe<FieldWrapper<Taxonomy>>;
 };
 
 /** A Gravity Forms   field. */
 export type CheckboxField = FormField & {
-  __typename?: "CheckboxField";
+  __typename: "CheckboxField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Determines if the field’s value can be pre-populated dynamically. */
@@ -1250,7 +1250,7 @@ export type CheckboxField = FormField & {
 
 /** Checkbox choice values. */
 export type CheckboxFieldChoice = {
-  __typename?: "CheckboxFieldChoice";
+  __typename: "CheckboxFieldChoice";
   /** Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected. */
   isSelected?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** The text to be displayed to the user when displaying this choice. */
@@ -1269,7 +1269,7 @@ export type CheckboxFieldInput = {
 
 /** The individual properties for each element of the Checkbox value field. */
 export type CheckboxFieldValue = {
-  __typename?: "CheckboxFieldValue";
+  __typename: "CheckboxFieldValue";
   /** Input ID. */
   inputId?: Maybe<FieldWrapper<Scalars["Float"]>>;
   /** Input text. */
@@ -1280,7 +1280,7 @@ export type CheckboxFieldValue = {
 
 /** Checkbox input values. */
 export type CheckboxInputProperty = {
-  __typename?: "CheckboxInputProperty";
+  __typename: "CheckboxInputProperty";
   /** The input ID. Input IDs follow the following naming convention: FIELDID.INPUTID (i.e. 5.1), where FIELDID is the id of the containing field and INPUTID specifies the input field. */
   id?: Maybe<FieldWrapper<Scalars["Float"]>>;
   /** Field label that will be displayed on the form and on the admin pages. */
@@ -1292,7 +1292,7 @@ export type CheckboxInputProperty = {
 /** A Comment object */
 export type Comment = DatabaseIdentifier &
   Node & {
-    __typename?: "Comment";
+    __typename: "Comment";
     /** User agent used to post the comment. This field is equivalent to WP_Comment-&gt;comment_agent and the value matching the &quot;comment_agent&quot; column in SQL. */
     agent?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** The approval status of the comment. This field is equivalent to WP_Comment-&gt;comment_approved and the value matching the &quot;comment_approved&quot; column in SQL. */
@@ -1356,7 +1356,7 @@ export type CommentrepliesArgs = {
 /** A Comment Author object */
 export type CommentAuthor = Commenter &
   Node & {
-    __typename?: "CommentAuthor";
+    __typename: "CommentAuthor";
     /** Avatar object for user. The avatar object can be retrieved in different sizes by specifying the size argument. */
     avatar?: Maybe<FieldWrapper<Avatar>>;
     /** Identifies the primary key from the database. */
@@ -1382,7 +1382,7 @@ export type CommentAuthoravatarArgs = {
 
 /** Connection between the Comment type and the Comment type */
 export type CommentToCommentConnection = {
-  __typename?: "CommentToCommentConnection";
+  __typename: "CommentToCommentConnection";
   /** Edges for the CommentToCommentConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<CommentToCommentConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -1393,7 +1393,7 @@ export type CommentToCommentConnection = {
 
 /** An edge in a connection */
 export type CommentToCommentConnectionEdge = {
-  __typename?: "CommentToCommentConnectionEdge";
+  __typename: "CommentToCommentConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -1464,21 +1464,21 @@ export type CommentToCommentConnectionWhereArgs = {
 
 /** Connection between the Comment type and the Commenter type */
 export type CommentToCommenterConnectionEdge = {
-  __typename?: "CommentToCommenterConnectionEdge";
+  __typename: "CommentToCommenterConnectionEdge";
   /** The node of the connection, without the edges */
   node?: Maybe<FieldWrapper<Commenter>>;
 };
 
 /** Connection between the Comment type and the ContentNode type */
 export type CommentToContentNodeConnectionEdge = {
-  __typename?: "CommentToContentNodeConnectionEdge";
+  __typename: "CommentToContentNodeConnectionEdge";
   /** The node of the connection, without the edges */
   node?: Maybe<FieldWrapper<ContentNode>>;
 };
 
 /** Connection between the Comment type and the Comment type */
 export type CommentToParentCommentConnectionEdge = {
-  __typename?: "CommentToParentCommentConnectionEdge";
+  __typename: "CommentToParentCommentConnectionEdge";
   /** The node of the connection, without the edges */
   node?: Maybe<FieldWrapper<Comment>>;
 };
@@ -1601,7 +1601,7 @@ export enum CommentsConnectionOrderbyEnum {
 
 /** Gravity Forms conditional logic. */
 export type ConditionalLogic = {
-  __typename?: "ConditionalLogic";
+  __typename: "ConditionalLogic";
   /** The type of action the conditional logic will perform. */
   actionType?: Maybe<FieldWrapper<ConditionalLogicActionTypeEnum>>;
   /** Determines how to the rules should be evaluated. */
@@ -1628,7 +1628,7 @@ export enum ConditionalLogicLogicTypeEnum {
 
 /** Gravity Forms conditional logic rule. */
 export type ConditionalLogicRule = {
-  __typename?: "ConditionalLogicRule";
+  __typename: "ConditionalLogicRule";
   /** Target field Id. Field that will have it’s value compared with the value property to determine if this rule is a match. */
   fieldId?: Maybe<FieldWrapper<Scalars["Float"]>>;
   /** Operator to be used when evaluating this rule. */
@@ -1639,7 +1639,7 @@ export type ConditionalLogicRule = {
 
 /** A Gravity Forms   field. */
 export type ConsentField = FormField & {
-  __typename?: "ConsentField";
+  __typename: "ConsentField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Text of the consent checkbox. */
@@ -1770,21 +1770,21 @@ export enum ContentNodeIdTypeEnum {
 
 /** Connection between the ContentNode type and the ContentType type */
 export type ContentNodeToContentTypeConnectionEdge = {
-  __typename?: "ContentNodeToContentTypeConnectionEdge";
+  __typename: "ContentNodeToContentTypeConnectionEdge";
   /** The node of the connection, without the edges */
   node?: Maybe<FieldWrapper<ContentType>>;
 };
 
 /** Connection between the ContentNode type and the User type */
 export type ContentNodeToEditLastConnectionEdge = {
-  __typename?: "ContentNodeToEditLastConnectionEdge";
+  __typename: "ContentNodeToEditLastConnectionEdge";
   /** The node of the connection, without the edges */
   node?: Maybe<FieldWrapper<User>>;
 };
 
 /** Connection between the ContentNode type and the User type */
 export type ContentNodeToEditLockConnectionEdge = {
-  __typename?: "ContentNodeToEditLockConnectionEdge";
+  __typename: "ContentNodeToEditLockConnectionEdge";
   /** The timestamp for when the node was last edited */
   lockTimestamp?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The node of the connection, without the edges */
@@ -1793,7 +1793,7 @@ export type ContentNodeToEditLockConnectionEdge = {
 
 /** Connection between the ContentNode type and the EnqueuedScript type */
 export type ContentNodeToEnqueuedScriptConnection = {
-  __typename?: "ContentNodeToEnqueuedScriptConnection";
+  __typename: "ContentNodeToEnqueuedScriptConnection";
   /** Edges for the ContentNodeToEnqueuedScriptConnection connection */
   edges?: Maybe<
     Array<Maybe<FieldWrapper<ContentNodeToEnqueuedScriptConnectionEdge>>>
@@ -1806,7 +1806,7 @@ export type ContentNodeToEnqueuedScriptConnection = {
 
 /** An edge in a connection */
 export type ContentNodeToEnqueuedScriptConnectionEdge = {
-  __typename?: "ContentNodeToEnqueuedScriptConnectionEdge";
+  __typename: "ContentNodeToEnqueuedScriptConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -1815,7 +1815,7 @@ export type ContentNodeToEnqueuedScriptConnectionEdge = {
 
 /** Connection between the ContentNode type and the EnqueuedStylesheet type */
 export type ContentNodeToEnqueuedStylesheetConnection = {
-  __typename?: "ContentNodeToEnqueuedStylesheetConnection";
+  __typename: "ContentNodeToEnqueuedStylesheetConnection";
   /** Edges for the ContentNodeToEnqueuedStylesheetConnection connection */
   edges?: Maybe<
     Array<Maybe<FieldWrapper<ContentNodeToEnqueuedStylesheetConnectionEdge>>>
@@ -1828,7 +1828,7 @@ export type ContentNodeToEnqueuedStylesheetConnection = {
 
 /** An edge in a connection */
 export type ContentNodeToEnqueuedStylesheetConnectionEdge = {
-  __typename?: "ContentNodeToEnqueuedStylesheetConnectionEdge";
+  __typename: "ContentNodeToEnqueuedStylesheetConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -1847,7 +1847,7 @@ export type ContentTemplate = {
 /** An Post Type object */
 export type ContentType = Node &
   UniformResourceIdentifiable & {
-    __typename?: "ContentType";
+    __typename: "ContentType";
     /** Whether this content type should can be exported. */
     canExport?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
     /** Connection between the ContentType type and the Taxonomy type */
@@ -1951,7 +1951,7 @@ export enum ContentTypeIdTypeEnum {
 
 /** Connection between the ContentType type and the ContentNode type */
 export type ContentTypeToContentNodeConnection = {
-  __typename?: "ContentTypeToContentNodeConnection";
+  __typename: "ContentTypeToContentNodeConnection";
   /** Edges for the ContentTypeToContentNodeConnection connection */
   edges?: Maybe<
     Array<Maybe<FieldWrapper<ContentTypeToContentNodeConnectionEdge>>>
@@ -1964,7 +1964,7 @@ export type ContentTypeToContentNodeConnection = {
 
 /** An edge in a connection */
 export type ContentTypeToContentNodeConnectionEdge = {
-  __typename?: "ContentTypeToContentNodeConnectionEdge";
+  __typename: "ContentTypeToContentNodeConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -2013,7 +2013,7 @@ export type ContentTypeToContentNodeConnectionWhereArgs = {
 
 /** Connection between the ContentType type and the Taxonomy type */
 export type ContentTypeToTaxonomyConnection = {
-  __typename?: "ContentTypeToTaxonomyConnection";
+  __typename: "ContentTypeToTaxonomyConnection";
   /** Edges for the ContentTypeToTaxonomyConnection connection */
   edges?: Maybe<
     Array<Maybe<FieldWrapper<ContentTypeToTaxonomyConnectionEdge>>>
@@ -2026,7 +2026,7 @@ export type ContentTypeToTaxonomyConnection = {
 
 /** An edge in a connection */
 export type ContentTypeToTaxonomyConnectionEdge = {
-  __typename?: "ContentTypeToTaxonomyConnectionEdge";
+  __typename: "ContentTypeToTaxonomyConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -2069,7 +2069,7 @@ export type CreateCategoryInput = {
 
 /** The payload for the createCategory mutation */
 export type CreateCategoryPayload = {
-  __typename?: "CreateCategoryPayload";
+  __typename: "CreateCategoryPayload";
   /** The created category */
   category?: Maybe<FieldWrapper<Category>>;
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -2102,7 +2102,7 @@ export type CreateCommentInput = {
 
 /** The payload for the createComment mutation */
 export type CreateCommentPayload = {
-  __typename?: "CreateCommentPayload";
+  __typename: "CreateCommentPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The comment that was created */
@@ -2147,7 +2147,7 @@ export type CreateMediaItemInput = {
 
 /** The payload for the createMediaItem mutation */
 export type CreateMediaItemPayload = {
-  __typename?: "CreateMediaItemPayload";
+  __typename: "CreateMediaItemPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The MediaItem object mutation type. */
@@ -2184,7 +2184,7 @@ export type CreatePageInput = {
 
 /** The payload for the createPage mutation */
 export type CreatePagePayload = {
-  __typename?: "CreatePagePayload";
+  __typename: "CreatePagePayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The Post object mutation type. */
@@ -2207,7 +2207,7 @@ export type CreatePostFormatInput = {
 
 /** The payload for the createPostFormat mutation */
 export type CreatePostFormatPayload = {
-  __typename?: "CreatePostFormatPayload";
+  __typename: "CreatePostFormatPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The created post_format */
@@ -2254,7 +2254,7 @@ export type CreatePostInput = {
 
 /** The payload for the createPost mutation */
 export type CreatePostPayload = {
-  __typename?: "CreatePostPayload";
+  __typename: "CreatePostPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The Post object mutation type. */
@@ -2277,7 +2277,7 @@ export type CreateTagInput = {
 
 /** The payload for the createTag mutation */
 export type CreateTagPayload = {
-  __typename?: "CreateTagPayload";
+  __typename: "CreateTagPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The created post_tag */
@@ -2330,7 +2330,7 @@ export type CreateUserInput = {
 
 /** The payload for the createUser mutation */
 export type CreateUserPayload = {
-  __typename?: "CreateUserPayload";
+  __typename: "CreateUserPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The User object mutation type. */
@@ -2345,7 +2345,7 @@ export type DatabaseIdentifier = {
 
 /** A Gravity Forms   field. */
 export type DateField = FormField & {
-  __typename?: "DateField";
+  __typename: "DateField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Determines how the date field displays it’s calendar icon. */
@@ -2448,7 +2448,7 @@ export type DateInput = {
 
 /** Date input values. */
 export type DateInputProperty = {
-  __typename?: "DateInputProperty";
+  __typename: "DateInputProperty";
   /** The autocomplete attribute for the field. */
   autocompleteAttribute?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The custom label for the input. When set, this is used in place of the label. */
@@ -2495,7 +2495,7 @@ export type DateQueryInput = {
 
 /** The template assigned to the node */
 export type DefaultTemplate = ContentTemplate & {
-  __typename?: "DefaultTemplate";
+  __typename: "DefaultTemplate";
   /** The name of the template */
   templateName?: Maybe<FieldWrapper<Scalars["String"]>>;
 };
@@ -2510,7 +2510,7 @@ export type DeleteCategoryInput = {
 
 /** The payload for the deleteCategory mutation */
 export type DeleteCategoryPayload = {
-  __typename?: "DeleteCategoryPayload";
+  __typename: "DeleteCategoryPayload";
   /** The deteted term object */
   category?: Maybe<FieldWrapper<Category>>;
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -2531,7 +2531,7 @@ export type DeleteCommentInput = {
 
 /** The payload for the deleteComment mutation */
 export type DeleteCommentPayload = {
-  __typename?: "DeleteCommentPayload";
+  __typename: "DeleteCommentPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The deleted comment object */
@@ -2552,7 +2552,7 @@ export type DeleteGfDraftEntryInput = {
 
 /** The payload for the deleteGfDraftEntry mutation */
 export type DeleteGfDraftEntryPayload = {
-  __typename?: "DeleteGfDraftEntryPayload";
+  __typename: "DeleteGfDraftEntryPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The global ID of the draft entry that was deleted. */
@@ -2573,7 +2573,7 @@ export type DeleteGfEntryInput = {
 
 /** The payload for the deleteGfEntry mutation */
 export type DeleteGfEntryPayload = {
-  __typename?: "DeleteGfEntryPayload";
+  __typename: "DeleteGfEntryPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The global ID of the draft entry that was deleted. */
@@ -2594,7 +2594,7 @@ export type DeleteMediaItemInput = {
 
 /** The payload for the deleteMediaItem mutation */
 export type DeleteMediaItemPayload = {
-  __typename?: "DeleteMediaItemPayload";
+  __typename: "DeleteMediaItemPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The ID of the deleted mediaItem */
@@ -2615,7 +2615,7 @@ export type DeletePageInput = {
 
 /** The payload for the deletePage mutation */
 export type DeletePagePayload = {
-  __typename?: "DeletePagePayload";
+  __typename: "DeletePagePayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The ID of the deleted object */
@@ -2634,7 +2634,7 @@ export type DeletePostFormatInput = {
 
 /** The payload for the deletePostFormat mutation */
 export type DeletePostFormatPayload = {
-  __typename?: "DeletePostFormatPayload";
+  __typename: "DeletePostFormatPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The ID of the deleted object */
@@ -2655,7 +2655,7 @@ export type DeletePostInput = {
 
 /** The payload for the deletePost mutation */
 export type DeletePostPayload = {
-  __typename?: "DeletePostPayload";
+  __typename: "DeletePostPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The ID of the deleted object */
@@ -2674,7 +2674,7 @@ export type DeleteTagInput = {
 
 /** The payload for the deleteTag mutation */
 export type DeleteTagPayload = {
-  __typename?: "DeleteTagPayload";
+  __typename: "DeleteTagPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The ID of the deleted object */
@@ -2695,7 +2695,7 @@ export type DeleteUserInput = {
 
 /** The payload for the deleteUser mutation */
 export type DeleteUserPayload = {
-  __typename?: "DeleteUserPayload";
+  __typename: "DeleteUserPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The ID of the user that you just deleted */
@@ -2706,7 +2706,7 @@ export type DeleteUserPayload = {
 
 /** The discussion setting type */
 export type DiscussionSettings = {
-  __typename?: "DiscussionSettings";
+  __typename: "DiscussionSettings";
   /** Allow people to submit comments on new posts. */
   defaultCommentStatus?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Allow link notifications from other blogs (pingbacks and trackbacks) on new articles. */
@@ -2723,7 +2723,7 @@ export enum DraftEntryIdTypeEnum {
 
 /** A Gravity Forms   field. */
 export type DropboxField = FormField & {
-  __typename?: "DropboxField";
+  __typename: "DropboxField";
   /** Indicates the field is only displayed and its contents are not submitted with the form/saved with the entry. This is set to true. */
   displayOnly?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** Field ID. */
@@ -2750,7 +2750,7 @@ export type DropboxField = FormField & {
 
 /** A Gravity Forms   field. */
 export type EmailField = FormField & {
-  __typename?: "EmailField";
+  __typename: "EmailField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Determines if the field’s value can be pre-populated dynamically. */
@@ -2817,7 +2817,7 @@ export type EmailFieldInput = {
 
 /** Email input values. */
 export type EmailInputProperty = {
-  __typename?: "EmailInputProperty";
+  __typename: "EmailInputProperty";
   /** The autocomplete attribute for the field. */
   autocompleteAttribute?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The custom label for the input. When set, this is used in place of the label. */
@@ -2855,7 +2855,7 @@ export type EnqueuedAsset = {
 /** Script enqueued by the CMS */
 export type EnqueuedScript = EnqueuedAsset &
   Node & {
-    __typename?: "EnqueuedScript";
+    __typename: "EnqueuedScript";
     /** @todo */
     args?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
     /** Dependencies needed to use this asset */
@@ -2875,7 +2875,7 @@ export type EnqueuedScript = EnqueuedAsset &
 /** Stylesheet enqueued by the CMS */
 export type EnqueuedStylesheet = EnqueuedAsset &
   Node & {
-    __typename?: "EnqueuedStylesheet";
+    __typename: "EnqueuedStylesheet";
     /** @todo */
     args?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
     /** Dependencies needed to use this asset */
@@ -2938,7 +2938,7 @@ export enum EntryIdTypeEnum {
 
 /** The quiz results for the entry. Requires Gravity Forms Quiz to be enabled. */
 export type EntryQuizResults = {
-  __typename?: "EntryQuizResults";
+  __typename: "EntryQuizResults";
   /** The quiz score as a letter grade. */
   grade?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Whether the quiz score meets the assigned passing threshold. */
@@ -2973,7 +2973,7 @@ export enum EntryTypeEnum {
 
 /** Field error. */
 export type FieldError = {
-  __typename?: "FieldError";
+  __typename: "FieldError";
   /** The field with the associated error message. */
   id?: Maybe<FieldWrapper<Scalars["Float"]>>;
   /** Error message. */
@@ -3006,7 +3006,7 @@ export enum FieldFiltersOperatorEnum {
 
 /** A Gravity Forms   field. */
 export type FileUploadField = FormField & {
-  __typename?: "FileUploadField";
+  __typename: "FileUploadField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** A comma-delimited list of the file extensions which may be uploaded. */
@@ -3059,7 +3059,7 @@ export type FileUploadField = FormField & {
 
 /** Gravity Forms button. */
 export type FormButton = {
-  __typename?: "FormButton";
+  __typename: "FormButton";
   /** Controls when the form button should be visible based on values selected on the form. */
   conditionalLogic?: Maybe<FieldWrapper<ConditionalLogic>>;
   /** Contains the URL for the image button. Only applicable when type is set to image. */
@@ -3080,7 +3080,7 @@ export enum FormButtonTypeEnum {
 
 /** Properties for all the email notifications which exist for a form. */
 export type FormConfirmation = {
-  __typename?: "FormConfirmation";
+  __typename: "FormConfirmation";
   /** Controls which form confirmation message should be displayed. */
   conditionalLogic?: Maybe<FieldWrapper<ConditionalLogic>>;
   /** ID. */
@@ -3115,7 +3115,7 @@ export enum FormConfirmationTypeEnum {
 
 /** The policies governing which entry data to include when erasing and exporting personal data. */
 export type FormDataPolicies = {
-  __typename?: "FormDataPolicies";
+  __typename: "FormDataPolicies";
   /** Whether entry data from this form is included when erasing and exporting personal data. */
   canExportAndErase?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** The individual entry data exporting and erasing policies. */
@@ -3134,7 +3134,7 @@ export enum FormDescriptionPlacementEnum {
 
 /** The individual entry data exporting and erasing policies. */
 export type FormEntryDataPolicy = {
-  __typename?: "FormEntryDataPolicy";
+  __typename: "FormEntryDataPolicy";
   /** The array key for the Gravity Forms Entry. */
   key?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Whether this field should be included when erasing personal data. */
@@ -3145,7 +3145,7 @@ export type FormEntryDataPolicy = {
 
 /** Gravity Forms form entry limititation details. */
 export type FormEntryLimits = {
-  __typename?: "FormEntryLimits";
+  __typename: "FormEntryLimits";
   /** Whether the form has a limit on the number of submissions. */
   hasLimit?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** Message that will be displayed when the maximum number of submissions have been reached. */
@@ -3188,7 +3188,7 @@ export enum FormFieldCalendarIconTypeEnum {
 
 /** The form field-specifc policies for exporting and erasing personal data. */
 export type FormFieldDataPolicy = {
-  __typename?: "FormFieldDataPolicy";
+  __typename: "FormFieldDataPolicy";
   /** Whether this field is used to identify the user&#039;s personal data. */
   isIdentificationField?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** Whether this field should be included when erasing personal data. */
@@ -3389,7 +3389,7 @@ export enum FormLabelPlacementEnum {
 
 /** Gravity Forms button. */
 export type FormLastPageButton = {
-  __typename?: "FormLastPageButton";
+  __typename: "FormLastPageButton";
   /** Contains the URL for the image button. Only applicable when type is set to image. */
   imageUrl?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Contains the button text. Only applicable when type is set to text. */
@@ -3412,7 +3412,7 @@ export enum FormLimitEntriesPeriodEnum {
 
 /** Gravity Forms form login requirements data. */
 export type FormLogin = {
-  __typename?: "FormLogin";
+  __typename: "FormLogin";
   /** Whether the form is configured to be displayed only to logged in users. */
   isLoginRequired?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** When `isLoginRequired` is set to true, this controls the message displayed when non-logged in user tries to access the form. */
@@ -3421,7 +3421,7 @@ export type FormLogin = {
 
 /** Properties for all the email notifications which exist for a form. */
 export type FormNotification = {
-  __typename?: "FormNotification";
+  __typename: "FormNotification";
   /** The email or merge tags to be used as the email bcc address. */
   bcc?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** An associative array containing the conditional logic rules. See the Conditional Logic Object for more details. */
@@ -3460,7 +3460,7 @@ export type FormNotification = {
 
 /** Properties for all the email notifications which exist for a form. */
 export type FormNotificationRouting = {
-  __typename?: "FormNotificationRouting";
+  __typename: "FormNotificationRouting";
   /** The email or merge tag to be used as the email To address if this rule is a match. */
   email?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Target field ID. The field that will have it’s value compared with the value property to determine if this rule is a match. */
@@ -3511,7 +3511,7 @@ export enum FormPageProgressTypeEnum {
 
 /** Gravity Forms form pagination data. */
 export type FormPagination = {
-  __typename?: "FormPagination";
+  __typename: "FormPagination";
   /** Progress bar background color. Can be any CSS color value. Only applies when `style` is set to &quot;CUSTOM&quot;. */
   backgroundColor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Progress bar text color. Can be any CSS color value. Only applies when `style` is set to &quot;CUSTOM&quot;. */
@@ -3530,7 +3530,7 @@ export type FormPagination = {
 
 /** Gravity Forms form Personal Data settings. */
 export type FormPersonalData = {
-  __typename?: "FormPersonalData";
+  __typename: "FormPersonalData";
   /** The policies governing which entry data to include when erasing and exporting personal data. */
   dataPolicies?: Maybe<FieldWrapper<FormDataPolicies>>;
   /** The number of days to retain entries. `null` if `retentionPolicy` is set to `RETAIN` entries indefinitely. */
@@ -3543,7 +3543,7 @@ export type FormPersonalData = {
 
 /** Gravity Forms form entry limititation details. */
 export type FormPostCreation = {
-  __typename?: "FormPostCreation";
+  __typename: "FormPostCreation";
   /** When `useCurrentUserAsAuthor` is `false`, this contains the User object for the author. */
   author?: Maybe<FieldWrapper<User>>;
   /** When `useCurrentUserAsAuthor` is `false`, this property contains the user database that will be used as the Post author. */
@@ -3570,7 +3570,7 @@ export type FormPostCreation = {
 
 /** Quiz-specific settings that will affect ALL Quiz fields in the form. */
 export type FormQuiz = {
-  __typename?: "FormQuiz";
+  __typename: "FormQuiz";
   /** The message to display if the quiz grade is below the Pass Percentage. Only used if grading is set to `PASSFAIL`. */
   failConfirmation?: Maybe<FieldWrapper<FormQuizConfirmation>>;
   /** The letter grades to be assigned based on the percentage score achieved. Only used if `grading` is set to `LETTER`. */
@@ -3597,7 +3597,7 @@ export type FormQuiz = {
 
 /** The Quiz Confirmation message data. */
 export type FormQuizConfirmation = {
-  __typename?: "FormQuizConfirmation";
+  __typename: "FormQuizConfirmation";
   /** Whether autoformatting is enabled for the confirmation message. */
   isAutoformatted?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The message to display. */
@@ -3606,7 +3606,7 @@ export type FormQuizConfirmation = {
 
 /** The letter grades to be assigned based on the percentage score achieved. Only used if `grading` is set to `LETTER`. */
 export type FormQuizGrades = {
-  __typename?: "FormQuizGrades";
+  __typename: "FormQuizGrades";
   /** The grade label. */
   text?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The minimum percentage score required to achieve this grade. */
@@ -3643,7 +3643,7 @@ export enum FormRuleOperatorEnum {
 
 /** Gravity Forms form Save and Continue data. */
 export type FormSaveAndContinue = {
-  __typename?: "FormSaveAndContinue";
+  __typename: "FormSaveAndContinue";
   /** Contains the save button text. */
   buttonText?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Whether the Save And Continue feature is enabled. */
@@ -3652,7 +3652,7 @@ export type FormSaveAndContinue = {
 
 /** Gravity Forms form scheduling data. */
 export type FormSchedule = {
-  __typename?: "FormSchedule";
+  __typename: "FormSchedule";
   /** Message to be displayed when form is no longer available. */
   closedMessage?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The Date/time details when the form will become inactive. */
@@ -3667,7 +3667,7 @@ export type FormSchedule = {
 
 /** Gravity Forms form scheduling data. */
 export type FormScheduleDetails = {
-  __typename?: "FormScheduleDetails";
+  __typename: "FormScheduleDetails";
   /** Whether the date is in the AM or PM of a 12-hour clock. */
   amPm?: Maybe<FieldWrapper<AmPmEnum>>;
   /** The schedule date in local time. */
@@ -3710,7 +3710,7 @@ export type FormsConnectionOrderbyInput = {
 
 /** The general setting type */
 export type GeneralSettings = {
-  __typename?: "GeneralSettings";
+  __typename: "GeneralSettings";
   /** A date format for all date strings. */
   dateFormat?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Site tagline. */
@@ -3733,14 +3733,14 @@ export type GeneralSettings = {
 
 /** The genesisBlocksAnalyticsSettings setting type */
 export type GenesisBlocksAnalyticsSettingsSettings = {
-  __typename?: "GenesisBlocksAnalyticsSettingsSettings";
+  __typename: "GenesisBlocksAnalyticsSettingsSettings";
   /** The string Settings Group */
   genesisBlocksAnalyticsOptIn?: Maybe<FieldWrapper<Scalars["String"]>>;
 };
 
 /** The genesisBlocksGlobalSettings setting type */
 export type GenesisBlocksGlobalSettingsSettings = {
-  __typename?: "GenesisBlocksGlobalSettingsSettings";
+  __typename: "GenesisBlocksGlobalSettingsSettings";
   /** The string Settings Group */
   genesisBlocksMailchimpApiKey?: Maybe<FieldWrapper<Scalars["String"]>>;
 };
@@ -3803,7 +3803,7 @@ export enum GfCurrencyEnum {
 export type GfDraftEntry = GfEntry &
   Node &
   NodeWithForm & {
-    __typename?: "GfDraftEntry";
+    __typename: "GfDraftEntry";
     /** The user who created the entry. */
     createdBy?: Maybe<FieldWrapper<User>>;
     /** Database ID of the user that submitted of the form if a logged in user submitted the form. */
@@ -3900,7 +3900,7 @@ export type GfEntryformFieldsArgs = {
 
 /** Connection between the GfEntry type and the FormField type */
 export type GfEntryToFormFieldConnection = {
-  __typename?: "GfEntryToFormFieldConnection";
+  __typename: "GfEntryToFormFieldConnection";
   /** Edges for the GfEntryToFormFieldConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<GfEntryToFormFieldConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -3911,7 +3911,7 @@ export type GfEntryToFormFieldConnection = {
 
 /** An edge in a connection */
 export type GfEntryToFormFieldConnectionEdge = {
-  __typename?: "GfEntryToFormFieldConnectionEdge";
+  __typename: "GfEntryToFormFieldConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -3933,7 +3933,7 @@ export type GfEntryToFormFieldConnectionWhereArgs = {
 /** Gravity Forms form. */
 export type GfForm = DatabaseIdentifier &
   Node & {
-    __typename?: "GfForm";
+    __typename: "GfForm";
     /** Contains the form button settings such as the button text or image button source. */
     button?: Maybe<FieldWrapper<FormButton>>;
     /** Contains the form confirmation settings such as confirmation text or redirect URL. */
@@ -4031,7 +4031,7 @@ export type GfFormformFieldsArgs = {
 
 /** Connection between the GfForm type and the FormField type */
 export type GfFormToFormFieldConnection = {
-  __typename?: "GfFormToFormFieldConnection";
+  __typename: "GfFormToFormFieldConnection";
   /** Edges for the GfFormToFormFieldConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<GfFormToFormFieldConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -4042,7 +4042,7 @@ export type GfFormToFormFieldConnection = {
 
 /** An edge in a connection */
 export type GfFormToFormFieldConnectionEdge = {
-  __typename?: "GfFormToFormFieldConnectionEdge";
+  __typename: "GfFormToFormFieldConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -4063,7 +4063,7 @@ export type GfFormToFormFieldConnectionWhereArgs = {
 
 /** Connection between the GfForm type and the GfEntry type */
 export type GfFormToGfEntryConnection = {
-  __typename?: "GfFormToGfEntryConnection";
+  __typename: "GfFormToGfEntryConnection";
   /** The number of (filtered) entries submitted to the form. */
   count?: Maybe<FieldWrapper<Scalars["Int"]>>;
   /** Edges for the GfFormToGfEntryConnection connection */
@@ -4078,7 +4078,7 @@ export type GfFormToGfEntryConnection = {
 
 /** An edge in a connection */
 export type GfFormToGfEntryConnectionEdge = {
-  __typename?: "GfFormToGfEntryConnectionEdge";
+  __typename: "GfFormToGfEntryConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -4101,7 +4101,7 @@ export type GfFormToGfEntryConnectionWhereArgs = {
 
 /** Gravity Forms Logging Settings. */
 export type GfLogger = {
-  __typename?: "GfLogger";
+  __typename: "GfLogger";
   /** Whether the logger is enabled. */
   isEnabled?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** The name of the Gravity Forms logger. */
@@ -4110,7 +4110,7 @@ export type GfLogger = {
 
 /** The quiz results for all entries. */
 export type GfQuizResults = {
-  __typename?: "GfQuizResults";
+  __typename: "GfQuizResults";
   /** Average percentage score as calculated across all entries received. */
   averagePercentage?: Maybe<FieldWrapper<Scalars["Float"]>>;
   /** Average score as calculated across all entries received. */
@@ -4131,7 +4131,7 @@ export type GfQuizResults = {
 
 /** The response counts for individual quiz fields. */
 export type GfQuizResultsChoiceCount = {
-  __typename?: "GfQuizResultsChoiceCount";
+  __typename: "GfQuizResultsChoiceCount";
   /** The number of entries with this choice provided. */
   count?: Maybe<FieldWrapper<Scalars["Int"]>>;
   /** The choice text. */
@@ -4142,7 +4142,7 @@ export type GfQuizResultsChoiceCount = {
 
 /** The quiz results summary for an individual quiz field. */
 export type GfQuizResultsFieldCount = {
-  __typename?: "GfQuizResultsFieldCount";
+  __typename: "GfQuizResultsFieldCount";
   /** A list of the individual responses and their counts. */
   choiceCounts?: Maybe<Array<Maybe<FieldWrapper<GfQuizResultsChoiceCount>>>>;
   /** The number of correct responses across all entries received. */
@@ -4159,14 +4159,14 @@ export type GfQuizResultsFieldCount = {
 
 /** Connection between the GfQuizResultsFieldCount type and the QuizField type */
 export type GfQuizResultsFieldCountToQuizFieldConnectionEdge = {
-  __typename?: "GfQuizResultsFieldCountToQuizFieldConnectionEdge";
+  __typename: "GfQuizResultsFieldCountToQuizFieldConnectionEdge";
   /** The node of the connection, without the edges */
   node?: Maybe<FieldWrapper<QuizField>>;
 };
 
 /** A quiz Grade and its count. */
 export type GfQuizResultsGradeCount = {
-  __typename?: "GfQuizResultsGradeCount";
+  __typename: "GfQuizResultsGradeCount";
   /** The number of entries that received this grade across all entries received. */
   count?: Maybe<FieldWrapper<Scalars["Int"]>>;
   /** The quiz grade. */
@@ -4175,7 +4175,7 @@ export type GfQuizResultsGradeCount = {
 
 /** A quiz score and its count. */
 export type GfQuizResultsScoreCount = {
-  __typename?: "GfQuizResultsScoreCount";
+  __typename: "GfQuizResultsScoreCount";
   /** The number of entries that received this score across all entries received. */
   count?: Maybe<FieldWrapper<Scalars["Int"]>>;
   /** The quiz score. */
@@ -4184,7 +4184,7 @@ export type GfQuizResultsScoreCount = {
 
 /** Gravity Forms Settings. */
 export type GfSettings = {
-  __typename?: "GfSettings";
+  __typename: "GfSettings";
   /** The default currency for your forms. Used for product, credit card, and other fields. */
   currency?: Maybe<FieldWrapper<GfCurrencyEnum>>;
   /** Whether Gravity Forms to download and install bug fixes and security updates automatically in the background. Requires a valid license key. */
@@ -4203,7 +4203,7 @@ export type GfSettings = {
 
 /** Gravity Forms Logging Settings. */
 export type GfSettingsLogging = {
-  __typename?: "GfSettingsLogging";
+  __typename: "GfSettingsLogging";
   /** Whether Gravity Forms internal logging is enabled. Logging allows you to easily debug the inner workings of Gravity Forms to solve any possible issues. */
   isLoggingEnabled?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** A list of registered Gravity Forms loggers and their configurations. */
@@ -4215,7 +4215,7 @@ export type GfSubmittedEntry = DatabaseIdentifier &
   GfEntry &
   Node &
   NodeWithForm & {
-    __typename?: "GfSubmittedEntry";
+    __typename: "GfSubmittedEntry";
     /** The user who created the entry. */
     createdBy?: Maybe<FieldWrapper<User>>;
     /** Database ID of the user that submitted of the form if a logged in user submitted the form. */
@@ -4282,7 +4282,7 @@ export type GfSubmittedEntryformFieldsArgs = {
 
 /** A Gravity Forms   field. */
 export type HiddenField = FormField & {
-  __typename?: "HiddenField";
+  __typename: "HiddenField";
   /** Determines if the field’s value can be pre-populated dynamically. */
   canPrepopulate?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** Contains the default value for the field. When specified, the field&#039;s value will be populated with the contents of this property when the form is displayed. */
@@ -4353,7 +4353,7 @@ export type HierarchicalContentNodechildrenArgs = {
 
 /** Connection between the HierarchicalContentNode type and the ContentNode type */
 export type HierarchicalContentNodeToContentNodeAncestorsConnection = {
-  __typename?: "HierarchicalContentNodeToContentNodeAncestorsConnection";
+  __typename: "HierarchicalContentNodeToContentNodeAncestorsConnection";
   /** Edges for the HierarchicalContentNodeToContentNodeAncestorsConnection connection */
   edges?: Maybe<
     Array<
@@ -4370,7 +4370,7 @@ export type HierarchicalContentNodeToContentNodeAncestorsConnection = {
 
 /** An edge in a connection */
 export type HierarchicalContentNodeToContentNodeAncestorsConnectionEdge = {
-  __typename?: "HierarchicalContentNodeToContentNodeAncestorsConnectionEdge";
+  __typename: "HierarchicalContentNodeToContentNodeAncestorsConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -4419,7 +4419,7 @@ export type HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs = {
 
 /** Connection between the HierarchicalContentNode type and the ContentNode type */
 export type HierarchicalContentNodeToContentNodeChildrenConnection = {
-  __typename?: "HierarchicalContentNodeToContentNodeChildrenConnection";
+  __typename: "HierarchicalContentNodeToContentNodeChildrenConnection";
   /** Edges for the HierarchicalContentNodeToContentNodeChildrenConnection connection */
   edges?: Maybe<
     Array<
@@ -4436,7 +4436,7 @@ export type HierarchicalContentNodeToContentNodeChildrenConnection = {
 
 /** An edge in a connection */
 export type HierarchicalContentNodeToContentNodeChildrenConnectionEdge = {
-  __typename?: "HierarchicalContentNodeToContentNodeChildrenConnectionEdge";
+  __typename: "HierarchicalContentNodeToContentNodeChildrenConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -4485,7 +4485,7 @@ export type HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs = {
 
 /** Connection between the HierarchicalContentNode type and the ContentNode type */
 export type HierarchicalContentNodeToParentContentNodeConnectionEdge = {
-  __typename?: "HierarchicalContentNodeToParentContentNodeConnectionEdge";
+  __typename: "HierarchicalContentNodeToParentContentNodeConnectionEdge";
   /** The node of the connection, without the edges */
   node?: Maybe<FieldWrapper<ContentNode>>;
 };
@@ -4500,7 +4500,7 @@ export type HierarchicalTermNode = {
 
 /** A Gravity Forms   field. */
 export type HtmlField = FormField & {
-  __typename?: "HtmlField";
+  __typename: "HtmlField";
   /** Controls the visibility of the field based on values selected by the user. */
   conditionalLogic?: Maybe<FieldWrapper<ConditionalLogic>>;
   /** Content of an HTML block field to be displayed on the form. */
@@ -4531,7 +4531,7 @@ export type HtmlField = FormField & {
 
 /** The individual properties for each element of the PostImage value field. */
 export type ImageFieldValue = {
-  __typename?: "ImageFieldValue";
+  __typename: "ImageFieldValue";
   /** The image alt text. */
   altText?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The image caption. */
@@ -4560,7 +4560,7 @@ export type ImageInput = {
 
 /** A Gravity Forms   field. */
 export type LikertField = FormField & {
-  __typename?: "LikertField";
+  __typename: "LikertField";
   /** Indicates the field is only displayed and its contents are not submitted with the form/saved with the entry. This is set to true. */
   displayOnly?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** Field ID. */
@@ -4587,7 +4587,7 @@ export type LikertField = FormField & {
 
 /** A Gravity Forms   field. */
 export type ListField = FormField & {
-  __typename?: "ListField";
+  __typename: "ListField";
   /** The URL of the image to be used for the add row button. */
   addIconUrl?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
@@ -4646,7 +4646,7 @@ export type ListField = FormField & {
 
 /** List choice values. */
 export type ListFieldChoice = {
-  __typename?: "ListFieldChoice";
+  __typename: "ListFieldChoice";
   /** The text to be displayed to the user when displaying this choice. */
   text?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The value to be stored in the database when this choice is selected. Note: This property is only supported by the Drop Down and Post Category fields. Checkboxes and Radio fields will store the text property in the database regardless of the value property. */
@@ -4661,7 +4661,7 @@ export type ListFieldInput = {
 
 /** The individual properties for each element of the List value field. */
 export type ListFieldValue = {
-  __typename?: "ListFieldValue";
+  __typename: "ListFieldValue";
   /** Input values. */
   values?: Maybe<Array<Maybe<FieldWrapper<Scalars["String"]>>>>;
 };
@@ -4678,7 +4678,7 @@ export type LoginInput = {
 
 /** The payload for the login mutation */
 export type LoginPayload = {
-  __typename?: "LoginPayload";
+  __typename: "LoginPayload";
   /** JWT Token that can be used in future requests for Authentication */
   authToken?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -4691,7 +4691,7 @@ export type LoginPayload = {
 
 /** File details for a Media Item */
 export type MediaDetails = {
-  __typename?: "MediaDetails";
+  __typename: "MediaDetails";
   /** The filename of the mediaItem */
   file?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The height of the mediaItem */
@@ -4714,7 +4714,7 @@ export type MediaItem = ContentNode &
   NodeWithTemplate &
   NodeWithTitle &
   UniformResourceIdentifiable & {
-    __typename?: "MediaItem";
+    __typename: "MediaItem";
     /** Alternative text to display when resource is not displayed */
     altText?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** Returns ancestors of the node. Default ordered as lowest (closest to the child) to highest (closest to the root). */
@@ -4926,7 +4926,7 @@ export enum MediaItemIdType {
 
 /** Meta connected to a MediaItem */
 export type MediaItemMeta = {
-  __typename?: "MediaItemMeta";
+  __typename: "MediaItemMeta";
   /** Aperture measurement of the media item. */
   aperture?: Maybe<FieldWrapper<Scalars["Float"]>>;
   /** Information about the camera used to create the media item. */
@@ -4993,7 +4993,7 @@ export enum MediaItemStatusEnum {
 
 /** Connection between the mediaItem type and the Comment type */
 export type MediaItemToCommentConnection = {
-  __typename?: "MediaItemToCommentConnection";
+  __typename: "MediaItemToCommentConnection";
   /** Edges for the MediaItemToCommentConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<MediaItemToCommentConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -5004,7 +5004,7 @@ export type MediaItemToCommentConnection = {
 
 /** An edge in a connection */
 export type MediaItemToCommentConnectionEdge = {
-  __typename?: "MediaItemToCommentConnectionEdge";
+  __typename: "MediaItemToCommentConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -5075,7 +5075,7 @@ export type MediaItemToCommentConnectionWhereArgs = {
 
 /** Details of an available size for a media item */
 export type MediaSize = {
-  __typename?: "MediaSize";
+  __typename: "MediaSize";
   /** The filename of the referenced size */
   file?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The filesize of the resource */
@@ -5095,7 +5095,7 @@ export type MediaSize = {
 /** Menus are the containers for navigation items. Menus can be assigned to menu locations, which are typically registered by the active theme. */
 export type Menu = DatabaseIdentifier &
   Node & {
-    __typename?: "Menu";
+    __typename: "Menu";
     /** The number of items in the menu */
     count?: Maybe<FieldWrapper<Scalars["Int"]>>;
     /** The unique identifier stored in the database */
@@ -5131,7 +5131,7 @@ export type MenumenuItemsArgs = {
 /** Navigation menu items are the individual items assigned to a menu. These are rendered as the links in a navigation menu. */
 export type MenuItem = DatabaseIdentifier &
   Node & {
-    __typename?: "MenuItem";
+    __typename: "MenuItem";
     /** Connection between the MenuItem type and the MenuItem type */
     childItems?: Maybe<FieldWrapper<MenuItemToMenuItemConnection>>;
     /** Connection from MenuItem to it&#039;s connected node */
@@ -5214,14 +5214,14 @@ export type MenuItemObjectUnion = Category | Page | Post | Tag;
 
 /** Connection between the MenuItem type and the Menu type */
 export type MenuItemToMenuConnectionEdge = {
-  __typename?: "MenuItemToMenuConnectionEdge";
+  __typename: "MenuItemToMenuConnectionEdge";
   /** The node of the connection, without the edges */
   node?: Maybe<FieldWrapper<Menu>>;
 };
 
 /** Connection between the MenuItem type and the MenuItem type */
 export type MenuItemToMenuItemConnection = {
-  __typename?: "MenuItemToMenuItemConnection";
+  __typename: "MenuItemToMenuItemConnection";
   /** Edges for the MenuItemToMenuItemConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<MenuItemToMenuItemConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -5232,7 +5232,7 @@ export type MenuItemToMenuItemConnection = {
 
 /** An edge in a connection */
 export type MenuItemToMenuItemConnectionEdge = {
-  __typename?: "MenuItemToMenuItemConnectionEdge";
+  __typename: "MenuItemToMenuItemConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -5253,7 +5253,7 @@ export type MenuItemToMenuItemConnectionWhereArgs = {
 
 /** Connection between the MenuItem type and the MenuItemLinkable type */
 export type MenuItemToMenuItemLinkableConnectionEdge = {
-  __typename?: "MenuItemToMenuItemLinkableConnectionEdge";
+  __typename: "MenuItemToMenuItemLinkableConnectionEdge";
   /** The node of the connection, without the edges */
   node?: Maybe<FieldWrapper<MenuItemLinkable>>;
 };
@@ -5278,7 +5278,7 @@ export enum MenuNodeIdTypeEnum {
 
 /** Connection between the Menu type and the MenuItem type */
 export type MenuToMenuItemConnection = {
-  __typename?: "MenuToMenuItemConnection";
+  __typename: "MenuToMenuItemConnection";
   /** Edges for the MenuToMenuItemConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<MenuToMenuItemConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -5289,7 +5289,7 @@ export type MenuToMenuItemConnection = {
 
 /** An edge in a connection */
 export type MenuToMenuItemConnectionEdge = {
-  __typename?: "MenuToMenuItemConnectionEdge";
+  __typename: "MenuToMenuItemConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -5496,7 +5496,7 @@ export enum MimeTypeEnum {
 
 /** A Gravity Forms   field. */
 export type MultiSelectField = FormField & {
-  __typename?: "MultiSelectField";
+  __typename: "MultiSelectField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Determines if the field’s value can be pre-populated dynamically. */
@@ -5553,7 +5553,7 @@ export type MultiSelectField = FormField & {
 
 /** Multiselect choice values. */
 export type MultiSelectFieldChoice = {
-  __typename?: "MultiSelectFieldChoice";
+  __typename: "MultiSelectFieldChoice";
   /** Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected. */
   isSelected?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** The text to be displayed to the user when displaying this choice. */
@@ -5564,7 +5564,7 @@ export type MultiSelectFieldChoice = {
 
 /** A Gravity Forms   field. */
 export type NameField = FormField & {
-  __typename?: "NameField";
+  __typename: "NameField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Determines if the field’s value can be pre-populated dynamically. */
@@ -5619,7 +5619,7 @@ export type NameField = FormField & {
 
 /** Name choice values. */
 export type NameFieldChoice = {
-  __typename?: "NameFieldChoice";
+  __typename: "NameFieldChoice";
   /** Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected. */
   isSelected?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** The text to be displayed to the user when displaying this choice. */
@@ -5644,7 +5644,7 @@ export type NameFieldInput = {
 
 /** The individual properties for each element of the Name value field. */
 export type NameFieldValue = {
-  __typename?: "NameFieldValue";
+  __typename: "NameFieldValue";
   /** First name. */
   first?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Last name. */
@@ -5659,7 +5659,7 @@ export type NameFieldValue = {
 
 /** Name input values. */
 export type NameInputProperty = {
-  __typename?: "NameInputProperty";
+  __typename: "NameInputProperty";
   /** The autocomplete attribute for the field. */
   autocompleteAttribute?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The available choices for the name field. */
@@ -5702,7 +5702,7 @@ export type NodeWithAuthor = {
 
 /** Connection between the NodeWithAuthor type and the User type */
 export type NodeWithAuthorToUserConnectionEdge = {
-  __typename?: "NodeWithAuthorToUserConnectionEdge";
+  __typename: "NodeWithAuthorToUserConnectionEdge";
   /** The node of the connection, without the edges */
   node?: Maybe<FieldWrapper<User>>;
 };
@@ -5821,7 +5821,7 @@ export type NodeWithFeaturedImageenqueuedStylesheetsArgs = {
 
 /** Connection between the NodeWithFeaturedImage type and the MediaItem type */
 export type NodeWithFeaturedImageToMediaItemConnectionEdge = {
-  __typename?: "NodeWithFeaturedImageToMediaItemConnectionEdge";
+  __typename: "NodeWithFeaturedImageToMediaItemConnectionEdge";
   /** The node of the connection, without the edges */
   node?: Maybe<FieldWrapper<MediaItem>>;
 };
@@ -5854,7 +5854,7 @@ export type NodeWithRevisions = {
 
 /** Connection between the NodeWithRevisions type and the ContentNode type */
 export type NodeWithRevisionsToContentNodeConnectionEdge = {
-  __typename?: "NodeWithRevisionsToContentNodeConnectionEdge";
+  __typename: "NodeWithRevisionsToContentNodeConnectionEdge";
   /** The node of the connection, without the edges */
   node?: Maybe<FieldWrapper<ContentNode>>;
 };
@@ -5888,7 +5888,7 @@ export type NodeWithTrackbacks = {
 
 /** A Gravity Forms   field. */
 export type NumberField = FormField & {
-  __typename?: "NumberField";
+  __typename: "NumberField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The autocomplete attribute for the field. */
@@ -5991,7 +5991,7 @@ export type Page = ContentNode &
   NodeWithTemplate &
   NodeWithTitle &
   UniformResourceIdentifiable & {
-    __typename?: "Page";
+    __typename: "Page";
     /** Returns ancestors of the node. Default ordered as lowest (closest to the child) to highest (closest to the root). */
     ancestors?: Maybe<
       FieldWrapper<HierarchicalContentNodeToContentNodeAncestorsConnection>
@@ -6186,7 +6186,7 @@ export type PagetitleArgs = {
 
 /** A Gravity Forms   field. */
 export type PageField = FormField & {
-  __typename?: "PageField";
+  __typename: "PageField";
   /** Controls the visibility of the field based on values selected by the user. */
   conditionalLogic?: Maybe<FieldWrapper<ConditionalLogic>>;
   /** String containing the custom CSS classes to be added to the &lt;li&gt; tag that contains the field. Useful for applying custom formatting to specific fields. */
@@ -6225,7 +6225,7 @@ export enum PageIdType {
 
 /** Connection between the page type and the Comment type */
 export type PageToCommentConnection = {
-  __typename?: "PageToCommentConnection";
+  __typename: "PageToCommentConnection";
   /** Edges for the PageToCommentConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<PageToCommentConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -6236,7 +6236,7 @@ export type PageToCommentConnection = {
 
 /** An edge in a connection */
 export type PageToCommentConnectionEdge = {
-  __typename?: "PageToCommentConnectionEdge";
+  __typename: "PageToCommentConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -6307,14 +6307,14 @@ export type PageToCommentConnectionWhereArgs = {
 
 /** Connection between the page type and the page type */
 export type PageToPreviewConnectionEdge = {
-  __typename?: "PageToPreviewConnectionEdge";
+  __typename: "PageToPreviewConnectionEdge";
   /** The node of the connection, without the edges */
   node?: Maybe<FieldWrapper<Page>>;
 };
 
 /** Connection between the page type and the page type */
 export type PageToRevisionConnection = {
-  __typename?: "PageToRevisionConnection";
+  __typename: "PageToRevisionConnection";
   /** Edges for the pageToRevisionConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<PageToRevisionConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -6325,7 +6325,7 @@ export type PageToRevisionConnection = {
 
 /** An edge in a connection */
 export type PageToRevisionConnectionEdge = {
-  __typename?: "PageToRevisionConnectionEdge";
+  __typename: "PageToRevisionConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -6380,7 +6380,7 @@ export type PageToRevisionConnectionWhereArgs = {
 
 /** A Gravity Forms   field. */
 export type PasswordField = FormField & {
-  __typename?: "PasswordField";
+  __typename: "PasswordField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Controls the visibility of the field based on values selected by the user. */
@@ -6447,7 +6447,7 @@ export enum PasswordFieldMinStrengthEnum {
 
 /** Password input values. */
 export type PasswordInputProperty = {
-  __typename?: "PasswordInputProperty";
+  __typename: "PasswordInputProperty";
   /** The custom label for the input. When set, this is used in place of the label. */
   customLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The input ID. Input IDs follow the following naming convention: FIELDID.INPUTID (i.e. 5.1), where FIELDID is the id of the containing field and INPUTID specifies the input field. */
@@ -6462,7 +6462,7 @@ export type PasswordInputProperty = {
 
 /** A Gravity Forms   field. */
 export type PhoneField = FormField & {
-  __typename?: "PhoneField";
+  __typename: "PhoneField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The autocomplete attribute for the field. */
@@ -6531,7 +6531,7 @@ export enum PhoneFieldFormatEnum {
 
 /** An plugin object */
 export type Plugin = Node & {
-  __typename?: "Plugin";
+  __typename: "Plugin";
   /** Name of the plugin author(s), may also be a company name. */
   author?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** URI for the related author(s)/company website. */
@@ -6554,7 +6554,7 @@ export type Plugin = Node & {
 
 /** A Gravity Forms   field. */
 export type PollField = FormField & {
-  __typename?: "PollField";
+  __typename: "PollField";
   /** Indicates the field is only displayed and its contents are not submitted with the form/saved with the entry. This is set to true. */
   displayOnly?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** Field ID. */
@@ -6592,7 +6592,7 @@ export type Post = ContentNode &
   NodeWithTitle &
   NodeWithTrackbacks &
   UniformResourceIdentifiable & {
-    __typename?: "Post";
+    __typename: "Post";
     /** Connection between the NodeWithAuthor type and the User type */
     author?: Maybe<FieldWrapper<NodeWithAuthorToUserConnectionEdge>>;
     /** The database identifier of the author of the node */
@@ -6818,7 +6818,7 @@ export type PostCategoriesNodeInput = {
 /** A Gravity Forms  post_category field. */
 export type PostCategoryCheckboxField = FormField &
   PostCategoryField & {
-    __typename?: "PostCategoryCheckboxField";
+    __typename: "PostCategoryCheckboxField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** Determines if the field’s value can be pre-populated dynamically. */
@@ -6943,7 +6943,7 @@ export type PostCategoryField = {
 
 /** Post_category choice values. */
 export type PostCategoryFieldChoice = {
-  __typename?: "PostCategoryFieldChoice";
+  __typename: "PostCategoryFieldChoice";
   /** Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected. */
   isSelected?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** The text to be displayed to the user when displaying this choice. */
@@ -6954,7 +6954,7 @@ export type PostCategoryFieldChoice = {
 
 /** Post_category input values. */
 export type PostCategoryInputProperty = {
-  __typename?: "PostCategoryInputProperty";
+  __typename: "PostCategoryInputProperty";
   /** The input ID. Input IDs follow the following naming convention: FIELDID.INPUTID (i.e. 5.1), where FIELDID is the id of the containing field and INPUTID specifies the input field. */
   id?: Maybe<FieldWrapper<Scalars["Float"]>>;
   /** Field label that will be displayed on the form and on the admin pages. */
@@ -6966,7 +6966,7 @@ export type PostCategoryInputProperty = {
 /** A Gravity Forms  post_category field. */
 export type PostCategoryMultiSelectField = FormField &
   PostCategoryField & {
-    __typename?: "PostCategoryMultiSelectField";
+    __typename: "PostCategoryMultiSelectField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** Determines if the field’s value can be pre-populated dynamically. */
@@ -7032,7 +7032,7 @@ export type PostCategoryMultiSelectField = FormField &
 /** A Gravity Forms  post_category field. */
 export type PostCategoryRadioField = FormField &
   PostCategoryField & {
-    __typename?: "PostCategoryRadioField";
+    __typename: "PostCategoryRadioField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** Determines if the field’s value can be pre-populated dynamically. */
@@ -7096,7 +7096,7 @@ export type PostCategoryRadioField = FormField &
 /** A Gravity Forms  post_category field. */
 export type PostCategorySelectField = FormField &
   PostCategoryField & {
-    __typename?: "PostCategorySelectField";
+    __typename: "PostCategorySelectField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** The autocomplete attribute for the field. */
@@ -7167,7 +7167,7 @@ export type PostCategorySelectField = FormField &
 
 /** A Gravity Forms   field. */
 export type PostContentField = FormField & {
-  __typename?: "PostContentField";
+  __typename: "PostContentField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Determines if the field’s value can be pre-populated dynamically. */
@@ -7225,7 +7225,7 @@ export type PostContentField = FormField & {
 /** A Gravity Forms  post_custom_field field. */
 export type PostCustomCheckboxField = FormField &
   PostCustomField & {
-    __typename?: "PostCustomCheckboxField";
+    __typename: "PostCustomCheckboxField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** Determines if the field’s value can be pre-populated dynamically. */
@@ -7290,7 +7290,7 @@ export type PostCustomCheckboxField = FormField &
 
 /** Post_custom_field choice values. */
 export type PostCustomCheckboxFieldChoice = {
-  __typename?: "PostCustomCheckboxFieldChoice";
+  __typename: "PostCustomCheckboxFieldChoice";
   /** Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected. */
   isSelected?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** The text to be displayed to the user when displaying this choice. */
@@ -7302,7 +7302,7 @@ export type PostCustomCheckboxFieldChoice = {
 /** A Gravity Forms  post_custom_field field. */
 export type PostCustomDateField = FormField &
   PostCustomField & {
-    __typename?: "PostCustomDateField";
+    __typename: "PostCustomDateField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** Determines how the date field displays it’s calendar icon. */
@@ -7374,7 +7374,7 @@ export type PostCustomDateField = FormField &
 /** A Gravity Forms  post_custom_field field. */
 export type PostCustomEmailField = FormField &
   PostCustomField & {
-    __typename?: "PostCustomEmailField";
+    __typename: "PostCustomEmailField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** The autocomplete attribute for the field. */
@@ -7496,7 +7496,7 @@ export type PostCustomField = {
 /** A Gravity Forms  post_custom_field field. */
 export type PostCustomFileuploadField = FormField &
   PostCustomField & {
-    __typename?: "PostCustomFileuploadField";
+    __typename: "PostCustomFileuploadField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** A comma-delimited list of the file extensions which may be uploaded. */
@@ -7562,7 +7562,7 @@ export type PostCustomFileuploadField = FormField &
 /** A Gravity Forms  post_custom_field field. */
 export type PostCustomHiddenField = FormField &
   PostCustomField & {
-    __typename?: "PostCustomHiddenField";
+    __typename: "PostCustomHiddenField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** Determines if the field’s value can be pre-populated dynamically. */
@@ -7619,7 +7619,7 @@ export type PostCustomHiddenField = FormField &
 
 /** Post_custom_field input values. */
 export type PostCustomInputProperty = {
-  __typename?: "PostCustomInputProperty";
+  __typename: "PostCustomInputProperty";
   /** The input ID. Input IDs follow the following naming convention: FIELDID.INPUTID (i.e. 5.1), where FIELDID is the id of the containing field and INPUTID specifies the input field. */
   id?: Maybe<FieldWrapper<Scalars["Float"]>>;
   /** Field label that will be displayed on the form and on the admin pages. */
@@ -7631,7 +7631,7 @@ export type PostCustomInputProperty = {
 /** A Gravity Forms  post_custom_field field. */
 export type PostCustomListField = FormField &
   PostCustomField & {
-    __typename?: "PostCustomListField";
+    __typename: "PostCustomListField";
     /** The URL of the image to be used for the add row button. */
     addIconUrl?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
@@ -7698,7 +7698,7 @@ export type PostCustomListField = FormField &
 
 /** Post_custom_field choice values. */
 export type PostCustomListFieldChoice = {
-  __typename?: "PostCustomListFieldChoice";
+  __typename: "PostCustomListFieldChoice";
   /** The text to be displayed to the user when displaying this choice. */
   text?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The value to be stored in the database when this choice is selected. Note: This property is only supported by the Drop Down and Post Category fields. Checkboxes and Radio fields will store the text property in the database regardless of the value property. */
@@ -7708,7 +7708,7 @@ export type PostCustomListFieldChoice = {
 /** A Gravity Forms  post_custom_field field. */
 export type PostCustomMultiSelectField = FormField &
   PostCustomField & {
-    __typename?: "PostCustomMultiSelectField";
+    __typename: "PostCustomMultiSelectField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** Determines if the field’s value can be pre-populated dynamically. */
@@ -7773,7 +7773,7 @@ export type PostCustomMultiSelectField = FormField &
 
 /** Post_custom_field choice values. */
 export type PostCustomMultiSelectFieldChoice = {
-  __typename?: "PostCustomMultiSelectFieldChoice";
+  __typename: "PostCustomMultiSelectFieldChoice";
   /** Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected. */
   isSelected?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** The text to be displayed to the user when displaying this choice. */
@@ -7785,7 +7785,7 @@ export type PostCustomMultiSelectFieldChoice = {
 /** A Gravity Forms  post_custom_field field. */
 export type PostCustomNumberField = FormField &
   PostCustomField & {
-    __typename?: "PostCustomNumberField";
+    __typename: "PostCustomNumberField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** The autocomplete attribute for the field. */
@@ -7861,7 +7861,7 @@ export type PostCustomNumberField = FormField &
 /** A Gravity Forms  post_custom_field field. */
 export type PostCustomPhoneField = FormField &
   PostCustomField & {
-    __typename?: "PostCustomPhoneField";
+    __typename: "PostCustomPhoneField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** The autocomplete attribute for the field. */
@@ -7927,7 +7927,7 @@ export type PostCustomPhoneField = FormField &
 /** A Gravity Forms  post_custom_field field. */
 export type PostCustomRadioField = FormField &
   PostCustomField & {
-    __typename?: "PostCustomRadioField";
+    __typename: "PostCustomRadioField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** Determines if the field’s value can be pre-populated dynamically. */
@@ -7988,7 +7988,7 @@ export type PostCustomRadioField = FormField &
 
 /** Post_custom_field choice values. */
 export type PostCustomRadioFieldChoice = {
-  __typename?: "PostCustomRadioFieldChoice";
+  __typename: "PostCustomRadioFieldChoice";
   /** Indicates the radio button item is the “Other” choice. */
   isOtherChoice?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected. */
@@ -8002,7 +8002,7 @@ export type PostCustomRadioFieldChoice = {
 /** A Gravity Forms  post_custom_field field. */
 export type PostCustomSelectField = FormField &
   PostCustomField & {
-    __typename?: "PostCustomSelectField";
+    __typename: "PostCustomSelectField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** The autocomplete attribute for the field. */
@@ -8071,7 +8071,7 @@ export type PostCustomSelectField = FormField &
 
 /** Post_custom_field choice values. */
 export type PostCustomSelectFieldChoice = {
-  __typename?: "PostCustomSelectFieldChoice";
+  __typename: "PostCustomSelectFieldChoice";
   /** Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected. */
   isSelected?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** The text to be displayed to the user when displaying this choice. */
@@ -8083,7 +8083,7 @@ export type PostCustomSelectFieldChoice = {
 /** A Gravity Forms  post_custom_field field. */
 export type PostCustomTextAreaField = FormField &
   PostCustomField & {
-    __typename?: "PostCustomTextAreaField";
+    __typename: "PostCustomTextAreaField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** Determines if the field’s value can be pre-populated dynamically. */
@@ -8147,7 +8147,7 @@ export type PostCustomTextAreaField = FormField &
 /** A Gravity Forms  post_custom_field field. */
 export type PostCustomTextField = FormField &
   PostCustomField & {
-    __typename?: "PostCustomTextField";
+    __typename: "PostCustomTextField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** The autocomplete attribute for the field. */
@@ -8219,7 +8219,7 @@ export type PostCustomTextField = FormField &
 /** A Gravity Forms  post_custom_field field. */
 export type PostCustomTimeField = FormField &
   PostCustomField & {
-    __typename?: "PostCustomTimeField";
+    __typename: "PostCustomTimeField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** Determines if the field’s value can be pre-populated dynamically. */
@@ -8283,7 +8283,7 @@ export type PostCustomTimeField = FormField &
 /** A Gravity Forms  post_custom_field field. */
 export type PostCustomWebsiteField = FormField &
   PostCustomField & {
-    __typename?: "PostCustomWebsiteField";
+    __typename: "PostCustomWebsiteField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** Determines if the field’s value can be pre-populated dynamically. */
@@ -8342,7 +8342,7 @@ export type PostCustomWebsiteField = FormField &
 
 /** A Gravity Forms   field. */
 export type PostExcerptField = FormField & {
-  __typename?: "PostExcerptField";
+  __typename: "PostExcerptField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Determines if the field’s value can be pre-populated dynamically. */
@@ -8400,7 +8400,7 @@ export type PostFormat = DatabaseIdentifier &
   Node &
   TermNode &
   UniformResourceIdentifiable & {
-    __typename?: "PostFormat";
+    __typename: "PostFormat";
     /** Connection between the postFormat type and the ContentNode type */
     contentNodes?: Maybe<FieldWrapper<PostFormatToContentNodeConnection>>;
     /** The number of objects connected to the object */
@@ -8500,7 +8500,7 @@ export enum PostFormatIdType {
 
 /** Connection between the postFormat type and the ContentNode type */
 export type PostFormatToContentNodeConnection = {
-  __typename?: "PostFormatToContentNodeConnection";
+  __typename: "PostFormatToContentNodeConnection";
   /** Edges for the PostFormatToContentNodeConnection connection */
   edges?: Maybe<
     Array<Maybe<FieldWrapper<PostFormatToContentNodeConnectionEdge>>>
@@ -8513,7 +8513,7 @@ export type PostFormatToContentNodeConnection = {
 
 /** An edge in a connection */
 export type PostFormatToContentNodeConnectionEdge = {
-  __typename?: "PostFormatToContentNodeConnectionEdge";
+  __typename: "PostFormatToContentNodeConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -8562,7 +8562,7 @@ export type PostFormatToContentNodeConnectionWhereArgs = {
 
 /** Connection between the postFormat type and the post type */
 export type PostFormatToPostConnection = {
-  __typename?: "PostFormatToPostConnection";
+  __typename: "PostFormatToPostConnection";
   /** Edges for the PostFormatToPostConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<PostFormatToPostConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -8573,7 +8573,7 @@ export type PostFormatToPostConnection = {
 
 /** An edge in a connection */
 export type PostFormatToPostConnectionEdge = {
-  __typename?: "PostFormatToPostConnectionEdge";
+  __typename: "PostFormatToPostConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -8648,7 +8648,7 @@ export type PostFormatToPostConnectionWhereArgs = {
 
 /** Connection between the postFormat type and the Taxonomy type */
 export type PostFormatToTaxonomyConnectionEdge = {
-  __typename?: "PostFormatToTaxonomyConnectionEdge";
+  __typename: "PostFormatToTaxonomyConnectionEdge";
   /** The node of the connection, without the edges */
   node?: Maybe<FieldWrapper<Taxonomy>>;
 };
@@ -8673,7 +8673,7 @@ export enum PostIdType {
 
 /** A Gravity Forms   field. */
 export type PostImageField = FormField & {
-  __typename?: "PostImageField";
+  __typename: "PostImageField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** A comma-delimited list of the file extensions which may be uploaded. */
@@ -8831,7 +8831,7 @@ export enum PostStatusEnum {
 /** A Gravity Forms  post_tags field. */
 export type PostTagsCheckboxField = FormField &
   PostTagsField & {
-    __typename?: "PostTagsCheckboxField";
+    __typename: "PostTagsCheckboxField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** Determines if the field’s value can be pre-populated dynamically. */
@@ -8896,7 +8896,7 @@ export type PostTagsCheckboxField = FormField &
 
 /** Post_tags choice values. */
 export type PostTagsCheckboxFieldChoice = {
-  __typename?: "PostTagsCheckboxFieldChoice";
+  __typename: "PostTagsCheckboxFieldChoice";
   /** Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected. */
   isSelected?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** The text to be displayed to the user when displaying this choice. */
@@ -8967,7 +8967,7 @@ export type PostTagsInput = {
 
 /** Post_tags input values. */
 export type PostTagsInputProperty = {
-  __typename?: "PostTagsInputProperty";
+  __typename: "PostTagsInputProperty";
   /** The input ID. Input IDs follow the following naming convention: FIELDID.INPUTID (i.e. 5.1), where FIELDID is the id of the containing field and INPUTID specifies the input field. */
   id?: Maybe<FieldWrapper<Scalars["Float"]>>;
   /** Field label that will be displayed on the form and on the admin pages. */
@@ -8979,7 +8979,7 @@ export type PostTagsInputProperty = {
 /** A Gravity Forms  post_tags field. */
 export type PostTagsMultiSelectField = FormField &
   PostTagsField & {
-    __typename?: "PostTagsMultiSelectField";
+    __typename: "PostTagsMultiSelectField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** Determines if the field’s value can be pre-populated dynamically. */
@@ -9042,7 +9042,7 @@ export type PostTagsMultiSelectField = FormField &
 
 /** Post_tags choice values. */
 export type PostTagsMultiSelectFieldChoice = {
-  __typename?: "PostTagsMultiSelectFieldChoice";
+  __typename: "PostTagsMultiSelectFieldChoice";
   /** Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected. */
   isSelected?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** The text to be displayed to the user when displaying this choice. */
@@ -9066,7 +9066,7 @@ export type PostTagsNodeInput = {
 /** A Gravity Forms  post_tags field. */
 export type PostTagsRadioField = FormField &
   PostTagsField & {
-    __typename?: "PostTagsRadioField";
+    __typename: "PostTagsRadioField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** Determines if the field’s value can be pre-populated dynamically. */
@@ -9129,7 +9129,7 @@ export type PostTagsRadioField = FormField &
 
 /** Post_tags choice values. */
 export type PostTagsRadioFieldChoice = {
-  __typename?: "PostTagsRadioFieldChoice";
+  __typename: "PostTagsRadioFieldChoice";
   /** Indicates the radio button item is the “Other” choice. */
   isOtherChoice?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected. */
@@ -9143,7 +9143,7 @@ export type PostTagsRadioFieldChoice = {
 /** A Gravity Forms  post_tags field. */
 export type PostTagsSelectField = FormField &
   PostTagsField & {
-    __typename?: "PostTagsSelectField";
+    __typename: "PostTagsSelectField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** The autocomplete attribute for the field. */
@@ -9210,7 +9210,7 @@ export type PostTagsSelectField = FormField &
 
 /** Post_tags choice values. */
 export type PostTagsSelectFieldChoice = {
-  __typename?: "PostTagsSelectFieldChoice";
+  __typename: "PostTagsSelectFieldChoice";
   /** Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected. */
   isSelected?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** The text to be displayed to the user when displaying this choice. */
@@ -9222,7 +9222,7 @@ export type PostTagsSelectFieldChoice = {
 /** A Gravity Forms  post_tags field. */
 export type PostTagsTextField = FormField &
   PostTagsField & {
-    __typename?: "PostTagsTextField";
+    __typename: "PostTagsTextField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** The autocomplete attribute for the field. */
@@ -9291,7 +9291,7 @@ export type PostTagsTextField = FormField &
 
 /** A Gravity Forms   field. */
 export type PostTitleField = FormField & {
-  __typename?: "PostTitleField";
+  __typename: "PostTitleField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Determines if the field’s value can be pre-populated dynamically. */
@@ -9344,7 +9344,7 @@ export type PostTitleField = FormField & {
 
 /** Connection between the post type and the category type */
 export type PostToCategoryConnection = {
-  __typename?: "PostToCategoryConnection";
+  __typename: "PostToCategoryConnection";
   /** Edges for the PostToCategoryConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<PostToCategoryConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -9355,7 +9355,7 @@ export type PostToCategoryConnection = {
 
 /** An edge in a connection */
 export type PostToCategoryConnectionEdge = {
-  __typename?: "PostToCategoryConnectionEdge";
+  __typename: "PostToCategoryConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The Yoast SEO Primary category */
@@ -9410,7 +9410,7 @@ export type PostToCategoryConnectionWhereArgs = {
 
 /** Connection between the post type and the Comment type */
 export type PostToCommentConnection = {
-  __typename?: "PostToCommentConnection";
+  __typename: "PostToCommentConnection";
   /** Edges for the PostToCommentConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<PostToCommentConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -9421,7 +9421,7 @@ export type PostToCommentConnection = {
 
 /** An edge in a connection */
 export type PostToCommentConnectionEdge = {
-  __typename?: "PostToCommentConnectionEdge";
+  __typename: "PostToCommentConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -9492,7 +9492,7 @@ export type PostToCommentConnectionWhereArgs = {
 
 /** Connection between the post type and the postFormat type */
 export type PostToPostFormatConnection = {
-  __typename?: "PostToPostFormatConnection";
+  __typename: "PostToPostFormatConnection";
   /** Edges for the PostToPostFormatConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<PostToPostFormatConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -9503,7 +9503,7 @@ export type PostToPostFormatConnection = {
 
 /** An edge in a connection */
 export type PostToPostFormatConnectionEdge = {
-  __typename?: "PostToPostFormatConnectionEdge";
+  __typename: "PostToPostFormatConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The Yoast SEO Primary post_format */
@@ -9558,14 +9558,14 @@ export type PostToPostFormatConnectionWhereArgs = {
 
 /** Connection between the post type and the post type */
 export type PostToPreviewConnectionEdge = {
-  __typename?: "PostToPreviewConnectionEdge";
+  __typename: "PostToPreviewConnectionEdge";
   /** The node of the connection, without the edges */
   node?: Maybe<FieldWrapper<Post>>;
 };
 
 /** Connection between the post type and the post type */
 export type PostToRevisionConnection = {
-  __typename?: "PostToRevisionConnection";
+  __typename: "PostToRevisionConnection";
   /** Edges for the postToRevisionConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<PostToRevisionConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -9576,7 +9576,7 @@ export type PostToRevisionConnection = {
 
 /** An edge in a connection */
 export type PostToRevisionConnectionEdge = {
-  __typename?: "PostToRevisionConnectionEdge";
+  __typename: "PostToRevisionConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -9651,7 +9651,7 @@ export type PostToRevisionConnectionWhereArgs = {
 
 /** Connection between the post type and the tag type */
 export type PostToTagConnection = {
-  __typename?: "PostToTagConnection";
+  __typename: "PostToTagConnection";
   /** Edges for the PostToTagConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<PostToTagConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -9662,7 +9662,7 @@ export type PostToTagConnection = {
 
 /** An edge in a connection */
 export type PostToTagConnectionEdge = {
-  __typename?: "PostToTagConnectionEdge";
+  __typename: "PostToTagConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The Yoast SEO Primary post_tag */
@@ -9717,7 +9717,7 @@ export type PostToTagConnectionWhereArgs = {
 
 /** Connection between the post type and the TermNode type */
 export type PostToTermNodeConnection = {
-  __typename?: "PostToTermNodeConnection";
+  __typename: "PostToTermNodeConnection";
   /** Edges for the PostToTermNodeConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<PostToTermNodeConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -9728,7 +9728,7 @@ export type PostToTermNodeConnection = {
 
 /** An edge in a connection */
 export type PostToTermNodeConnectionEdge = {
-  __typename?: "PostToTermNodeConnectionEdge";
+  __typename: "PostToTermNodeConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -9783,7 +9783,7 @@ export type PostToTermNodeConnectionWhereArgs = {
 
 /** Details for labels of the PostType */
 export type PostTypeLabelDetails = {
-  __typename?: "PostTypeLabelDetails";
+  __typename: "PostTypeLabelDetails";
   /** Default is ‘Add New’ for both hierarchical and non-hierarchical types. */
   addNew?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Label for adding a new singular item. */
@@ -9837,7 +9837,7 @@ export type PostTypeLabelDetails = {
 };
 
 export type PostTypeSEO = {
-  __typename?: "PostTypeSEO";
+  __typename: "PostTypeSEO";
   breadcrumbs?: Maybe<Array<Maybe<FieldWrapper<SEOPostTypeBreadcrumbs>>>>;
   canonical?: Maybe<FieldWrapper<Scalars["String"]>>;
   cornerstone?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
@@ -9868,7 +9868,7 @@ export type PostTypeSEO = {
 /** A Gravity Forms  quiz field. */
 export type QuizCheckboxField = FormField &
   QuizField & {
-    __typename?: "QuizCheckboxField";
+    __typename: "QuizCheckboxField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** The explanation for the correct answer and/or incorrect answers. */
@@ -9993,7 +9993,7 @@ export type QuizField = {
 
 /** Quiz choice values. */
 export type QuizFieldChoice = {
-  __typename?: "QuizFieldChoice";
+  __typename: "QuizFieldChoice";
   /** Indicates the choice item is the correct answer. */
   isCorrect?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** Indicates the radio button item is the “Other” choice. */
@@ -10020,7 +10020,7 @@ export enum QuizFieldGradingTypeEnum {
 
 /** Quiz input values. */
 export type QuizInputProperty = {
-  __typename?: "QuizInputProperty";
+  __typename: "QuizInputProperty";
   /** The input ID. Input IDs follow the following naming convention: FIELDID.INPUTID (i.e. 5.1), where FIELDID is the id of the containing field and INPUTID specifies the input field. */
   id?: Maybe<FieldWrapper<Scalars["Float"]>>;
   /** Field label that will be displayed on the form and on the admin pages. */
@@ -10032,7 +10032,7 @@ export type QuizInputProperty = {
 /** A Gravity Forms  quiz field. */
 export type QuizRadioField = FormField &
   QuizField & {
-    __typename?: "QuizRadioField";
+    __typename: "QuizRadioField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** The explanation for the correct answer and/or incorrect answers. */
@@ -10098,7 +10098,7 @@ export type QuizRadioField = FormField &
 /** A Gravity Forms  quiz field. */
 export type QuizSelectField = FormField &
   QuizField & {
-    __typename?: "QuizSelectField";
+    __typename: "QuizSelectField";
     /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
     adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
     /** The explanation for the correct answer and/or incorrect answers. */
@@ -10173,7 +10173,7 @@ export type QuizSelectField = FormField &
 
 /** A Gravity Forms   field. */
 export type RadioField = FormField & {
-  __typename?: "RadioField";
+  __typename: "RadioField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Determines if the field’s value can be pre-populated dynamically. */
@@ -10228,7 +10228,7 @@ export type RadioField = FormField & {
 
 /** Radio choice values. */
 export type RadioFieldChoice = {
-  __typename?: "RadioFieldChoice";
+  __typename: "RadioFieldChoice";
   /** Indicates the radio button item is the “Other” choice. */
   isOtherChoice?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected. */
@@ -10241,7 +10241,7 @@ export type RadioFieldChoice = {
 
 /** A Gravity Forms   field. */
 export type RankField = FormField & {
-  __typename?: "RankField";
+  __typename: "RankField";
   /** The available choices for the rank field. */
   choices?: Maybe<Array<Maybe<FieldWrapper<RankFieldChoice>>>>;
   /** Indicates the field is only displayed and its contents are not submitted with the form/saved with the entry. This is set to true. */
@@ -10270,7 +10270,7 @@ export type RankField = FormField & {
 
 /** Rank choice values. */
 export type RankFieldChoice = {
-  __typename?: "RankFieldChoice";
+  __typename: "RankFieldChoice";
   /** Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected. */
   isSelected?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** The text to be displayed to the user when displaying this choice. */
@@ -10281,7 +10281,7 @@ export type RankFieldChoice = {
 
 /** A Gravity Forms   field. */
 export type RatingField = FormField & {
-  __typename?: "RatingField";
+  __typename: "RatingField";
   /** The available choices for the rating field. */
   choices?: Maybe<Array<Maybe<FieldWrapper<RatingFieldChoice>>>>;
   /** Indicates the field is only displayed and its contents are not submitted with the form/saved with the entry. This is set to true. */
@@ -10312,7 +10312,7 @@ export type RatingField = FormField & {
 
 /** Rating choice values. */
 export type RatingFieldChoice = {
-  __typename?: "RatingFieldChoice";
+  __typename: "RatingFieldChoice";
   /** Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected. */
   isSelected?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** The text to be displayed to the user when displaying this choice. */
@@ -10323,14 +10323,14 @@ export type RatingFieldChoice = {
 
 /** The reading setting type */
 export type ReadingSettings = {
-  __typename?: "ReadingSettings";
+  __typename: "ReadingSettings";
   /** Blog pages show at most. */
   postsPerPage?: Maybe<FieldWrapper<Scalars["Int"]>>;
 };
 
 /** A Gravity Forms   field. */
 export type RecaptchaField = FormField & {
-  __typename?: "RecaptchaField";
+  __typename: "RecaptchaField";
   /** Indicates the field is only displayed and its contents are not submitted with the form/saved with the entry. This is set to true. */
   displayOnly?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** Field ID. */
@@ -10359,7 +10359,7 @@ export type RefreshJwtAuthTokenInput = {
 
 /** The payload for the refreshJwtAuthToken mutation */
 export type RefreshJwtAuthTokenPayload = {
-  __typename?: "RefreshJwtAuthTokenPayload";
+  __typename: "RefreshJwtAuthTokenPayload";
   /** JWT Token that can be used in future requests for Authentication */
   authToken?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -10410,7 +10410,7 @@ export type RegisterUserInput = {
 
 /** The payload for the registerUser mutation */
 export type RegisterUserPayload = {
-  __typename?: "RegisterUserPayload";
+  __typename: "RegisterUserPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The User object mutation type. */
@@ -10427,7 +10427,7 @@ export enum RelationEnum {
 
 /** A Gravity Forms   field. */
 export type RememberMeField = FormField & {
-  __typename?: "RememberMeField";
+  __typename: "RememberMeField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Determines if the field’s value can be pre-populated dynamically. */
@@ -10482,7 +10482,7 @@ export type RememberMeField = FormField & {
 
 /** Remember_me choice values. */
 export type RememberMeFieldChoice = {
-  __typename?: "RememberMeFieldChoice";
+  __typename: "RememberMeFieldChoice";
   /** Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected. */
   isSelected?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** The text to be displayed to the user when displaying this choice. */
@@ -10493,7 +10493,7 @@ export type RememberMeFieldChoice = {
 
 /** Remember_me input values. */
 export type RememberMeInputProperty = {
-  __typename?: "RememberMeInputProperty";
+  __typename: "RememberMeInputProperty";
   /** The input ID. Input IDs follow the following naming convention: FIELDID.INPUTID (i.e. 5.1), where FIELDID is the id of the containing field and INPUTID specifies the input field. */
   id?: Maybe<FieldWrapper<Scalars["Float"]>>;
   /** Field label that will be displayed on the form and on the admin pages. */
@@ -10516,7 +10516,7 @@ export type ResetUserPasswordInput = {
 
 /** The payload for the resetUserPassword mutation */
 export type ResetUserPasswordPayload = {
-  __typename?: "ResetUserPasswordPayload";
+  __typename: "ResetUserPasswordPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The User object mutation type. */
@@ -10533,7 +10533,7 @@ export type RestoreCommentInput = {
 
 /** The payload for the restoreComment mutation */
 export type RestoreCommentPayload = {
-  __typename?: "RestoreCommentPayload";
+  __typename: "RestoreCommentPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The restored comment object */
@@ -10544,7 +10544,7 @@ export type RestoreCommentPayload = {
 
 /** The root mutation */
 export type RootMutation = {
-  __typename?: "RootMutation";
+  __typename: "RootMutation";
   /** The payload for the createCategory mutation */
   createCategory?: Maybe<FieldWrapper<CreateCategoryPayload>>;
   /** The payload for the createComment mutation */
@@ -10815,7 +10815,7 @@ export type RootMutationupdateUserArgs = {
 
 /** The root entry point into the Graph */
 export type RootQuery = {
-  __typename?: "RootQuery";
+  __typename: "RootQuery";
   /** Entry point to get all settings for the site */
   allSettings?: Maybe<FieldWrapper<Settings>>;
   /** Connection between the RootQuery type and the category type */
@@ -11316,7 +11316,7 @@ export type RootQueryusersArgs = {
 
 /** Connection between the RootQuery type and the category type */
 export type RootQueryToCategoryConnection = {
-  __typename?: "RootQueryToCategoryConnection";
+  __typename: "RootQueryToCategoryConnection";
   /** Edges for the RootQueryToCategoryConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<RootQueryToCategoryConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -11327,7 +11327,7 @@ export type RootQueryToCategoryConnection = {
 
 /** An edge in a connection */
 export type RootQueryToCategoryConnectionEdge = {
-  __typename?: "RootQueryToCategoryConnectionEdge";
+  __typename: "RootQueryToCategoryConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -11380,7 +11380,7 @@ export type RootQueryToCategoryConnectionWhereArgs = {
 
 /** Connection between the RootQuery type and the Comment type */
 export type RootQueryToCommentConnection = {
-  __typename?: "RootQueryToCommentConnection";
+  __typename: "RootQueryToCommentConnection";
   /** Edges for the RootQueryToCommentConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<RootQueryToCommentConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -11391,7 +11391,7 @@ export type RootQueryToCommentConnection = {
 
 /** An edge in a connection */
 export type RootQueryToCommentConnectionEdge = {
-  __typename?: "RootQueryToCommentConnectionEdge";
+  __typename: "RootQueryToCommentConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -11462,7 +11462,7 @@ export type RootQueryToCommentConnectionWhereArgs = {
 
 /** Connection between the RootQuery type and the ContentNode type */
 export type RootQueryToContentNodeConnection = {
-  __typename?: "RootQueryToContentNodeConnection";
+  __typename: "RootQueryToContentNodeConnection";
   /** Edges for the RootQueryToContentNodeConnection connection */
   edges?: Maybe<
     Array<Maybe<FieldWrapper<RootQueryToContentNodeConnectionEdge>>>
@@ -11475,7 +11475,7 @@ export type RootQueryToContentNodeConnection = {
 
 /** An edge in a connection */
 export type RootQueryToContentNodeConnectionEdge = {
-  __typename?: "RootQueryToContentNodeConnectionEdge";
+  __typename: "RootQueryToContentNodeConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -11524,7 +11524,7 @@ export type RootQueryToContentNodeConnectionWhereArgs = {
 
 /** Connection between the RootQuery type and the ContentRevisionUnion type */
 export type RootQueryToContentRevisionUnionConnection = {
-  __typename?: "RootQueryToContentRevisionUnionConnection";
+  __typename: "RootQueryToContentRevisionUnionConnection";
   /** Edges for the RootQueryToContentRevisionUnionConnection connection */
   edges?: Maybe<
     Array<Maybe<FieldWrapper<RootQueryToContentRevisionUnionConnectionEdge>>>
@@ -11537,7 +11537,7 @@ export type RootQueryToContentRevisionUnionConnection = {
 
 /** An edge in a connection */
 export type RootQueryToContentRevisionUnionConnectionEdge = {
-  __typename?: "RootQueryToContentRevisionUnionConnectionEdge";
+  __typename: "RootQueryToContentRevisionUnionConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -11586,7 +11586,7 @@ export type RootQueryToContentRevisionUnionConnectionWhereArgs = {
 
 /** Connection between the RootQuery type and the ContentType type */
 export type RootQueryToContentTypeConnection = {
-  __typename?: "RootQueryToContentTypeConnection";
+  __typename: "RootQueryToContentTypeConnection";
   /** Edges for the RootQueryToContentTypeConnection connection */
   edges?: Maybe<
     Array<Maybe<FieldWrapper<RootQueryToContentTypeConnectionEdge>>>
@@ -11599,7 +11599,7 @@ export type RootQueryToContentTypeConnection = {
 
 /** An edge in a connection */
 export type RootQueryToContentTypeConnectionEdge = {
-  __typename?: "RootQueryToContentTypeConnectionEdge";
+  __typename: "RootQueryToContentTypeConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -11608,7 +11608,7 @@ export type RootQueryToContentTypeConnectionEdge = {
 
 /** Connection between the RootQuery type and the EnqueuedScript type */
 export type RootQueryToEnqueuedScriptConnection = {
-  __typename?: "RootQueryToEnqueuedScriptConnection";
+  __typename: "RootQueryToEnqueuedScriptConnection";
   /** Edges for the RootQueryToEnqueuedScriptConnection connection */
   edges?: Maybe<
     Array<Maybe<FieldWrapper<RootQueryToEnqueuedScriptConnectionEdge>>>
@@ -11621,7 +11621,7 @@ export type RootQueryToEnqueuedScriptConnection = {
 
 /** An edge in a connection */
 export type RootQueryToEnqueuedScriptConnectionEdge = {
-  __typename?: "RootQueryToEnqueuedScriptConnectionEdge";
+  __typename: "RootQueryToEnqueuedScriptConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -11630,7 +11630,7 @@ export type RootQueryToEnqueuedScriptConnectionEdge = {
 
 /** Connection between the RootQuery type and the EnqueuedStylesheet type */
 export type RootQueryToEnqueuedStylesheetConnection = {
-  __typename?: "RootQueryToEnqueuedStylesheetConnection";
+  __typename: "RootQueryToEnqueuedStylesheetConnection";
   /** Edges for the RootQueryToEnqueuedStylesheetConnection connection */
   edges?: Maybe<
     Array<Maybe<FieldWrapper<RootQueryToEnqueuedStylesheetConnectionEdge>>>
@@ -11643,7 +11643,7 @@ export type RootQueryToEnqueuedStylesheetConnection = {
 
 /** An edge in a connection */
 export type RootQueryToEnqueuedStylesheetConnectionEdge = {
-  __typename?: "RootQueryToEnqueuedStylesheetConnectionEdge";
+  __typename: "RootQueryToEnqueuedStylesheetConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -11652,7 +11652,7 @@ export type RootQueryToEnqueuedStylesheetConnectionEdge = {
 
 /** Connection between the RootQuery type and the GfEntry type */
 export type RootQueryToGfEntryConnection = {
-  __typename?: "RootQueryToGfEntryConnection";
+  __typename: "RootQueryToGfEntryConnection";
   /** Edges for the RootQueryToGfEntryConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<RootQueryToGfEntryConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -11663,7 +11663,7 @@ export type RootQueryToGfEntryConnection = {
 
 /** An edge in a connection */
 export type RootQueryToGfEntryConnectionEdge = {
-  __typename?: "RootQueryToGfEntryConnectionEdge";
+  __typename: "RootQueryToGfEntryConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -11690,7 +11690,7 @@ export type RootQueryToGfEntryConnectionWhereArgs = {
 
 /** Connection between the RootQuery type and the GfForm type */
 export type RootQueryToGfFormConnection = {
-  __typename?: "RootQueryToGfFormConnection";
+  __typename: "RootQueryToGfFormConnection";
   /** Edges for the RootQueryToGfFormConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<RootQueryToGfFormConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -11701,7 +11701,7 @@ export type RootQueryToGfFormConnection = {
 
 /** An edge in a connection */
 export type RootQueryToGfFormConnectionEdge = {
-  __typename?: "RootQueryToGfFormConnectionEdge";
+  __typename: "RootQueryToGfFormConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -11720,7 +11720,7 @@ export type RootQueryToGfFormConnectionWhereArgs = {
 
 /** Connection between the RootQuery type and the GfSubmittedEntry type */
 export type RootQueryToGfSubmittedEntryConnection = {
-  __typename?: "RootQueryToGfSubmittedEntryConnection";
+  __typename: "RootQueryToGfSubmittedEntryConnection";
   /** Edges for the RootQueryToGfSubmittedEntryConnection connection */
   edges?: Maybe<
     Array<Maybe<FieldWrapper<RootQueryToGfSubmittedEntryConnectionEdge>>>
@@ -11733,7 +11733,7 @@ export type RootQueryToGfSubmittedEntryConnection = {
 
 /** An edge in a connection */
 export type RootQueryToGfSubmittedEntryConnectionEdge = {
-  __typename?: "RootQueryToGfSubmittedEntryConnectionEdge";
+  __typename: "RootQueryToGfSubmittedEntryConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -11758,7 +11758,7 @@ export type RootQueryToGfSubmittedEntryConnectionWhereArgs = {
 
 /** Connection between the RootQuery type and the mediaItem type */
 export type RootQueryToMediaItemConnection = {
-  __typename?: "RootQueryToMediaItemConnection";
+  __typename: "RootQueryToMediaItemConnection";
   /** Edges for the RootQueryToMediaItemConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<RootQueryToMediaItemConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -11769,7 +11769,7 @@ export type RootQueryToMediaItemConnection = {
 
 /** An edge in a connection */
 export type RootQueryToMediaItemConnectionEdge = {
-  __typename?: "RootQueryToMediaItemConnectionEdge";
+  __typename: "RootQueryToMediaItemConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -11824,7 +11824,7 @@ export type RootQueryToMediaItemConnectionWhereArgs = {
 
 /** Connection between the RootQuery type and the Menu type */
 export type RootQueryToMenuConnection = {
-  __typename?: "RootQueryToMenuConnection";
+  __typename: "RootQueryToMenuConnection";
   /** Edges for the RootQueryToMenuConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<RootQueryToMenuConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -11835,7 +11835,7 @@ export type RootQueryToMenuConnection = {
 
 /** An edge in a connection */
 export type RootQueryToMenuConnectionEdge = {
-  __typename?: "RootQueryToMenuConnectionEdge";
+  __typename: "RootQueryToMenuConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -11854,7 +11854,7 @@ export type RootQueryToMenuConnectionWhereArgs = {
 
 /** Connection between the RootQuery type and the MenuItem type */
 export type RootQueryToMenuItemConnection = {
-  __typename?: "RootQueryToMenuItemConnection";
+  __typename: "RootQueryToMenuItemConnection";
   /** Edges for the RootQueryToMenuItemConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<RootQueryToMenuItemConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -11865,7 +11865,7 @@ export type RootQueryToMenuItemConnection = {
 
 /** An edge in a connection */
 export type RootQueryToMenuItemConnectionEdge = {
-  __typename?: "RootQueryToMenuItemConnectionEdge";
+  __typename: "RootQueryToMenuItemConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -11886,7 +11886,7 @@ export type RootQueryToMenuItemConnectionWhereArgs = {
 
 /** Connection between the RootQuery type and the page type */
 export type RootQueryToPageConnection = {
-  __typename?: "RootQueryToPageConnection";
+  __typename: "RootQueryToPageConnection";
   /** Edges for the RootQueryToPageConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<RootQueryToPageConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -11897,7 +11897,7 @@ export type RootQueryToPageConnection = {
 
 /** An edge in a connection */
 export type RootQueryToPageConnectionEdge = {
-  __typename?: "RootQueryToPageConnectionEdge";
+  __typename: "RootQueryToPageConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -11952,7 +11952,7 @@ export type RootQueryToPageConnectionWhereArgs = {
 
 /** Connection between the RootQuery type and the Plugin type */
 export type RootQueryToPluginConnection = {
-  __typename?: "RootQueryToPluginConnection";
+  __typename: "RootQueryToPluginConnection";
   /** Edges for the RootQueryToPluginConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<RootQueryToPluginConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -11963,7 +11963,7 @@ export type RootQueryToPluginConnection = {
 
 /** An edge in a connection */
 export type RootQueryToPluginConnectionEdge = {
-  __typename?: "RootQueryToPluginConnectionEdge";
+  __typename: "RootQueryToPluginConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -11972,7 +11972,7 @@ export type RootQueryToPluginConnectionEdge = {
 
 /** Connection between the RootQuery type and the post type */
 export type RootQueryToPostConnection = {
-  __typename?: "RootQueryToPostConnection";
+  __typename: "RootQueryToPostConnection";
   /** Edges for the RootQueryToPostConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<RootQueryToPostConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -11983,7 +11983,7 @@ export type RootQueryToPostConnection = {
 
 /** An edge in a connection */
 export type RootQueryToPostConnectionEdge = {
-  __typename?: "RootQueryToPostConnectionEdge";
+  __typename: "RootQueryToPostConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -12058,7 +12058,7 @@ export type RootQueryToPostConnectionWhereArgs = {
 
 /** Connection between the RootQuery type and the postFormat type */
 export type RootQueryToPostFormatConnection = {
-  __typename?: "RootQueryToPostFormatConnection";
+  __typename: "RootQueryToPostFormatConnection";
   /** Edges for the RootQueryToPostFormatConnection connection */
   edges?: Maybe<
     Array<Maybe<FieldWrapper<RootQueryToPostFormatConnectionEdge>>>
@@ -12071,7 +12071,7 @@ export type RootQueryToPostFormatConnection = {
 
 /** An edge in a connection */
 export type RootQueryToPostFormatConnectionEdge = {
-  __typename?: "RootQueryToPostFormatConnectionEdge";
+  __typename: "RootQueryToPostFormatConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -12124,7 +12124,7 @@ export type RootQueryToPostFormatConnectionWhereArgs = {
 
 /** Connection between the RootQuery type and the tag type */
 export type RootQueryToTagConnection = {
-  __typename?: "RootQueryToTagConnection";
+  __typename: "RootQueryToTagConnection";
   /** Edges for the RootQueryToTagConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<RootQueryToTagConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -12135,7 +12135,7 @@ export type RootQueryToTagConnection = {
 
 /** An edge in a connection */
 export type RootQueryToTagConnectionEdge = {
-  __typename?: "RootQueryToTagConnectionEdge";
+  __typename: "RootQueryToTagConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -12188,7 +12188,7 @@ export type RootQueryToTagConnectionWhereArgs = {
 
 /** Connection between the RootQuery type and the Taxonomy type */
 export type RootQueryToTaxonomyConnection = {
-  __typename?: "RootQueryToTaxonomyConnection";
+  __typename: "RootQueryToTaxonomyConnection";
   /** Edges for the RootQueryToTaxonomyConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<RootQueryToTaxonomyConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -12199,7 +12199,7 @@ export type RootQueryToTaxonomyConnection = {
 
 /** An edge in a connection */
 export type RootQueryToTaxonomyConnectionEdge = {
-  __typename?: "RootQueryToTaxonomyConnectionEdge";
+  __typename: "RootQueryToTaxonomyConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -12208,7 +12208,7 @@ export type RootQueryToTaxonomyConnectionEdge = {
 
 /** Connection between the RootQuery type and the TermNode type */
 export type RootQueryToTermNodeConnection = {
-  __typename?: "RootQueryToTermNodeConnection";
+  __typename: "RootQueryToTermNodeConnection";
   /** Edges for the RootQueryToTermNodeConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<RootQueryToTermNodeConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -12219,7 +12219,7 @@ export type RootQueryToTermNodeConnection = {
 
 /** An edge in a connection */
 export type RootQueryToTermNodeConnectionEdge = {
-  __typename?: "RootQueryToTermNodeConnectionEdge";
+  __typename: "RootQueryToTermNodeConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -12274,7 +12274,7 @@ export type RootQueryToTermNodeConnectionWhereArgs = {
 
 /** Connection between the RootQuery type and the Theme type */
 export type RootQueryToThemeConnection = {
-  __typename?: "RootQueryToThemeConnection";
+  __typename: "RootQueryToThemeConnection";
   /** Edges for the RootQueryToThemeConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<RootQueryToThemeConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -12285,7 +12285,7 @@ export type RootQueryToThemeConnection = {
 
 /** An edge in a connection */
 export type RootQueryToThemeConnectionEdge = {
-  __typename?: "RootQueryToThemeConnectionEdge";
+  __typename: "RootQueryToThemeConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -12294,7 +12294,7 @@ export type RootQueryToThemeConnectionEdge = {
 
 /** Connection between the RootQuery type and the User type */
 export type RootQueryToUserConnection = {
-  __typename?: "RootQueryToUserConnection";
+  __typename: "RootQueryToUserConnection";
   /** Edges for the RootQueryToUserConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<RootQueryToUserConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -12305,7 +12305,7 @@ export type RootQueryToUserConnection = {
 
 /** An edge in a connection */
 export type RootQueryToUserConnectionEdge = {
-  __typename?: "RootQueryToUserConnectionEdge";
+  __typename: "RootQueryToUserConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -12350,7 +12350,7 @@ export type RootQueryToUserConnectionWhereArgs = {
 
 /** Connection between the RootQuery type and the UserRole type */
 export type RootQueryToUserRoleConnection = {
-  __typename?: "RootQueryToUserRoleConnection";
+  __typename: "RootQueryToUserRoleConnection";
   /** Edges for the RootQueryToUserRoleConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<RootQueryToUserRoleConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -12361,7 +12361,7 @@ export type RootQueryToUserRoleConnection = {
 
 /** An edge in a connection */
 export type RootQueryToUserRoleConnectionEdge = {
-  __typename?: "RootQueryToUserRoleConnectionEdge";
+  __typename: "RootQueryToUserRoleConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -12370,7 +12370,7 @@ export type RootQueryToUserRoleConnectionEdge = {
 
 /** The Yoast SEO breadcrumb config */
 export type SEOBreadcrumbs = {
-  __typename?: "SEOBreadcrumbs";
+  __typename: "SEOBreadcrumbs";
   archivePrefix?: Maybe<FieldWrapper<Scalars["String"]>>;
   boldLast?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   enabled?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
@@ -12390,7 +12390,7 @@ export enum SEOCardType {
 
 /** The Yoast SEO site level configuration data */
 export type SEOConfig = {
-  __typename?: "SEOConfig";
+  __typename: "SEOConfig";
   breadcrumbs?: Maybe<FieldWrapper<SEOBreadcrumbs>>;
   contentTypes?: Maybe<FieldWrapper<SEOContentTypes>>;
   openGraph?: Maybe<FieldWrapper<SEOOpenGraph>>;
@@ -12402,7 +12402,7 @@ export type SEOConfig = {
 
 /** he Yoast SEO search appearance content types fields */
 export type SEOContentType = {
-  __typename?: "SEOContentType";
+  __typename: "SEOContentType";
   archive?: Maybe<FieldWrapper<SEOContentTypeArchive>>;
   metaDesc?: Maybe<FieldWrapper<Scalars["String"]>>;
   metaRobotsNoindex?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
@@ -12413,7 +12413,7 @@ export type SEOContentType = {
 
 /** he Yoast SEO search appearance content types fields */
 export type SEOContentTypeArchive = {
-  __typename?: "SEOContentTypeArchive";
+  __typename: "SEOContentTypeArchive";
   archiveLink?: Maybe<FieldWrapper<Scalars["String"]>>;
   breadcrumbTitle?: Maybe<FieldWrapper<Scalars["String"]>>;
   fullHead?: Maybe<FieldWrapper<Scalars["String"]>>;
@@ -12425,7 +12425,7 @@ export type SEOContentTypeArchive = {
 
 /** The Yoast SEO search appearance content types */
 export type SEOContentTypes = {
-  __typename?: "SEOContentTypes";
+  __typename: "SEOContentTypes";
   mediaItem?: Maybe<FieldWrapper<SEOContentType>>;
   page?: Maybe<FieldWrapper<SEOContentType>>;
   post?: Maybe<FieldWrapper<SEOContentType>>;
@@ -12433,14 +12433,14 @@ export type SEOContentTypes = {
 
 /** The Open Graph data */
 export type SEOOpenGraph = {
-  __typename?: "SEOOpenGraph";
+  __typename: "SEOOpenGraph";
   defaultImage?: Maybe<FieldWrapper<MediaItem>>;
   frontPage?: Maybe<FieldWrapper<SEOOpenGraphFrontPage>>;
 };
 
 /** The Open Graph Front page data */
 export type SEOOpenGraphFrontPage = {
-  __typename?: "SEOOpenGraphFrontPage";
+  __typename: "SEOOpenGraphFrontPage";
   description?: Maybe<FieldWrapper<Scalars["String"]>>;
   image?: Maybe<FieldWrapper<MediaItem>>;
   title?: Maybe<FieldWrapper<Scalars["String"]>>;
@@ -12448,25 +12448,25 @@ export type SEOOpenGraphFrontPage = {
 
 /** The Schema for post type */
 export type SEOPageInfoSchema = {
-  __typename?: "SEOPageInfoSchema";
+  __typename: "SEOPageInfoSchema";
   raw?: Maybe<FieldWrapper<Scalars["String"]>>;
 };
 
 export type SEOPostTypeBreadcrumbs = {
-  __typename?: "SEOPostTypeBreadcrumbs";
+  __typename: "SEOPostTypeBreadcrumbs";
   text?: Maybe<FieldWrapper<Scalars["String"]>>;
   url?: Maybe<FieldWrapper<Scalars["String"]>>;
 };
 
 /** The page info SEO details */
 export type SEOPostTypePageInfo = {
-  __typename?: "SEOPostTypePageInfo";
+  __typename: "SEOPostTypePageInfo";
   schema?: Maybe<FieldWrapper<SEOPageInfoSchema>>;
 };
 
 /** The Schema types */
 export type SEOPostTypeSchema = {
-  __typename?: "SEOPostTypeSchema";
+  __typename: "SEOPostTypeSchema";
   articleType?: Maybe<Array<Maybe<FieldWrapper<Scalars["String"]>>>>;
   pageType?: Maybe<Array<Maybe<FieldWrapper<Scalars["String"]>>>>;
   raw?: Maybe<FieldWrapper<Scalars["String"]>>;
@@ -12474,7 +12474,7 @@ export type SEOPostTypeSchema = {
 
 /** The Yoast redirect data  (Yoast Premium only) */
 export type SEORedirect = {
-  __typename?: "SEORedirect";
+  __typename: "SEORedirect";
   format?: Maybe<FieldWrapper<Scalars["String"]>>;
   origin?: Maybe<FieldWrapper<Scalars["String"]>>;
   target?: Maybe<FieldWrapper<Scalars["String"]>>;
@@ -12483,7 +12483,7 @@ export type SEORedirect = {
 
 /** The Yoast SEO schema data */
 export type SEOSchema = {
-  __typename?: "SEOSchema";
+  __typename: "SEOSchema";
   companyLogo?: Maybe<FieldWrapper<MediaItem>>;
   companyName?: Maybe<FieldWrapper<Scalars["String"]>>;
   companyOrPerson?: Maybe<FieldWrapper<Scalars["String"]>>;
@@ -12499,7 +12499,7 @@ export type SEOSchema = {
 
 /** The Yoast SEO Social media links */
 export type SEOSocial = {
-  __typename?: "SEOSocial";
+  __typename: "SEOSocial";
   facebook?: Maybe<FieldWrapper<SEOSocialFacebook>>;
   instagram?: Maybe<FieldWrapper<SEOSocialInstagram>>;
   linkedIn?: Maybe<FieldWrapper<SEOSocialLinkedIn>>;
@@ -12511,56 +12511,56 @@ export type SEOSocial = {
 };
 
 export type SEOSocialFacebook = {
-  __typename?: "SEOSocialFacebook";
+  __typename: "SEOSocialFacebook";
   defaultImage?: Maybe<FieldWrapper<MediaItem>>;
   url?: Maybe<FieldWrapper<Scalars["String"]>>;
 };
 
 export type SEOSocialInstagram = {
-  __typename?: "SEOSocialInstagram";
+  __typename: "SEOSocialInstagram";
   url?: Maybe<FieldWrapper<Scalars["String"]>>;
 };
 
 export type SEOSocialLinkedIn = {
-  __typename?: "SEOSocialLinkedIn";
+  __typename: "SEOSocialLinkedIn";
   url?: Maybe<FieldWrapper<Scalars["String"]>>;
 };
 
 export type SEOSocialMySpace = {
-  __typename?: "SEOSocialMySpace";
+  __typename: "SEOSocialMySpace";
   url?: Maybe<FieldWrapper<Scalars["String"]>>;
 };
 
 export type SEOSocialPinterest = {
-  __typename?: "SEOSocialPinterest";
+  __typename: "SEOSocialPinterest";
   metaTag?: Maybe<FieldWrapper<Scalars["String"]>>;
   url?: Maybe<FieldWrapper<Scalars["String"]>>;
 };
 
 export type SEOSocialTwitter = {
-  __typename?: "SEOSocialTwitter";
+  __typename: "SEOSocialTwitter";
   cardType?: Maybe<FieldWrapper<SEOCardType>>;
   username?: Maybe<FieldWrapper<Scalars["String"]>>;
 };
 
 export type SEOSocialWikipedia = {
-  __typename?: "SEOSocialWikipedia";
+  __typename: "SEOSocialWikipedia";
   url?: Maybe<FieldWrapper<Scalars["String"]>>;
 };
 
 export type SEOSocialYoutube = {
-  __typename?: "SEOSocialYoutube";
+  __typename: "SEOSocialYoutube";
   url?: Maybe<FieldWrapper<Scalars["String"]>>;
 };
 
 /** The Schema types for Taxonomy */
 export type SEOTaxonomySchema = {
-  __typename?: "SEOTaxonomySchema";
+  __typename: "SEOTaxonomySchema";
   raw?: Maybe<FieldWrapper<Scalars["String"]>>;
 };
 
 export type SEOUser = {
-  __typename?: "SEOUser";
+  __typename: "SEOUser";
   breadcrumbTitle?: Maybe<FieldWrapper<Scalars["String"]>>;
   canonical?: Maybe<FieldWrapper<Scalars["String"]>>;
   fullHead?: Maybe<FieldWrapper<Scalars["String"]>>;
@@ -12582,14 +12582,14 @@ export type SEOUser = {
 
 /** The Schema types for User */
 export type SEOUserSchema = {
-  __typename?: "SEOUserSchema";
+  __typename: "SEOUserSchema";
   articleType?: Maybe<Array<Maybe<FieldWrapper<Scalars["String"]>>>>;
   pageType?: Maybe<Array<Maybe<FieldWrapper<Scalars["String"]>>>>;
   raw?: Maybe<FieldWrapper<Scalars["String"]>>;
 };
 
 export type SEOUserSocial = {
-  __typename?: "SEOUserSocial";
+  __typename: "SEOUserSocial";
   facebook?: Maybe<FieldWrapper<Scalars["String"]>>;
   instagram?: Maybe<FieldWrapper<Scalars["String"]>>;
   linkedIn?: Maybe<FieldWrapper<Scalars["String"]>>;
@@ -12603,7 +12603,7 @@ export type SEOUserSocial = {
 
 /** The Yoast SEO  webmaster fields */
 export type SEOWebmaster = {
-  __typename?: "SEOWebmaster";
+  __typename: "SEOWebmaster";
   baiduVerify?: Maybe<FieldWrapper<Scalars["String"]>>;
   googleVerify?: Maybe<FieldWrapper<Scalars["String"]>>;
   msVerify?: Maybe<FieldWrapper<Scalars["String"]>>;
@@ -12612,7 +12612,7 @@ export type SEOWebmaster = {
 
 /** A Gravity Forms   field. */
 export type SectionField = FormField & {
-  __typename?: "SectionField";
+  __typename: "SectionField";
   /** Controls the visibility of the field based on values selected by the user. */
   conditionalLogic?: Maybe<FieldWrapper<ConditionalLogic>>;
   /** String containing the custom CSS classes to be added to the &lt;li&gt; tag that contains the field. Useful for applying custom formatting to specific fields. */
@@ -12641,7 +12641,7 @@ export type SectionField = FormField & {
 
 /** A Gravity Forms   field. */
 export type SelectField = FormField & {
-  __typename?: "SelectField";
+  __typename: "SelectField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The autocomplete attribute for the field. */
@@ -12706,7 +12706,7 @@ export type SelectField = FormField & {
 
 /** Select choice values. */
 export type SelectFieldChoice = {
-  __typename?: "SelectFieldChoice";
+  __typename: "SelectFieldChoice";
   /** Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected. */
   isSelected?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
   /** The text to be displayed to the user when displaying this choice. */
@@ -12725,7 +12725,7 @@ export type SendPasswordResetEmailInput = {
 
 /** The payload for the sendPasswordResetEmail mutation */
 export type SendPasswordResetEmailPayload = {
-  __typename?: "SendPasswordResetEmailPayload";
+  __typename: "SendPasswordResetEmailPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The user that the password reset email was sent to */
@@ -12734,7 +12734,7 @@ export type SendPasswordResetEmailPayload = {
 
 /** All of the registered settings */
 export type Settings = {
-  __typename?: "Settings";
+  __typename: "Settings";
   /** Settings of the the string Settings Group */
   discussionSettingsDefaultCommentStatus?: Maybe<
     FieldWrapper<Scalars["String"]>
@@ -12803,7 +12803,7 @@ export type SubmitGfDraftEntryInput = {
 
 /** The payload for the submitGfDraftEntry mutation */
 export type SubmitGfDraftEntryPayload = {
-  __typename?: "SubmitGfDraftEntryPayload";
+  __typename: "SubmitGfDraftEntryPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The entry that was created. */
@@ -12832,7 +12832,7 @@ export type SubmitGfFormInput = {
 
 /** The payload for the submitGfForm mutation */
 export type SubmitGfFormPayload = {
-  __typename?: "SubmitGfFormPayload";
+  __typename: "SubmitGfFormPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The entry that was created. */
@@ -12853,7 +12853,7 @@ export enum SubmittedEntryIdTypeEnum {
 
 /** A Gravity Forms   field. */
 export type SurveyField = FormField & {
-  __typename?: "SurveyField";
+  __typename: "SurveyField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Determines if the field’s value can be pre-populated dynamically. */
@@ -12900,7 +12900,7 @@ export type Tag = DatabaseIdentifier &
   Node &
   TermNode &
   UniformResourceIdentifiable & {
-    __typename?: "Tag";
+    __typename: "Tag";
     /** Connection between the tag type and the ContentNode type */
     contentNodes?: Maybe<FieldWrapper<TagToContentNodeConnection>>;
     /** The number of objects connected to the object */
@@ -13000,7 +13000,7 @@ export enum TagIdType {
 
 /** Connection between the tag type and the ContentNode type */
 export type TagToContentNodeConnection = {
-  __typename?: "TagToContentNodeConnection";
+  __typename: "TagToContentNodeConnection";
   /** Edges for the TagToContentNodeConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<TagToContentNodeConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -13011,7 +13011,7 @@ export type TagToContentNodeConnection = {
 
 /** An edge in a connection */
 export type TagToContentNodeConnectionEdge = {
-  __typename?: "TagToContentNodeConnectionEdge";
+  __typename: "TagToContentNodeConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -13060,7 +13060,7 @@ export type TagToContentNodeConnectionWhereArgs = {
 
 /** Connection between the tag type and the post type */
 export type TagToPostConnection = {
-  __typename?: "TagToPostConnection";
+  __typename: "TagToPostConnection";
   /** Edges for the TagToPostConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<TagToPostConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -13071,7 +13071,7 @@ export type TagToPostConnection = {
 
 /** An edge in a connection */
 export type TagToPostConnectionEdge = {
-  __typename?: "TagToPostConnectionEdge";
+  __typename: "TagToPostConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -13146,14 +13146,14 @@ export type TagToPostConnectionWhereArgs = {
 
 /** Connection between the tag type and the Taxonomy type */
 export type TagToTaxonomyConnectionEdge = {
-  __typename?: "TagToTaxonomyConnectionEdge";
+  __typename: "TagToTaxonomyConnectionEdge";
   /** The node of the connection, without the edges */
   node?: Maybe<FieldWrapper<Taxonomy>>;
 };
 
 /** A taxonomy object */
 export type Taxonomy = Node & {
-  __typename?: "Taxonomy";
+  __typename: "Taxonomy";
   /** List of Content Types associated with the Taxonomy */
   connectedContentTypes?: Maybe<FieldWrapper<TaxonomyToContentTypeConnection>>;
   /** Description of the taxonomy. This field is equivalent to WP_Taxonomy-&gt;description */
@@ -13223,7 +13223,7 @@ export enum TaxonomyIdTypeEnum {
 }
 
 export type TaxonomySEO = {
-  __typename?: "TaxonomySEO";
+  __typename: "TaxonomySEO";
   breadcrumbs?: Maybe<Array<Maybe<FieldWrapper<SEOPostTypeBreadcrumbs>>>>;
   canonical?: Maybe<FieldWrapper<Scalars["String"]>>;
   cornerstone?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
@@ -13252,7 +13252,7 @@ export type TaxonomySEO = {
 
 /** Connection between the Taxonomy type and the ContentType type */
 export type TaxonomyToContentTypeConnection = {
-  __typename?: "TaxonomyToContentTypeConnection";
+  __typename: "TaxonomyToContentTypeConnection";
   /** Edges for the TaxonomyToContentTypeConnection connection */
   edges?: Maybe<
     Array<Maybe<FieldWrapper<TaxonomyToContentTypeConnectionEdge>>>
@@ -13265,7 +13265,7 @@ export type TaxonomyToContentTypeConnection = {
 
 /** An edge in a connection */
 export type TaxonomyToContentTypeConnectionEdge = {
-  __typename?: "TaxonomyToContentTypeConnectionEdge";
+  __typename: "TaxonomyToContentTypeConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -13274,7 +13274,7 @@ export type TaxonomyToContentTypeConnectionEdge = {
 
 /** The template assigned to the node */
 export type Template_FullWidth = ContentTemplate & {
-  __typename?: "Template_FullWidth";
+  __typename: "Template_FullWidth";
   /** The name of the template */
   templateName?: Maybe<FieldWrapper<Scalars["String"]>>;
 };
@@ -13349,7 +13349,7 @@ export enum TermNodeIdTypeEnum {
 
 /** Connection between the TermNode type and the EnqueuedScript type */
 export type TermNodeToEnqueuedScriptConnection = {
-  __typename?: "TermNodeToEnqueuedScriptConnection";
+  __typename: "TermNodeToEnqueuedScriptConnection";
   /** Edges for the TermNodeToEnqueuedScriptConnection connection */
   edges?: Maybe<
     Array<Maybe<FieldWrapper<TermNodeToEnqueuedScriptConnectionEdge>>>
@@ -13362,7 +13362,7 @@ export type TermNodeToEnqueuedScriptConnection = {
 
 /** An edge in a connection */
 export type TermNodeToEnqueuedScriptConnectionEdge = {
-  __typename?: "TermNodeToEnqueuedScriptConnectionEdge";
+  __typename: "TermNodeToEnqueuedScriptConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -13371,7 +13371,7 @@ export type TermNodeToEnqueuedScriptConnectionEdge = {
 
 /** Connection between the TermNode type and the EnqueuedStylesheet type */
 export type TermNodeToEnqueuedStylesheetConnection = {
-  __typename?: "TermNodeToEnqueuedStylesheetConnection";
+  __typename: "TermNodeToEnqueuedStylesheetConnection";
   /** Edges for the TermNodeToEnqueuedStylesheetConnection connection */
   edges?: Maybe<
     Array<Maybe<FieldWrapper<TermNodeToEnqueuedStylesheetConnectionEdge>>>
@@ -13384,7 +13384,7 @@ export type TermNodeToEnqueuedStylesheetConnection = {
 
 /** An edge in a connection */
 export type TermNodeToEnqueuedStylesheetConnectionEdge = {
-  __typename?: "TermNodeToEnqueuedStylesheetConnectionEdge";
+  __typename: "TermNodeToEnqueuedStylesheetConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -13411,7 +13411,7 @@ export enum TermObjectsConnectionOrderbyEnum {
 
 /** A Gravity Forms   field. */
 export type TextAreaField = FormField & {
-  __typename?: "TextAreaField";
+  __typename: "TextAreaField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Determines if the field’s value can be pre-populated dynamically. */
@@ -13470,7 +13470,7 @@ export type TextAreaField = FormField & {
 
 /** A Gravity Forms   field. */
 export type TextField = FormField & {
-  __typename?: "TextField";
+  __typename: "TextField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The autocomplete attribute for the field. */
@@ -13537,7 +13537,7 @@ export type TextField = FormField & {
 
 /** A theme object */
 export type Theme = Node & {
-  __typename?: "Theme";
+  __typename: "Theme";
   /** Name of the theme author(s), could also be a company name. This field is equivalent to WP_Theme-&gt;get( &quot;Author&quot; ). */
   author?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** URI for the author/company website. This field is equivalent to WP_Theme-&gt;get( &quot;AuthorURI&quot; ). */
@@ -13564,7 +13564,7 @@ export type Theme = Node & {
 
 /** A Gravity Forms   field. */
 export type TimeField = FormField & {
-  __typename?: "TimeField";
+  __typename: "TimeField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Determines if the field’s value can be pre-populated dynamically. */
@@ -13627,7 +13627,7 @@ export enum TimeFieldFormatEnum {
 
 /** The individual properties for each element of the Time value field. */
 export type TimeFieldValue = {
-  __typename?: "TimeFieldValue";
+  __typename: "TimeFieldValue";
   /** AM or PM. */
   amPm?: Maybe<FieldWrapper<AmPmEnum>>;
   /** The full display value in 12-hour format. Example: &quot;08:25 am&quot;. */
@@ -13640,7 +13640,7 @@ export type TimeFieldValue = {
 
 /** Time input values. */
 export type TimeInputProperty = {
-  __typename?: "TimeInputProperty";
+  __typename: "TimeInputProperty";
   /** The autocomplete attribute for the field. */
   autocompleteAttribute?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The custom label for the input. When set, this is used in place of the label. */
@@ -13687,7 +13687,7 @@ export type UpdateCategoryInput = {
 
 /** The payload for the UpdateCategory mutation */
 export type UpdateCategoryPayload = {
-  __typename?: "UpdateCategoryPayload";
+  __typename: "UpdateCategoryPayload";
   /** The created category */
   category?: Maybe<FieldWrapper<Category>>;
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -13722,7 +13722,7 @@ export type UpdateCommentInput = {
 
 /** The payload for the updateComment mutation */
 export type UpdateCommentPayload = {
-  __typename?: "UpdateCommentPayload";
+  __typename: "UpdateCommentPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The comment that was created */
@@ -13783,7 +13783,7 @@ export type UpdateGfDraftEntryInput = {
 
 /** The payload for the updateGfDraftEntry mutation */
 export type UpdateGfDraftEntryPayload = {
-  __typename?: "UpdateGfDraftEntryPayload";
+  __typename: "UpdateGfDraftEntryPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The draft entry after the update mutation has been applied. If a validation error occurred, the draft entry will NOT have been updated with the invalid value provided. */
@@ -13810,7 +13810,7 @@ export type UpdateGfEntryInput = {
 
 /** The payload for the updateGfEntry mutation */
 export type UpdateGfEntryPayload = {
-  __typename?: "UpdateGfEntryPayload";
+  __typename: "UpdateGfEntryPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The entry that was created. */
@@ -13857,7 +13857,7 @@ export type UpdateMediaItemInput = {
 
 /** The payload for the updateMediaItem mutation */
 export type UpdateMediaItemPayload = {
-  __typename?: "UpdateMediaItemPayload";
+  __typename: "UpdateMediaItemPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The MediaItem object mutation type. */
@@ -13896,7 +13896,7 @@ export type UpdatePageInput = {
 
 /** The payload for the updatePage mutation */
 export type UpdatePagePayload = {
-  __typename?: "UpdatePagePayload";
+  __typename: "UpdatePagePayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The Post object mutation type. */
@@ -13921,7 +13921,7 @@ export type UpdatePostFormatInput = {
 
 /** The payload for the UpdatePostFormat mutation */
 export type UpdatePostFormatPayload = {
-  __typename?: "UpdatePostFormatPayload";
+  __typename: "UpdatePostFormatPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The created post_format */
@@ -13970,7 +13970,7 @@ export type UpdatePostInput = {
 
 /** The payload for the updatePost mutation */
 export type UpdatePostPayload = {
-  __typename?: "UpdatePostPayload";
+  __typename: "UpdatePostPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The Post object mutation type. */
@@ -14021,7 +14021,7 @@ export type UpdateSettingsInput = {
 
 /** The payload for the updateSettings mutation */
 export type UpdateSettingsPayload = {
-  __typename?: "UpdateSettingsPayload";
+  __typename: "UpdateSettingsPayload";
   /** Update all settings. */
   allSettings?: Maybe<FieldWrapper<Settings>>;
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -14062,7 +14062,7 @@ export type UpdateTagInput = {
 
 /** The payload for the UpdateTag mutation */
 export type UpdateTagPayload = {
-  __typename?: "UpdateTagPayload";
+  __typename: "UpdateTagPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The created post_tag */
@@ -14115,7 +14115,7 @@ export type UpdateUserInput = {
 
 /** The payload for the updateUser mutation */
 export type UpdateUserPayload = {
-  __typename?: "UpdateUserPayload";
+  __typename: "UpdateUserPayload";
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The User object mutation type. */
@@ -14127,7 +14127,7 @@ export type User = Commenter &
   DatabaseIdentifier &
   Node &
   UniformResourceIdentifiable & {
-    __typename?: "User";
+    __typename: "User";
     /** Avatar object for user. The avatar object can be retrieved in different sizes by specifying the size argument. */
     avatar?: Maybe<FieldWrapper<Avatar>>;
     /** User metadata option name. Usually it will be &quot;wp_capabilities&quot;. */
@@ -14303,7 +14303,7 @@ export enum UserNodeIdTypeEnum {
 
 /** A user role object */
 export type UserRole = Node & {
-  __typename?: "UserRole";
+  __typename: "UserRole";
   /** The capabilities that belong to this role */
   capabilities?: Maybe<Array<Maybe<FieldWrapper<Scalars["String"]>>>>;
   /** The display name of the role */
@@ -14336,7 +14336,7 @@ export enum UserRoleEnum {
 
 /** Connection between the User type and the Comment type */
 export type UserToCommentConnection = {
-  __typename?: "UserToCommentConnection";
+  __typename: "UserToCommentConnection";
   /** Edges for the UserToCommentConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<UserToCommentConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -14347,7 +14347,7 @@ export type UserToCommentConnection = {
 
 /** An edge in a connection */
 export type UserToCommentConnectionEdge = {
-  __typename?: "UserToCommentConnectionEdge";
+  __typename: "UserToCommentConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -14418,7 +14418,7 @@ export type UserToCommentConnectionWhereArgs = {
 
 /** Connection between the User type and the ContentRevisionUnion type */
 export type UserToContentRevisionUnionConnection = {
-  __typename?: "UserToContentRevisionUnionConnection";
+  __typename: "UserToContentRevisionUnionConnection";
   /** Edges for the UserToContentRevisionUnionConnection connection */
   edges?: Maybe<
     Array<Maybe<FieldWrapper<UserToContentRevisionUnionConnectionEdge>>>
@@ -14431,7 +14431,7 @@ export type UserToContentRevisionUnionConnection = {
 
 /** An edge in a connection */
 export type UserToContentRevisionUnionConnectionEdge = {
-  __typename?: "UserToContentRevisionUnionConnectionEdge";
+  __typename: "UserToContentRevisionUnionConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -14480,7 +14480,7 @@ export type UserToContentRevisionUnionConnectionWhereArgs = {
 
 /** Connection between the User type and the EnqueuedScript type */
 export type UserToEnqueuedScriptConnection = {
-  __typename?: "UserToEnqueuedScriptConnection";
+  __typename: "UserToEnqueuedScriptConnection";
   /** Edges for the UserToEnqueuedScriptConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<UserToEnqueuedScriptConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -14491,7 +14491,7 @@ export type UserToEnqueuedScriptConnection = {
 
 /** An edge in a connection */
 export type UserToEnqueuedScriptConnectionEdge = {
-  __typename?: "UserToEnqueuedScriptConnectionEdge";
+  __typename: "UserToEnqueuedScriptConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -14500,7 +14500,7 @@ export type UserToEnqueuedScriptConnectionEdge = {
 
 /** Connection between the User type and the EnqueuedStylesheet type */
 export type UserToEnqueuedStylesheetConnection = {
-  __typename?: "UserToEnqueuedStylesheetConnection";
+  __typename: "UserToEnqueuedStylesheetConnection";
   /** Edges for the UserToEnqueuedStylesheetConnection connection */
   edges?: Maybe<
     Array<Maybe<FieldWrapper<UserToEnqueuedStylesheetConnectionEdge>>>
@@ -14513,7 +14513,7 @@ export type UserToEnqueuedStylesheetConnection = {
 
 /** An edge in a connection */
 export type UserToEnqueuedStylesheetConnectionEdge = {
-  __typename?: "UserToEnqueuedStylesheetConnectionEdge";
+  __typename: "UserToEnqueuedStylesheetConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -14522,7 +14522,7 @@ export type UserToEnqueuedStylesheetConnectionEdge = {
 
 /** Connection between the User type and the mediaItem type */
 export type UserToMediaItemConnection = {
-  __typename?: "UserToMediaItemConnection";
+  __typename: "UserToMediaItemConnection";
   /** Edges for the UserToMediaItemConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<UserToMediaItemConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -14533,7 +14533,7 @@ export type UserToMediaItemConnection = {
 
 /** An edge in a connection */
 export type UserToMediaItemConnectionEdge = {
-  __typename?: "UserToMediaItemConnectionEdge";
+  __typename: "UserToMediaItemConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -14588,7 +14588,7 @@ export type UserToMediaItemConnectionWhereArgs = {
 
 /** Connection between the User type and the page type */
 export type UserToPageConnection = {
-  __typename?: "UserToPageConnection";
+  __typename: "UserToPageConnection";
   /** Edges for the UserToPageConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<UserToPageConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -14599,7 +14599,7 @@ export type UserToPageConnection = {
 
 /** An edge in a connection */
 export type UserToPageConnectionEdge = {
-  __typename?: "UserToPageConnectionEdge";
+  __typename: "UserToPageConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -14654,7 +14654,7 @@ export type UserToPageConnectionWhereArgs = {
 
 /** Connection between the User type and the post type */
 export type UserToPostConnection = {
-  __typename?: "UserToPostConnection";
+  __typename: "UserToPostConnection";
   /** Edges for the UserToPostConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<UserToPostConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -14665,7 +14665,7 @@ export type UserToPostConnection = {
 
 /** An edge in a connection */
 export type UserToPostConnectionEdge = {
-  __typename?: "UserToPostConnectionEdge";
+  __typename: "UserToPostConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -14740,7 +14740,7 @@ export type UserToPostConnectionWhereArgs = {
 
 /** Connection between the User type and the UserRole type */
 export type UserToUserRoleConnection = {
-  __typename?: "UserToUserRoleConnection";
+  __typename: "UserToUserRoleConnection";
   /** Edges for the UserToUserRoleConnection connection */
   edges?: Maybe<Array<Maybe<FieldWrapper<UserToUserRoleConnectionEdge>>>>;
   /** The nodes of the connection, without the edges */
@@ -14751,7 +14751,7 @@ export type UserToUserRoleConnection = {
 
 /** An edge in a connection */
 export type UserToUserRoleConnectionEdge = {
-  __typename?: "UserToUserRoleConnectionEdge";
+  __typename: "UserToUserRoleConnectionEdge";
   /** A cursor for use in pagination */
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
@@ -14760,7 +14760,7 @@ export type UserToUserRoleConnectionEdge = {
 
 /** A Gravity Forms   field. */
 export type UsernameField = FormField & {
-  __typename?: "UsernameField";
+  __typename: "UsernameField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The autocomplete attribute for the field. */
@@ -14869,7 +14869,7 @@ export enum UsersConnectionSearchColumnEnum {
 
 /** Information about pagination in a connection. */
 export type WPPageInfo = {
-  __typename?: "WPPageInfo";
+  __typename: "WPPageInfo";
   /** When paginating forwards, the cursor to continue. */
   endCursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** When paginating forwards, are there more items? */
@@ -14885,7 +14885,7 @@ export type WPPageInfo = {
 
 /** A Gravity Forms   field. */
 export type WebsiteField = FormField & {
-  __typename?: "WebsiteField";
+  __typename: "WebsiteField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
   adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** Determines if the field’s value can be pre-populated dynamically. */
@@ -14940,7 +14940,7 @@ export type WebsiteField = FormField & {
 
 /** The writing setting type */
 export type WritingSettings = {
-  __typename?: "WritingSettings";
+  __typename: "WritingSettings";
   /** Default post category. */
   defaultCategory?: Maybe<FieldWrapper<Scalars["Int"]>>;
   /** Default post format. */
@@ -35456,6 +35456,8 @@ export type AuthorPartialFragment = {
   jwtAuthExpiration?: string | null;
 };
 
+export type AuthorPartialFragmentVariables = Exact<{ [key: string]: never }>;
+
 export type AvatarPartialFragment = {
   __typename: "Avatar";
   forceDefault?: boolean | null;
@@ -35470,6 +35472,8 @@ export type AvatarPartialFragment = {
   url?: string | null;
   extraAttr?: string | null;
 };
+
+export type AvatarPartialFragmentVariables = Exact<{ [key: string]: never }>;
 
 export type CommentPartialFragment = {
   __typename?: "Comment";
@@ -35488,6 +35492,8 @@ export type CommentPartialFragment = {
   content?: string | null;
 };
 
+export type CommentPartialFragmentVariables = Exact<{ [key: string]: never }>;
+
 export type LoginPayloadPartialFragment = {
   __typename: "LoginPayload";
   authToken?: string | null;
@@ -35495,12 +35501,20 @@ export type LoginPayloadPartialFragment = {
   clientMutationId?: string | null;
 };
 
+export type LoginPayloadPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type MediaDetailsPartialFragment = {
   __typename: "MediaDetails";
   height?: number | null;
   width?: number | null;
   file?: string | null;
 };
+
+export type MediaDetailsPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type MediaItemPartialFragment = {
   __typename: "MediaItem";
@@ -35522,6 +35536,8 @@ export type MediaItemPartialFragment = {
   sizes?: string | null;
   mediaType?: string | null;
 };
+
+export type MediaItemPartialFragmentVariables = Exact<{ [key: string]: never }>;
 
 type NodeWithCommentsPartial_MediaItem_Fragment = {
   __typename: "MediaItem";
@@ -35546,6 +35562,10 @@ export type NodeWithCommentsPartialFragment =
   | NodeWithCommentsPartial_Page_Fragment
   | NodeWithCommentsPartial_Post_Fragment;
 
+export type NodeWithCommentsPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type PageInfoPartialFragment = {
   __typename: "WPPageInfo";
   endCursor?: string | null;
@@ -35554,6 +35574,8 @@ export type PageInfoPartialFragment = {
   startCursor?: string | null;
   total?: number | null;
 };
+
+export type PageInfoPartialFragmentVariables = Exact<{ [key: string]: never }>;
 
 export type PagePartialFragment = {
   __typename: "Page";
@@ -35569,6 +35591,8 @@ export type PagePartialFragment = {
   uri?: string | null;
   isRestricted?: boolean | null;
 };
+
+export type PagePartialFragmentVariables = Exact<{ [key: string]: never }>;
 
 export type PostPartialFragment = {
   __typename: "Post";
@@ -35590,10 +35614,16 @@ export type PostPartialFragment = {
   featuredImageDatabaseId?: number | null;
 };
 
+export type PostPartialFragmentVariables = Exact<{ [key: string]: never }>;
+
 export type SEOPageInfoSchemaPartialFragment = {
   __typename: "SEOPageInfoSchema";
   raw?: string | null;
 };
+
+export type SEOPageInfoSchemaPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type UserLoginPartialFragment = {
   __typename: "User";
@@ -35615,10 +35645,16 @@ export type UserLoginPartialFragment = {
   isJwtAuthSecretRevoked: boolean;
 };
 
+export type UserLoginPartialFragmentVariables = Exact<{ [key: string]: never }>;
+
 export type UserToCommentConnectionEdgePartialFragment = {
   __typename: "UserToCommentConnectionEdge";
   cursor?: string | null;
 };
+
+export type UserToCommentConnectionEdgePartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type loginMutationVariables = Exact<{
   input: LoginInput;
@@ -35915,6 +35951,10 @@ export type AddressFieldsGravityPartialFragment = {
   } | null> | null;
 };
 
+export type AddressFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type AddressFieldValuePartialFragment = {
   __typename: "AddressFieldValue";
   street?: string | null;
@@ -35924,6 +35964,10 @@ export type AddressFieldValuePartialFragment = {
   zip?: string | null;
   country?: AddressFieldCountryEnum | null;
 };
+
+export type AddressFieldValuePartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type AddressInputPropertyPartialFragment = {
   __typename: "AddressInputProperty";
@@ -35938,12 +35982,20 @@ export type AddressInputPropertyPartialFragment = {
   placeholder?: string | null;
 };
 
+export type AddressInputPropertyPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type ButtonFieldsGravityPartialFragment = {
   __typename: "FormButton";
   text?: string | null;
   imageUrl?: string | null;
   type?: FormButtonTypeEnum | null;
 };
+
+export type ButtonFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type CaptchaPartialFragment = {
   __typename: "CaptchaField";
@@ -35964,6 +36016,8 @@ export type CaptchaPartialFragment = {
   simpleCaptchaFontColor?: string | null;
   simpleCaptchaSize?: FormFieldSizeEnum | null;
 };
+
+export type CaptchaPartialFragmentVariables = Exact<{ [key: string]: never }>;
 
 export type CheckboxFieldsGravityPartialFragment = {
   __typename?: "CheckboxField";
@@ -35987,12 +36041,20 @@ export type CheckboxFieldsGravityPartialFragment = {
   } | null> | null;
 };
 
+export type CheckboxFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type CheckboxFieldValuePartialFragment = {
   __typename: "CheckboxFieldValue";
   inputId?: number | null;
   text?: string | null;
   value?: string | null;
 };
+
+export type CheckboxFieldValuePartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type ChoicePropertyFieldsGravityPartialFragment = {
   __typename: "SelectFieldChoice";
@@ -36001,11 +36063,19 @@ export type ChoicePropertyFieldsGravityPartialFragment = {
   value?: string | null;
 };
 
+export type ChoicePropertyFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type ConditionalLogicPartialFragment = {
   __typename: "ConditionalLogic";
   actionType?: ConditionalLogicActionTypeEnum | null;
   logicType?: ConditionalLogicLogicTypeEnum | null;
 };
+
+export type ConditionalLogicPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type ConditionalLogicRulePartialFragment = {
   __typename: "ConditionalLogicRule";
@@ -36013,6 +36083,10 @@ export type ConditionalLogicRulePartialFragment = {
   operator?: FormRuleOperatorEnum | null;
   value?: string | null;
 };
+
+export type ConditionalLogicRulePartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type DateFieldsGravityPartialFragment = {
   __typename: "DateField";
@@ -36039,6 +36113,10 @@ export type DateFieldsGravityPartialFragment = {
   placeholder?: string | null;
 };
 
+export type DateFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type EmailFieldsGravityPartialFragment = {
   __typename: "EmailField";
   id: number;
@@ -36056,11 +36134,19 @@ export type EmailFieldsGravityPartialFragment = {
   placeholder?: string | null;
 };
 
+export type EmailFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type FieldErrorPartialFragment = {
   __typename: "FieldError";
   id?: number | null;
   message?: string | null;
 };
+
+export type FieldErrorPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type FileUploadFieldsGravityPartialFragment = {
   __typename: "FileUploadField";
@@ -36080,6 +36166,10 @@ export type FileUploadFieldsGravityPartialFragment = {
   maxFileSize?: number | null;
 };
 
+export type FileUploadFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type FormConfirmationGravityPartialFragment = {
   __typename: "FormConfirmation";
   id?: string | null;
@@ -36093,11 +36183,19 @@ export type FormConfirmationGravityPartialFragment = {
   url?: string | null;
 };
 
+export type FormConfirmationGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type FormDataPoliciesPartialFragment = {
   __typename: "FormDataPolicies";
   identificationFieldDatabaseId?: number | null;
   canExportAndErase?: boolean | null;
 };
+
+export type FormDataPoliciesPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type FormEntryDataPolicyPartialFragment = {
   __typename: "FormEntryDataPolicy";
@@ -36106,12 +36204,20 @@ export type FormEntryDataPolicyPartialFragment = {
   shouldExport?: boolean | null;
 };
 
+export type FormEntryDataPolicyPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type FormFieldDataPolicyPartialFragment = {
   __typename: "FormFieldDataPolicy";
   isIdentificationField?: boolean | null;
   shouldErase?: boolean | null;
   shouldExport?: boolean | null;
 };
+
+export type FormFieldDataPolicyPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 type FormFieldsGravityPartial_AddressField_Fragment = {
   __typename: "AddressField";
@@ -36808,6 +36914,10 @@ export type FormFieldsGravityPartialFragment =
   | FormFieldsGravityPartial_UsernameField_Fragment
   | FormFieldsGravityPartial_WebsiteField_Fragment;
 
+export type FormFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type FormLastPageButtonPartialFragment = {
   __typename: "FormLastPageButton";
   imageUrl?: string | null;
@@ -36815,11 +36925,17 @@ export type FormLastPageButtonPartialFragment = {
   type?: FormButtonTypeEnum | null;
 };
 
+export type FormLastPageButtonPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type FormLoginPartialFragment = {
   __typename: "FormLogin";
   isLoginRequired?: boolean | null;
   loginRequiredMessage?: string | null;
 };
+
+export type FormLoginPartialFragmentVariables = Exact<{ [key: string]: never }>;
 
 export type FormNotificationPartialFragment = {
   __typename: "FormNotification";
@@ -36840,6 +36956,10 @@ export type FormNotificationPartialFragment = {
   toType?: FormNotificationToTypeEnum | null;
 };
 
+export type FormNotificationPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type FormNotificationRoutingPartialFragment = {
   __typename: "FormNotificationRouting";
   email?: string | null;
@@ -36848,6 +36968,10 @@ export type FormNotificationRoutingPartialFragment = {
   value?: string | null;
 };
 
+export type FormNotificationRoutingPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type FormPersonalDataPartialFragment = {
   __typename: "FormPersonalData";
   retentionPolicy?: FormRetentionPolicyEnum | null;
@@ -36855,11 +36979,19 @@ export type FormPersonalDataPartialFragment = {
   shouldSaveIP?: boolean | null;
 };
 
+export type FormPersonalDataPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type FormSaveAndContinuePartialFragment = {
   __typename: "FormSaveAndContinue";
   buttonText?: string | null;
   hasSaveAndContinue?: boolean | null;
 };
+
+export type FormSaveAndContinuePartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type FormScheduleDetailsPartialFragment = {
   __typename: "FormScheduleDetails";
@@ -36870,12 +37002,20 @@ export type FormScheduleDetailsPartialFragment = {
   minute?: number | null;
 };
 
+export type FormScheduleDetailsPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type FormSchedulePartialFragment = {
   __typename: "FormSchedule";
   closedMessage?: string | null;
   hasSchedule?: boolean | null;
   pendingMessage?: string | null;
 };
+
+export type FormSchedulePartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 type GravityFormEntryPartial_GfDraftEntry_Fragment = {
   __typename: "GfDraftEntry";
@@ -36911,6 +37051,10 @@ export type GravityFormEntryPartialFragment =
   | GravityFormEntryPartial_GfDraftEntry_Fragment
   | GravityFormEntryPartial_GfSubmittedEntry_Fragment;
 
+export type GravityFormEntryPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type GravityFormsFormPartialFragment = {
   __typename: "GfForm";
   id: string;
@@ -36935,6 +37079,10 @@ export type GravityFormsFormPartialFragment = {
   version?: string | null;
 };
 
+export type GravityFormsFormPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type LikertFieldPartialFragment = {
   __typename: "LikertField";
   displayOnly?: boolean | null;
@@ -36949,11 +37097,19 @@ export type LikertFieldPartialFragment = {
   visibility?: FormFieldVisibilityEnum | null;
 };
 
+export type LikertFieldPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type ListChoicePropertyFieldsGravityPartialFragment = {
   __typename: "ListFieldChoice";
   value?: string | null;
   text?: string | null;
 };
+
+export type ListChoicePropertyFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type ListFieldsGravityPartialFragment = {
   __typename: "ListField";
@@ -36970,10 +37126,18 @@ export type ListFieldsGravityPartialFragment = {
   errorMessage?: string | null;
 };
 
+export type ListFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type ListValuePropertyFieldsGravityPartialFragment = {
   __typename: "ListFieldValue";
   values?: Array<string | null> | null;
 };
+
+export type ListValuePropertyFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type MultiSelectFieldsGravityPartialFragment = {
   __typename: "MultiSelectField";
@@ -36991,6 +37155,10 @@ export type MultiSelectFieldsGravityPartialFragment = {
     value?: string | null;
   } | null> | null;
 };
+
+export type MultiSelectFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type NameFieldsGravityPartialFragment = {
   __typename?: "NameField";
@@ -37024,6 +37192,10 @@ export type NameFieldsGravityPartialFragment = {
   } | null> | null;
 };
 
+export type NameFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type NameInputFieldsGravityPartialFragment = {
   __typename: "NameInputProperty";
   name?: string | null;
@@ -37037,6 +37209,10 @@ export type NameInputFieldsGravityPartialFragment = {
   isHidden?: boolean | null;
 };
 
+export type NameInputFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type PaginationPartialFragment = {
   __typename: "FormPagination";
   backgroundColor?: string | null;
@@ -37048,6 +37224,10 @@ export type PaginationPartialFragment = {
   type?: FormPageProgressTypeEnum | null;
 };
 
+export type PaginationPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type PasswordFieldInputPartialFragment = {
   __typename: "PasswordInputProperty";
   customLabel?: string | null;
@@ -37056,6 +37236,10 @@ export type PasswordFieldInputPartialFragment = {
   label?: string | null;
   placeholder?: string | null;
 };
+
+export type PasswordFieldInputPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type PasswordFieldPartialFragment = {
   __typename: "PasswordField";
@@ -37080,6 +37264,10 @@ export type PasswordFieldPartialFragment = {
   value?: string | null;
 };
 
+export type PasswordFieldPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type PhoneFieldsGravityPartialFragment = {
   __typename?: "PhoneField";
   id: number;
@@ -37098,6 +37286,10 @@ export type PhoneFieldsGravityPartialFragment = {
   placeholder?: string | null;
 };
 
+export type PhoneFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type PollFieldPartialFragment = {
   __typename: "PollField";
   displayOnly?: boolean | null;
@@ -37108,6 +37300,8 @@ export type PollFieldPartialFragment = {
   value?: string | null;
   pageNumber?: number | null;
 };
+
+export type PollFieldPartialFragmentVariables = Exact<{ [key: string]: never }>;
 
 export type PostContentFieldsGravityPartialFragment = {
   __typename: "PostContentField";
@@ -37128,6 +37322,10 @@ export type PostContentFieldsGravityPartialFragment = {
   errorMessage?: string | null;
 };
 
+export type PostContentFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type PostImageValuePropertyFieldsGravityPartialFragment = {
   __typename: "ImageFieldValue";
   altText?: string | null;
@@ -37136,6 +37334,9 @@ export type PostImageValuePropertyFieldsGravityPartialFragment = {
   title?: string | null;
   url?: string | null;
 };
+
+export type PostImageValuePropertyFieldsGravityPartialFragmentVariables =
+  Exact<{ [key: string]: never }>;
 
 export type PostImageFieldsGravityPartialFragment = {
   __typename: "PostImageField";
@@ -37165,12 +37366,20 @@ export type PostImageFieldsGravityPartialFragment = {
   } | null;
 };
 
+export type PostImageFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type QuizInputPropertyPartialFragment = {
   __typename: "QuizInputProperty";
   id?: number | null;
   label?: string | null;
   name?: string | null;
 };
+
+export type QuizInputPropertyPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type QuizFieldChoicePartialFragment = {
   __typename: "QuizFieldChoice";
@@ -37181,6 +37390,10 @@ export type QuizFieldChoicePartialFragment = {
   value?: string | null;
   weight?: number | null;
 };
+
+export type QuizFieldChoicePartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type QuizRadioFieldPartialFragment = {
   __typename: "QuizRadioField";
@@ -37209,6 +37422,10 @@ export type QuizRadioFieldPartialFragment = {
   value?: string | null;
   visibility?: FormFieldVisibilityEnum | null;
 };
+
+export type QuizRadioFieldPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type QuizSelectFieldPartialFragment = {
   __typename: "QuizSelectField";
@@ -37242,6 +37459,10 @@ export type QuizSelectFieldPartialFragment = {
   value?: string | null;
   visibility?: FormFieldVisibilityEnum | null;
 };
+
+export type QuizSelectFieldPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 type QuizFieldPartial_QuizCheckboxField_Fragment = {
   __typename: "QuizCheckboxField";
@@ -37326,6 +37547,8 @@ export type QuizFieldPartialFragment =
   | QuizFieldPartial_QuizRadioField_Fragment
   | QuizFieldPartial_QuizSelectField_Fragment;
 
+export type QuizFieldPartialFragmentVariables = Exact<{ [key: string]: never }>;
+
 export type QuizCheckboxFieldPartialFragment = {
   __typename: "QuizCheckboxField";
   adminLabel?: string | null;
@@ -37353,6 +37576,10 @@ export type QuizCheckboxFieldPartialFragment = {
   visibility?: FormFieldVisibilityEnum | null;
 };
 
+export type QuizCheckboxFieldPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type RadioFieldsGravityPartialFragment = {
   __typename?: "RadioField";
   id: number;
@@ -37372,6 +37599,10 @@ export type RadioFieldsGravityPartialFragment = {
   } | null> | null;
 };
 
+export type RadioFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type RadioFieldChoicePartialFragment = {
   __typename: "RadioFieldChoice";
   text?: string | null;
@@ -37379,6 +37610,10 @@ export type RadioFieldChoicePartialFragment = {
   isOtherChoice?: boolean | null;
   isSelected?: boolean | null;
 };
+
+export type RadioFieldChoicePartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type RecaptchaPartialFragment = {
   __typename: "RecaptchaField";
@@ -37388,6 +37623,8 @@ export type RecaptchaPartialFragment = {
   inputType?: FormFieldTypeEnum | null;
   displayOnly?: boolean | null;
 };
+
+export type RecaptchaPartialFragmentVariables = Exact<{ [key: string]: never }>;
 
 export type SelectFieldsGravityPartialFragment = {
   __typename: "SelectField";
@@ -37413,11 +37650,19 @@ export type SelectFieldsGravityPartialFragment = {
   } | null> | null;
 };
 
+export type SelectFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type SubmitGfFormPayloadPartialFragment = {
   __typename: "SubmitGfFormPayload";
   clientMutationId?: string | null;
   resumeUrl?: string | null;
 };
+
+export type SubmitGfFormPayloadPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type SurveyFieldPartialFragment = {
   __typename: "SurveyField";
@@ -37438,6 +37683,10 @@ export type SurveyFieldPartialFragment = {
   visibility?: FormFieldVisibilityEnum | null;
 };
 
+export type SurveyFieldPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type TextAreaFieldsGravityPartialFragment = {
   __typename: "TextAreaField";
   id: number;
@@ -37457,6 +37706,10 @@ export type TextAreaFieldsGravityPartialFragment = {
   descriptionPlacement?: FormFieldDescriptionPlacementEnum | null;
   type?: FormFieldTypeEnum | null;
 };
+
+export type TextAreaFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type TextFieldsGravityPartialFragment = {
   __typename: "TextField";
@@ -37480,6 +37733,10 @@ export type TextFieldsGravityPartialFragment = {
   value?: string | null;
 };
 
+export type TextFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type TimeFieldsGravityPartialFragment = {
   __typename?: "TimeField";
   id: number;
@@ -37500,6 +37757,10 @@ export type TimeFieldsGravityPartialFragment = {
   } | null;
 };
 
+export type TimeFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type TimeFieldValuePartialFragment = {
   __typename?: "TimeFieldValue";
   amPm?: AmPmEnum | null;
@@ -37507,6 +37768,10 @@ export type TimeFieldValuePartialFragment = {
   hours?: string | null;
   minutes?: string | null;
 };
+
+export type TimeFieldValuePartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type WebsiteFieldsGravityPartialFragment = {
   __typename: "WebsiteField";
@@ -37524,6 +37789,10 @@ export type WebsiteFieldsGravityPartialFragment = {
   isRequired?: boolean | null;
   placeholder?: string | null;
 };
+
+export type WebsiteFieldsGravityPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type SubmitGravityFormMutationVariables = Exact<{
   input: SubmitGfFormInput;
