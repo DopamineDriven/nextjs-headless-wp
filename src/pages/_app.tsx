@@ -1,40 +1,83 @@
 import "../styles/index.css";
 
+import cn from "classnames";
 import { AppProps, NextWebVitalsMetric } from "next/app";
-import { useEffect } from "react";
+import { Component, ComponentType, FC, HTMLAttributes, useEffect } from "react";
 import { useRouter } from "next/router";
 import * as gtag from "@/utils/analytics";
 import Head from "@/components/Head";
 import { LinkProps } from "next/link";
 import NextSEO from "@/lib/next-seo";
 import Script from "next/script";
-// import { ApolloProviderProps, ApolloProvider } from "@apollo/client/react/context";
+import { useApollo, initializeApollo } from "@/apollo/apollo";
+import { xResolvers } from "@/apollo/middleware";
+import {
+  ApolloProviderProps,
+  ApolloProvider
+} from "@apollo/client/react/context";
+import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
 
+export const Noop: FC = ({ children }) => <>{children}</>;
 export interface HandleRouteChangeExtended<T extends (url: URL) => void> {
   shallow: LinkProps["shallow"];
 }
+export const Page: FC<HTMLAttributes<HTMLElement>> = ({
+  children,
+  className,
+  ...props
+}) => (
+  <main
+    {...props}
+    className={cn("w-full max-w-3xl font-interVar mx-auto py-16", className)}>
+    {children}
+  </main>
+);
 
-export default function HeadlessWordPressNext({
-  Component,
-  pageProps
-}: AppProps) {
+export type LinkPropsMapped<T extends keyof LinkProps> = {
+  [P in T]: LinkProps[P];
+};
+
+export type RouterPropsMapped<K extends keyof ReturnType<typeof useRouter>> = {
+  [L in K]: ReturnType<typeof useRouter>[L];
+};
+
+export function getLayout<LP extends {}>(
+  Component: ComponentType<any>
+): ComponentType<LP> {
+  return (Component as any).Layout || Noop;
+}
+
+export default function HeadlessWordPressNext<P = Record<string, unknown>>({
+  pageProps,
+  Component
+}: AppProps<P>) {
+  const LayoutGlobal = getLayout<any>(Component);
+
+  const router = useRouter();
+
+  const apolloClient = useApollo(
+    pageProps.initialApolloState ?? null,
+    pageProps.resolverContext ? (pageProps.resolverContext) : {}
+  );
+
   useEffect(() => {
     document.body.classList?.remove("loading");
   }, []);
-  const router = useRouter();
 
   useEffect(() => {
     const isProd = process.env.NODE_ENV === "production";
-    const handleRouteChange = (
-      url: URL,
-      { shallow }: HandleRouteChangeExtended<typeof gtag.pageview>
+    const handleRouteChange = <P extends URL>(
+      url: P,
+      shallow: HandleRouteChangeExtended<typeof gtag.pageview>["shallow"]
     ) => {
-      if (isProd) gtag.pageview(url);
-      console.log(
-        `App is changing to ${url} ${
-          shallow ? "with" : "without"
-        } shallow routing`
-      );
+      if (!isProd) {
+        console.log(
+          `App is changing to ${url} ${
+            shallow ? "with" : "without"
+          } shallow routing`
+        );
+      }
+      gtag.pageview(url);
     };
     router.events.on("routeChangeComplete", handleRouteChange);
     return () => {
@@ -64,8 +107,12 @@ export default function HeadlessWordPressNext({
          `
         }}
       />
-      <Head nextSeoProps={NextSEO} />
-      <Component {...pageProps} />
+      <ApolloProvider client={apolloClient}>
+        <LayoutGlobal {...pageProps}>
+          <Head nextSeoProps={NextSEO} />
+          <Component {...pageProps} />
+        </LayoutGlobal>
+      </ApolloProvider>
     </>
   );
 }
@@ -74,6 +121,7 @@ export function reportGAVitals({
   id,
   name,
   label,
+  startTime,
   value
 }: NextWebVitalsMetric) {
   if (typeof window !== "undefined")

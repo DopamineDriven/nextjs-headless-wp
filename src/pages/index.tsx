@@ -1,3 +1,12 @@
+import { initializeApollo } from "@/apollo/apollo";
+import { ParsedUrlQuery } from "@/types/query-parser";
+import { NormalizedCacheObject } from "@apollo/client";
+import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
+
+export type IndexProps = {
+  apolloClient: NormalizedCacheObject;
+};
+
 export default function IndexPage() {
   return (
     <>
@@ -9,3 +18,15 @@ export default function IndexPage() {
     </>
   );
 }
+
+export const getServerSideProps = async (
+  ctx: GetServerSidePropsContext<ParsedUrlQuery>
+): Promise<GetServerSidePropsResult<IndexProps>> => {
+  const apolloClient = initializeApollo({}, { req: ctx.req, res: ctx.res });
+  const AuthHeaderPresent = ctx.req.headers.authorization;
+
+  
+  return {
+    props: { apolloClient: apolloClient.cache.extract(true) }
+  };
+};

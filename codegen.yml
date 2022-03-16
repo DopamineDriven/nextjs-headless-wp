@@ -39,10 +39,10 @@ generates:
           noExport: false
           enumPrefix: true
           numericEnums: false
-
+          fieldWrapperValue: T
           wrapFieldDefinitions: true
           skipTypename: false
-          nonOptionalTypename: false
+          nonOptionalTypename: true
       - add:
           content:
             - "import {ResolverContext} from '@/types/resolver-context';"
@@ -50,10 +50,27 @@ generates:
             - "import { GraphQLDate, GraphQLDateTime, GraphQLTime, GraphQLHexadecimal, GraphQLJSON,GraphQLPhoneNumber,GraphQLUUID, GraphQLJSONObject, JSONResolver, GraphQLBigInt } from 'graphql-scalars';"
             - "import { DeepPartial } from 'utility-types';"
       - typescript-document-nodes:
+          scalars:
+            Upload: File
+            Date: typeof GraphQLDate
+            DateTime: Date
+            Time: typeof GraphQLTime
+            BigInt: typeof GraphQLBigInt
+            UUID: typeof GraphQLUUID
+            PhoneNumber: typeof GraphQLPhoneNumber
           strictScalars: true
           gqlImport: "@apollo/client#gql"
       - typescript-resolvers:
           defaultMapper: DeepPartial<{T}>
+          dedupeFragments: true
+          scalars:
+            Upload: File
+            Date: typeof GraphQLDate
+            DateTime: Date
+            Time: typeof GraphQLTime
+            BigInt: typeof GraphQLBigInt
+            UUID: typeof GraphQLUUID
+            PhoneNumber: typeof GraphQLPhoneNumber
           optionalInfoArgument: true
           contextType: ResolverContext
           useIndexSignature: true
@@ -63,13 +80,13 @@ generates:
           maybeValue: "T | null"
       - typescript-operations:
           dedupeFragments: true
+          experimentalFragmentVariables: true
       - typescript-react-apollo:
           addDocBlocks: true
           reactApolloVersion: 3
           withRefetchFn: true
       - named-operations-object
     config:
-      useIndexSignature: true
       scalars:
         Hexadecimal: typeof GraphQLHexadecimal
         Json: typeof GraphQLJSON
@@ -81,6 +98,7 @@ generates:
         BigInt: typeof GraphQLBigInt
         UUID: typeof GraphQLUUID
         PhoneNumber: typeof GraphQLPhoneNumber
+      useIndexSignature: true
       reactApolloVersion: 3
       withHooks: true
       numericEnums: false
