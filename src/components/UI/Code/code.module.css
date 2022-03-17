@@ -1,0 +1,8 @@
+.root {
+  @apply text-[#f81ce5] text-[1rem] whitespace-pre-wrap;
+}
+
+.root::before,
+.root::after {
+  content: "`";
+}

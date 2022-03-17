@@ -1,0 +1,26 @@
+.description {
+  @apply font-normal text-[1rem] leading-[1.6rem] tracking-[-0.02em]
+  text-[#666]/100;
+}
+
+.body {
+  @apply font-normal text-[1rem] leading-[1.6rem];
+}
+
+.h1 {
+  @apply font-bold text-[2.625rem] leading-[1rem] tracking-[-0.01em];
+}
+
+.h2 {
+  @apply font-semibold tracking-[-0.47px] leading-[2rem] text-[1.875rem];
+}
+
+.description {
+  @apply font-medium leading-[1.6rem] tracking-[-0.02em]
+  text-[#666]/100 text-[1.125rem];
+}
+
+.smallText {
+  @apply tracking-[0.1rem] mt-0 pl-[0.2rem] leading[1.25rem] text-[0.875rem]
+  uppercase text-blue-500/100 font-semibold block mb-4;
+}

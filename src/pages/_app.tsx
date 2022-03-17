@@ -57,7 +57,7 @@ export default function HeadlessWordPressNext<P = Record<string, unknown>>({
 
   const apolloClient = useApollo(
     pageProps.initialApolloState ?? null,
-    pageProps.resolverContext ? (pageProps.resolverContext) : {}
+    pageProps.resolverContext ? pageProps.resolverContext : {}
   );
 
   useEffect(() => {

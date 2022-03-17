@@ -78,7 +78,7 @@
     }
 
     & > *:nth-child(6n + 2) {
-      @apply bg-accents-8;
+      @apply bg-[#111]/100;
     }
 
     & > *:nth-child(6n + 3) {

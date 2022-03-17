@@ -1,0 +1,3 @@
+.land {
+  @apply fill-[#CCCCCC]/100 stroke-white/100 stroke-[0.5px];
+}

@@ -21,7 +21,7 @@
 }
 
 .leftControl {
-  @apply -ml-0.25;
+  @apply -ml-[0.0625rem];
 }
 
 .root {

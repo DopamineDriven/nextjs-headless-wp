@@ -1,0 +1,12 @@
+.root {
+  @apply text-[#f81ce5] decoration-0 transition-colors duration-200 ease-in-out;
+}
+
+.root > .inlineCode {
+  @apply text-[#0070f3] transition-colors duration-200 ease-in-out;
+}
+
+.root:hover,
+.root:hover > .inlineCode {
+  @apply text-[#3291ff];
+}
