@@ -5,6 +5,7 @@ import {
   HTMLAttributes,
   ButtonHTMLAttributes,
   InputHTMLAttributes,
+  BlockquoteHTMLAttributes,
   TextareaHTMLAttributes,
   SelectHTMLAttributes,
   AnchorHTMLAttributes
@@ -12,6 +13,7 @@ import {
 import { NextApiHandler } from "next";
 import { ImageProps } from "next/image";
 import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
+import { OneOf, RequireOnlyOne } from "./helpers";
 
 export type LiteralUnion<T extends U, U = string> =
   | T
@@ -34,11 +36,9 @@ export type ApolloRecursive<
   _Implements = ({
     ...props
   }) => ApolloClient<
-    T extends Record<keyof T, infer U>
-      ? Record<keyof U, U>
-      : Record<keyof T, T>
+    T extends Record<keyof T, infer U> ? Record<keyof U, U> : Record<keyof T, T>
   >
-  > = RecursiveAmbivalent<ApolloClient<NormalizedCacheObject>>;
+> = RecursiveAmbivalent<ApolloClient<NormalizedCacheObject>>;
 
 export const ApolloClientProps = async ({
   apolloProps: { ...props }
@@ -89,10 +89,9 @@ export type SVGAttribs<T extends keyof SVGAttributes<SVGSVGElement>> = {
 };
 
 // <path/> props
-export type SVGPathAttribs<T extends keyof SVGAttributes<SVGPathElement>> =
-  {
-    [P in T]?: SVGAttributes<SVGPathElement>[P];
-  };
+export type SVGPathAttribs<T extends keyof SVGAttributes<SVGPathElement>> = {
+  [P in T]?: SVGAttributes<SVGPathElement>[P];
+};
 
 // <a/> props
 export type UnwrapAnchorProps<
@@ -149,17 +148,75 @@ export type UnwrapDivProps<
   >[P];
 };
 
-// <code/> props
-export type CodeProps<
+// list (li)
+export type UnwrapLI<
   T extends keyof DetailedHTMLProps<
-    HTMLAttributes<HTMLElement>,
-    HTMLElement
+    HTMLAttributes<HTMLLIElement>,
+    HTMLLIElement
+  >
+> = {
+  [P in T]?: DetailedHTMLProps<HTMLAttributes<HTMLLIElement>, HTMLLIElement>[P];
+};
+
+
+
+// span (span)
+export type UnwrapSpan<
+  T extends keyof DetailedHTMLProps<
+    HTMLAttributes<HTMLSpanElement>,
+    HTMLSpanElement
   >
 > = {
   [P in T]?: DetailedHTMLProps<
-    HTMLAttributes<HTMLElement>,
-    HTMLElement
+    HTMLAttributes<HTMLSpanElement>,
+    HTMLSpanElement
   >[P];
+};
+
+// paragraph (p)
+export type UnwrapParagraph<
+  T extends keyof DetailedHTMLProps<
+    HTMLAttributes<HTMLParagraphElement>,
+    HTMLParagraphElement
+  >
+> = {
+  [P in T]?: DetailedHTMLProps<
+    HTMLAttributes<HTMLParagraphElement>,
+    HTMLParagraphElement
+  >[P];
+};
+
+// unordered list (ul)
+export type UnwrapUL<
+  T extends keyof DetailedHTMLProps<
+    HTMLAttributes<HTMLUListElement>,
+    HTMLUListElement
+  >
+> = {
+  [P in T]?: DetailedHTMLProps<
+    HTMLAttributes<HTMLUListElement>,
+    HTMLUListElement
+  >[P];
+};
+
+// ordered list (ol)
+export type UnwrapOL<
+  T extends keyof DetailedHTMLProps<
+    HTMLAttributes<HTMLOListElement>,
+    HTMLOListElement
+  >
+> = {
+  [P in T]?: DetailedHTMLProps<
+    HTMLAttributes<HTMLOListElement>,
+    HTMLOListElement
+  >[P];
+};
+
+// <code/> props
+export type CodeProps<
+  T extends keyof DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
+> = {
+  [P in T]?: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>[P];
 };
 
 // <Image/> props

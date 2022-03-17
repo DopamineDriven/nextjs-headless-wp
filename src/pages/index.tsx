@@ -9,9 +9,54 @@ export type IndexProps = {
   apolloClient: NormalizedCacheObject;
 };
 
+import type { UnwrapPickOneInUnion } from "@/types/unwrap-react";
 
+export const CustomDiv = ({
+  ...props
+}: UnwrapPickOneInUnion<
+  HTMLDivElement,
+  | "about"
+  | "accessKey"
+  | "className"
+  | "onChange"
+  | "children"
+  | "ref"
+  | "dangerouslySetInnerHTML"
+>): JSX.Element => <div {...props}>{props.children}</div>;
 
-export default function IndexPage() {
+export const CustomCanvasFtw = ({
+  ...props
+}: UnwrapPickOneInUnion<
+  HTMLCanvasElement,
+  | "contentEditable"
+  | "onCopyCapture"
+  | "className"
+  | "aria-hidden"
+  | "onTouchMove"
+  | "onChange"
+  | "onMouseOverCapture"
+>) => <canvas {...props} />;
+
+export const customHeading = ({
+  ...props
+}: UnwrapPickOneInUnion<
+  HTMLHeadingElement,
+  "typeof" | "title" | "children" | "is" | "role" | "className"
+>) => {
+  return (
+    <CustomDiv about='this div was unwrapped, stripped to its essential bits, and forced into this custom existence'>
+      <h2 {...props}>
+        <CustomCanvasFtw
+          contentEditable='inherit'
+          className='leading-[1.22rem] tracking-[0.019rem] text-[#885833]/90'
+        />
+        {props.children}
+      </h2>
+    </CustomDiv>
+  );
+};
+
+export default function IndexPage(): JSX.Element {
   return (
     <>
       <div className='min-h-screen bg-gradient-to-tl from-gray-700 via-slate-800 to-gray-900 flex text-stone-200 fit '>
@@ -29,7 +74,6 @@ export const getServerSideProps = async (
 ): Promise<GetServerSidePropsResult<IndexProps>> => {
   const apolloClient = initializeApollo({}, { req: ctx.req, res: ctx.res });
   const AuthHeaderPresent = ctx.req.headers.authorization;
-
 
   return {
     props: { apolloClient: apolloClient.cache.extract(true) }
