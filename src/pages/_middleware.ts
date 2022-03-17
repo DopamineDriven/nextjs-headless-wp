@@ -2,6 +2,7 @@ import { NextFetchEvent, NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 export default function Middleware(req: NextRequest) {
+  // todo this new NextRequest("", {})ADD OPTIONS -- can conidtionally query pages before completion of req/res
   const { ua, geo, ip, headers } = req;
   const nonProxiedIp = headers.get("x-forwarded-for") as string;
   const returnFirstRealIp = nonProxiedIp
