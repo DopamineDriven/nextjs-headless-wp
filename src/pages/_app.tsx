@@ -2,20 +2,17 @@ import "../styles/index.css";
 
 import cn from "classnames";
 import { AppProps, NextWebVitalsMetric } from "next/app";
-import { Component, ComponentType, FC, HTMLAttributes, useEffect } from "react";
+import { ComponentType, FC, HTMLAttributes, useEffect } from "react";
 import { useRouter } from "next/router";
 import * as gtag from "@/utils/analytics";
 import Head from "@/components/Head";
 import { LinkProps } from "next/link";
 import NextSEO from "@/lib/next-seo";
 import Script from "next/script";
-import { useApollo, initializeApollo } from "@/apollo/apollo";
-import { xResolvers } from "@/apollo/middleware";
+import { useApollo } from "@/apollo/apollo";
 import {
-  ApolloProviderProps,
   ApolloProvider
 } from "@apollo/client/react/context";
-import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
 
 export const Noop: FC = ({ children }) => <>{children}</>;
 export interface HandleRouteChangeExtended<T extends (url: URL) => void> {
@@ -57,7 +54,7 @@ export default function HeadlessWordPressNext<P = Record<string, unknown>>({
 
   const apolloClient = useApollo(
     pageProps.initialApolloState ?? null,
-    pageProps.resolverContext ? pageProps.resolverContext : {}
+    pageProps.resolverContext ? (pageProps.resolverContext) : {}
   );
 
   useEffect(() => {
@@ -131,7 +128,7 @@ export function reportGAVitals({
       value: Math.round(name === "CLS" ? value * 1000 : value), // values must be integers
       event_label: id, // id unique to current page load
       non_interaction: true // avoids affecting bounce rate.
-    });
+      });
 }
 
 export function reportWebVitals(metric: NextWebVitalsMetric): void {
