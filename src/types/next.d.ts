@@ -6,7 +6,7 @@ import type {
   ApolloClient,
   NormalizedCache
 } from "@apollo/client";
-import { ResolverContext } from "./resolver-context";
+import type { ResolverContext } from "./resolver-context";
 // import { AuthData } from "@/hooks/use-auth";
 declare module "next/app" {
   type AppProps<P = Record<string, unknown>> = {
