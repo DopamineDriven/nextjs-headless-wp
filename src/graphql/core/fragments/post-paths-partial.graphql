@@ -1,0 +1,8 @@
+fragment PostPathsPartial on Post {
+  id
+  databaseId
+  guid
+  uri
+  slug
+  desiredSlug
+}

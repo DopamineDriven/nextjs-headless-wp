@@ -15004,6 +15004,38 @@ export const CommentPartial = gql`
     content
   }
 `;
+export const CommenterPartial = gql`
+  fragment CommenterPartial on Commenter {
+    url
+    databaseId
+    email
+    name
+    id
+    __typename
+  }
+`;
+export const ContentNodePartial = gql`
+  fragment ContentNodePartial on ContentNode {
+    guid
+    slug
+    isContentNode
+    isPreview
+    isRestricted
+    isTermNode
+    previewRevisionId
+    contentTypeName
+    desiredSlug
+    enclosure
+    status
+    uri
+    databaseId
+    id
+    previewRevisionDatabaseId
+    status
+    date
+    modified
+  }
+`;
 export const LoginPayloadPartial = gql`
   fragment LoginPayloadPartial on LoginPayload {
     __typename
@@ -15042,6 +15074,16 @@ export const MediaItemPartial = gql`
     mediaType
   }
 `;
+export const MenuFragment = gql`
+  fragment MenuFragment on MenuItem {
+    id
+    label
+    url
+    path
+    parentId
+    databaseId
+  }
+`;
 export const NodeWithCommentsPartial = gql`
   fragment NodeWithCommentsPartial on NodeWithComments {
     commentCount
@@ -15075,6 +15117,15 @@ export const PagePartial = gql`
     isRestricted
   }
 `;
+export const PagePathsPartial = gql`
+  fragment PagePathsPartial on Page {
+    uri
+    databaseId
+    id
+    slug
+    desiredSlug
+  }
+`;
 export const PostPartial = gql`
   fragment PostPartial on Post {
     __typename
@@ -15096,10 +15147,59 @@ export const PostPartial = gql`
     featuredImageDatabaseId
   }
 `;
+export const PostPathsPartial = gql`
+  fragment PostPathsPartial on Post {
+    id
+    databaseId
+    guid
+    uri
+    slug
+    desiredSlug
+  }
+`;
 export const SEOPageInfoSchemaPartial = gql`
   fragment SEOPageInfoSchemaPartial on SEOPageInfoSchema {
     __typename
     raw
+  }
+`;
+export const PostTypeSeoPartial = gql`
+  fragment PostTypeSeoPartial on PostTypeSEO {
+    title
+    metaDesc
+    metaRobotsNoindex
+    cornerstone
+    readingTime
+    fullHead
+    metaRobotsNofollow
+    opengraphAuthor
+    opengraphDescription
+    opengraphType
+    opengraphPublishedTime
+    opengraphModifiedTime
+    opengraphPublisher
+    opengraphTitle
+    canonical
+    opengraphSiteName
+    metaKeywords
+    focuskw
+    twitterTitle
+    twitterDescription
+  }
+`;
+export const SEOPostTypeBreadcrumbsPartial = gql`
+  fragment SEOPostTypeBreadcrumbsPartial on SEOPostTypeBreadcrumbs {
+    text
+    url
+    __typename
+  }
+`;
+export const SEOPostTypeSchemaPartial = gql`
+  fragment SEOPostTypeSchemaPartial on SEOPostTypeSchema {
+    articleType
+    pageType
+    raw
+    __typename
   }
 `;
 export const UserLoginPartial = gql`
@@ -16096,6 +16196,49 @@ export const login = gql`
   ${PostPartial}
   ${PagePartial}
   ${NodeWithCommentsPartial}
+`;
+export const ContentNodePaths = gql`
+  query ContentNodePaths(
+    $first: Int
+    $search: String
+    $contentTypes: [ContentTypeEnum!]
+    $fieldOrderBy: PostObjectsConnectionOrderbyEnum!
+    $orderOrderBy: OrderEnum!
+    $parentIn: [ID]
+    $stati: [PostStatusEnum]
+    $status: PostStatusEnum
+  ) {
+    contentNodes(
+      first: $first
+      where: {
+        search: $search
+        contentTypes: $contentTypes
+        orderby: { field: $fieldOrderBy, order: $orderOrderBy }
+        parentIn: $parentIn
+        stati: $stati
+        status: $status
+      }
+    ) {
+      pageInfo {
+        ...PageInfoPartial
+      }
+      nodes {
+        contentTypeName
+        __typename
+        ... on Page {
+          __typename
+          ...PagePathsPartial
+        }
+        ... on Post {
+          __typename
+          ...PostPathsPartial
+        }
+      }
+    }
+  }
+  ${PageInfoPartial}
+  ${PagePathsPartial}
+  ${PostPathsPartial}
 `;
 export const ContentNodes = gql`
   query ContentNodes {
@@ -35494,6 +35637,102 @@ export type CommentPartialFragment = {
 
 export type CommentPartialFragmentVariables = Exact<{ [key: string]: never }>;
 
+type CommenterPartial_CommentAuthor_Fragment = {
+  __typename: "CommentAuthor";
+  url?: string | null;
+  databaseId: number;
+  email?: string | null;
+  name?: string | null;
+  id: string;
+};
+
+type CommenterPartial_User_Fragment = {
+  __typename: "User";
+  url?: string | null;
+  databaseId: number;
+  email?: string | null;
+  name?: string | null;
+  id: string;
+};
+
+export type CommenterPartialFragment =
+  | CommenterPartial_CommentAuthor_Fragment
+  | CommenterPartial_User_Fragment;
+
+export type CommenterPartialFragmentVariables = Exact<{ [key: string]: never }>;
+
+type ContentNodePartial_MediaItem_Fragment = {
+  __typename?: "MediaItem";
+  guid?: string | null;
+  slug?: string | null;
+  isContentNode: boolean;
+  isPreview?: boolean | null;
+  isRestricted?: boolean | null;
+  isTermNode: boolean;
+  previewRevisionId?: string | null;
+  contentTypeName: string;
+  desiredSlug?: string | null;
+  enclosure?: string | null;
+  status?: string | null;
+  uri?: string | null;
+  databaseId: number;
+  id: string;
+  previewRevisionDatabaseId?: number | null;
+  date?: string | null;
+  modified?: string | null;
+};
+
+type ContentNodePartial_Page_Fragment = {
+  __typename?: "Page";
+  guid?: string | null;
+  slug?: string | null;
+  isContentNode: boolean;
+  isPreview?: boolean | null;
+  isRestricted?: boolean | null;
+  isTermNode: boolean;
+  previewRevisionId?: string | null;
+  contentTypeName: string;
+  desiredSlug?: string | null;
+  enclosure?: string | null;
+  status?: string | null;
+  uri?: string | null;
+  databaseId: number;
+  id: string;
+  previewRevisionDatabaseId?: number | null;
+  date?: string | null;
+  modified?: string | null;
+};
+
+type ContentNodePartial_Post_Fragment = {
+  __typename?: "Post";
+  guid?: string | null;
+  slug?: string | null;
+  isContentNode: boolean;
+  isPreview?: boolean | null;
+  isRestricted?: boolean | null;
+  isTermNode: boolean;
+  previewRevisionId?: string | null;
+  contentTypeName: string;
+  desiredSlug?: string | null;
+  enclosure?: string | null;
+  status?: string | null;
+  uri?: string | null;
+  databaseId: number;
+  id: string;
+  previewRevisionDatabaseId?: number | null;
+  date?: string | null;
+  modified?: string | null;
+};
+
+export type ContentNodePartialFragment =
+  | ContentNodePartial_MediaItem_Fragment
+  | ContentNodePartial_Page_Fragment
+  | ContentNodePartial_Post_Fragment;
+
+export type ContentNodePartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type LoginPayloadPartialFragment = {
   __typename: "LoginPayload";
   authToken?: string | null;
@@ -35538,6 +35777,18 @@ export type MediaItemPartialFragment = {
 };
 
 export type MediaItemPartialFragmentVariables = Exact<{ [key: string]: never }>;
+
+export type MenuFragmentFragment = {
+  __typename?: "MenuItem";
+  id: string;
+  label?: string | null;
+  url?: string | null;
+  path?: string | null;
+  parentId?: string | null;
+  databaseId: number;
+};
+
+export type MenuFragmentFragmentVariables = Exact<{ [key: string]: never }>;
 
 type NodeWithCommentsPartial_MediaItem_Fragment = {
   __typename: "MediaItem";
@@ -35594,6 +35845,17 @@ export type PagePartialFragment = {
 
 export type PagePartialFragmentVariables = Exact<{ [key: string]: never }>;
 
+export type PagePathsPartialFragment = {
+  __typename?: "Page";
+  uri?: string | null;
+  databaseId: number;
+  id: string;
+  slug?: string | null;
+  desiredSlug?: string | null;
+};
+
+export type PagePathsPartialFragmentVariables = Exact<{ [key: string]: never }>;
+
 export type PostPartialFragment = {
   __typename: "Post";
   authorDatabaseId?: number | null;
@@ -35616,12 +35878,73 @@ export type PostPartialFragment = {
 
 export type PostPartialFragmentVariables = Exact<{ [key: string]: never }>;
 
+export type PostPathsPartialFragment = {
+  __typename?: "Post";
+  id: string;
+  databaseId: number;
+  guid?: string | null;
+  uri?: string | null;
+  slug?: string | null;
+  desiredSlug?: string | null;
+};
+
+export type PostPathsPartialFragmentVariables = Exact<{ [key: string]: never }>;
+
 export type SEOPageInfoSchemaPartialFragment = {
   __typename: "SEOPageInfoSchema";
   raw?: string | null;
 };
 
 export type SEOPageInfoSchemaPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type PostTypeSeoPartialFragment = {
+  __typename?: "PostTypeSEO";
+  title?: string | null;
+  metaDesc?: string | null;
+  metaRobotsNoindex?: string | null;
+  cornerstone?: boolean | null;
+  readingTime?: number | null;
+  fullHead?: string | null;
+  metaRobotsNofollow?: string | null;
+  opengraphAuthor?: string | null;
+  opengraphDescription?: string | null;
+  opengraphType?: string | null;
+  opengraphPublishedTime?: string | null;
+  opengraphModifiedTime?: string | null;
+  opengraphPublisher?: string | null;
+  opengraphTitle?: string | null;
+  canonical?: string | null;
+  opengraphSiteName?: string | null;
+  metaKeywords?: string | null;
+  focuskw?: string | null;
+  twitterTitle?: string | null;
+  twitterDescription?: string | null;
+};
+
+export type PostTypeSeoPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type SEOPostTypeBreadcrumbsPartialFragment = {
+  __typename: "SEOPostTypeBreadcrumbs";
+  text?: string | null;
+  url?: string | null;
+};
+
+export type SEOPostTypeBreadcrumbsPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type SEOPostTypeSchemaPartialFragment = {
+  __typename: "SEOPostTypeSchema";
+  articleType?: Array<string | null> | null;
+  pageType?: Array<string | null> | null;
+  raw?: string | null;
+};
+
+export type SEOPostTypeSchemaPartialFragmentVariables = Exact<{
   [key: string]: never;
 }>;
 
@@ -35778,6 +36101,59 @@ export type loginMutation = {
         } | null> | null;
       } | null;
     } | null;
+  } | null;
+};
+
+export type ContentNodePathsQueryVariables = Exact<{
+  first?: InputMaybe<Scalars["Int"]>;
+  search?: InputMaybe<Scalars["String"]>;
+  contentTypes?: InputMaybe<Array<ContentTypeEnum> | ContentTypeEnum>;
+  fieldOrderBy: PostObjectsConnectionOrderbyEnum;
+  orderOrderBy: OrderEnum;
+  parentIn?: InputMaybe<
+    Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>
+  >;
+  stati?: InputMaybe<
+    Array<InputMaybe<PostStatusEnum>> | InputMaybe<PostStatusEnum>
+  >;
+  status?: InputMaybe<PostStatusEnum>;
+}>;
+
+export type ContentNodePathsQuery = {
+  __typename?: "RootQuery";
+  contentNodes?: {
+    __typename?: "RootQueryToContentNodeConnection";
+    pageInfo?: {
+      __typename: "WPPageInfo";
+      endCursor?: string | null;
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor?: string | null;
+      total?: number | null;
+    } | null;
+    nodes?: Array<
+      | { __typename: "MediaItem"; contentTypeName: string }
+      | {
+          __typename: "Page";
+          contentTypeName: string;
+          uri?: string | null;
+          databaseId: number;
+          id: string;
+          slug?: string | null;
+          desiredSlug?: string | null;
+        }
+      | {
+          __typename: "Post";
+          contentTypeName: string;
+          id: string;
+          databaseId: number;
+          guid?: string | null;
+          uri?: string | null;
+          slug?: string | null;
+          desiredSlug?: string | null;
+        }
+      | null
+    > | null;
   } | null;
 };
 
@@ -39094,6 +39470,38 @@ export const CommentPartialFragmentDoc = gql`
     content
   }
 `;
+export const CommenterPartialFragmentDoc = gql`
+  fragment CommenterPartial on Commenter {
+    url
+    databaseId
+    email
+    name
+    id
+    __typename
+  }
+`;
+export const ContentNodePartialFragmentDoc = gql`
+  fragment ContentNodePartial on ContentNode {
+    guid
+    slug
+    isContentNode
+    isPreview
+    isRestricted
+    isTermNode
+    previewRevisionId
+    contentTypeName
+    desiredSlug
+    enclosure
+    status
+    uri
+    databaseId
+    id
+    previewRevisionDatabaseId
+    status
+    date
+    modified
+  }
+`;
 export const LoginPayloadPartialFragmentDoc = gql`
   fragment LoginPayloadPartial on LoginPayload {
     __typename
@@ -39132,6 +39540,16 @@ export const MediaItemPartialFragmentDoc = gql`
     mediaType
   }
 `;
+export const MenuFragmentFragmentDoc = gql`
+  fragment MenuFragment on MenuItem {
+    id
+    label
+    url
+    path
+    parentId
+    databaseId
+  }
+`;
 export const NodeWithCommentsPartialFragmentDoc = gql`
   fragment NodeWithCommentsPartial on NodeWithComments {
     commentCount
@@ -39165,6 +39583,15 @@ export const PagePartialFragmentDoc = gql`
     isRestricted
   }
 `;
+export const PagePathsPartialFragmentDoc = gql`
+  fragment PagePathsPartial on Page {
+    uri
+    databaseId
+    id
+    slug
+    desiredSlug
+  }
+`;
 export const PostPartialFragmentDoc = gql`
   fragment PostPartial on Post {
     __typename
@@ -39186,10 +39613,59 @@ export const PostPartialFragmentDoc = gql`
     featuredImageDatabaseId
   }
 `;
+export const PostPathsPartialFragmentDoc = gql`
+  fragment PostPathsPartial on Post {
+    id
+    databaseId
+    guid
+    uri
+    slug
+    desiredSlug
+  }
+`;
 export const SEOPageInfoSchemaPartialFragmentDoc = gql`
   fragment SEOPageInfoSchemaPartial on SEOPageInfoSchema {
     __typename
     raw
+  }
+`;
+export const PostTypeSeoPartialFragmentDoc = gql`
+  fragment PostTypeSeoPartial on PostTypeSEO {
+    title
+    metaDesc
+    metaRobotsNoindex
+    cornerstone
+    readingTime
+    fullHead
+    metaRobotsNofollow
+    opengraphAuthor
+    opengraphDescription
+    opengraphType
+    opengraphPublishedTime
+    opengraphModifiedTime
+    opengraphPublisher
+    opengraphTitle
+    canonical
+    opengraphSiteName
+    metaKeywords
+    focuskw
+    twitterTitle
+    twitterDescription
+  }
+`;
+export const SEOPostTypeBreadcrumbsPartialFragmentDoc = gql`
+  fragment SEOPostTypeBreadcrumbsPartial on SEOPostTypeBreadcrumbs {
+    text
+    url
+    __typename
+  }
+`;
+export const SEOPostTypeSchemaPartialFragmentDoc = gql`
+  fragment SEOPostTypeSchemaPartial on SEOPostTypeSchema {
+    articleType
+    pageType
+    raw
+    __typename
   }
 `;
 export const UserLoginPartialFragmentDoc = gql`
@@ -40228,6 +40704,112 @@ export type loginMutationOptions = Apollo.BaseMutationOptions<
   loginMutation,
   loginMutationVariables
 >;
+export const ContentNodePathsDocument = gql`
+  query ContentNodePaths(
+    $first: Int
+    $search: String
+    $contentTypes: [ContentTypeEnum!]
+    $fieldOrderBy: PostObjectsConnectionOrderbyEnum!
+    $orderOrderBy: OrderEnum!
+    $parentIn: [ID]
+    $stati: [PostStatusEnum]
+    $status: PostStatusEnum
+  ) {
+    contentNodes(
+      first: $first
+      where: {
+        search: $search
+        contentTypes: $contentTypes
+        orderby: { field: $fieldOrderBy, order: $orderOrderBy }
+        parentIn: $parentIn
+        stati: $stati
+        status: $status
+      }
+    ) {
+      pageInfo {
+        ...PageInfoPartial
+      }
+      nodes {
+        contentTypeName
+        __typename
+        ... on Page {
+          __typename
+          ...PagePathsPartial
+        }
+        ... on Post {
+          __typename
+          ...PostPathsPartial
+        }
+      }
+    }
+  }
+  ${PageInfoPartialFragmentDoc}
+  ${PagePathsPartialFragmentDoc}
+  ${PostPathsPartialFragmentDoc}
+`;
+
+/**
+ * __useContentNodePathsQuery__
+ *
+ * To run a query within a React component, call `useContentNodePathsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useContentNodePathsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useContentNodePathsQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      search: // value for 'search'
+ *      contentTypes: // value for 'contentTypes'
+ *      fieldOrderBy: // value for 'fieldOrderBy'
+ *      orderOrderBy: // value for 'orderOrderBy'
+ *      parentIn: // value for 'parentIn'
+ *      stati: // value for 'stati'
+ *      status: // value for 'status'
+ *   },
+ * });
+ */
+export function useContentNodePathsQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    ContentNodePathsQuery,
+    ContentNodePathsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ContentNodePathsQuery, ContentNodePathsQueryVariables>(
+    ContentNodePathsDocument,
+    options
+  );
+}
+export function useContentNodePathsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ContentNodePathsQuery,
+    ContentNodePathsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    ContentNodePathsQuery,
+    ContentNodePathsQueryVariables
+  >(ContentNodePathsDocument, options);
+}
+export type ContentNodePathsQueryHookResult = ReturnType<
+  typeof useContentNodePathsQuery
+>;
+export type ContentNodePathsLazyQueryHookResult = ReturnType<
+  typeof useContentNodePathsLazyQuery
+>;
+export type ContentNodePathsQueryResult = Apollo.QueryResult<
+  ContentNodePathsQuery,
+  ContentNodePathsQueryVariables
+>;
+export function refetchContentNodePathsQuery(
+  variables: ContentNodePathsQueryVariables
+) {
+  return { query: ContentNodePathsDocument, variables: variables };
+}
 export const ContentNodesDocument = gql`
   query ContentNodes {
     contentNodes {
@@ -40704,6 +41286,7 @@ export function refetchGetGravityFormQuery(
 }
 export const namedOperations = {
   Query: {
+    ContentNodePaths: "ContentNodePaths",
     ContentNodes: "ContentNodes",
     GetGravityForm: "GetGravityForm"
   },
@@ -40715,14 +41298,22 @@ export const namedOperations = {
     AuthorPartial: "AuthorPartial",
     AvatarPartial: "AvatarPartial",
     CommentPartial: "CommentPartial",
+    CommenterPartial: "CommenterPartial",
+    ContentNodePartial: "ContentNodePartial",
     LoginPayloadPartial: "LoginPayloadPartial",
     MediaDetailsPartial: "MediaDetailsPartial",
     MediaItemPartial: "MediaItemPartial",
+    MenuFragment: "MenuFragment",
     NodeWithCommentsPartial: "NodeWithCommentsPartial",
     PageInfoPartial: "PageInfoPartial",
     PagePartial: "PagePartial",
+    PagePathsPartial: "PagePathsPartial",
     PostPartial: "PostPartial",
+    PostPathsPartial: "PostPathsPartial",
     SEOPageInfoSchemaPartial: "SEOPageInfoSchemaPartial",
+    PostTypeSeoPartial: "PostTypeSeoPartial",
+    SEOPostTypeBreadcrumbsPartial: "SEOPostTypeBreadcrumbsPartial",
+    SEOPostTypeSchemaPartial: "SEOPostTypeSchemaPartial",
     UserLoginPartial: "UserLoginPartial",
     UserToCommentConnectionEdgePartial: "UserToCommentConnectionEdgePartial",
     AddressFieldsGravityPartial: "AddressFieldsGravityPartial",

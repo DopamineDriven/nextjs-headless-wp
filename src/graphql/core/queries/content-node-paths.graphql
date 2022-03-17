@@ -1,0 +1,41 @@
+# import PageInfoPartial from "../fragments/page-info-partial.graphql";
+# import PagePathsPartial from "../fragments/page-paths-partial.graphql";
+# import PostPathsPartial from "../fragments/post-paths-partial.graphql";
+query ContentNodePaths(
+  $first: Int
+  $search: String
+  $contentTypes: [ContentTypeEnum!]
+  $fieldOrderBy: PostObjectsConnectionOrderbyEnum!
+  $orderOrderBy: OrderEnum!
+  $parentIn: [ID]
+  $stati: [PostStatusEnum]
+  $status: PostStatusEnum
+) {
+  contentNodes(
+    first: $first
+    where: {
+      search: $search
+      contentTypes: $contentTypes
+      orderby: { field: $fieldOrderBy, order: $orderOrderBy }
+      parentIn: $parentIn
+      stati: $stati
+      status: $status
+    }
+  ) {
+    pageInfo {
+      ...PageInfoPartial
+    }
+    nodes {
+      contentTypeName
+      __typename
+      ... on Page {
+        __typename
+        ...PagePathsPartial
+      }
+      ... on Post {
+        __typename
+        ...PostPathsPartial
+      }
+    }
+  }
+}

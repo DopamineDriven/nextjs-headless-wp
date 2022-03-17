@@ -1,0 +1,7 @@
+fragment PagePathsPartial on Page {
+  uri
+  databaseId
+  id
+  slug
+  desiredSlug
+}

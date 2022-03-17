@@ -1,0 +1,8 @@
+fragment CommenterPartial on Commenter {
+  url
+  databaseId
+  email
+  name
+  id
+  __typename
+}
