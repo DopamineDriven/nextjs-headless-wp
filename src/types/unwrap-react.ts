@@ -1,15 +1,5 @@
 import type { DetailedHTMLProps, HTMLAttributes } from "react";
 
-/* interface with all optional values to accept ONLY one of them */
-export type ConditionalSansOne<T, Keys extends keyof T = keyof T> = Pick<
-  T,
-  Exclude<keyof T, Keys>
-> &
-  {
-    [K in Keys]-?: Required<Pick<T, K>> &
-      Partial<Record<Exclude<Keys, K>, undefined>>;
-  }[Keys];
-
 export type UnwrapPickOneInUnion<
   T extends
     | HTMLAnchorElement
@@ -38,11 +28,19 @@ export type UnwrapPickOneInUnion<
     | HTMLUListElement
     | HTMLVideoElement,
   P extends keyof DetailedHTMLProps<HTMLAttributes<T>, T>
-  > = {
+> = {
   [R in P]?: DetailedHTMLProps<HTMLAttributes<T>, T>[R];
 };
 
-
+/* interface with all optional values to accept ONLY one of them */
+export type ConditionalSansOne<T, Keys extends keyof T = keyof T> = Pick<
+  T,
+  Exclude<keyof T, Keys>
+> &
+  {
+    [K in Keys]-?: Required<Pick<T, K>> &
+      Partial<Record<Exclude<Keys, K>, undefined>>;
+  }[Keys];
 
 // export type UnwrappingWithTemplateLiterals<
 // T extends `HTML${
