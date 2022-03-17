@@ -1,4 +1,4 @@
-import { Maybe } from "./helpers";
+import type { Maybe } from "@/graphql/generated/graphql";
 
 export type GravityFieldErrors = {
   fieldErrors?:

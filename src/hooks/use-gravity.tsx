@@ -16,6 +16,11 @@ import {
   ListFieldInput
 } from "@/graphql/generated/graphql";
 
+export enum FormIdCounter {
+  signUp = 1,
+  login = 2
+}
+
 export type Enumerable<T> = T | Array<T>;
 
 export interface BaseFieldValue {

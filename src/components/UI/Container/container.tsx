@@ -1,20 +1,20 @@
 import cn from "classnames";
-import React, { FC } from "react";
+import { VFC, ComponentType, HTMLAttributes } from "react";
 
 interface Props {
   className?: string;
   children?: any;
-  el?: any;
+  el?: ComponentType<HTMLAttributes<HTMLDivElement>>;
   clean?: boolean;
 }
 
-const Container: FC<Props> = ({ children, className, el = "div", clean }) => {
+const Container: VFC<Props> = ({ children, className, el = "div", clean }) => {
   const rootClassName = cn(className, {
     "mx-auto max-w-10xl": !clean
   });
 
-  const Component: React.ComponentType<React.HTMLAttributes<HTMLDivElement>> =
-    el as any;
+  const Component: ComponentType<HTMLAttributes<HTMLDivElement>> =
+    el as ComponentType<HTMLAttributes<HTMLDivElement>>;
 
   return <Component className={rootClassName}>{children}</Component>;
 };

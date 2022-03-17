@@ -1,7 +1,7 @@
 export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "";
 
 export const pageview = (url: URL) => {
-  window.gtag("config", String(GA_TRACKING_ID), {
+  window.gtag("config", GA_TRACKING_ID, {
     page_path: url
   });
 };
@@ -20,7 +20,7 @@ export const event = (
 
 export const logException = (
   url: URL,
-  { description, fatal }: Gtag.EventParams
+  { description, fatal, ...props }: Gtag.EventParams
 ) => {
   pageview(url);
   if (description) {

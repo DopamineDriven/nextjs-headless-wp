@@ -1,33 +1,27 @@
-import { FileUpload } from "graphql-upload";
 import {
-  useCallback,
-  useState,
-  ChangeEvent,
-  FC
-} from "react";
+  FileUploadField as FileUploadFieldType,
+  Maybe
+} from "@/graphql/generated/graphql";
+import useGravityForm, {
+  ACTION_TYPES,
+  BaseFieldValue,
+  FileUploadFieldValues
+} from "@/hooks/use-gravity";
+import { GravityFieldErrors } from "@/types/error-helpers";
+import { useCallback, useEffect, useRef, useState, ChangeEvent } from "react";
 import { blurDataURLShimmer } from "@/lib/shimmer";
 import Image from "next/image";
 import cn from "classnames";
 import { format } from "date-fns";
-import { GraphQLErrors } from "@apollo/client/errors";
 
-type Maybe<T> = T | null | undefined;
-type Enumerable<T> = T extends infer U
-  ? U
-  : T | (T extends infer U ? U : T)[];
-type UnEnumerate<T> = T extends Array<infer U> ? U : T;
-
-export interface FileUploadFieldProps extends FileUpload {
-  target?: Enumerable<File>;
+export interface FileUploadFieldProps extends GravityFieldErrors {
+  field: FileUploadFieldType;
   formId?: number | null;
-  className?: string;
-  viewerId?: string;
-  fieldErrors?: GraphQLErrors;
 }
 
 const DEFAULT_FILE_STATE = [] as Maybe<File>[];
 
-export const getBase64Value = (
+const getBase64Value = (
   img: File | Blob,
   callback: (imageBase64Value: string) => void
 ) => {
@@ -35,34 +29,19 @@ export const getBase64Value = (
 
   reader.readAsDataURL(img);
 
-  reader.onload = e => {
-    console.log(
-      JSON.stringify(
-        {
-          total: e.total,
-          target: e.target,
-          loaded: e.loaded
-        },
-        null,
-        2
-      )
-    );
+  reader.onload = () => {
     callback(reader.result as string);
   };
 };
 
-export const fileSizeValidator = (
-  size: File["size"] | Blob["size"]
-): boolean => {
+const fileSizeValidator = (size: File["size"]): boolean => {
   // convert to MB in binary form: 2**10 bytes = 1024 bytes = 1 GB;
   // 2**20 bytes = 1024**2 = 1MB * 10 = 10MB
   // 10 MB Max; size < 1 ? true : false;
   return size / 1024 / 1024 / 10 < 1;
 };
 
-export const fileTypeValidator = (
-  type: File["type"] | Blob["type"]
-): boolean => {
+const fileTypeValidator = (type: File["type"]): boolean => {
   return (
     type === "image/jpeg" ||
     type === "image/jpg" ||
@@ -71,81 +50,88 @@ export const fileTypeValidator = (
   );
 };
 
-const FileUploadComponent: FC<FileUploadFieldProps> = ({
-  className,
-  children,
-  createReadStream,
-  encoding,
-  filename,
-  mimetype,
-  formId,
-  target,
+const FileUploadField = ({
+  field,
   fieldErrors,
-  viewerId
-}) => {
+  formId: formmId
+}: FileUploadFieldProps) => {
+  const { id, errorMessage, value, values, description } = field;
+
   const [imageLoading, setImageLoading] = useState(false);
-  const [imageBase64Value, setImageBase64Value] = useState<string | null>(
-    null
-  );
-  const [error, setError] = useState<string | Error | null>();
+  const [imageBase64Value, setImageBase64Value] = useState<string | null>(null);
   const [size, setSize] = useState<number>(0);
   const [type, setType] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [modified, setModified] = useState<number>(0);
-  const [description, setDescription] = useState<string | null>("");
-  const fileValue = DEFAULT_FILE_STATE;
+  const formIdConditional = id === formmId ? formmId : id;
 
-  const [fieldValueState, setFieldValueState] = useState<
-    UnEnumerate<typeof DEFAULT_FILE_STATE>
-  >(DEFAULT_FILE_STATE[0]);
+  const [formIdState, setFormIdState] = useState<
+    typeof formIdConditional | undefined
+  >(formIdConditional);
 
-  const handleImageUpload = useCallback(
-    <T extends File>(file: Maybe<T>) => {
-      if (!file) {
-        setImageLoading(true);
-        return;
-      }
+  const formIdRef = useRef(formIdState);
 
-      if (file) {
-        setModified(file.lastModified);
-        setSize(file.size);
-        setType(file.type);
-        setName(file.name);
-        setFieldValueState(file);
-        return getBase64Value(file, imageBase64Value => {
-          setImageBase64Value(imageBase64Value);
-          setImageLoading(false);
-        });
-      }
-    },
-    []
-  );
+  const htmlId = `field_${formIdConditional}_${id}`;
 
-  const [fileUploadShape, setFileUploadShape] = useState<{
-    type: string | undefined;
-    fieldValue: {
-      fileUploadValues: (File | null | undefined)[];
-    };
-  }>();
+  const { state, dispatch } = useGravityForm();
+
+  const fieldValue = state.find(
+    (fieldValue: BaseFieldValue) => fieldValue.id === id
+  ) as FileUploadFieldValues | null;
+
+  const fileValue = fieldValue?.fileUploadValues || DEFAULT_FILE_STATE;
+
+  const [fieldValueState, setFieldValueState] = useState<Maybe<File>>();
+
+  const handleImageUpload = useCallback((file: Maybe<File>) => {
+    if (!file) {
+      setImageLoading(true);
+      return;
+    }
+
+    if (file) {
+      setModified(file.lastModified);
+      setSize(file.size);
+      setType(file.type);
+      setName(file.name);
+      setFieldValueState(file);
+      return getBase64Value(file, imageBase64Value => {
+        setImageBase64Value(imageBase64Value);
+        setImageLoading(false);
+      });
+    }
+  }, []);
+
   const handleUploadChangeEvent = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    let targetFile =
-      e.currentTarget.files && e.currentTarget.files.item(0);
+    let targetFile = e.currentTarget.files && e.currentTarget.files.item(0);
     targetFile !== null &&
     handleImageUpload(targetFile) &&
     fieldValueState !== targetFile
       ? setFieldValueState(targetFile)
       : setFieldValueState(targetFile);
 
-    console.log(fileValue.push(e.currentTarget.files?.item(0)).toString());
+    console.log(fileValue.push(e.currentTarget.files && e.currentTarget.files?.item(0)).toString());
     console.log({ ...(fileValue ?? "") });
-    return setFileUploadShape({
-      type: targetFile?.type,
+    return dispatch({
+      type: ACTION_TYPES.updateFileFieldValue,
       fieldValue: {
-        fileUploadValues: [e.currentTarget.files?.item(0)]
+        id,
+        fileUploadValues: e.currentTarget.files !=null ? [e.currentTarget.files?.item(0)] : [null]
       }
     });
   };
+
+  useEffect(() => {
+    const formIdInnerRef = formIdRef?.current;
+    (function FileUploadIIFE() {
+      return formIdInnerRef?.valueOf() ===
+        (formIdConditional || formIdState?.valueOf() || formIdRef?.current)
+        ? () => {}
+        : setFormIdState(formIdConditional);
+    })();
+  }, [id, formmId, formIdState, formIdConditional]);
+
   const photoSVG = (
     <svg
       stroke='currentColor'
@@ -160,20 +146,16 @@ const FileUploadComponent: FC<FileUploadFieldProps> = ({
       />
     </svg>
   );
+
   return (
     <div>
       <div>
         <div>
           <div>
-            <label
-              htmlFor={
-                viewerId ? viewerId : new Date(Date.now()).toUTCString()
-              }>
+            <label htmlFor={htmlId}>
               <span>{"Upload a File"}</span>
               <input
-                id={
-                  viewerId ? viewerId : new Date(Date.now()).toUTCString()
-                }
+                id={htmlId}
                 accept='*'
                 type='file'
                 onChangeCapture={e => {
@@ -227,9 +209,7 @@ const FileUploadComponent: FC<FileUploadFieldProps> = ({
                     : "text-red-900"
                   : "text-[#424242]"
               )}>{`size: ${
-              size !== 0
-                ? (size / 1024 / 1024).toPrecision(4) + " MB"
-                : "--"
+              size !== 0 ? (size / 1024 / 1024).toPrecision(4) + " MB" : "--"
             }`}</span>
             <span
               className={cn(
@@ -239,9 +219,7 @@ const FileUploadComponent: FC<FileUploadFieldProps> = ({
                     : "text-red-900"
                   : "text-[#424242]"
               )}>{`type: ${type !== "" ? type : "--"}`}</span>
-            <span className={"sr-only"}>{`${
-              name !== "" ? name : "--"
-            }`}</span>
+            <span className={"sr-only"}>{`${name !== "" ? name : "--"}`}</span>
             <span className={"sr-only"}>{`${
               modified !== 0
                 ? format(modified, "LL/dd/yyyy") +
@@ -253,15 +231,19 @@ const FileUploadComponent: FC<FileUploadFieldProps> = ({
           </p>
         </div>
       </div>
-      {fileUploadShape ? (
-        <p className='field-description not-sr-only'>
-          {fileUploadShape ?? ""}
+      {description ? (
+        <p
+          className='field-description sr-only'
+          id={`gform_${formIdRef.current}_field_${id}_p`}>
+          {description ?? ""}
         </p>
       ) : null}
       {fieldErrors?.length
         ? fieldErrors.map((fieldError, j) => (
-            <p key={(++j) ** j + 2} className='error-message'>
-              {fieldError?.message ?? error}
+            <p
+              key={parseInt(`${fieldError?.id}`, 10) ** -++j}
+              className='error-message'>
+              {fieldError?.message ?? errorMessage}
             </p>
           ))
         : null}
@@ -269,29 +251,4 @@ const FileUploadComponent: FC<FileUploadFieldProps> = ({
   );
 };
 
-export default FileUploadComponent;
-
-
-/**https://next-s3-upload.codingvalue.com/
- * interface ImageData {
-  height: number | undefined;
-  width: number | undefined;
-}
-
-export const getImageData = (file: File | Blob): Promise<ImageData> => {
-  return new Promise(resolve => {
-    if (file.type.split('/')?.[0] === 'image') {
-      let img = new Image();
-      let objectUrl = URL.createObjectURL(file);
-      img.onload = (event: Event) => {
-        let image = event.target as HTMLImageElement;
-        resolve({ height: image.height, width: image.width });
-        URL.revokeObjectURL(objectUrl);
-      };
-      img.src = objectUrl;
-    } else {
-      resolve({ height: undefined, width: undefined });
-    }
-  });
-};
- */
+export default FileUploadField;
