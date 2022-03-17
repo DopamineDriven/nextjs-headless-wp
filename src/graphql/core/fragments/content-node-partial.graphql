@@ -1,0 +1,20 @@
+fragment ContentNodePartial on ContentNode {
+  guid
+  slug
+  isContentNode
+  isPreview
+  isRestricted
+  isTermNode
+  previewRevisionId
+  contentTypeName
+  desiredSlug
+  enclosure
+  status
+  uri
+  databaseId
+  id
+  previewRevisionDatabaseId
+  status
+  date
+  modified
+}

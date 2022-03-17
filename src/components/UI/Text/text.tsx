@@ -1,12 +1,12 @@
 import React, {
-  FunctionComponent,
+  VFC,
   JSXElementConstructor,
-  CSSProperties,
+  CSSProperties
 } from 'react'
 import cn from 'classnames'
 import s from './text.module.css'
 
-interface Props {
+export interface Props {
   variant?: Variant
   className?: string
   style?: CSSProperties
@@ -16,7 +16,7 @@ interface Props {
 
 type Variant = 'h1' | 'h2' | 'description' | 'body' | 'smallText'
 
-const Text: FunctionComponent<Props> = ({
+const Text: VFC<Props> = ({
   style,
   className = '',
   variant = 'body',

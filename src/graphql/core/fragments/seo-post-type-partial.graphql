@@ -1,0 +1,35 @@
+fragment PostTypeSeoPartial on PostTypeSEO {
+  title
+  metaDesc
+  metaRobotsNoindex
+  cornerstone
+  readingTime
+  fullHead
+  metaRobotsNofollow
+  opengraphAuthor
+  opengraphDescription
+  opengraphType
+  opengraphPublishedTime
+  opengraphModifiedTime
+  opengraphPublisher
+  opengraphTitle
+  canonical
+  opengraphSiteName
+  metaKeywords
+  focuskw
+  twitterTitle
+  twitterDescription
+}
+
+fragment SEOPostTypeBreadcrumbsPartial on SEOPostTypeBreadcrumbs {
+ text
+ url
+ __typename
+}
+
+fragment SEOPostTypeSchemaPartial on SEOPostTypeSchema {
+  articleType
+  pageType
+  raw
+  __typename
+}

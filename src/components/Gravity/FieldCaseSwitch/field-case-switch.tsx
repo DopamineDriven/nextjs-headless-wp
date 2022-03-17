@@ -2,24 +2,18 @@ import {
   EmailFieldsGravityPartialFragment,
   NameFieldsGravityPartialFragment,
   FormFieldsGravityPartialFragment,
-  // AddressField as AddressFieldType,
-  // TextAreaField as TextAreaType,
-  // TextField as TextFieldType,
-  // SelectField as SelectFieldType,
+  PasswordFieldPartialFragment,
   RadioField as RadioFieldType,
   FileUploadField as FileUploadFieldType
 } from "@/graphql/generated/graphql";
 import {
-  // AddressField,
   EmailField,
   FileUploadField,
   NameField,
-  RadioField,
-  // SelectField,
-  // TextAreaField,
-  // TextField
+  PasswordField,
+  RadioField
 } from "../Fields/index";
-import { GravityFieldErrors } from "@/types/error-helpers";
+import type { GravityFieldErrors } from "@/types/error-helpers";
 
 interface FieldCaseSwitchProps extends GravityFieldErrors {
   field: FormFieldsGravityPartialFragment;
@@ -32,14 +26,6 @@ export default function FieldCaseSwitch({
   fieldErrors
 }: FieldCaseSwitchProps) {
   switch (field.__typename) {
-    // case "AddressField":
-    //   return (
-    //     <AddressField
-    //       field={field as AddressFieldType}
-    //       fieldErrors={fieldErrors}
-    //       formId={formId}
-    //     />
-    //   );
     case "EmailField":
       return (
         <EmailField
@@ -64,6 +50,14 @@ export default function FieldCaseSwitch({
           formId={formId}
         />
       );
+    case "PasswordField":
+      return (
+        <PasswordField
+          field={field as PasswordFieldPartialFragment}
+          fieldErrors={fieldErrors}
+          formId={formId}
+        />
+      );
     case "RadioField":
       return (
         <RadioField
@@ -72,30 +66,6 @@ export default function FieldCaseSwitch({
           fieldErrors={fieldErrors}
         />
       );
-    // case "SelectField":
-    //   return (
-    //     <SelectField
-    //       field={field as SelectFieldType}
-    //       fieldErrors={fieldErrors}
-    //       formId={formId}
-    //     />
-    //   );
-    // case "TextAreaField":
-    //   return (
-    //     <TextAreaField
-    //       field={field as TextAreaType}
-    //       fieldErrors={fieldErrors}
-    //       formId={formId}
-    //     />
-    //   );
-    // case "TextField":
-    //   return (
-    //     <TextField
-    //       field={field as TextFieldType}
-    //       fieldErrors={fieldErrors}
-    //       formId={formId}
-    //     />
-    //   );
     default:
       return <p>{`Field type not supported: ${field.type}.`}</p>;
   }
