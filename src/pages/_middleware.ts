@@ -19,7 +19,7 @@ export default function Middleware(req: NextRequest) {
   };
   console.log(userData ?? "no userData");
   const response = NextResponse.next();
-
+  response.headers.set("Authorization", `Bearer ${process.env.GRAPHQL_JWT_AUTH_SECRET_KEY_YML ?? ""}`)
   response.headers.set("Referrer-Policy", "Strict-Origin-When-Cross-Origin");
   response.headers.set(
     "Strict-Transport-Security",
@@ -28,7 +28,8 @@ export default function Middleware(req: NextRequest) {
   response.headers.set("Access-Control-Allow-Credentials", "true");
   response.headers.set(
     "Access-Control-Allow-Origin",
-    "https://www.andrewross.tech; https://www.andrewross.engineer; https://vitals.vercel-insights.com;  https://www.googletagmanager.com/; https://connect.facebook.net; https://studio.apollographql.com; https://serve.onegraph.com;"
+
+    "https://wwww.andrewross.engineer/graphql;. https://www.andrewross.tech; https://www.andrewross.engineer; https://vitals.vercel-insights.com;  https://www.googletagmanager.com/; https://connect.facebook.net; https://studio.apollographql.com; https://serve.onegraph.com;"
   );
   response.headers.set(
     "Cache-Control",

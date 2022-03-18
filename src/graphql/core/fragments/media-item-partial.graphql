@@ -5,6 +5,7 @@ fragment MediaItemPartial on MediaItem {
   authorDatabaseId
   authorId
   caption
+  enclosure
   title
   date
   modified

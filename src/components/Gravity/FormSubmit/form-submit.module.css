@@ -1,0 +1,10 @@
+.successSeven {
+  & > circle,
+  rect,
+  line {
+    stroke-width: 10px;
+    stroke-linecap: round;
+    fill: transparent;
+    @apply w-12 h-12;
+  }
+}

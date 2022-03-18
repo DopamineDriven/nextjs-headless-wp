@@ -9,7 +9,7 @@ import { createUploadLink } from "apollo-upload-client";
 export const xResolvers = (props: Resolvers<ResolverContext>) => ({
   ...props
 });
-
+const token = process.env.GRAPHQL_JWT_AUTH_SECRET_KEY_YML ?? "";
 const envEndpoint =
   process.env.NEXT_GQL_ENDPOINT ?? "https://wwww.andrewross.engineer/graphql";
 
@@ -31,12 +31,11 @@ export function createBatch<T extends ResolverContext>(context?: T) {
     credentials: "include",
     includeExtensions: true,
     fetchOptions: {
-      mode: "cors",
-      context: { ...context }
+      mode: "cors"
     },
     fetch: enhancedFetch,
     headers: {
-      Authorization: "Bearer ".concat(`${process.env.GRAPHQL_JWT_AUTH_SECRET_KEY_YML}`),
+      authorization: `Bearer ${token}`,
       "Accept-Encoding": "gzip, deflate, br",
       "Transfer-Encoding": "chunked",
       "Content-Type": "application/json; charset=utf-8",
@@ -78,7 +77,7 @@ export const sessionMiddleware = new ApolloLink((operation, forward) => {
     operation.setContext(({ headers = {} }) => ({
       headers: {
         ...headers,
-        "authorization": `Bearer ${token}`
+        "authorization": `Bearer ${process.env.GRAPHQL_JWT_AUTH_SECRET_KEY_YML}`
       }
     }));
   }
