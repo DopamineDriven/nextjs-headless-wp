@@ -11,13 +11,15 @@ export const xResolvers = (props: Resolvers<ResolverContext>) => ({
 });
 const token = process.env.GRAPHQL_JWT_AUTH_SECRET_KEY_YML ?? "";
 const envEndpoint =
-  process.env.NEXT_GQL_ENDPOINT ?? "https://wwww.andrewross.engineer/graphql";
+  process.env.NEXT_GQL_ENDPOINT ?? "https://www.andrewross.engineer/graphql";
 
 export const enhancedFetch = async (url: RequestInfo, init: RequestInit) => {
   return await fetch(url, {
     ...init,
     headers: {
-      ...init.headers
+      Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvd3d3LmFuZHJld3Jvc3MuZW5naW5lZXIiLCJpYXQiOjE2NDcyMzA5OTMsIm5iZiI6MTY0NzIzMDk5MywiZXhwIjoxNjc4NzY2OTkzLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIiwidXNlcl9zZWNyZXQiOiJncmFwaHFsX2p3dF82MjJlYWFlMzkzMzU5In19fQ.ruUZAzyHOTydRr783PCw1B2cwSbKf6yhZIQ2k9yUHvA"
+,
+      ...init.headers,
     },
     credentials: "include",
     keepalive: true,
@@ -35,7 +37,8 @@ export function createBatch<T extends ResolverContext>(context?: T) {
     },
     fetch: enhancedFetch,
     headers: {
-      authorization: `Bearer ${token}`,
+      Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvd3d3LmFuZHJld3Jvc3MuZW5naW5lZXIiLCJpYXQiOjE2NDcyMzA5OTMsIm5iZiI6MTY0NzIzMDk5MywiZXhwIjoxNjc4NzY2OTkzLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIiwidXNlcl9zZWNyZXQiOiJncmFwaHFsX2p3dF82MjJlYWFlMzkzMzU5In19fQ.ruUZAzyHOTydRr783PCw1B2cwSbKf6yhZIQ2k9yUHvA`,
+      "x-jwt-auth": `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvd3d3LmFuZHJld3Jvc3MuZW5naW5lZXIiLCJpYXQiOjE2NDcyMzA5OTMsIm5iZiI6MTY0NzIzMDk5MywiZXhwIjoxNjc4NzY2OTkzLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIiwidXNlcl9zZWNyZXQiOiJncmFwaHFsX2p3dF82MjJlYWFlMzkzMzU5In19fQ.ruUZAzyHOTydRr783PCw1B2cwSbKf6yhZIQ2k9yUHvA`,
       "Accept-Encoding": "gzip, deflate, br",
       "Transfer-Encoding": "chunked",
       "Content-Type": "application/json; charset=utf-8",

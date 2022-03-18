@@ -23,7 +23,7 @@ import { initializeApollo } from "@/apollo/apollo";
 import { useRouter } from "next/router";
 import type { ParsedUrlQuery } from "@/types/query-parser";
 import { NormalizedCacheObject } from "@apollo/client";
-import { LoadingSpinner } from "@/components/UI";
+import { LoadingSpinner, Inspector } from "@/components/UI";
 import GravityFormCoalesced from "@/components/Gravity/FormHook/gravity-form-coalesced";
 import { htmlToReact } from "@/lib/html-to-react";
 
@@ -140,12 +140,12 @@ const DynamicGravity = <T extends typeof getStaticProps>({
         <LoadingSpinner />
       ) : (
         <div className='font-interVar mx-auto mt-10'>
-          {htmlToReact(`${gform.gform?.content ?? "no content"}`)}
-          {isomorphicSlug === "create-an-account" ? (
+          {JSON.stringify(`${gform.gform?.content ?? "no content"}`)}
+          {/* {isomorphicSlug === "create-an-account" ? (
             <GravityFormCoalesced form={register.gfForm} formId='1' />
           ) : (
             <div>{"hmm...something went wrong..."} </div>
-          )}
+          )} */}
         </div>
       )}
     </>
