@@ -28,7 +28,7 @@ export default function Middleware(req: NextRequest) {
   response.headers.set("Access-Control-Allow-Credentials", "true");
   response.headers.set(
     "Access-Control-Allow-Origin",
-    "https://www.andrewross.engineer https://www.andrewross.tech https://vitals.vercel-insights.com  https://www.googletagmanager.com/ https://connect.facebook.net; https://studio.apollographql.com; https://serve.onegraph.com;"
+    "https://asrossheadless.wpengine.com https://www.andrewross.tech https://vitals.vercel-insights.com  https://www.googletagmanager.com/ https://connect.facebook.net; https://studio.apollographql.com; https://serve.onegraph.com;"
   );
   response.headers.set(
     "Cache-Control",

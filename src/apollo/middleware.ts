@@ -11,7 +11,7 @@ export const xResolvers = (props: Resolvers<ResolverContext>) => ({
 });
 const token = process.env.GRAPHQL_JWT_AUTH_SECRET_KEY_YML ?? "";
 const envEndpoint =
-  process.env.NEXT_GQL_ENDPOINT ?? "https://www.andrewross.engineer/graphql";
+  process.env.NEXT_GQL_ENDPOINT ?? "https://asrossheadless.wpengine.com/graphql";
 
 export const enhancedFetch = async (url: RequestInfo, init: RequestInit) => {
   return await fetch(url, {

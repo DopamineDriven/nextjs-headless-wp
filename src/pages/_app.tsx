@@ -104,9 +104,10 @@ export default function HeadlessWordPressNext<P = Record<string, unknown>>({
          `
         }}
       />
+          <Head nextSeoProps={NextSEO} />
+
       <ApolloProvider client={apolloClient}>
         <LayoutGlobal {...pageProps}>
-          <Head nextSeoProps={NextSEO} />
           <Component {...pageProps} />
         </LayoutGlobal>
       </ApolloProvider>
