@@ -1,0 +1,14 @@
+fragment RootQueryToGformConnectionEdgePartial on RootQueryToGformConnectionEdge {
+  cursor
+  __typename
+}
+
+fragment GformPathPartial on Gform {
+  uri
+  slug
+  title
+  contentTypeName
+  databaseId
+  id
+  guid
+}

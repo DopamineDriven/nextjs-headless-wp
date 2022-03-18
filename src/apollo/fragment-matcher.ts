@@ -1,14 +1,15 @@
 export type PossibleTypesResultData = {
   possibleTypes: {
     Commenter: ["CommentAuthor", "User"];
-    ContentNode: ["MediaItem", "Page", "Post"];
-    ContentRevisionUnion: ["Page", "Post"];
+    ContentNode: ["Gform", "MediaItem", "Page", "Post"];
+    ContentRevisionUnion: ["Gform", "Page", "Post"];
     ContentTemplate: ["DefaultTemplate", "Template_FullWidth"];
     DatabaseIdentifier: [
       "Category",
       "Comment",
       "GfForm",
       "GfSubmittedEntry",
+      "Gform",
       "MediaItem",
       "Menu",
       "MenuItem",
@@ -87,8 +88,8 @@ export type PossibleTypesResultData = {
     GfEntry: ["GfDraftEntry", "GfSubmittedEntry"];
     HierarchicalContentNode: ["MediaItem", "Page"];
     HierarchicalTermNode: ["Category"];
-    MenuItemLinkable: ["Category", "Page", "Post", "Tag"];
-    MenuItemObjectUnion: ["Category", "Page", "Post", "Tag"];
+    MenuItemLinkable: ["Category", "Gform", "Page", "Post", "Tag"];
+    MenuItemObjectUnion: ["Category", "Gform", "Page", "Post", "Tag"];
     Node: [
       "Category",
       "Comment",
@@ -99,6 +100,7 @@ export type PossibleTypesResultData = {
       "GfDraftEntry",
       "GfForm",
       "GfSubmittedEntry",
+      "Gform",
       "MediaItem",
       "Menu",
       "MenuItem",
@@ -112,17 +114,17 @@ export type PossibleTypesResultData = {
       "User",
       "UserRole"
     ];
-    NodeWithAuthor: ["MediaItem", "Page", "Post"];
-    NodeWithComments: ["MediaItem", "Page", "Post"];
-    NodeWithContentEditor: ["Page", "Post"];
-    NodeWithExcerpt: ["Page", "Post"];
-    NodeWithFeaturedImage: ["Page", "Post"];
+    NodeWithAuthor: ["Gform", "MediaItem", "Page", "Post"];
+    NodeWithComments: ["Gform", "MediaItem", "Page", "Post"];
+    NodeWithContentEditor: ["Gform", "Page", "Post"];
+    NodeWithExcerpt: ["Gform", "Page", "Post"];
+    NodeWithFeaturedImage: ["Gform", "Page", "Post"];
     NodeWithForm: ["GfDraftEntry", "GfSubmittedEntry"];
     NodeWithPageAttributes: ["Page"];
-    NodeWithRevisions: ["Page", "Post"];
-    NodeWithTemplate: ["MediaItem", "Page", "Post"];
-    NodeWithTitle: ["MediaItem", "Page", "Post"];
-    NodeWithTrackbacks: ["Post"];
+    NodeWithRevisions: ["Gform", "Page", "Post"];
+    NodeWithTemplate: ["Gform", "MediaItem", "Page", "Post"];
+    NodeWithTitle: ["Gform", "MediaItem", "Page", "Post"];
+    NodeWithTrackbacks: ["Gform", "Post"];
     PostCategoryField: [
       "PostCategoryCheckboxField",
       "PostCategoryMultiSelectField",
@@ -158,6 +160,7 @@ export type PossibleTypesResultData = {
     UniformResourceIdentifiable: [
       "Category",
       "ContentType",
+      "Gform",
       "MediaItem",
       "Page",
       "Post",
@@ -170,14 +173,15 @@ export type PossibleTypesResultData = {
 const result: PossibleTypesResultData = {
   possibleTypes: {
     Commenter: ["CommentAuthor", "User"],
-    ContentNode: ["MediaItem", "Page", "Post"],
-    ContentRevisionUnion: ["Page", "Post"],
+    ContentNode: ["Gform", "MediaItem", "Page", "Post"],
+    ContentRevisionUnion: ["Gform", "Page", "Post"],
     ContentTemplate: ["DefaultTemplate", "Template_FullWidth"],
     DatabaseIdentifier: [
       "Category",
       "Comment",
       "GfForm",
       "GfSubmittedEntry",
+      "Gform",
       "MediaItem",
       "Menu",
       "MenuItem",
@@ -256,8 +260,8 @@ const result: PossibleTypesResultData = {
     GfEntry: ["GfDraftEntry", "GfSubmittedEntry"],
     HierarchicalContentNode: ["MediaItem", "Page"],
     HierarchicalTermNode: ["Category"],
-    MenuItemLinkable: ["Category", "Page", "Post", "Tag"],
-    MenuItemObjectUnion: ["Category", "Page", "Post", "Tag"],
+    MenuItemLinkable: ["Category", "Gform", "Page", "Post", "Tag"],
+    MenuItemObjectUnion: ["Category", "Gform", "Page", "Post", "Tag"],
     Node: [
       "Category",
       "Comment",
@@ -268,6 +272,7 @@ const result: PossibleTypesResultData = {
       "GfDraftEntry",
       "GfForm",
       "GfSubmittedEntry",
+      "Gform",
       "MediaItem",
       "Menu",
       "MenuItem",
@@ -281,17 +286,17 @@ const result: PossibleTypesResultData = {
       "User",
       "UserRole"
     ],
-    NodeWithAuthor: ["MediaItem", "Page", "Post"],
-    NodeWithComments: ["MediaItem", "Page", "Post"],
-    NodeWithContentEditor: ["Page", "Post"],
-    NodeWithExcerpt: ["Page", "Post"],
-    NodeWithFeaturedImage: ["Page", "Post"],
+    NodeWithAuthor: ["Gform", "MediaItem", "Page", "Post"],
+    NodeWithComments: ["Gform", "MediaItem", "Page", "Post"],
+    NodeWithContentEditor: ["Gform", "Page", "Post"],
+    NodeWithExcerpt: ["Gform", "Page", "Post"],
+    NodeWithFeaturedImage: ["Gform", "Page", "Post"],
     NodeWithForm: ["GfDraftEntry", "GfSubmittedEntry"],
     NodeWithPageAttributes: ["Page"],
-    NodeWithRevisions: ["Page", "Post"],
-    NodeWithTemplate: ["MediaItem", "Page", "Post"],
-    NodeWithTitle: ["MediaItem", "Page", "Post"],
-    NodeWithTrackbacks: ["Post"],
+    NodeWithRevisions: ["Gform", "Page", "Post"],
+    NodeWithTemplate: ["Gform", "MediaItem", "Page", "Post"],
+    NodeWithTitle: ["Gform", "MediaItem", "Page", "Post"],
+    NodeWithTrackbacks: ["Gform", "Post"],
     PostCategoryField: [
       "PostCategoryCheckboxField",
       "PostCategoryMultiSelectField",
@@ -327,6 +332,7 @@ const result: PossibleTypesResultData = {
     UniformResourceIdentifiable: [
       "Category",
       "ContentType",
+      "Gform",
       "MediaItem",
       "Page",
       "Post",

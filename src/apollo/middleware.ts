@@ -1,17 +1,15 @@
-import { ResolverContext } from "@/types/resolver-context";
 import { ServerResponse, IncomingMessage } from "http";
 import { BatchHttpLink } from "@apollo/client/link/batch-http";
 import { onError } from "@apollo/client/link/error";
 import { Resolvers } from "@/graphql/generated/graphql";
 import { ApolloLink, FetchResult } from "@apollo/client";
 import { createUploadLink } from "apollo-upload-client";
-
-export const xResolvers = (props: Resolvers<ResolverContext>) => ({
-  ...props
-});
-
-const envEndpoint =
-  process.env.NEXT_GQL_ENDPOINT ?? "https://wwww.andrewross.engineer/graphql";
+export type ResolverContext = {
+  req?: IncomingMessage;
+  res?: ServerResponse;
+};
+const token = process.env.GRAPHQL_JWT_AUTH_SECRET_KEY_YML ?? "";
+// https://github.com/unjs/ohmyfetch/blob/main/src/types.ts
 
 export const enhancedFetch = async (url: RequestInfo, init: RequestInit) => {
   return await fetch(url, {
@@ -24,6 +22,44 @@ export const enhancedFetch = async (url: RequestInfo, init: RequestInit) => {
     method: "POST"
   }).then(response => response);
 };
+export const httpLink = createUploadLink({
+  uri: "https://www.andrewross.engineer/graphql",
+  credentials: "include",
+  includeExtensions: true,
+  fetch: enhancedFetch,
+  fetchOptions: {
+    mode: "cors"
+  },
+  headers: {
+    "Accept-Encoding": "gzip, deflate, br",
+    "Transfer-Encoding": "chunked",
+    "Content-Type": "application/json; charset=utf-8",
+    Connection: "keep-alive",
+    Authorization: `Bearer ${token}`,
+    "x-jwt-auth": `Bearer ${token}`,
+    Accept: "*/*"
+  }
+});
+export const xResolvers = (props: Resolvers<ResolverContext>) => ({
+  ...props
+});
+
+const envEndpoint =
+  process.env.NEXT_GQL_ENDPOINT ?? "https://www.andrewross.engineer/graphql";
+
+// export const enhancedFetch = async (url: RequestInfo, init: RequestInit) => {
+//   return await fetch(url, {
+//     ...init,
+//     headers: {
+//       Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvd3d3LmFuZHJld3Jvc3MuZW5naW5lZXIiLCJpYXQiOjE2NDcyMzA5OTMsIm5iZiI6MTY0NzIzMDk5MywiZXhwIjoxNjc4NzY2OTkzLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIiwidXNlcl9zZWNyZXQiOiJncmFwaHFsX2p3dF82MjJlYWFlMzkzMzU5In19fQ.ruUZAzyHOTydRr783PCw1B2cwSbKf6yhZIQ2k9yUHvA"
+// ,
+//       ...init.headers,
+//     },
+//     credentials: "include",
+//     keepalive: true,
+//     method: "POST"
+//   }).then(response => response);
+// };
 
 export function createBatch<T extends ResolverContext>(context?: T) {
   return createUploadLink({
@@ -31,12 +67,12 @@ export function createBatch<T extends ResolverContext>(context?: T) {
     credentials: "include",
     includeExtensions: true,
     fetchOptions: {
-      mode: "cors",
-      context: { ...context }
+      mode: "cors"
     },
     fetch: enhancedFetch,
     headers: {
-      Authorization: "Bearer ".concat(`${process.env.GRAPHQL_JWT_AUTH_SECRET_KEY_YML}`),
+      Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvd3d3LmFuZHJld3Jvc3MuZW5naW5lZXIiLCJpYXQiOjE2NDcyMzA5OTMsIm5iZiI6MTY0NzIzMDk5MywiZXhwIjoxNjc4NzY2OTkzLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIiwidXNlcl9zZWNyZXQiOiJncmFwaHFsX2p3dF82MjJlYWFlMzkzMzU5In19fQ.ruUZAzyHOTydRr783PCw1B2cwSbKf6yhZIQ2k9yUHvA`,
+      "x-jwt-auth": `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvd3d3LmFuZHJld3Jvc3MuZW5naW5lZXIiLCJpYXQiOjE2NDcyMzA5OTMsIm5iZiI6MTY0NzIzMDk5MywiZXhwIjoxNjc4NzY2OTkzLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIiwidXNlcl9zZWNyZXQiOiJncmFwaHFsX2p3dF82MjJlYWFlMzkzMzU5In19fQ.ruUZAzyHOTydRr783PCw1B2cwSbKf6yhZIQ2k9yUHvA`,
       "Accept-Encoding": "gzip, deflate, br",
       "Transfer-Encoding": "chunked",
       "Content-Type": "application/json; charset=utf-8",
@@ -78,7 +114,7 @@ export const sessionMiddleware = new ApolloLink((operation, forward) => {
     operation.setContext(({ headers = {} }) => ({
       headers: {
         ...headers,
-        "authorization": `Bearer ${token}`
+        "authorization": `Bearer ${process.env.GRAPHQL_JWT_AUTH_SECRET_KEY_YML}`
       }
     }));
   }

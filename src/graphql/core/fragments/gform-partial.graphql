@@ -1,0 +1,22 @@
+fragment GformPartial on Gform {
+      authorId
+    authorDatabaseId
+    content
+    databaseId
+    title
+    toPing
+    status
+    slug
+    desiredSlug
+    enclosure
+    featuredImageDatabaseId
+    featuredImageId
+    guid
+    id
+    isPreview
+    isRevision
+    isRestricted
+    isContentNode
+    modified
+    date
+}

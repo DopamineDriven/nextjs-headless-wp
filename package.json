@@ -107,6 +107,7 @@
     "cookies-next": "^2.0.4",
     "date-fns": "^2.28.0",
     "debounce": "^1.2.1",
+    "deepmerge": "^4.2.2",
     "faker": "^5.5.3",
     "graphql": "^15.8.0",
     "graphql-let": "^0.18.6",

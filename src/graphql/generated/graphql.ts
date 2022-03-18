@@ -842,6 +842,8 @@ export type Category = DatabaseIdentifier &
     enqueuedStylesheets?: Maybe<
       FieldWrapper<TermNodeToEnqueuedStylesheetConnection>
     >;
+    /** Connection between the category type and the Gform type */
+    gforms?: Maybe<FieldWrapper<CategoryToGformConnection>>;
     /** The unique resource identifier path */
     id: FieldWrapper<Scalars["ID"]>;
     /** Whether the node is a Content Node */
@@ -918,6 +920,15 @@ export type CategoryenqueuedStylesheetsArgs = {
   before?: InputMaybe<Scalars["String"]>;
   first?: InputMaybe<Scalars["Int"]>;
   last?: InputMaybe<Scalars["Int"]>;
+};
+
+/** The category type */
+export type CategorygformsArgs = {
+  after?: InputMaybe<Scalars["String"]>;
+  before?: InputMaybe<Scalars["String"]>;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<CategoryToGformConnectionWhereArgs>;
 };
 
 /** The category type */
@@ -1055,6 +1066,80 @@ export type CategoryToContentNodeConnectionEdge = {
 export type CategoryToContentNodeConnectionWhereArgs = {
   /** The Types of content to filter */
   contentTypes?: InputMaybe<Array<InputMaybe<ContentTypesOfCategoryEnum>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars["Boolean"]>;
+  /** Specific ID of the object */
+  id?: InputMaybe<Scalars["Int"]>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars["String"]>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars["ID"]>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars["String"]>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+};
+
+/** Connection between the category type and the Gform type */
+export type CategoryToGformConnection = {
+  __typename: "CategoryToGformConnection";
+  /** Edges for the CategoryToGformConnection connection */
+  edges?: Maybe<Array<Maybe<FieldWrapper<CategoryToGformConnectionEdge>>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<FieldWrapper<Gform>>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<FieldWrapper<WPPageInfo>>;
+};
+
+/** An edge in a connection */
+export type CategoryToGformConnectionEdge = {
+  __typename: "CategoryToGformConnectionEdge";
+  /** A cursor for use in pagination */
+  cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** The item at the end of the edge */
+  node?: Maybe<FieldWrapper<Gform>>;
+};
+
+/** Arguments for filtering the CategoryToGformConnection connection */
+export type CategoryToGformConnectionWhereArgs = {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: InputMaybe<Scalars["Int"]>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: InputMaybe<Scalars["String"]>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Category ID */
+  categoryId?: InputMaybe<Scalars["Int"]>;
+  /** Array of category IDs, used to display objects from one category OR another */
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Use Category Slug */
+  categoryName?: InputMaybe<Scalars["String"]>;
+  /** Array of category IDs, used to display objects from one category OR another */
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
@@ -1836,7 +1921,7 @@ export type ContentNodeToEnqueuedStylesheetConnectionEdge = {
 };
 
 /** A union of Content Node Types that support revisions */
-export type ContentRevisionUnion = Page | Post;
+export type ContentRevisionUnion = Gform | Page | Post;
 
 /** The template assigned to a node of content */
 export type ContentTemplate = {
@@ -1935,6 +2020,8 @@ export type ContentTypecontentNodesArgs = {
 export enum ContentTypeEnum {
   /** The Type of Content object */
   ATTACHMENT = "ATTACHMENT",
+  /** The Type of Content object */
+  GRAVITY = "GRAVITY",
   /** The Type of Content object */
   PAGE = "PAGE",
   /** The Type of Content object */
@@ -2036,11 +2123,15 @@ export type ContentTypeToTaxonomyConnectionEdge = {
 /** Allowed Content Types of the Category taxonomy. */
 export enum ContentTypesOfCategoryEnum {
   /** The Type of Content object */
+  GRAVITY = "GRAVITY",
+  /** The Type of Content object */
   POST = "POST"
 }
 
 /** Allowed Content Types of the PostFormat taxonomy. */
 export enum ContentTypesOfPostFormatEnum {
+  /** The Type of Content object */
+  GRAVITY = "GRAVITY",
   /** The Type of Content object */
   POST = "POST"
 }
@@ -2109,6 +2200,51 @@ export type CreateCommentPayload = {
   comment?: Maybe<FieldWrapper<Comment>>;
   /** Whether the mutation succeeded. If the comment is not approved, the server will not return the comment to a non authenticated user, but a success message can be returned if the create succeeded, and the client can optimistically add the comment to the client cache */
   success?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
+};
+
+/** Input for the createGform mutation */
+export type CreateGformInput = {
+  /** The userId to assign as the author of the object */
+  authorId?: InputMaybe<Scalars["ID"]>;
+  /** Set connections between the Gform and categories */
+  categories?: InputMaybe<GformCategoriesInput>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  /** The comment status for the object */
+  commentStatus?: InputMaybe<Scalars["String"]>;
+  /** The content of the object */
+  content?: InputMaybe<Scalars["String"]>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars["String"]>;
+  /** The excerpt of the object */
+  excerpt?: InputMaybe<Scalars["String"]>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars["Int"]>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars["String"]>;
+  /** The ping status for the object */
+  pingStatus?: InputMaybe<Scalars["String"]>;
+  /** URLs that have been pinged. */
+  pinged?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Set connections between the Gform and postFormats */
+  postFormats?: InputMaybe<GformPostFormatsInput>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars["String"]>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+  /** URLs queued to be pinged. */
+  toPing?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+/** The payload for the createGform mutation */
+export type CreateGformPayload = {
+  __typename: "CreateGformPayload";
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** The Post object mutation type. */
+  gform?: Maybe<FieldWrapper<Gform>>;
 };
 
 /** Input for the createMediaItem mutation */
@@ -2580,6 +2716,27 @@ export type DeleteGfEntryPayload = {
   deletedId?: Maybe<FieldWrapper<Scalars["ID"]>>;
   /** The entry object before it was deleted. */
   entry?: Maybe<FieldWrapper<GfSubmittedEntry>>;
+};
+
+/** Input for the deleteGform mutation */
+export type DeleteGformInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  /** Whether the object should be force deleted instead of being moved to the trash */
+  forceDelete?: InputMaybe<Scalars["Boolean"]>;
+  /** The ID of the Gform to delete */
+  id: Scalars["ID"];
+};
+
+/** The payload for the deleteGform mutation */
+export type DeleteGformPayload = {
+  __typename: "DeleteGformPayload";
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** The ID of the deleted object */
+  deletedId?: Maybe<FieldWrapper<Scalars["ID"]>>;
+  /** The object before it was deleted */
+  gform?: Maybe<FieldWrapper<Gform>>;
 };
 
 /** Input for the deleteMediaItem mutation */
@@ -4280,6 +4437,624 @@ export type GfSubmittedEntryformFieldsArgs = {
   where?: InputMaybe<GfEntryToFormFieldConnectionWhereArgs>;
 };
 
+/** The Gform type */
+export type Gform = ContentNode &
+  DatabaseIdentifier &
+  MenuItemLinkable &
+  Node &
+  NodeWithAuthor &
+  NodeWithComments &
+  NodeWithContentEditor &
+  NodeWithExcerpt &
+  NodeWithFeaturedImage &
+  NodeWithRevisions &
+  NodeWithTemplate &
+  NodeWithTitle &
+  NodeWithTrackbacks &
+  UniformResourceIdentifiable & {
+    __typename: "Gform";
+    /** Connection between the NodeWithAuthor type and the User type */
+    author?: Maybe<FieldWrapper<NodeWithAuthorToUserConnectionEdge>>;
+    /** The database identifier of the author of the node */
+    authorDatabaseId?: Maybe<FieldWrapper<Scalars["Int"]>>;
+    /** The globally unique identifier of the author of the node */
+    authorId?: Maybe<FieldWrapper<Scalars["ID"]>>;
+    /** Connection between the Gform type and the category type */
+    categories?: Maybe<FieldWrapper<GformToCategoryConnection>>;
+    /** The number of comments. Even though WPGraphQL denotes this field as an integer, in WordPress this field should be saved as a numeric string for compatibility. */
+    commentCount?: Maybe<FieldWrapper<Scalars["Int"]>>;
+    /** Whether the comments are open or closed for this particular post. */
+    commentStatus?: Maybe<FieldWrapper<Scalars["String"]>>;
+    /** Connection between the Gform type and the Comment type */
+    comments?: Maybe<FieldWrapper<GformToCommentConnection>>;
+    /** The content of the post. */
+    content?: Maybe<FieldWrapper<Scalars["String"]>>;
+    /** Connection between the ContentNode type and the ContentType type */
+    contentType?: Maybe<FieldWrapper<ContentNodeToContentTypeConnectionEdge>>;
+    /** The name of the Content Type the node belongs to */
+    contentTypeName: FieldWrapper<Scalars["String"]>;
+    /** The unique resource identifier path */
+    databaseId: FieldWrapper<Scalars["Int"]>;
+    /** Post publishing date. */
+    date?: Maybe<FieldWrapper<Scalars["String"]>>;
+    /** The publishing date set in GMT. */
+    dateGmt?: Maybe<FieldWrapper<Scalars["String"]>>;
+    /** The desired slug of the post */
+    desiredSlug?: Maybe<FieldWrapper<Scalars["String"]>>;
+    /** If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds */
+    editingLockedBy?: Maybe<FieldWrapper<ContentNodeToEditLockConnectionEdge>>;
+    /** The RSS enclosure for the object */
+    enclosure?: Maybe<FieldWrapper<Scalars["String"]>>;
+    /** Connection between the ContentNode type and the EnqueuedScript type */
+    enqueuedScripts?: Maybe<
+      FieldWrapper<ContentNodeToEnqueuedScriptConnection>
+    >;
+    /** Connection between the ContentNode type and the EnqueuedStylesheet type */
+    enqueuedStylesheets?: Maybe<
+      FieldWrapper<ContentNodeToEnqueuedStylesheetConnection>
+    >;
+    /** The excerpt of the post. */
+    excerpt?: Maybe<FieldWrapper<Scalars["String"]>>;
+    /** Connection between the NodeWithFeaturedImage type and the MediaItem type */
+    featuredImage?: Maybe<
+      FieldWrapper<NodeWithFeaturedImageToMediaItemConnectionEdge>
+    >;
+    /** The database identifier for the featured image node assigned to the content node */
+    featuredImageDatabaseId?: Maybe<FieldWrapper<Scalars["Int"]>>;
+    /** Globally unique ID of the featured image assigned to the node */
+    featuredImageId?: Maybe<FieldWrapper<Scalars["ID"]>>;
+    /**
+     * The id field matches the WP_Post-&gt;ID field.
+     * @deprecated Deprecated in favor of the databaseId field
+     */
+    gformId: FieldWrapper<Scalars["Int"]>;
+    /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
+    guid?: Maybe<FieldWrapper<Scalars["String"]>>;
+    /** The globally unique identifier of the gravity object. */
+    id: FieldWrapper<Scalars["ID"]>;
+    /** Whether the node is a Content Node */
+    isContentNode: FieldWrapper<Scalars["Boolean"]>;
+    /** Whether the object is a node in the preview state */
+    isPreview?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
+    /** Whether the object is restricted from the current viewer */
+    isRestricted?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
+    /** True if the node is a revision of another node */
+    isRevision?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
+    /** Whether the node is a Term */
+    isTermNode: FieldWrapper<Scalars["Boolean"]>;
+    /** The user that most recently edited the node */
+    lastEditedBy?: Maybe<FieldWrapper<ContentNodeToEditLastConnectionEdge>>;
+    /** The permalink of the post */
+    link?: Maybe<FieldWrapper<Scalars["String"]>>;
+    /** The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time. */
+    modified?: Maybe<FieldWrapper<Scalars["String"]>>;
+    /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
+    modifiedGmt?: Maybe<FieldWrapper<Scalars["String"]>>;
+    /** Whether the pings are open or closed for this particular post. */
+    pingStatus?: Maybe<FieldWrapper<Scalars["String"]>>;
+    /** URLs that have been pinged. */
+    pinged?: Maybe<Array<Maybe<FieldWrapper<Scalars["String"]>>>>;
+    /** Connection between the Gform type and the postFormat type */
+    postFormats?: Maybe<FieldWrapper<GformToPostFormatConnection>>;
+    /** Connection between the Gform type and the Gform type */
+    preview?: Maybe<FieldWrapper<GformToPreviewConnectionEdge>>;
+    /** The database id of the preview node */
+    previewRevisionDatabaseId?: Maybe<FieldWrapper<Scalars["Int"]>>;
+    /** Whether the object is a node in the preview state */
+    previewRevisionId?: Maybe<FieldWrapper<Scalars["ID"]>>;
+    /** If the current node is a revision, this field exposes the node this is a revision of. Returns null if the node is not a revision of another node. */
+    revisionOf?: Maybe<
+      FieldWrapper<NodeWithRevisionsToContentNodeConnectionEdge>
+    >;
+    /** Connection between the Gform type and the Gform type */
+    revisions?: Maybe<FieldWrapper<GformToRevisionConnection>>;
+    /** The Yoast SEO data of the Gform */
+    seo?: Maybe<FieldWrapper<PostTypeSEO>>;
+    /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
+    slug?: Maybe<FieldWrapper<Scalars["String"]>>;
+    /** The current status of the object */
+    status?: Maybe<FieldWrapper<Scalars["String"]>>;
+    /** The template assigned to a node of content */
+    template?: Maybe<FieldWrapper<ContentTemplate>>;
+    /** Connection between the Gform type and the TermNode type */
+    terms?: Maybe<FieldWrapper<GformToTermNodeConnection>>;
+    /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
+    title?: Maybe<FieldWrapper<Scalars["String"]>>;
+    /** URLs queued to be pinged. */
+    toPing?: Maybe<Array<Maybe<FieldWrapper<Scalars["String"]>>>>;
+    /** The unique resource identifier path */
+    uri?: Maybe<FieldWrapper<Scalars["String"]>>;
+  };
+
+/** The Gform type */
+export type GformcategoriesArgs = {
+  after?: InputMaybe<Scalars["String"]>;
+  before?: InputMaybe<Scalars["String"]>;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<GformToCategoryConnectionWhereArgs>;
+};
+
+/** The Gform type */
+export type GformcommentsArgs = {
+  after?: InputMaybe<Scalars["String"]>;
+  before?: InputMaybe<Scalars["String"]>;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<GformToCommentConnectionWhereArgs>;
+};
+
+/** The Gform type */
+export type GformcontentArgs = {
+  format?: InputMaybe<PostObjectFieldFormatEnum>;
+};
+
+/** The Gform type */
+export type GformenqueuedScriptsArgs = {
+  after?: InputMaybe<Scalars["String"]>;
+  before?: InputMaybe<Scalars["String"]>;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+};
+
+/** The Gform type */
+export type GformenqueuedStylesheetsArgs = {
+  after?: InputMaybe<Scalars["String"]>;
+  before?: InputMaybe<Scalars["String"]>;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+};
+
+/** The Gform type */
+export type GformexcerptArgs = {
+  format?: InputMaybe<PostObjectFieldFormatEnum>;
+};
+
+/** The Gform type */
+export type GformpostFormatsArgs = {
+  after?: InputMaybe<Scalars["String"]>;
+  before?: InputMaybe<Scalars["String"]>;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<GformToPostFormatConnectionWhereArgs>;
+};
+
+/** The Gform type */
+export type GformrevisionsArgs = {
+  after?: InputMaybe<Scalars["String"]>;
+  before?: InputMaybe<Scalars["String"]>;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<GformToRevisionConnectionWhereArgs>;
+};
+
+/** The Gform type */
+export type GformtermsArgs = {
+  after?: InputMaybe<Scalars["String"]>;
+  before?: InputMaybe<Scalars["String"]>;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<GformToTermNodeConnectionWhereArgs>;
+};
+
+/** The Gform type */
+export type GformtitleArgs = {
+  format?: InputMaybe<PostObjectFieldFormatEnum>;
+};
+
+/** Set relationships between the Gform to categories */
+export type GformCategoriesInput = {
+  /** If true, this will append the category to existing related categories. If false, this will replace existing relationships. Default true. */
+  append?: InputMaybe<Scalars["Boolean"]>;
+  /** The input list of items to set. */
+  nodes?: InputMaybe<Array<InputMaybe<GformCategoriesNodeInput>>>;
+};
+
+/** List of categories to connect the Gform to. If an ID is set, it will be used to create the connection. If not, it will look for a slug. If neither are valid existing terms, and the site is configured to allow terms to be created during post mutations, a term will be created using the Name if it exists in the input, then fallback to the slug if it exists. */
+export type GformCategoriesNodeInput = {
+  /** The description of the category. This field is used to set a description of the category if a new one is created during the mutation. */
+  description?: InputMaybe<Scalars["String"]>;
+  /** The ID of the category. If present, this will be used to connect to the Gform. If no existing category exists with this ID, no connection will be made. */
+  id?: InputMaybe<Scalars["ID"]>;
+  /** The name of the category. This field is used to create a new term, if term creation is enabled in nested mutations, and if one does not already exist with the provided slug or ID or if a slug or ID is not provided. If no name is included and a term is created, the creation will fallback to the slug field. */
+  name?: InputMaybe<Scalars["String"]>;
+  /** The slug of the category. If no ID is present, this field will be used to make a connection. If no existing term exists with this slug, this field will be used as a fallback to the Name field when creating a new term to connect to, if term creation is enabled as a nested mutation. */
+  slug?: InputMaybe<Scalars["String"]>;
+};
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum GformIdType {
+  /** Identify a resource by the Database ID. */
+  DATABASE_ID = "DATABASE_ID",
+  /** Identify a resource by the (hashed) Global ID. */
+  ID = "ID",
+  /** Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier. */
+  SLUG = "SLUG",
+  /** Identify a resource by the URI. */
+  URI = "URI"
+}
+
+/** Set relationships between the Gform to postFormats */
+export type GformPostFormatsInput = {
+  /** If true, this will append the postFormat to existing related postFormats. If false, this will replace existing relationships. Default true. */
+  append?: InputMaybe<Scalars["Boolean"]>;
+  /** The input list of items to set. */
+  nodes?: InputMaybe<Array<InputMaybe<GformPostFormatsNodeInput>>>;
+};
+
+/** List of postFormats to connect the Gform to. If an ID is set, it will be used to create the connection. If not, it will look for a slug. If neither are valid existing terms, and the site is configured to allow terms to be created during post mutations, a term will be created using the Name if it exists in the input, then fallback to the slug if it exists. */
+export type GformPostFormatsNodeInput = {
+  /** The description of the postFormat. This field is used to set a description of the postFormat if a new one is created during the mutation. */
+  description?: InputMaybe<Scalars["String"]>;
+  /** The ID of the postFormat. If present, this will be used to connect to the Gform. If no existing postFormat exists with this ID, no connection will be made. */
+  id?: InputMaybe<Scalars["ID"]>;
+  /** The name of the postFormat. This field is used to create a new term, if term creation is enabled in nested mutations, and if one does not already exist with the provided slug or ID or if a slug or ID is not provided. If no name is included and a term is created, the creation will fallback to the slug field. */
+  name?: InputMaybe<Scalars["String"]>;
+  /** The slug of the postFormat. If no ID is present, this field will be used to make a connection. If no existing term exists with this slug, this field will be used as a fallback to the Name field when creating a new term to connect to, if term creation is enabled as a nested mutation. */
+  slug?: InputMaybe<Scalars["String"]>;
+};
+
+/** Connection between the Gform type and the category type */
+export type GformToCategoryConnection = {
+  __typename: "GformToCategoryConnection";
+  /** Edges for the GformToCategoryConnection connection */
+  edges?: Maybe<Array<Maybe<FieldWrapper<GformToCategoryConnectionEdge>>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<FieldWrapper<Category>>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<FieldWrapper<WPPageInfo>>;
+};
+
+/** An edge in a connection */
+export type GformToCategoryConnectionEdge = {
+  __typename: "GformToCategoryConnectionEdge";
+  /** A cursor for use in pagination */
+  cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** The Yoast SEO Primary category */
+  isPrimary?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
+  /** The item at the end of the edge */
+  node?: Maybe<FieldWrapper<Category>>;
+};
+
+/** Arguments for filtering the GformToCategoryConnection connection */
+export type GformToCategoryConnectionWhereArgs = {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars["String"]>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars["Int"]>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars["Boolean"]>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars["String"]>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars["Boolean"]>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars["Boolean"]>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars["String"]>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars["Boolean"]>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars["Int"]>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars["Boolean"]>;
+};
+
+/** Connection between the Gform type and the Comment type */
+export type GformToCommentConnection = {
+  __typename: "GformToCommentConnection";
+  /** Edges for the GformToCommentConnection connection */
+  edges?: Maybe<Array<Maybe<FieldWrapper<GformToCommentConnectionEdge>>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<FieldWrapper<Comment>>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<FieldWrapper<WPPageInfo>>;
+};
+
+/** An edge in a connection */
+export type GformToCommentConnectionEdge = {
+  __typename: "GformToCommentConnectionEdge";
+  /** A cursor for use in pagination */
+  cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** The item at the end of the edge */
+  node?: Maybe<FieldWrapper<Comment>>;
+};
+
+/** Arguments for filtering the GformToCommentConnection connection */
+export type GformToCommentConnectionWhereArgs = {
+  /** Comment author email address. */
+  authorEmail?: InputMaybe<Scalars["String"]>;
+  /** Array of author IDs to include comments for. */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of author IDs to exclude comments for. */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Comment author URL. */
+  authorUrl?: InputMaybe<Scalars["String"]>;
+  /** Array of comment IDs to include. */
+  commentIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of IDs of users whose unapproved comments will be returned by the query regardless of status. */
+  commentNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Include comments of a given type. */
+  commentType?: InputMaybe<Scalars["String"]>;
+  /** Include comments from a given array of comment types. */
+  commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Exclude comments from a given array of comment types. */
+  commentTypeNotIn?: InputMaybe<Scalars["String"]>;
+  /** Content object author ID to limit results by. */
+  contentAuthor?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of author IDs to retrieve comments for. */
+  contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of author IDs *not* to retrieve comments for. */
+  contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Limit results to those affiliated with a given content object ID. */
+  contentId?: InputMaybe<Scalars["ID"]>;
+  /** Array of content object IDs to include affiliated comments for. */
+  contentIdIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of content object IDs to exclude affiliated comments for. */
+  contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Content object name to retrieve affiliated comments for. */
+  contentName?: InputMaybe<Scalars["String"]>;
+  /** Content Object parent ID to retrieve affiliated comments for. */
+  contentParent?: InputMaybe<Scalars["Int"]>;
+  /** Array of content object statuses to retrieve affiliated comments for. Pass 'any' to match any value. */
+  contentStatus?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Content object type or array of types to retrieve affiliated comments for. Pass 'any' to match any value. */
+  contentType?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
+  /** Array of IDs or email addresses of users whose unapproved comments will be returned by the query regardless of $status. Default empty */
+  includeUnapproved?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Karma score to retrieve matching comments for. */
+  karma?: InputMaybe<Scalars["Int"]>;
+  /** The cardinality of the order of the connection */
+  order?: InputMaybe<OrderEnum>;
+  /** Field to order the comments by. */
+  orderby?: InputMaybe<CommentsConnectionOrderbyEnum>;
+  /** Parent ID of comment to retrieve children of. */
+  parent?: InputMaybe<Scalars["Int"]>;
+  /** Array of parent IDs of comments to retrieve children for. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of parent IDs of comments *not* to retrieve children for. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Search term(s) to retrieve matching comments for. */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Comment status to limit results by. */
+  status?: InputMaybe<Scalars["String"]>;
+  /** Include comments for a specific user ID. */
+  userId?: InputMaybe<Scalars["ID"]>;
+};
+
+/** Connection between the Gform type and the postFormat type */
+export type GformToPostFormatConnection = {
+  __typename: "GformToPostFormatConnection";
+  /** Edges for the GformToPostFormatConnection connection */
+  edges?: Maybe<Array<Maybe<FieldWrapper<GformToPostFormatConnectionEdge>>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<FieldWrapper<PostFormat>>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<FieldWrapper<WPPageInfo>>;
+};
+
+/** An edge in a connection */
+export type GformToPostFormatConnectionEdge = {
+  __typename: "GformToPostFormatConnectionEdge";
+  /** A cursor for use in pagination */
+  cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** The Yoast SEO Primary post_format */
+  isPrimary?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
+  /** The item at the end of the edge */
+  node?: Maybe<FieldWrapper<PostFormat>>;
+};
+
+/** Arguments for filtering the GformToPostFormatConnection connection */
+export type GformToPostFormatConnectionWhereArgs = {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars["String"]>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars["Int"]>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars["Boolean"]>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars["String"]>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars["Boolean"]>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars["Boolean"]>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars["String"]>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars["Boolean"]>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars["Int"]>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars["Boolean"]>;
+};
+
+/** Connection between the Gform type and the Gform type */
+export type GformToPreviewConnectionEdge = {
+  __typename: "GformToPreviewConnectionEdge";
+  /** The node of the connection, without the edges */
+  node?: Maybe<FieldWrapper<Gform>>;
+};
+
+/** Connection between the Gform type and the Gform type */
+export type GformToRevisionConnection = {
+  __typename: "GformToRevisionConnection";
+  /** Edges for the GformToRevisionConnection connection */
+  edges?: Maybe<Array<Maybe<FieldWrapper<GformToRevisionConnectionEdge>>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<FieldWrapper<Gform>>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<FieldWrapper<WPPageInfo>>;
+};
+
+/** An edge in a connection */
+export type GformToRevisionConnectionEdge = {
+  __typename: "GformToRevisionConnectionEdge";
+  /** A cursor for use in pagination */
+  cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** The item at the end of the edge */
+  node?: Maybe<FieldWrapper<Gform>>;
+};
+
+/** Arguments for filtering the GformToRevisionConnection connection */
+export type GformToRevisionConnectionWhereArgs = {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: InputMaybe<Scalars["Int"]>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: InputMaybe<Scalars["String"]>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Category ID */
+  categoryId?: InputMaybe<Scalars["Int"]>;
+  /** Array of category IDs, used to display objects from one category OR another */
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Use Category Slug */
+  categoryName?: InputMaybe<Scalars["String"]>;
+  /** Array of category IDs, used to display objects from one category OR another */
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars["Boolean"]>;
+  /** Specific ID of the object */
+  id?: InputMaybe<Scalars["Int"]>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars["String"]>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars["ID"]>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars["String"]>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+};
+
+/** Connection between the Gform type and the TermNode type */
+export type GformToTermNodeConnection = {
+  __typename: "GformToTermNodeConnection";
+  /** Edges for the GformToTermNodeConnection connection */
+  edges?: Maybe<Array<Maybe<FieldWrapper<GformToTermNodeConnectionEdge>>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<FieldWrapper<TermNode>>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<FieldWrapper<WPPageInfo>>;
+};
+
+/** An edge in a connection */
+export type GformToTermNodeConnectionEdge = {
+  __typename: "GformToTermNodeConnectionEdge";
+  /** A cursor for use in pagination */
+  cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** The item at the end of the edge */
+  node?: Maybe<FieldWrapper<TermNode>>;
+};
+
+/** Arguments for filtering the GformToTermNodeConnection connection */
+export type GformToTermNodeConnectionWhereArgs = {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars["String"]>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars["Int"]>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars["Boolean"]>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars["String"]>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars["Boolean"]>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars["Boolean"]>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars["String"]>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars["Boolean"]>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars["Int"]>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** The Taxonomy to filter terms by */
+  taxonomies?: InputMaybe<Array<InputMaybe<TaxonomyEnum>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars["Boolean"]>;
+};
+
 /** A Gravity Forms   field. */
 export type HiddenField = FormField & {
   __typename: "HiddenField";
@@ -5210,7 +5985,7 @@ export enum MenuItemNodeIdTypeEnum {
 }
 
 /** Deprecated in favor of MenuItemLinkeable Interface */
-export type MenuItemObjectUnion = Category | Page | Post | Tag;
+export type MenuItemObjectUnion = Category | Gform | Page | Post | Tag;
 
 /** Connection between the MenuItem type and the Menu type */
 export type MenuItemToMenuConnectionEdge = {
@@ -8415,6 +9190,8 @@ export type PostFormat = DatabaseIdentifier &
     enqueuedStylesheets?: Maybe<
       FieldWrapper<TermNodeToEnqueuedStylesheetConnection>
     >;
+    /** Connection between the postFormat type and the Gform type */
+    gforms?: Maybe<FieldWrapper<PostFormatToGformConnection>>;
     /** The unique resource identifier path */
     id: FieldWrapper<Scalars["ID"]>;
     /** Whether the node is a Content Node */
@@ -8476,6 +9253,15 @@ export type PostFormatenqueuedStylesheetsArgs = {
 };
 
 /** The postFormat type */
+export type PostFormatgformsArgs = {
+  after?: InputMaybe<Scalars["String"]>;
+  before?: InputMaybe<Scalars["String"]>;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<PostFormatToGformConnectionWhereArgs>;
+};
+
+/** The postFormat type */
 export type PostFormatpostsArgs = {
   after?: InputMaybe<Scalars["String"]>;
   before?: InputMaybe<Scalars["String"]>;
@@ -8524,6 +9310,80 @@ export type PostFormatToContentNodeConnectionEdge = {
 export type PostFormatToContentNodeConnectionWhereArgs = {
   /** The Types of content to filter */
   contentTypes?: InputMaybe<Array<InputMaybe<ContentTypesOfPostFormatEnum>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars["Boolean"]>;
+  /** Specific ID of the object */
+  id?: InputMaybe<Scalars["Int"]>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars["String"]>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars["ID"]>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars["String"]>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+};
+
+/** Connection between the postFormat type and the Gform type */
+export type PostFormatToGformConnection = {
+  __typename: "PostFormatToGformConnection";
+  /** Edges for the PostFormatToGformConnection connection */
+  edges?: Maybe<Array<Maybe<FieldWrapper<PostFormatToGformConnectionEdge>>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<FieldWrapper<Gform>>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<FieldWrapper<WPPageInfo>>;
+};
+
+/** An edge in a connection */
+export type PostFormatToGformConnectionEdge = {
+  __typename: "PostFormatToGformConnectionEdge";
+  /** A cursor for use in pagination */
+  cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** The item at the end of the edge */
+  node?: Maybe<FieldWrapper<Gform>>;
+};
+
+/** Arguments for filtering the PostFormatToGformConnection connection */
+export type PostFormatToGformConnectionWhereArgs = {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: InputMaybe<Scalars["Int"]>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: InputMaybe<Scalars["String"]>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Category ID */
+  categoryId?: InputMaybe<Scalars["Int"]>;
+  /** Array of category IDs, used to display objects from one category OR another */
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Use Category Slug */
+  categoryName?: InputMaybe<Scalars["String"]>;
+  /** Array of category IDs, used to display objects from one category OR another */
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
@@ -10549,6 +11409,8 @@ export type RootMutation = {
   createCategory?: Maybe<FieldWrapper<CreateCategoryPayload>>;
   /** The payload for the createComment mutation */
   createComment?: Maybe<FieldWrapper<CreateCommentPayload>>;
+  /** The payload for the createGform mutation */
+  createGform?: Maybe<FieldWrapper<CreateGformPayload>>;
   /** The payload for the createMediaItem mutation */
   createMediaItem?: Maybe<FieldWrapper<CreateMediaItemPayload>>;
   /** The payload for the createPage mutation */
@@ -10569,6 +11431,8 @@ export type RootMutation = {
   deleteGfDraftEntry?: Maybe<FieldWrapper<DeleteGfDraftEntryPayload>>;
   /** The payload for the deleteGfEntry mutation */
   deleteGfEntry?: Maybe<FieldWrapper<DeleteGfEntryPayload>>;
+  /** The payload for the deleteGform mutation */
+  deleteGform?: Maybe<FieldWrapper<DeleteGformPayload>>;
   /** The payload for the deleteMediaItem mutation */
   deleteMediaItem?: Maybe<FieldWrapper<DeleteMediaItemPayload>>;
   /** The payload for the deletePage mutation */
@@ -10607,6 +11471,8 @@ export type RootMutation = {
   updateGfDraftEntry?: Maybe<FieldWrapper<UpdateGfDraftEntryPayload>>;
   /** The payload for the updateGfEntry mutation */
   updateGfEntry?: Maybe<FieldWrapper<UpdateGfEntryPayload>>;
+  /** The payload for the updateGform mutation */
+  updateGform?: Maybe<FieldWrapper<UpdateGformPayload>>;
   /** The payload for the updateMediaItem mutation */
   updateMediaItem?: Maybe<FieldWrapper<UpdateMediaItemPayload>>;
   /** The payload for the updatePage mutation */
@@ -10631,6 +11497,11 @@ export type RootMutationcreateCategoryArgs = {
 /** The root mutation */
 export type RootMutationcreateCommentArgs = {
   input: CreateCommentInput;
+};
+
+/** The root mutation */
+export type RootMutationcreateGformArgs = {
+  input: CreateGformInput;
 };
 
 /** The root mutation */
@@ -10681,6 +11552,11 @@ export type RootMutationdeleteGfDraftEntryArgs = {
 /** The root mutation */
 export type RootMutationdeleteGfEntryArgs = {
   input: DeleteGfEntryInput;
+};
+
+/** The root mutation */
+export type RootMutationdeleteGformArgs = {
+  input: DeleteGformInput;
 };
 
 /** The root mutation */
@@ -10779,6 +11655,11 @@ export type RootMutationupdateGfEntryArgs = {
 };
 
 /** The root mutation */
+export type RootMutationupdateGformArgs = {
+  input: UpdateGformInput;
+};
+
+/** The root mutation */
 export type RootMutationupdateMediaItemArgs = {
   input: UpdateMediaItemInput;
 };
@@ -10864,6 +11745,15 @@ export type RootQuery = {
   >;
   /** Get a Gravity Forms entry. */
   gfSubmittedEntry?: Maybe<FieldWrapper<GfSubmittedEntry>>;
+  /** An object of the Gform Type. Gravity Form Pages/Posts */
+  gform?: Maybe<FieldWrapper<Gform>>;
+  /**
+   * A Gform object
+   * @deprecated Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)
+   */
+  gformBy?: Maybe<FieldWrapper<Gform>>;
+  /** Connection between the RootQuery type and the Gform type */
+  gforms?: Maybe<FieldWrapper<RootQueryToGformConnection>>;
   /** An object of the mediaItem Type.  */
   mediaItem?: Maybe<FieldWrapper<MediaItem>>;
   /**
@@ -11062,6 +11952,30 @@ export type RootQuerygfSubmittedEntriesArgs = {
 export type RootQuerygfSubmittedEntryArgs = {
   id: Scalars["ID"];
   idType?: InputMaybe<SubmittedEntryIdTypeEnum>;
+};
+
+/** The root entry point into the Graph */
+export type RootQuerygformArgs = {
+  asPreview?: InputMaybe<Scalars["Boolean"]>;
+  id: Scalars["ID"];
+  idType?: InputMaybe<GformIdType>;
+};
+
+/** The root entry point into the Graph */
+export type RootQuerygformByArgs = {
+  gformId?: InputMaybe<Scalars["Int"]>;
+  id?: InputMaybe<Scalars["ID"]>;
+  slug?: InputMaybe<Scalars["String"]>;
+  uri?: InputMaybe<Scalars["String"]>;
+};
+
+/** The root entry point into the Graph */
+export type RootQuerygformsArgs = {
+  after?: InputMaybe<Scalars["String"]>;
+  before?: InputMaybe<Scalars["String"]>;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<RootQueryToGformConnectionWhereArgs>;
 };
 
 /** The root entry point into the Graph */
@@ -11756,6 +12670,80 @@ export type RootQueryToGfSubmittedEntryConnectionWhereArgs = {
   status?: InputMaybe<EntryStatusEnum>;
 };
 
+/** Connection between the RootQuery type and the Gform type */
+export type RootQueryToGformConnection = {
+  __typename: "RootQueryToGformConnection";
+  /** Edges for the RootQueryToGformConnection connection */
+  edges?: Maybe<Array<Maybe<FieldWrapper<RootQueryToGformConnectionEdge>>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<FieldWrapper<Gform>>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<FieldWrapper<WPPageInfo>>;
+};
+
+/** An edge in a connection */
+export type RootQueryToGformConnectionEdge = {
+  __typename: "RootQueryToGformConnectionEdge";
+  /** A cursor for use in pagination */
+  cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** The item at the end of the edge */
+  node?: Maybe<FieldWrapper<Gform>>;
+};
+
+/** Arguments for filtering the RootQueryToGformConnection connection */
+export type RootQueryToGformConnectionWhereArgs = {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: InputMaybe<Scalars["Int"]>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: InputMaybe<Scalars["String"]>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Category ID */
+  categoryId?: InputMaybe<Scalars["Int"]>;
+  /** Array of category IDs, used to display objects from one category OR another */
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Use Category Slug */
+  categoryName?: InputMaybe<Scalars["String"]>;
+  /** Array of category IDs, used to display objects from one category OR another */
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars["Boolean"]>;
+  /** Specific ID of the object */
+  id?: InputMaybe<Scalars["Int"]>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars["String"]>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars["ID"]>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars["String"]>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+};
+
 /** Connection between the RootQuery type and the mediaItem type */
 export type RootQueryToMediaItemConnection = {
   __typename: "RootQueryToMediaItemConnection";
@@ -12426,6 +13414,7 @@ export type SEOContentTypeArchive = {
 /** The Yoast SEO search appearance content types */
 export type SEOContentTypes = {
   __typename: "SEOContentTypes";
+  gform?: Maybe<FieldWrapper<SEOContentType>>;
   mediaItem?: Maybe<FieldWrapper<SEOContentType>>;
   page?: Maybe<FieldWrapper<SEOContentType>>;
   post?: Maybe<FieldWrapper<SEOContentType>>;
@@ -13819,6 +14808,53 @@ export type UpdateGfEntryPayload = {
   errors?: Maybe<Array<Maybe<FieldWrapper<FieldError>>>>;
 };
 
+/** Input for the updateGform mutation */
+export type UpdateGformInput = {
+  /** The userId to assign as the author of the object */
+  authorId?: InputMaybe<Scalars["ID"]>;
+  /** Set connections between the Gform and categories */
+  categories?: InputMaybe<GformCategoriesInput>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  /** The comment status for the object */
+  commentStatus?: InputMaybe<Scalars["String"]>;
+  /** The content of the object */
+  content?: InputMaybe<Scalars["String"]>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars["String"]>;
+  /** The excerpt of the object */
+  excerpt?: InputMaybe<Scalars["String"]>;
+  /** The ID of the Gform object */
+  id: Scalars["ID"];
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars["Int"]>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars["String"]>;
+  /** The ping status for the object */
+  pingStatus?: InputMaybe<Scalars["String"]>;
+  /** URLs that have been pinged. */
+  pinged?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Set connections between the Gform and postFormats */
+  postFormats?: InputMaybe<GformPostFormatsInput>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars["String"]>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+  /** URLs queued to be pinged. */
+  toPing?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+};
+
+/** The payload for the updateGform mutation */
+export type UpdateGformPayload = {
+  __typename: "UpdateGformPayload";
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** The Post object mutation type. */
+  gform?: Maybe<FieldWrapper<Gform>>;
+};
+
 /** Input for the updateMediaItem mutation */
 export type UpdateMediaItemInput = {
   /** Alternative text to display when mediaItem is not displayed */
@@ -14152,6 +15188,8 @@ export type User = Commenter &
     extraCapabilities?: Maybe<Array<Maybe<FieldWrapper<Scalars["String"]>>>>;
     /** First name of the user. This is equivalent to the WP_User-&gt;user_first_name property. */
     firstName?: Maybe<FieldWrapper<Scalars["String"]>>;
+    /** Connection between the User type and the Gform type */
+    gforms?: Maybe<FieldWrapper<UserToGformConnection>>;
     /** The globally unique identifier for the user object. */
     id: FieldWrapper<Scalars["ID"]>;
     /** Whether the node is a Content Node */
@@ -14239,6 +15277,15 @@ export type UserenqueuedStylesheetsArgs = {
   before?: InputMaybe<Scalars["String"]>;
   first?: InputMaybe<Scalars["Int"]>;
   last?: InputMaybe<Scalars["Int"]>;
+};
+
+/** A User object */
+export type UsergformsArgs = {
+  after?: InputMaybe<Scalars["String"]>;
+  before?: InputMaybe<Scalars["String"]>;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<UserToGformConnectionWhereArgs>;
 };
 
 /** A User object */
@@ -14518,6 +15565,80 @@ export type UserToEnqueuedStylesheetConnectionEdge = {
   cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
   /** The item at the end of the edge */
   node?: Maybe<FieldWrapper<EnqueuedStylesheet>>;
+};
+
+/** Connection between the User type and the Gform type */
+export type UserToGformConnection = {
+  __typename: "UserToGformConnection";
+  /** Edges for the UserToGformConnection connection */
+  edges?: Maybe<Array<Maybe<FieldWrapper<UserToGformConnectionEdge>>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<FieldWrapper<Gform>>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<FieldWrapper<WPPageInfo>>;
+};
+
+/** An edge in a connection */
+export type UserToGformConnectionEdge = {
+  __typename: "UserToGformConnectionEdge";
+  /** A cursor for use in pagination */
+  cursor?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** The item at the end of the edge */
+  node?: Maybe<FieldWrapper<Gform>>;
+};
+
+/** Arguments for filtering the UserToGformConnection connection */
+export type UserToGformConnectionWhereArgs = {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: InputMaybe<Scalars["Int"]>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: InputMaybe<Scalars["String"]>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Category ID */
+  categoryId?: InputMaybe<Scalars["Int"]>;
+  /** Array of category IDs, used to display objects from one category OR another */
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Use Category Slug */
+  categoryName?: InputMaybe<Scalars["String"]>;
+  /** Array of category IDs, used to display objects from one category OR another */
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars["Boolean"]>;
+  /** Specific ID of the object */
+  id?: InputMaybe<Scalars["Int"]>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars["String"]>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars["ID"]>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars["String"]>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars["String"]>;
 };
 
 /** Connection between the User type and the mediaItem type */
@@ -15036,6 +16157,47 @@ export const ContentNodePartial = gql`
     modified
   }
 `;
+export const GformPartial = gql`
+  fragment GformPartial on Gform {
+    authorId
+    authorDatabaseId
+    content
+    databaseId
+    title
+    toPing
+    status
+    slug
+    desiredSlug
+    enclosure
+    featuredImageDatabaseId
+    featuredImageId
+    guid
+    id
+    isPreview
+    isRevision
+    isRestricted
+    isContentNode
+    modified
+    date
+  }
+`;
+export const RootQueryToGformConnectionEdgePartial = gql`
+  fragment RootQueryToGformConnectionEdgePartial on RootQueryToGformConnectionEdge {
+    cursor
+    __typename
+  }
+`;
+export const GformPathPartial = gql`
+  fragment GformPathPartial on Gform {
+    uri
+    slug
+    title
+    contentTypeName
+    databaseId
+    id
+    guid
+  }
+`;
 export const LoginPayloadPartial = gql`
   fragment LoginPayloadPartial on LoginPayload {
     __typename
@@ -15060,6 +16222,7 @@ export const MediaItemPartial = gql`
     authorDatabaseId
     authorId
     caption
+    enclosure
     title
     date
     modified
@@ -15072,6 +16235,18 @@ export const MediaItemPartial = gql`
     altText
     sizes
     mediaType
+  }
+`;
+export const MediaSizePartial = gql`
+  fragment MediaSizePartial on MediaSize {
+    file
+    fileSize
+    height
+    width
+    sourceUrl
+    name
+    mimeType
+    __typename
   }
 `;
 export const MenuFragment = gql`
@@ -16290,6 +17465,46 @@ export const ContentNodes = gql`
   ${PageInfoPartial}
   ${SEOPageInfoSchemaPartial}
 `;
+export const GravityPostTypePaths = gql`
+  query GravityPostTypePaths($first: Int!) {
+    gforms(first: $first) {
+      pageInfo {
+        ...PageInfoPartial
+      }
+      edges {
+        ...RootQueryToGformConnectionEdgePartial
+        node {
+          ...GformPathPartial
+        }
+      }
+    }
+  }
+  ${PageInfoPartial}
+  ${RootQueryToGformConnectionEdgePartial}
+  ${GformPathPartial}
+`;
+export const GravityPostType = gql`
+  query GravityPostType($id: ID!, $idType: GformIdType!) {
+    gform(id: $id, idType: $idType) {
+      ...GformPartial
+      featuredImage {
+        node {
+          ...MediaItemPartial
+          mediaDetails {
+            ...MediaDetailsPartial
+            sizes {
+              ...MediaSizePartial
+            }
+          }
+        }
+      }
+    }
+  }
+  ${GformPartial}
+  ${MediaItemPartial}
+  ${MediaDetailsPartial}
+  ${MediaSizePartial}
+`;
 export const SubmitGravityForm = gql`
   mutation SubmitGravityForm($input: SubmitGfFormInput!) {
     submitGfForm(input: $input) {
@@ -16721,6 +17936,15 @@ export type ResolversTypes = ResolversObject<{
   CategoryToContentNodeConnectionWhereArgs: ResolverTypeWrapper<
     DeepPartial<CategoryToContentNodeConnectionWhereArgs>
   >;
+  CategoryToGformConnection: ResolverTypeWrapper<
+    DeepPartial<CategoryToGformConnection>
+  >;
+  CategoryToGformConnectionEdge: ResolverTypeWrapper<
+    DeepPartial<CategoryToGformConnectionEdge>
+  >;
+  CategoryToGformConnectionWhereArgs: ResolverTypeWrapper<
+    DeepPartial<CategoryToGformConnectionWhereArgs>
+  >;
   CategoryToParentCategoryConnectionEdge: ResolverTypeWrapper<
     DeepPartial<CategoryToParentCategoryConnectionEdge>
   >;
@@ -16780,6 +18004,7 @@ export type ResolversTypes = ResolversObject<{
   ConditionalLogicRule: ResolverTypeWrapper<DeepPartial<ConditionalLogicRule>>;
   ConsentField: ResolverTypeWrapper<DeepPartial<ConsentField>>;
   ContentNode:
+    | ResolversTypes["Gform"]
     | ResolversTypes["MediaItem"]
     | ResolversTypes["Page"]
     | ResolversTypes["Post"];
@@ -16808,7 +18033,7 @@ export type ResolversTypes = ResolversObject<{
     DeepPartial<ContentNodeToEnqueuedStylesheetConnectionEdge>
   >;
   ContentRevisionUnion: DeepPartial<
-    ResolversTypes["Page"] | ResolversTypes["Post"]
+    ResolversTypes["Gform"] | ResolversTypes["Page"] | ResolversTypes["Post"]
   >;
   ContentTemplate:
     | ResolversTypes["DefaultTemplate"]
@@ -16848,6 +18073,8 @@ export type ResolversTypes = ResolversObject<{
   >;
   CreateCommentInput: ResolverTypeWrapper<DeepPartial<CreateCommentInput>>;
   CreateCommentPayload: ResolverTypeWrapper<DeepPartial<CreateCommentPayload>>;
+  CreateGformInput: ResolverTypeWrapper<DeepPartial<CreateGformInput>>;
+  CreateGformPayload: ResolverTypeWrapper<DeepPartial<CreateGformPayload>>;
   CreateMediaItemInput: ResolverTypeWrapper<DeepPartial<CreateMediaItemInput>>;
   CreateMediaItemPayload: ResolverTypeWrapper<
     DeepPartial<CreateMediaItemPayload>
@@ -16871,6 +18098,7 @@ export type ResolversTypes = ResolversObject<{
     | ResolversTypes["Comment"]
     | ResolversTypes["GfForm"]
     | ResolversTypes["GfSubmittedEntry"]
+    | ResolversTypes["Gform"]
     | ResolversTypes["MediaItem"]
     | ResolversTypes["Menu"]
     | ResolversTypes["MenuItem"]
@@ -16900,6 +18128,8 @@ export type ResolversTypes = ResolversObject<{
   >;
   DeleteGfEntryInput: ResolverTypeWrapper<DeepPartial<DeleteGfEntryInput>>;
   DeleteGfEntryPayload: ResolverTypeWrapper<DeepPartial<DeleteGfEntryPayload>>;
+  DeleteGformInput: ResolverTypeWrapper<DeepPartial<DeleteGformInput>>;
+  DeleteGformPayload: ResolverTypeWrapper<DeepPartial<DeleteGformPayload>>;
   DeleteMediaItemInput: ResolverTypeWrapper<DeepPartial<DeleteMediaItemInput>>;
   DeleteMediaItemPayload: ResolverTypeWrapper<
     DeepPartial<DeleteMediaItemPayload>
@@ -17147,6 +18377,66 @@ export type ResolversTypes = ResolversObject<{
   GfSettings: ResolverTypeWrapper<DeepPartial<GfSettings>>;
   GfSettingsLogging: ResolverTypeWrapper<DeepPartial<GfSettingsLogging>>;
   GfSubmittedEntry: ResolverTypeWrapper<DeepPartial<GfSubmittedEntry>>;
+  Gform: ResolverTypeWrapper<DeepPartial<Gform>>;
+  GformCategoriesInput: ResolverTypeWrapper<DeepPartial<GformCategoriesInput>>;
+  GformCategoriesNodeInput: ResolverTypeWrapper<
+    DeepPartial<GformCategoriesNodeInput>
+  >;
+  GformIdType: ResolverTypeWrapper<DeepPartial<GformIdType>>;
+  GformPostFormatsInput: ResolverTypeWrapper<
+    DeepPartial<GformPostFormatsInput>
+  >;
+  GformPostFormatsNodeInput: ResolverTypeWrapper<
+    DeepPartial<GformPostFormatsNodeInput>
+  >;
+  GformToCategoryConnection: ResolverTypeWrapper<
+    DeepPartial<GformToCategoryConnection>
+  >;
+  GformToCategoryConnectionEdge: ResolverTypeWrapper<
+    DeepPartial<GformToCategoryConnectionEdge>
+  >;
+  GformToCategoryConnectionWhereArgs: ResolverTypeWrapper<
+    DeepPartial<GformToCategoryConnectionWhereArgs>
+  >;
+  GformToCommentConnection: ResolverTypeWrapper<
+    DeepPartial<GformToCommentConnection>
+  >;
+  GformToCommentConnectionEdge: ResolverTypeWrapper<
+    DeepPartial<GformToCommentConnectionEdge>
+  >;
+  GformToCommentConnectionWhereArgs: ResolverTypeWrapper<
+    DeepPartial<GformToCommentConnectionWhereArgs>
+  >;
+  GformToPostFormatConnection: ResolverTypeWrapper<
+    DeepPartial<GformToPostFormatConnection>
+  >;
+  GformToPostFormatConnectionEdge: ResolverTypeWrapper<
+    DeepPartial<GformToPostFormatConnectionEdge>
+  >;
+  GformToPostFormatConnectionWhereArgs: ResolverTypeWrapper<
+    DeepPartial<GformToPostFormatConnectionWhereArgs>
+  >;
+  GformToPreviewConnectionEdge: ResolverTypeWrapper<
+    DeepPartial<GformToPreviewConnectionEdge>
+  >;
+  GformToRevisionConnection: ResolverTypeWrapper<
+    DeepPartial<GformToRevisionConnection>
+  >;
+  GformToRevisionConnectionEdge: ResolverTypeWrapper<
+    DeepPartial<GformToRevisionConnectionEdge>
+  >;
+  GformToRevisionConnectionWhereArgs: ResolverTypeWrapper<
+    DeepPartial<GformToRevisionConnectionWhereArgs>
+  >;
+  GformToTermNodeConnection: ResolverTypeWrapper<
+    DeepPartial<GformToTermNodeConnection>
+  >;
+  GformToTermNodeConnectionEdge: ResolverTypeWrapper<
+    DeepPartial<GformToTermNodeConnectionEdge>
+  >;
+  GformToTermNodeConnectionWhereArgs: ResolverTypeWrapper<
+    DeepPartial<GformToTermNodeConnectionWhereArgs>
+  >;
   HiddenField: ResolverTypeWrapper<DeepPartial<HiddenField>>;
   HierarchicalContentNode: ResolversTypes["MediaItem"] | ResolversTypes["Page"];
   HierarchicalContentNodeToContentNodeAncestorsConnection: ResolverTypeWrapper<
@@ -17209,6 +18499,7 @@ export type ResolversTypes = ResolversObject<{
   >;
   MenuItemLinkable:
     | ResolversTypes["Category"]
+    | ResolversTypes["Gform"]
     | ResolversTypes["Page"]
     | ResolversTypes["Post"]
     | ResolversTypes["Tag"];
@@ -17217,6 +18508,7 @@ export type ResolversTypes = ResolversObject<{
   >;
   MenuItemObjectUnion: DeepPartial<
     | ResolversTypes["Category"]
+    | ResolversTypes["Gform"]
     | ResolversTypes["Page"]
     | ResolversTypes["Post"]
     | ResolversTypes["Tag"]
@@ -17267,6 +18559,7 @@ export type ResolversTypes = ResolversObject<{
     | ResolversTypes["GfDraftEntry"]
     | ResolversTypes["GfForm"]
     | ResolversTypes["GfSubmittedEntry"]
+    | ResolversTypes["Gform"]
     | ResolversTypes["MediaItem"]
     | ResolversTypes["Menu"]
     | ResolversTypes["MenuItem"]
@@ -17280,6 +18573,7 @@ export type ResolversTypes = ResolversObject<{
     | ResolversTypes["User"]
     | ResolversTypes["UserRole"];
   NodeWithAuthor:
+    | ResolversTypes["Gform"]
     | ResolversTypes["MediaItem"]
     | ResolversTypes["Page"]
     | ResolversTypes["Post"];
@@ -17287,12 +18581,22 @@ export type ResolversTypes = ResolversObject<{
     DeepPartial<NodeWithAuthorToUserConnectionEdge>
   >;
   NodeWithComments:
+    | ResolversTypes["Gform"]
     | ResolversTypes["MediaItem"]
     | ResolversTypes["Page"]
     | ResolversTypes["Post"];
-  NodeWithContentEditor: ResolversTypes["Page"] | ResolversTypes["Post"];
-  NodeWithExcerpt: ResolversTypes["Page"] | ResolversTypes["Post"];
-  NodeWithFeaturedImage: ResolversTypes["Page"] | ResolversTypes["Post"];
+  NodeWithContentEditor:
+    | ResolversTypes["Gform"]
+    | ResolversTypes["Page"]
+    | ResolversTypes["Post"];
+  NodeWithExcerpt:
+    | ResolversTypes["Gform"]
+    | ResolversTypes["Page"]
+    | ResolversTypes["Post"];
+  NodeWithFeaturedImage:
+    | ResolversTypes["Gform"]
+    | ResolversTypes["Page"]
+    | ResolversTypes["Post"];
   NodeWithFeaturedImageToMediaItemConnectionEdge: ResolverTypeWrapper<
     DeepPartial<NodeWithFeaturedImageToMediaItemConnectionEdge>
   >;
@@ -17300,19 +18604,24 @@ export type ResolversTypes = ResolversObject<{
     | ResolversTypes["GfDraftEntry"]
     | ResolversTypes["GfSubmittedEntry"];
   NodeWithPageAttributes: ResolversTypes["Page"];
-  NodeWithRevisions: ResolversTypes["Page"] | ResolversTypes["Post"];
+  NodeWithRevisions:
+    | ResolversTypes["Gform"]
+    | ResolversTypes["Page"]
+    | ResolversTypes["Post"];
   NodeWithRevisionsToContentNodeConnectionEdge: ResolverTypeWrapper<
     DeepPartial<NodeWithRevisionsToContentNodeConnectionEdge>
   >;
   NodeWithTemplate:
+    | ResolversTypes["Gform"]
     | ResolversTypes["MediaItem"]
     | ResolversTypes["Page"]
     | ResolversTypes["Post"];
   NodeWithTitle:
+    | ResolversTypes["Gform"]
     | ResolversTypes["MediaItem"]
     | ResolversTypes["Page"]
     | ResolversTypes["Post"];
-  NodeWithTrackbacks: ResolversTypes["Post"];
+  NodeWithTrackbacks: ResolversTypes["Gform"] | ResolversTypes["Post"];
   NumberField: ResolverTypeWrapper<DeepPartial<NumberField>>;
   NumberFieldFormatEnum: ResolverTypeWrapper<
     DeepPartial<NumberFieldFormatEnum>
@@ -17458,6 +18767,15 @@ export type ResolversTypes = ResolversObject<{
   >;
   PostFormatToContentNodeConnectionWhereArgs: ResolverTypeWrapper<
     DeepPartial<PostFormatToContentNodeConnectionWhereArgs>
+  >;
+  PostFormatToGformConnection: ResolverTypeWrapper<
+    DeepPartial<PostFormatToGformConnection>
+  >;
+  PostFormatToGformConnectionEdge: ResolverTypeWrapper<
+    DeepPartial<PostFormatToGformConnectionEdge>
+  >;
+  PostFormatToGformConnectionWhereArgs: ResolverTypeWrapper<
+    DeepPartial<PostFormatToGformConnectionWhereArgs>
   >;
   PostFormatToPostConnection: ResolverTypeWrapper<
     DeepPartial<PostFormatToPostConnection>
@@ -17718,6 +19036,15 @@ export type ResolversTypes = ResolversObject<{
   RootQueryToGfSubmittedEntryConnectionWhereArgs: ResolverTypeWrapper<
     DeepPartial<RootQueryToGfSubmittedEntryConnectionWhereArgs>
   >;
+  RootQueryToGformConnection: ResolverTypeWrapper<
+    DeepPartial<RootQueryToGformConnection>
+  >;
+  RootQueryToGformConnectionEdge: ResolverTypeWrapper<
+    DeepPartial<RootQueryToGformConnectionEdge>
+  >;
+  RootQueryToGformConnectionWhereArgs: ResolverTypeWrapper<
+    DeepPartial<RootQueryToGformConnectionWhereArgs>
+  >;
   RootQueryToMediaItemConnection: ResolverTypeWrapper<
     DeepPartial<RootQueryToMediaItemConnection>
   >;
@@ -17943,6 +19270,7 @@ export type ResolversTypes = ResolversObject<{
   UniformResourceIdentifiable:
     | ResolversTypes["Category"]
     | ResolversTypes["ContentType"]
+    | ResolversTypes["Gform"]
     | ResolversTypes["MediaItem"]
     | ResolversTypes["Page"]
     | ResolversTypes["Post"]
@@ -17967,6 +19295,8 @@ export type ResolversTypes = ResolversObject<{
   >;
   UpdateGfEntryInput: ResolverTypeWrapper<DeepPartial<UpdateGfEntryInput>>;
   UpdateGfEntryPayload: ResolverTypeWrapper<DeepPartial<UpdateGfEntryPayload>>;
+  UpdateGformInput: ResolverTypeWrapper<DeepPartial<UpdateGformInput>>;
+  UpdateGformPayload: ResolverTypeWrapper<DeepPartial<UpdateGformPayload>>;
   UpdateMediaItemInput: ResolverTypeWrapper<DeepPartial<UpdateMediaItemInput>>;
   UpdateMediaItemPayload: ResolverTypeWrapper<
     DeepPartial<UpdateMediaItemPayload>
@@ -18032,6 +19362,15 @@ export type ResolversTypes = ResolversObject<{
   UserToEnqueuedStylesheetConnectionEdge: ResolverTypeWrapper<
     DeepPartial<UserToEnqueuedStylesheetConnectionEdge>
   >;
+  UserToGformConnection: ResolverTypeWrapper<
+    DeepPartial<UserToGformConnection>
+  >;
+  UserToGformConnectionEdge: ResolverTypeWrapper<
+    DeepPartial<UserToGformConnectionEdge>
+  >;
+  UserToGformConnectionWhereArgs: ResolverTypeWrapper<
+    DeepPartial<UserToGformConnectionWhereArgs>
+  >;
   UserToMediaItemConnection: ResolverTypeWrapper<
     DeepPartial<UserToMediaItemConnection>
   >;
@@ -18094,6 +19433,9 @@ export type ResolversParentTypes = ResolversObject<{
   CategoryToContentNodeConnection: DeepPartial<CategoryToContentNodeConnection>;
   CategoryToContentNodeConnectionEdge: DeepPartial<CategoryToContentNodeConnectionEdge>;
   CategoryToContentNodeConnectionWhereArgs: DeepPartial<CategoryToContentNodeConnectionWhereArgs>;
+  CategoryToGformConnection: DeepPartial<CategoryToGformConnection>;
+  CategoryToGformConnectionEdge: DeepPartial<CategoryToGformConnectionEdge>;
+  CategoryToGformConnectionWhereArgs: DeepPartial<CategoryToGformConnectionWhereArgs>;
   CategoryToParentCategoryConnectionEdge: DeepPartial<CategoryToParentCategoryConnectionEdge>;
   CategoryToPostConnection: DeepPartial<CategoryToPostConnection>;
   CategoryToPostConnectionEdge: DeepPartial<CategoryToPostConnectionEdge>;
@@ -18120,6 +19462,7 @@ export type ResolversParentTypes = ResolversObject<{
   ConditionalLogicRule: DeepPartial<ConditionalLogicRule>;
   ConsentField: DeepPartial<ConsentField>;
   ContentNode:
+    | ResolversParentTypes["Gform"]
     | ResolversParentTypes["MediaItem"]
     | ResolversParentTypes["Page"]
     | ResolversParentTypes["Post"];
@@ -18131,7 +19474,9 @@ export type ResolversParentTypes = ResolversObject<{
   ContentNodeToEnqueuedStylesheetConnection: DeepPartial<ContentNodeToEnqueuedStylesheetConnection>;
   ContentNodeToEnqueuedStylesheetConnectionEdge: DeepPartial<ContentNodeToEnqueuedStylesheetConnectionEdge>;
   ContentRevisionUnion: DeepPartial<
-    ResolversParentTypes["Page"] | ResolversParentTypes["Post"]
+    | ResolversParentTypes["Gform"]
+    | ResolversParentTypes["Page"]
+    | ResolversParentTypes["Post"]
   >;
   ContentTemplate:
     | ResolversParentTypes["DefaultTemplate"]
@@ -18146,6 +19491,8 @@ export type ResolversParentTypes = ResolversObject<{
   CreateCategoryPayload: DeepPartial<CreateCategoryPayload>;
   CreateCommentInput: DeepPartial<CreateCommentInput>;
   CreateCommentPayload: DeepPartial<CreateCommentPayload>;
+  CreateGformInput: DeepPartial<CreateGformInput>;
+  CreateGformPayload: DeepPartial<CreateGformPayload>;
   CreateMediaItemInput: DeepPartial<CreateMediaItemInput>;
   CreateMediaItemPayload: DeepPartial<CreateMediaItemPayload>;
   CreatePageInput: DeepPartial<CreatePageInput>;
@@ -18163,6 +19510,7 @@ export type ResolversParentTypes = ResolversObject<{
     | ResolversParentTypes["Comment"]
     | ResolversParentTypes["GfForm"]
     | ResolversParentTypes["GfSubmittedEntry"]
+    | ResolversParentTypes["Gform"]
     | ResolversParentTypes["MediaItem"]
     | ResolversParentTypes["Menu"]
     | ResolversParentTypes["MenuItem"]
@@ -18184,6 +19532,8 @@ export type ResolversParentTypes = ResolversObject<{
   DeleteGfDraftEntryPayload: DeepPartial<DeleteGfDraftEntryPayload>;
   DeleteGfEntryInput: DeepPartial<DeleteGfEntryInput>;
   DeleteGfEntryPayload: DeepPartial<DeleteGfEntryPayload>;
+  DeleteGformInput: DeepPartial<DeleteGformInput>;
+  DeleteGformPayload: DeepPartial<DeleteGformPayload>;
   DeleteMediaItemInput: DeepPartial<DeleteMediaItemInput>;
   DeleteMediaItemPayload: DeepPartial<DeleteMediaItemPayload>;
   DeletePageInput: DeepPartial<DeletePageInput>;
@@ -18325,6 +19675,27 @@ export type ResolversParentTypes = ResolversObject<{
   GfSettings: DeepPartial<GfSettings>;
   GfSettingsLogging: DeepPartial<GfSettingsLogging>;
   GfSubmittedEntry: DeepPartial<GfSubmittedEntry>;
+  Gform: DeepPartial<Gform>;
+  GformCategoriesInput: DeepPartial<GformCategoriesInput>;
+  GformCategoriesNodeInput: DeepPartial<GformCategoriesNodeInput>;
+  GformPostFormatsInput: DeepPartial<GformPostFormatsInput>;
+  GformPostFormatsNodeInput: DeepPartial<GformPostFormatsNodeInput>;
+  GformToCategoryConnection: DeepPartial<GformToCategoryConnection>;
+  GformToCategoryConnectionEdge: DeepPartial<GformToCategoryConnectionEdge>;
+  GformToCategoryConnectionWhereArgs: DeepPartial<GformToCategoryConnectionWhereArgs>;
+  GformToCommentConnection: DeepPartial<GformToCommentConnection>;
+  GformToCommentConnectionEdge: DeepPartial<GformToCommentConnectionEdge>;
+  GformToCommentConnectionWhereArgs: DeepPartial<GformToCommentConnectionWhereArgs>;
+  GformToPostFormatConnection: DeepPartial<GformToPostFormatConnection>;
+  GformToPostFormatConnectionEdge: DeepPartial<GformToPostFormatConnectionEdge>;
+  GformToPostFormatConnectionWhereArgs: DeepPartial<GformToPostFormatConnectionWhereArgs>;
+  GformToPreviewConnectionEdge: DeepPartial<GformToPreviewConnectionEdge>;
+  GformToRevisionConnection: DeepPartial<GformToRevisionConnection>;
+  GformToRevisionConnectionEdge: DeepPartial<GformToRevisionConnectionEdge>;
+  GformToRevisionConnectionWhereArgs: DeepPartial<GformToRevisionConnectionWhereArgs>;
+  GformToTermNodeConnection: DeepPartial<GformToTermNodeConnection>;
+  GformToTermNodeConnectionEdge: DeepPartial<GformToTermNodeConnectionEdge>;
+  GformToTermNodeConnectionWhereArgs: DeepPartial<GformToTermNodeConnectionWhereArgs>;
   HiddenField: DeepPartial<HiddenField>;
   HierarchicalContentNode:
     | ResolversParentTypes["MediaItem"]
@@ -18364,11 +19735,13 @@ export type ResolversParentTypes = ResolversObject<{
   >;
   MenuItemLinkable:
     | ResolversParentTypes["Category"]
+    | ResolversParentTypes["Gform"]
     | ResolversParentTypes["Page"]
     | ResolversParentTypes["Post"]
     | ResolversParentTypes["Tag"];
   MenuItemObjectUnion: DeepPartial<
     | ResolversParentTypes["Category"]
+    | ResolversParentTypes["Gform"]
     | ResolversParentTypes["Page"]
     | ResolversParentTypes["Post"]
     | ResolversParentTypes["Tag"]
@@ -18398,6 +19771,7 @@ export type ResolversParentTypes = ResolversObject<{
     | ResolversParentTypes["GfDraftEntry"]
     | ResolversParentTypes["GfForm"]
     | ResolversParentTypes["GfSubmittedEntry"]
+    | ResolversParentTypes["Gform"]
     | ResolversParentTypes["MediaItem"]
     | ResolversParentTypes["Menu"]
     | ResolversParentTypes["MenuItem"]
@@ -18411,19 +19785,26 @@ export type ResolversParentTypes = ResolversObject<{
     | ResolversParentTypes["User"]
     | ResolversParentTypes["UserRole"];
   NodeWithAuthor:
+    | ResolversParentTypes["Gform"]
     | ResolversParentTypes["MediaItem"]
     | ResolversParentTypes["Page"]
     | ResolversParentTypes["Post"];
   NodeWithAuthorToUserConnectionEdge: DeepPartial<NodeWithAuthorToUserConnectionEdge>;
   NodeWithComments:
+    | ResolversParentTypes["Gform"]
     | ResolversParentTypes["MediaItem"]
     | ResolversParentTypes["Page"]
     | ResolversParentTypes["Post"];
   NodeWithContentEditor:
+    | ResolversParentTypes["Gform"]
     | ResolversParentTypes["Page"]
     | ResolversParentTypes["Post"];
-  NodeWithExcerpt: ResolversParentTypes["Page"] | ResolversParentTypes["Post"];
+  NodeWithExcerpt:
+    | ResolversParentTypes["Gform"]
+    | ResolversParentTypes["Page"]
+    | ResolversParentTypes["Post"];
   NodeWithFeaturedImage:
+    | ResolversParentTypes["Gform"]
     | ResolversParentTypes["Page"]
     | ResolversParentTypes["Post"];
   NodeWithFeaturedImageToMediaItemConnectionEdge: DeepPartial<NodeWithFeaturedImageToMediaItemConnectionEdge>;
@@ -18432,18 +19813,23 @@ export type ResolversParentTypes = ResolversObject<{
     | ResolversParentTypes["GfSubmittedEntry"];
   NodeWithPageAttributes: ResolversParentTypes["Page"];
   NodeWithRevisions:
+    | ResolversParentTypes["Gform"]
     | ResolversParentTypes["Page"]
     | ResolversParentTypes["Post"];
   NodeWithRevisionsToContentNodeConnectionEdge: DeepPartial<NodeWithRevisionsToContentNodeConnectionEdge>;
   NodeWithTemplate:
+    | ResolversParentTypes["Gform"]
     | ResolversParentTypes["MediaItem"]
     | ResolversParentTypes["Page"]
     | ResolversParentTypes["Post"];
   NodeWithTitle:
+    | ResolversParentTypes["Gform"]
     | ResolversParentTypes["MediaItem"]
     | ResolversParentTypes["Page"]
     | ResolversParentTypes["Post"];
-  NodeWithTrackbacks: ResolversParentTypes["Post"];
+  NodeWithTrackbacks:
+    | ResolversParentTypes["Gform"]
+    | ResolversParentTypes["Post"];
   NumberField: DeepPartial<NumberField>;
   Page: DeepPartial<Page>;
   PageField: DeepPartial<PageField>;
@@ -18516,6 +19902,9 @@ export type ResolversParentTypes = ResolversObject<{
   PostFormatToContentNodeConnection: DeepPartial<PostFormatToContentNodeConnection>;
   PostFormatToContentNodeConnectionEdge: DeepPartial<PostFormatToContentNodeConnectionEdge>;
   PostFormatToContentNodeConnectionWhereArgs: DeepPartial<PostFormatToContentNodeConnectionWhereArgs>;
+  PostFormatToGformConnection: DeepPartial<PostFormatToGformConnection>;
+  PostFormatToGformConnectionEdge: DeepPartial<PostFormatToGformConnectionEdge>;
+  PostFormatToGformConnectionWhereArgs: DeepPartial<PostFormatToGformConnectionWhereArgs>;
   PostFormatToPostConnection: DeepPartial<PostFormatToPostConnection>;
   PostFormatToPostConnectionEdge: DeepPartial<PostFormatToPostConnectionEdge>;
   PostFormatToPostConnectionWhereArgs: DeepPartial<PostFormatToPostConnectionWhereArgs>;
@@ -18629,6 +20018,9 @@ export type ResolversParentTypes = ResolversObject<{
   RootQueryToGfSubmittedEntryConnection: DeepPartial<RootQueryToGfSubmittedEntryConnection>;
   RootQueryToGfSubmittedEntryConnectionEdge: DeepPartial<RootQueryToGfSubmittedEntryConnectionEdge>;
   RootQueryToGfSubmittedEntryConnectionWhereArgs: DeepPartial<RootQueryToGfSubmittedEntryConnectionWhereArgs>;
+  RootQueryToGformConnection: DeepPartial<RootQueryToGformConnection>;
+  RootQueryToGformConnectionEdge: DeepPartial<RootQueryToGformConnectionEdge>;
+  RootQueryToGformConnectionWhereArgs: DeepPartial<RootQueryToGformConnectionWhereArgs>;
   RootQueryToMediaItemConnection: DeepPartial<RootQueryToMediaItemConnection>;
   RootQueryToMediaItemConnectionEdge: DeepPartial<RootQueryToMediaItemConnectionEdge>;
   RootQueryToMediaItemConnectionWhereArgs: DeepPartial<RootQueryToMediaItemConnectionWhereArgs>;
@@ -18734,6 +20126,7 @@ export type ResolversParentTypes = ResolversObject<{
   UniformResourceIdentifiable:
     | ResolversParentTypes["Category"]
     | ResolversParentTypes["ContentType"]
+    | ResolversParentTypes["Gform"]
     | ResolversParentTypes["MediaItem"]
     | ResolversParentTypes["Page"]
     | ResolversParentTypes["Post"]
@@ -18750,6 +20143,8 @@ export type ResolversParentTypes = ResolversObject<{
   UpdateGfDraftEntryPayload: DeepPartial<UpdateGfDraftEntryPayload>;
   UpdateGfEntryInput: DeepPartial<UpdateGfEntryInput>;
   UpdateGfEntryPayload: DeepPartial<UpdateGfEntryPayload>;
+  UpdateGformInput: DeepPartial<UpdateGformInput>;
+  UpdateGformPayload: DeepPartial<UpdateGformPayload>;
   UpdateMediaItemInput: DeepPartial<UpdateMediaItemInput>;
   UpdateMediaItemPayload: DeepPartial<UpdateMediaItemPayload>;
   UpdatePageInput: DeepPartial<UpdatePageInput>;
@@ -18785,6 +20180,9 @@ export type ResolversParentTypes = ResolversObject<{
   UserToEnqueuedScriptConnectionEdge: DeepPartial<UserToEnqueuedScriptConnectionEdge>;
   UserToEnqueuedStylesheetConnection: DeepPartial<UserToEnqueuedStylesheetConnection>;
   UserToEnqueuedStylesheetConnectionEdge: DeepPartial<UserToEnqueuedStylesheetConnectionEdge>;
+  UserToGformConnection: DeepPartial<UserToGformConnection>;
+  UserToGformConnectionEdge: DeepPartial<UserToGformConnectionEdge>;
+  UserToGformConnectionWhereArgs: DeepPartial<UserToGformConnectionWhereArgs>;
   UserToMediaItemConnection: DeepPartial<UserToMediaItemConnection>;
   UserToMediaItemConnectionEdge: DeepPartial<UserToMediaItemConnectionEdge>;
   UserToMediaItemConnectionWhereArgs: DeepPartial<UserToMediaItemConnectionWhereArgs>;
@@ -19181,6 +20579,12 @@ export type CategoryResolvers<
     ContextType,
     Partial<CategoryenqueuedStylesheetsArgs>
   >;
+  gforms?: Resolver<
+    Maybe<ResolversTypes["CategoryToGformConnection"]>,
+    ParentType,
+    ContextType,
+    Partial<CategorygformsArgs>
+  >;
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   isContentNode?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
   isRestricted?: Resolver<
@@ -19326,6 +20730,37 @@ export type CategoryToContentNodeConnectionEdgeResolvers<
     ParentType,
     ContextType
   >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type CategoryToGformConnectionResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["CategoryToGformConnection"] = ResolversParentTypes["CategoryToGformConnection"]
+> = ResolversObject<{
+  edges?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["CategoryToGformConnectionEdge"]>>>,
+    ParentType,
+    ContextType
+  >;
+  nodes?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["Gform"]>>>,
+    ParentType,
+    ContextType
+  >;
+  pageInfo?: Resolver<
+    Maybe<ResolversTypes["WPPageInfo"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type CategoryToGformConnectionEdgeResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["CategoryToGformConnectionEdge"] = ResolversParentTypes["CategoryToGformConnectionEdge"]
+> = ResolversObject<{
+  cursor?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  node?: Resolver<Maybe<ResolversTypes["Gform"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -19824,7 +21259,7 @@ export type ContentNodeResolvers<
   ParentType extends ResolversParentTypes["ContentNode"] = ResolversParentTypes["ContentNode"]
 > = ResolversObject<{
   __resolveType: TypeResolveFn<
-    "MediaItem" | "Page" | "Post",
+    "Gform" | "MediaItem" | "Page" | "Post",
     ParentType,
     ContextType
   >;
@@ -20023,7 +21458,11 @@ export type ContentRevisionUnionResolvers<
   ContextType = ResolverContext,
   ParentType extends ResolversParentTypes["ContentRevisionUnion"] = ResolversParentTypes["ContentRevisionUnion"]
 > = ResolversObject<{
-  __resolveType: TypeResolveFn<"Page" | "Post", ParentType, ContextType>;
+  __resolveType: TypeResolveFn<
+    "Gform" | "Page" | "Post",
+    ParentType,
+    ContextType
+  >;
 }>;
 
 export type ContentTemplateResolvers<
@@ -20262,6 +21701,19 @@ export type CreateCommentPayloadResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type CreateGformPayloadResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["CreateGformPayload"] = ResolversParentTypes["CreateGformPayload"]
+> = ResolversObject<{
+  clientMutationId?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  gform?: Resolver<Maybe<ResolversTypes["Gform"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type CreateMediaItemPayloadResolvers<
   ContextType = ResolverContext,
   ParentType extends ResolversParentTypes["CreateMediaItemPayload"] = ResolversParentTypes["CreateMediaItemPayload"]
@@ -20357,6 +21809,7 @@ export type DatabaseIdentifierResolvers<
     | "Comment"
     | "GfForm"
     | "GfSubmittedEntry"
+    | "Gform"
     | "MediaItem"
     | "Menu"
     | "MenuItem"
@@ -20614,6 +22067,20 @@ export type DeleteGfEntryPayloadResolvers<
     ParentType,
     ContextType
   >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type DeleteGformPayloadResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["DeleteGformPayload"] = ResolversParentTypes["DeleteGformPayload"]
+> = ResolversObject<{
+  clientMutationId?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  deletedId?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
+  gform?: Resolver<Maybe<ResolversTypes["Gform"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -22396,6 +23863,382 @@ export type GfSubmittedEntryResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type GformResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["Gform"] = ResolversParentTypes["Gform"]
+> = ResolversObject<{
+  author?: Resolver<
+    Maybe<ResolversTypes["NodeWithAuthorToUserConnectionEdge"]>,
+    ParentType,
+    ContextType
+  >;
+  authorDatabaseId?: Resolver<
+    Maybe<ResolversTypes["Int"]>,
+    ParentType,
+    ContextType
+  >;
+  authorId?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
+  categories?: Resolver<
+    Maybe<ResolversTypes["GformToCategoryConnection"]>,
+    ParentType,
+    ContextType,
+    Partial<GformcategoriesArgs>
+  >;
+  commentCount?: Resolver<
+    Maybe<ResolversTypes["Int"]>,
+    ParentType,
+    ContextType
+  >;
+  commentStatus?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  comments?: Resolver<
+    Maybe<ResolversTypes["GformToCommentConnection"]>,
+    ParentType,
+    ContextType,
+    Partial<GformcommentsArgs>
+  >;
+  content?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType,
+    Partial<GformcontentArgs>
+  >;
+  contentType?: Resolver<
+    Maybe<ResolversTypes["ContentNodeToContentTypeConnectionEdge"]>,
+    ParentType,
+    ContextType
+  >;
+  contentTypeName?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  databaseId?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  date?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  dateGmt?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  desiredSlug?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  editingLockedBy?: Resolver<
+    Maybe<ResolversTypes["ContentNodeToEditLockConnectionEdge"]>,
+    ParentType,
+    ContextType
+  >;
+  enclosure?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  enqueuedScripts?: Resolver<
+    Maybe<ResolversTypes["ContentNodeToEnqueuedScriptConnection"]>,
+    ParentType,
+    ContextType,
+    Partial<GformenqueuedScriptsArgs>
+  >;
+  enqueuedStylesheets?: Resolver<
+    Maybe<ResolversTypes["ContentNodeToEnqueuedStylesheetConnection"]>,
+    ParentType,
+    ContextType,
+    Partial<GformenqueuedStylesheetsArgs>
+  >;
+  excerpt?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType,
+    Partial<GformexcerptArgs>
+  >;
+  featuredImage?: Resolver<
+    Maybe<ResolversTypes["NodeWithFeaturedImageToMediaItemConnectionEdge"]>,
+    ParentType,
+    ContextType
+  >;
+  featuredImageDatabaseId?: Resolver<
+    Maybe<ResolversTypes["Int"]>,
+    ParentType,
+    ContextType
+  >;
+  featuredImageId?: Resolver<
+    Maybe<ResolversTypes["ID"]>,
+    ParentType,
+    ContextType
+  >;
+  gformId?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  guid?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  isContentNode?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  isPreview?: Resolver<
+    Maybe<ResolversTypes["Boolean"]>,
+    ParentType,
+    ContextType
+  >;
+  isRestricted?: Resolver<
+    Maybe<ResolversTypes["Boolean"]>,
+    ParentType,
+    ContextType
+  >;
+  isRevision?: Resolver<
+    Maybe<ResolversTypes["Boolean"]>,
+    ParentType,
+    ContextType
+  >;
+  isTermNode?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  lastEditedBy?: Resolver<
+    Maybe<ResolversTypes["ContentNodeToEditLastConnectionEdge"]>,
+    ParentType,
+    ContextType
+  >;
+  link?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  modified?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  modifiedGmt?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  pingStatus?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  pinged?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["String"]>>>,
+    ParentType,
+    ContextType
+  >;
+  postFormats?: Resolver<
+    Maybe<ResolversTypes["GformToPostFormatConnection"]>,
+    ParentType,
+    ContextType,
+    Partial<GformpostFormatsArgs>
+  >;
+  preview?: Resolver<
+    Maybe<ResolversTypes["GformToPreviewConnectionEdge"]>,
+    ParentType,
+    ContextType
+  >;
+  previewRevisionDatabaseId?: Resolver<
+    Maybe<ResolversTypes["Int"]>,
+    ParentType,
+    ContextType
+  >;
+  previewRevisionId?: Resolver<
+    Maybe<ResolversTypes["ID"]>,
+    ParentType,
+    ContextType
+  >;
+  revisionOf?: Resolver<
+    Maybe<ResolversTypes["NodeWithRevisionsToContentNodeConnectionEdge"]>,
+    ParentType,
+    ContextType
+  >;
+  revisions?: Resolver<
+    Maybe<ResolversTypes["GformToRevisionConnection"]>,
+    ParentType,
+    ContextType,
+    Partial<GformrevisionsArgs>
+  >;
+  seo?: Resolver<Maybe<ResolversTypes["PostTypeSEO"]>, ParentType, ContextType>;
+  slug?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  status?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  template?: Resolver<
+    Maybe<ResolversTypes["ContentTemplate"]>,
+    ParentType,
+    ContextType
+  >;
+  terms?: Resolver<
+    Maybe<ResolversTypes["GformToTermNodeConnection"]>,
+    ParentType,
+    ContextType,
+    Partial<GformtermsArgs>
+  >;
+  title?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType,
+    Partial<GformtitleArgs>
+  >;
+  toPing?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["String"]>>>,
+    ParentType,
+    ContextType
+  >;
+  uri?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GformToCategoryConnectionResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["GformToCategoryConnection"] = ResolversParentTypes["GformToCategoryConnection"]
+> = ResolversObject<{
+  edges?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["GformToCategoryConnectionEdge"]>>>,
+    ParentType,
+    ContextType
+  >;
+  nodes?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["Category"]>>>,
+    ParentType,
+    ContextType
+  >;
+  pageInfo?: Resolver<
+    Maybe<ResolversTypes["WPPageInfo"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GformToCategoryConnectionEdgeResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["GformToCategoryConnectionEdge"] = ResolversParentTypes["GformToCategoryConnectionEdge"]
+> = ResolversObject<{
+  cursor?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  isPrimary?: Resolver<
+    Maybe<ResolversTypes["Boolean"]>,
+    ParentType,
+    ContextType
+  >;
+  node?: Resolver<Maybe<ResolversTypes["Category"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GformToCommentConnectionResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["GformToCommentConnection"] = ResolversParentTypes["GformToCommentConnection"]
+> = ResolversObject<{
+  edges?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["GformToCommentConnectionEdge"]>>>,
+    ParentType,
+    ContextType
+  >;
+  nodes?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["Comment"]>>>,
+    ParentType,
+    ContextType
+  >;
+  pageInfo?: Resolver<
+    Maybe<ResolversTypes["WPPageInfo"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GformToCommentConnectionEdgeResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["GformToCommentConnectionEdge"] = ResolversParentTypes["GformToCommentConnectionEdge"]
+> = ResolversObject<{
+  cursor?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  node?: Resolver<Maybe<ResolversTypes["Comment"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GformToPostFormatConnectionResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["GformToPostFormatConnection"] = ResolversParentTypes["GformToPostFormatConnection"]
+> = ResolversObject<{
+  edges?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["GformToPostFormatConnectionEdge"]>>>,
+    ParentType,
+    ContextType
+  >;
+  nodes?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["PostFormat"]>>>,
+    ParentType,
+    ContextType
+  >;
+  pageInfo?: Resolver<
+    Maybe<ResolversTypes["WPPageInfo"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GformToPostFormatConnectionEdgeResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["GformToPostFormatConnectionEdge"] = ResolversParentTypes["GformToPostFormatConnectionEdge"]
+> = ResolversObject<{
+  cursor?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  isPrimary?: Resolver<
+    Maybe<ResolversTypes["Boolean"]>,
+    ParentType,
+    ContextType
+  >;
+  node?: Resolver<Maybe<ResolversTypes["PostFormat"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GformToPreviewConnectionEdgeResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["GformToPreviewConnectionEdge"] = ResolversParentTypes["GformToPreviewConnectionEdge"]
+> = ResolversObject<{
+  node?: Resolver<Maybe<ResolversTypes["Gform"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GformToRevisionConnectionResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["GformToRevisionConnection"] = ResolversParentTypes["GformToRevisionConnection"]
+> = ResolversObject<{
+  edges?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["GformToRevisionConnectionEdge"]>>>,
+    ParentType,
+    ContextType
+  >;
+  nodes?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["Gform"]>>>,
+    ParentType,
+    ContextType
+  >;
+  pageInfo?: Resolver<
+    Maybe<ResolversTypes["WPPageInfo"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GformToRevisionConnectionEdgeResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["GformToRevisionConnectionEdge"] = ResolversParentTypes["GformToRevisionConnectionEdge"]
+> = ResolversObject<{
+  cursor?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  node?: Resolver<Maybe<ResolversTypes["Gform"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GformToTermNodeConnectionResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["GformToTermNodeConnection"] = ResolversParentTypes["GformToTermNodeConnection"]
+> = ResolversObject<{
+  edges?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["GformToTermNodeConnectionEdge"]>>>,
+    ParentType,
+    ContextType
+  >;
+  nodes?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["TermNode"]>>>,
+    ParentType,
+    ContextType
+  >;
+  pageInfo?: Resolver<
+    Maybe<ResolversTypes["WPPageInfo"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GformToTermNodeConnectionEdgeResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["GformToTermNodeConnectionEdge"] = ResolversParentTypes["GformToTermNodeConnectionEdge"]
+> = ResolversObject<{
+  cursor?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  node?: Resolver<Maybe<ResolversTypes["TermNode"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type HiddenFieldResolvers<
   ContextType = ResolverContext,
   ParentType extends ResolversParentTypes["HiddenField"] = ResolversParentTypes["HiddenField"]
@@ -23298,7 +25141,7 @@ export type MenuItemLinkableResolvers<
   ParentType extends ResolversParentTypes["MenuItemLinkable"] = ResolversParentTypes["MenuItemLinkable"]
 > = ResolversObject<{
   __resolveType: TypeResolveFn<
-    "Category" | "Page" | "Post" | "Tag",
+    "Category" | "Gform" | "Page" | "Post" | "Tag",
     ParentType,
     ContextType
   >;
@@ -23312,7 +25155,7 @@ export type MenuItemObjectUnionResolvers<
   ParentType extends ResolversParentTypes["MenuItemObjectUnion"] = ResolversParentTypes["MenuItemObjectUnion"]
 > = ResolversObject<{
   __resolveType: TypeResolveFn<
-    "Category" | "Page" | "Post" | "Tag",
+    "Category" | "Gform" | "Page" | "Post" | "Tag",
     ParentType,
     ContextType
   >;
@@ -23729,6 +25572,7 @@ export type NodeResolvers<
     | "GfDraftEntry"
     | "GfForm"
     | "GfSubmittedEntry"
+    | "Gform"
     | "MediaItem"
     | "Menu"
     | "MenuItem"
@@ -23752,7 +25596,7 @@ export type NodeWithAuthorResolvers<
   ParentType extends ResolversParentTypes["NodeWithAuthor"] = ResolversParentTypes["NodeWithAuthor"]
 > = ResolversObject<{
   __resolveType: TypeResolveFn<
-    "MediaItem" | "Page" | "Post",
+    "Gform" | "MediaItem" | "Page" | "Post",
     ParentType,
     ContextType
   >;
@@ -23782,7 +25626,7 @@ export type NodeWithCommentsResolvers<
   ParentType extends ResolversParentTypes["NodeWithComments"] = ResolversParentTypes["NodeWithComments"]
 > = ResolversObject<{
   __resolveType: TypeResolveFn<
-    "MediaItem" | "Page" | "Post",
+    "Gform" | "MediaItem" | "Page" | "Post",
     ParentType,
     ContextType
   >;
@@ -23802,7 +25646,11 @@ export type NodeWithContentEditorResolvers<
   ContextType = ResolverContext,
   ParentType extends ResolversParentTypes["NodeWithContentEditor"] = ResolversParentTypes["NodeWithContentEditor"]
 > = ResolversObject<{
-  __resolveType: TypeResolveFn<"Page" | "Post", ParentType, ContextType>;
+  __resolveType: TypeResolveFn<
+    "Gform" | "Page" | "Post",
+    ParentType,
+    ContextType
+  >;
   content?: Resolver<
     Maybe<ResolversTypes["String"]>,
     ParentType,
@@ -23815,7 +25663,11 @@ export type NodeWithExcerptResolvers<
   ContextType = ResolverContext,
   ParentType extends ResolversParentTypes["NodeWithExcerpt"] = ResolversParentTypes["NodeWithExcerpt"]
 > = ResolversObject<{
-  __resolveType: TypeResolveFn<"Page" | "Post", ParentType, ContextType>;
+  __resolveType: TypeResolveFn<
+    "Gform" | "Page" | "Post",
+    ParentType,
+    ContextType
+  >;
   excerpt?: Resolver<
     Maybe<ResolversTypes["String"]>,
     ParentType,
@@ -23828,7 +25680,11 @@ export type NodeWithFeaturedImageResolvers<
   ContextType = ResolverContext,
   ParentType extends ResolversParentTypes["NodeWithFeaturedImage"] = ResolversParentTypes["NodeWithFeaturedImage"]
 > = ResolversObject<{
-  __resolveType: TypeResolveFn<"Page" | "Post", ParentType, ContextType>;
+  __resolveType: TypeResolveFn<
+    "Gform" | "Page" | "Post",
+    ParentType,
+    ContextType
+  >;
   contentType?: Resolver<
     Maybe<ResolversTypes["ContentNodeToContentTypeConnectionEdge"]>,
     ParentType,
@@ -23964,7 +25820,11 @@ export type NodeWithRevisionsResolvers<
   ContextType = ResolverContext,
   ParentType extends ResolversParentTypes["NodeWithRevisions"] = ResolversParentTypes["NodeWithRevisions"]
 > = ResolversObject<{
-  __resolveType: TypeResolveFn<"Page" | "Post", ParentType, ContextType>;
+  __resolveType: TypeResolveFn<
+    "Gform" | "Page" | "Post",
+    ParentType,
+    ContextType
+  >;
   isRevision?: Resolver<
     Maybe<ResolversTypes["Boolean"]>,
     ParentType,
@@ -23994,7 +25854,7 @@ export type NodeWithTemplateResolvers<
   ParentType extends ResolversParentTypes["NodeWithTemplate"] = ResolversParentTypes["NodeWithTemplate"]
 > = ResolversObject<{
   __resolveType: TypeResolveFn<
-    "MediaItem" | "Page" | "Post",
+    "Gform" | "MediaItem" | "Page" | "Post",
     ParentType,
     ContextType
   >;
@@ -24010,7 +25870,7 @@ export type NodeWithTitleResolvers<
   ParentType extends ResolversParentTypes["NodeWithTitle"] = ResolversParentTypes["NodeWithTitle"]
 > = ResolversObject<{
   __resolveType: TypeResolveFn<
-    "MediaItem" | "Page" | "Post",
+    "Gform" | "MediaItem" | "Page" | "Post",
     ParentType,
     ContextType
   >;
@@ -24026,7 +25886,7 @@ export type NodeWithTrackbacksResolvers<
   ContextType = ResolverContext,
   ParentType extends ResolversParentTypes["NodeWithTrackbacks"] = ResolversParentTypes["NodeWithTrackbacks"]
 > = ResolversObject<{
-  __resolveType: TypeResolveFn<"Post", ParentType, ContextType>;
+  __resolveType: TypeResolveFn<"Gform" | "Post", ParentType, ContextType>;
   pingStatus?: Resolver<
     Maybe<ResolversTypes["String"]>,
     ParentType,
@@ -28189,6 +30049,12 @@ export type PostFormatResolvers<
     ContextType,
     Partial<PostFormatenqueuedStylesheetsArgs>
   >;
+  gforms?: Resolver<
+    Maybe<ResolversTypes["PostFormatToGformConnection"]>,
+    ParentType,
+    ContextType,
+    Partial<PostFormatgformsArgs>
+  >;
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   isContentNode?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
   isRestricted?: Resolver<
@@ -28266,6 +30132,37 @@ export type PostFormatToContentNodeConnectionEdgeResolvers<
     ParentType,
     ContextType
   >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type PostFormatToGformConnectionResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["PostFormatToGformConnection"] = ResolversParentTypes["PostFormatToGformConnection"]
+> = ResolversObject<{
+  edges?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["PostFormatToGformConnectionEdge"]>>>,
+    ParentType,
+    ContextType
+  >;
+  nodes?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["Gform"]>>>,
+    ParentType,
+    ContextType
+  >;
+  pageInfo?: Resolver<
+    Maybe<ResolversTypes["WPPageInfo"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type PostFormatToGformConnectionEdgeResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["PostFormatToGformConnectionEdge"] = ResolversParentTypes["PostFormatToGformConnectionEdge"]
+> = ResolversObject<{
+  cursor?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  node?: Resolver<Maybe<ResolversTypes["Gform"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -30922,6 +32819,12 @@ export type RootMutationResolvers<
     ContextType,
     RequireFields<RootMutationcreateCommentArgs, "input">
   >;
+  createGform?: Resolver<
+    Maybe<ResolversTypes["CreateGformPayload"]>,
+    ParentType,
+    ContextType,
+    RequireFields<RootMutationcreateGformArgs, "input">
+  >;
   createMediaItem?: Resolver<
     Maybe<ResolversTypes["CreateMediaItemPayload"]>,
     ParentType,
@@ -30981,6 +32884,12 @@ export type RootMutationResolvers<
     ParentType,
     ContextType,
     RequireFields<RootMutationdeleteGfEntryArgs, "input">
+  >;
+  deleteGform?: Resolver<
+    Maybe<ResolversTypes["DeleteGformPayload"]>,
+    ParentType,
+    ContextType,
+    RequireFields<RootMutationdeleteGformArgs, "input">
   >;
   deleteMediaItem?: Resolver<
     Maybe<ResolversTypes["DeleteMediaItemPayload"]>,
@@ -31095,6 +33004,12 @@ export type RootMutationResolvers<
     ParentType,
     ContextType,
     RequireFields<RootMutationupdateGfEntryArgs, "input">
+  >;
+  updateGform?: Resolver<
+    Maybe<ResolversTypes["UpdateGformPayload"]>,
+    ParentType,
+    ContextType,
+    RequireFields<RootMutationupdateGformArgs, "input">
   >;
   updateMediaItem?: Resolver<
     Maybe<ResolversTypes["UpdateMediaItemPayload"]>,
@@ -31263,6 +33178,24 @@ export type RootQueryResolvers<
     ParentType,
     ContextType,
     RequireFields<RootQuerygfSubmittedEntryArgs, "id">
+  >;
+  gform?: Resolver<
+    Maybe<ResolversTypes["Gform"]>,
+    ParentType,
+    ContextType,
+    RequireFields<RootQuerygformArgs, "id">
+  >;
+  gformBy?: Resolver<
+    Maybe<ResolversTypes["Gform"]>,
+    ParentType,
+    ContextType,
+    Partial<RootQuerygformByArgs>
+  >;
+  gforms?: Resolver<
+    Maybe<ResolversTypes["RootQueryToGformConnection"]>,
+    ParentType,
+    ContextType,
+    Partial<RootQuerygformsArgs>
   >;
   mediaItem?: Resolver<
     Maybe<ResolversTypes["MediaItem"]>,
@@ -31828,6 +33761,37 @@ export type RootQueryToGfSubmittedEntryConnectionEdgeResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type RootQueryToGformConnectionResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["RootQueryToGformConnection"] = ResolversParentTypes["RootQueryToGformConnection"]
+> = ResolversObject<{
+  edges?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["RootQueryToGformConnectionEdge"]>>>,
+    ParentType,
+    ContextType
+  >;
+  nodes?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["Gform"]>>>,
+    ParentType,
+    ContextType
+  >;
+  pageInfo?: Resolver<
+    Maybe<ResolversTypes["WPPageInfo"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type RootQueryToGformConnectionEdgeResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["RootQueryToGformConnectionEdge"] = ResolversParentTypes["RootQueryToGformConnectionEdge"]
+> = ResolversObject<{
+  cursor?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  node?: Resolver<Maybe<ResolversTypes["Gform"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type RootQueryToMediaItemConnectionResolvers<
   ContextType = ResolverContext,
   ParentType extends ResolversParentTypes["RootQueryToMediaItemConnection"] = ResolversParentTypes["RootQueryToMediaItemConnection"]
@@ -32376,6 +34340,11 @@ export type SEOContentTypesResolvers<
   ContextType = ResolverContext,
   ParentType extends ResolversParentTypes["SEOContentTypes"] = ResolversParentTypes["SEOContentTypes"]
 > = ResolversObject<{
+  gform?: Resolver<
+    Maybe<ResolversTypes["SEOContentType"]>,
+    ParentType,
+    ContextType
+  >;
   mediaItem?: Resolver<
     Maybe<ResolversTypes["SEOContentType"]>,
     ParentType,
@@ -34210,6 +36179,7 @@ export type UniformResourceIdentifiableResolvers<
   __resolveType: TypeResolveFn<
     | "Category"
     | "ContentType"
+    | "Gform"
     | "MediaItem"
     | "Page"
     | "Post"
@@ -34302,6 +36272,19 @@ export type UpdateGfEntryPayloadResolvers<
     ParentType,
     ContextType
   >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type UpdateGformPayloadResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["UpdateGformPayload"] = ResolversParentTypes["UpdateGformPayload"]
+> = ResolversObject<{
+  clientMutationId?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  gform?: Resolver<Maybe<ResolversTypes["Gform"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -34493,6 +36476,12 @@ export type UserResolvers<
     Maybe<ResolversTypes["String"]>,
     ParentType,
     ContextType
+  >;
+  gforms?: Resolver<
+    Maybe<ResolversTypes["UserToGformConnection"]>,
+    ParentType,
+    ContextType,
+    Partial<UsergformsArgs>
   >;
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   isContentNode?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
@@ -34737,6 +36726,37 @@ export type UserToEnqueuedStylesheetConnectionEdgeResolvers<
     ParentType,
     ContextType
   >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type UserToGformConnectionResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["UserToGformConnection"] = ResolversParentTypes["UserToGformConnection"]
+> = ResolversObject<{
+  edges?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["UserToGformConnectionEdge"]>>>,
+    ParentType,
+    ContextType
+  >;
+  nodes?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["Gform"]>>>,
+    ParentType,
+    ContextType
+  >;
+  pageInfo?: Resolver<
+    Maybe<ResolversTypes["WPPageInfo"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type UserToGformConnectionEdgeResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["UserToGformConnectionEdge"] = ResolversParentTypes["UserToGformConnectionEdge"]
+> = ResolversObject<{
+  cursor?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  node?: Resolver<Maybe<ResolversTypes["Gform"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -35178,6 +37198,8 @@ export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   CategoryToCategoryConnectionEdge?: CategoryToCategoryConnectionEdgeResolvers<ContextType>;
   CategoryToContentNodeConnection?: CategoryToContentNodeConnectionResolvers<ContextType>;
   CategoryToContentNodeConnectionEdge?: CategoryToContentNodeConnectionEdgeResolvers<ContextType>;
+  CategoryToGformConnection?: CategoryToGformConnectionResolvers<ContextType>;
+  CategoryToGformConnectionEdge?: CategoryToGformConnectionEdgeResolvers<ContextType>;
   CategoryToParentCategoryConnectionEdge?: CategoryToParentCategoryConnectionEdgeResolvers<ContextType>;
   CategoryToPostConnection?: CategoryToPostConnectionResolvers<ContextType>;
   CategoryToPostConnectionEdge?: CategoryToPostConnectionEdgeResolvers<ContextType>;
@@ -35214,6 +37236,7 @@ export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   ContentTypeToTaxonomyConnectionEdge?: ContentTypeToTaxonomyConnectionEdgeResolvers<ContextType>;
   CreateCategoryPayload?: CreateCategoryPayloadResolvers<ContextType>;
   CreateCommentPayload?: CreateCommentPayloadResolvers<ContextType>;
+  CreateGformPayload?: CreateGformPayloadResolvers<ContextType>;
   CreateMediaItemPayload?: CreateMediaItemPayloadResolvers<ContextType>;
   CreatePagePayload?: CreatePagePayloadResolvers<ContextType>;
   CreatePostFormatPayload?: CreatePostFormatPayloadResolvers<ContextType>;
@@ -35228,6 +37251,7 @@ export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   DeleteCommentPayload?: DeleteCommentPayloadResolvers<ContextType>;
   DeleteGfDraftEntryPayload?: DeleteGfDraftEntryPayloadResolvers<ContextType>;
   DeleteGfEntryPayload?: DeleteGfEntryPayloadResolvers<ContextType>;
+  DeleteGformPayload?: DeleteGformPayloadResolvers<ContextType>;
   DeleteMediaItemPayload?: DeleteMediaItemPayloadResolvers<ContextType>;
   DeletePagePayload?: DeletePagePayloadResolvers<ContextType>;
   DeletePostFormatPayload?: DeletePostFormatPayloadResolvers<ContextType>;
@@ -35286,6 +37310,18 @@ export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   GfSettings?: GfSettingsResolvers<ContextType>;
   GfSettingsLogging?: GfSettingsLoggingResolvers<ContextType>;
   GfSubmittedEntry?: GfSubmittedEntryResolvers<ContextType>;
+  Gform?: GformResolvers<ContextType>;
+  GformToCategoryConnection?: GformToCategoryConnectionResolvers<ContextType>;
+  GformToCategoryConnectionEdge?: GformToCategoryConnectionEdgeResolvers<ContextType>;
+  GformToCommentConnection?: GformToCommentConnectionResolvers<ContextType>;
+  GformToCommentConnectionEdge?: GformToCommentConnectionEdgeResolvers<ContextType>;
+  GformToPostFormatConnection?: GformToPostFormatConnectionResolvers<ContextType>;
+  GformToPostFormatConnectionEdge?: GformToPostFormatConnectionEdgeResolvers<ContextType>;
+  GformToPreviewConnectionEdge?: GformToPreviewConnectionEdgeResolvers<ContextType>;
+  GformToRevisionConnection?: GformToRevisionConnectionResolvers<ContextType>;
+  GformToRevisionConnectionEdge?: GformToRevisionConnectionEdgeResolvers<ContextType>;
+  GformToTermNodeConnection?: GformToTermNodeConnectionResolvers<ContextType>;
+  GformToTermNodeConnectionEdge?: GformToTermNodeConnectionEdgeResolvers<ContextType>;
   HiddenField?: HiddenFieldResolvers<ContextType>;
   HierarchicalContentNode?: HierarchicalContentNodeResolvers<ContextType>;
   HierarchicalContentNodeToContentNodeAncestorsConnection?: HierarchicalContentNodeToContentNodeAncestorsConnectionResolvers<ContextType>;
@@ -35386,6 +37422,8 @@ export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   PostFormat?: PostFormatResolvers<ContextType>;
   PostFormatToContentNodeConnection?: PostFormatToContentNodeConnectionResolvers<ContextType>;
   PostFormatToContentNodeConnectionEdge?: PostFormatToContentNodeConnectionEdgeResolvers<ContextType>;
+  PostFormatToGformConnection?: PostFormatToGformConnectionResolvers<ContextType>;
+  PostFormatToGformConnectionEdge?: PostFormatToGformConnectionEdgeResolvers<ContextType>;
   PostFormatToPostConnection?: PostFormatToPostConnectionResolvers<ContextType>;
   PostFormatToPostConnectionEdge?: PostFormatToPostConnectionEdgeResolvers<ContextType>;
   PostFormatToTaxonomyConnectionEdge?: PostFormatToTaxonomyConnectionEdgeResolvers<ContextType>;
@@ -35460,6 +37498,8 @@ export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   RootQueryToGfFormConnectionEdge?: RootQueryToGfFormConnectionEdgeResolvers<ContextType>;
   RootQueryToGfSubmittedEntryConnection?: RootQueryToGfSubmittedEntryConnectionResolvers<ContextType>;
   RootQueryToGfSubmittedEntryConnectionEdge?: RootQueryToGfSubmittedEntryConnectionEdgeResolvers<ContextType>;
+  RootQueryToGformConnection?: RootQueryToGformConnectionResolvers<ContextType>;
+  RootQueryToGformConnectionEdge?: RootQueryToGformConnectionEdgeResolvers<ContextType>;
   RootQueryToMediaItemConnection?: RootQueryToMediaItemConnectionResolvers<ContextType>;
   RootQueryToMediaItemConnectionEdge?: RootQueryToMediaItemConnectionEdgeResolvers<ContextType>;
   RootQueryToMenuConnection?: RootQueryToMenuConnectionResolvers<ContextType>;
@@ -35548,6 +37588,7 @@ export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   UpdateCommentPayload?: UpdateCommentPayloadResolvers<ContextType>;
   UpdateGfDraftEntryPayload?: UpdateGfDraftEntryPayloadResolvers<ContextType>;
   UpdateGfEntryPayload?: UpdateGfEntryPayloadResolvers<ContextType>;
+  UpdateGformPayload?: UpdateGformPayloadResolvers<ContextType>;
   UpdateMediaItemPayload?: UpdateMediaItemPayloadResolvers<ContextType>;
   UpdatePagePayload?: UpdatePagePayloadResolvers<ContextType>;
   UpdatePostFormatPayload?: UpdatePostFormatPayloadResolvers<ContextType>;
@@ -35566,6 +37607,8 @@ export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   UserToEnqueuedScriptConnectionEdge?: UserToEnqueuedScriptConnectionEdgeResolvers<ContextType>;
   UserToEnqueuedStylesheetConnection?: UserToEnqueuedStylesheetConnectionResolvers<ContextType>;
   UserToEnqueuedStylesheetConnectionEdge?: UserToEnqueuedStylesheetConnectionEdgeResolvers<ContextType>;
+  UserToGformConnection?: UserToGformConnectionResolvers<ContextType>;
+  UserToGformConnectionEdge?: UserToGformConnectionEdgeResolvers<ContextType>;
   UserToMediaItemConnection?: UserToMediaItemConnectionResolvers<ContextType>;
   UserToMediaItemConnectionEdge?: UserToMediaItemConnectionEdgeResolvers<ContextType>;
   UserToPageConnection?: UserToPageConnectionResolvers<ContextType>;
@@ -35661,6 +37704,27 @@ export type CommenterPartialFragment =
 
 export type CommenterPartialFragmentVariables = Exact<{ [key: string]: never }>;
 
+type ContentNodePartial_Gform_Fragment = {
+  __typename?: "Gform";
+  guid?: string | null;
+  slug?: string | null;
+  isContentNode: boolean;
+  isPreview?: boolean | null;
+  isRestricted?: boolean | null;
+  isTermNode: boolean;
+  previewRevisionId?: string | null;
+  contentTypeName: string;
+  desiredSlug?: string | null;
+  enclosure?: string | null;
+  status?: string | null;
+  uri?: string | null;
+  databaseId: number;
+  id: string;
+  previewRevisionDatabaseId?: number | null;
+  date?: string | null;
+  modified?: string | null;
+};
+
 type ContentNodePartial_MediaItem_Fragment = {
   __typename?: "MediaItem";
   guid?: string | null;
@@ -35725,6 +37789,7 @@ type ContentNodePartial_Post_Fragment = {
 };
 
 export type ContentNodePartialFragment =
+  | ContentNodePartial_Gform_Fragment
   | ContentNodePartial_MediaItem_Fragment
   | ContentNodePartial_Page_Fragment
   | ContentNodePartial_Post_Fragment;
@@ -35732,6 +37797,54 @@ export type ContentNodePartialFragment =
 export type ContentNodePartialFragmentVariables = Exact<{
   [key: string]: never;
 }>;
+
+export type GformPartialFragment = {
+  __typename?: "Gform";
+  authorId?: string | null;
+  authorDatabaseId?: number | null;
+  content?: string | null;
+  databaseId: number;
+  title?: string | null;
+  toPing?: Array<string | null> | null;
+  status?: string | null;
+  slug?: string | null;
+  desiredSlug?: string | null;
+  enclosure?: string | null;
+  featuredImageDatabaseId?: number | null;
+  featuredImageId?: string | null;
+  guid?: string | null;
+  id: string;
+  isPreview?: boolean | null;
+  isRevision?: boolean | null;
+  isRestricted?: boolean | null;
+  isContentNode: boolean;
+  modified?: string | null;
+  date?: string | null;
+};
+
+export type GformPartialFragmentVariables = Exact<{ [key: string]: never }>;
+
+export type RootQueryToGformConnectionEdgePartialFragment = {
+  __typename: "RootQueryToGformConnectionEdge";
+  cursor?: string | null;
+};
+
+export type RootQueryToGformConnectionEdgePartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GformPathPartialFragment = {
+  __typename?: "Gform";
+  uri?: string | null;
+  slug?: string | null;
+  title?: string | null;
+  contentTypeName: string;
+  databaseId: number;
+  id: string;
+  guid?: string | null;
+};
+
+export type GformPathPartialFragmentVariables = Exact<{ [key: string]: never }>;
 
 export type LoginPayloadPartialFragment = {
   __typename: "LoginPayload";
@@ -35762,6 +37875,7 @@ export type MediaItemPartialFragment = {
   authorDatabaseId?: number | null;
   authorId?: string | null;
   caption?: string | null;
+  enclosure?: string | null;
   title?: string | null;
   date?: string | null;
   modified?: string | null;
@@ -35778,6 +37892,19 @@ export type MediaItemPartialFragment = {
 
 export type MediaItemPartialFragmentVariables = Exact<{ [key: string]: never }>;
 
+export type MediaSizePartialFragment = {
+  __typename: "MediaSize";
+  file?: string | null;
+  fileSize?: number | null;
+  height?: string | null;
+  width?: string | null;
+  sourceUrl?: string | null;
+  name?: string | null;
+  mimeType?: string | null;
+};
+
+export type MediaSizePartialFragmentVariables = Exact<{ [key: string]: never }>;
+
 export type MenuFragmentFragment = {
   __typename?: "MenuItem";
   id: string;
@@ -35789,6 +37916,12 @@ export type MenuFragmentFragment = {
 };
 
 export type MenuFragmentFragmentVariables = Exact<{ [key: string]: never }>;
+
+type NodeWithCommentsPartial_Gform_Fragment = {
+  __typename: "Gform";
+  commentCount?: number | null;
+  commentStatus?: string | null;
+};
 
 type NodeWithCommentsPartial_MediaItem_Fragment = {
   __typename: "MediaItem";
@@ -35809,6 +37942,7 @@ type NodeWithCommentsPartial_Post_Fragment = {
 };
 
 export type NodeWithCommentsPartialFragment =
+  | NodeWithCommentsPartial_Gform_Fragment
   | NodeWithCommentsPartial_MediaItem_Fragment
   | NodeWithCommentsPartial_Page_Fragment
   | NodeWithCommentsPartial_Post_Fragment;
@@ -36055,6 +38189,11 @@ export type loginMutation = {
               __typename?: "CommentToContentNodeConnectionEdge";
               node?:
                 | {
+                    __typename: "Gform";
+                    commentCount?: number | null;
+                    commentStatus?: string | null;
+                  }
+                | {
                     __typename: "MediaItem";
                     commentCount?: number | null;
                     commentStatus?: string | null;
@@ -36132,6 +38271,7 @@ export type ContentNodePathsQuery = {
       total?: number | null;
     } | null;
     nodes?: Array<
+      | { __typename: "Gform"; contentTypeName: string }
       | { __typename: "MediaItem"; contentTypeName: string }
       | {
           __typename: "Page";
@@ -36167,6 +38307,7 @@ export type ContentNodesQuery = {
       __typename: "RootQueryToContentNodeConnectionEdge";
       cursor?: string | null;
       node?:
+        | { __typename?: "Gform" }
         | { __typename?: "MediaItem" }
         | {
             __typename: "Page";
@@ -36190,6 +38331,7 @@ export type ContentNodesQuery = {
                 authorDatabaseId?: number | null;
                 authorId?: string | null;
                 caption?: string | null;
+                enclosure?: string | null;
                 title?: string | null;
                 date?: string | null;
                 modified?: string | null;
@@ -36279,6 +38421,111 @@ export type ContentNodesQuery = {
         schema?: {
           __typename: "SEOPageInfoSchema";
           raw?: string | null;
+        } | null;
+      } | null;
+    } | null;
+  } | null;
+};
+
+export type GravityPostTypePathsQueryVariables = Exact<{
+  first: Scalars["Int"];
+}>;
+
+export type GravityPostTypePathsQuery = {
+  __typename?: "RootQuery";
+  gforms?: {
+    __typename?: "RootQueryToGformConnection";
+    pageInfo?: {
+      __typename: "WPPageInfo";
+      endCursor?: string | null;
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor?: string | null;
+      total?: number | null;
+    } | null;
+    edges?: Array<{
+      __typename: "RootQueryToGformConnectionEdge";
+      cursor?: string | null;
+      node?: {
+        __typename?: "Gform";
+        uri?: string | null;
+        slug?: string | null;
+        title?: string | null;
+        contentTypeName: string;
+        databaseId: number;
+        id: string;
+        guid?: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
+};
+
+export type GravityPostTypeQueryVariables = Exact<{
+  id: Scalars["ID"];
+  idType: GformIdType;
+}>;
+
+export type GravityPostTypeQuery = {
+  __typename?: "RootQuery";
+  gform?: {
+    __typename?: "Gform";
+    authorId?: string | null;
+    authorDatabaseId?: number | null;
+    content?: string | null;
+    databaseId: number;
+    title?: string | null;
+    toPing?: Array<string | null> | null;
+    status?: string | null;
+    slug?: string | null;
+    desiredSlug?: string | null;
+    enclosure?: string | null;
+    featuredImageDatabaseId?: number | null;
+    featuredImageId?: string | null;
+    guid?: string | null;
+    id: string;
+    isPreview?: boolean | null;
+    isRevision?: boolean | null;
+    isRestricted?: boolean | null;
+    isContentNode: boolean;
+    modified?: string | null;
+    date?: string | null;
+    featuredImage?: {
+      __typename?: "NodeWithFeaturedImageToMediaItemConnectionEdge";
+      node?: {
+        __typename: "MediaItem";
+        id: string;
+        databaseId: number;
+        authorDatabaseId?: number | null;
+        authorId?: string | null;
+        caption?: string | null;
+        enclosure?: string | null;
+        title?: string | null;
+        date?: string | null;
+        modified?: string | null;
+        uri?: string | null;
+        sourceUrl?: string | null;
+        srcSet?: string | null;
+        description?: string | null;
+        fileSize?: number | null;
+        mimeType?: string | null;
+        altText?: string | null;
+        sizes?: string | null;
+        mediaType?: string | null;
+        mediaDetails?: {
+          __typename: "MediaDetails";
+          height?: number | null;
+          width?: number | null;
+          file?: string | null;
+          sizes?: Array<{
+            __typename: "MediaSize";
+            file?: string | null;
+            fileSize?: number | null;
+            height?: string | null;
+            width?: string | null;
+            sourceUrl?: string | null;
+            name?: string | null;
+            mimeType?: string | null;
+          } | null> | null;
         } | null;
       } | null;
     } | null;
@@ -39502,6 +41749,47 @@ export const ContentNodePartialFragmentDoc = gql`
     modified
   }
 `;
+export const GformPartialFragmentDoc = gql`
+  fragment GformPartial on Gform {
+    authorId
+    authorDatabaseId
+    content
+    databaseId
+    title
+    toPing
+    status
+    slug
+    desiredSlug
+    enclosure
+    featuredImageDatabaseId
+    featuredImageId
+    guid
+    id
+    isPreview
+    isRevision
+    isRestricted
+    isContentNode
+    modified
+    date
+  }
+`;
+export const RootQueryToGformConnectionEdgePartialFragmentDoc = gql`
+  fragment RootQueryToGformConnectionEdgePartial on RootQueryToGformConnectionEdge {
+    cursor
+    __typename
+  }
+`;
+export const GformPathPartialFragmentDoc = gql`
+  fragment GformPathPartial on Gform {
+    uri
+    slug
+    title
+    contentTypeName
+    databaseId
+    id
+    guid
+  }
+`;
 export const LoginPayloadPartialFragmentDoc = gql`
   fragment LoginPayloadPartial on LoginPayload {
     __typename
@@ -39526,6 +41814,7 @@ export const MediaItemPartialFragmentDoc = gql`
     authorDatabaseId
     authorId
     caption
+    enclosure
     title
     date
     modified
@@ -39538,6 +41827,18 @@ export const MediaItemPartialFragmentDoc = gql`
     altText
     sizes
     mediaType
+  }
+`;
+export const MediaSizePartialFragmentDoc = gql`
+  fragment MediaSizePartial on MediaSize {
+    file
+    fileSize
+    height
+    width
+    sourceUrl
+    name
+    mimeType
+    __typename
   }
 `;
 export const MenuFragmentFragmentDoc = gql`
@@ -40915,6 +43216,159 @@ export function refetchContentNodesQuery(
 ) {
   return { query: ContentNodesDocument, variables: variables };
 }
+export const GravityPostTypePathsDocument = gql`
+  query GravityPostTypePaths($first: Int!) {
+    gforms(first: $first) {
+      pageInfo {
+        ...PageInfoPartial
+      }
+      edges {
+        ...RootQueryToGformConnectionEdgePartial
+        node {
+          ...GformPathPartial
+        }
+      }
+    }
+  }
+  ${PageInfoPartialFragmentDoc}
+  ${RootQueryToGformConnectionEdgePartialFragmentDoc}
+  ${GformPathPartialFragmentDoc}
+`;
+
+/**
+ * __useGravityPostTypePathsQuery__
+ *
+ * To run a query within a React component, call `useGravityPostTypePathsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGravityPostTypePathsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGravityPostTypePathsQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useGravityPostTypePathsQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GravityPostTypePathsQuery,
+    GravityPostTypePathsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GravityPostTypePathsQuery,
+    GravityPostTypePathsQueryVariables
+  >(GravityPostTypePathsDocument, options);
+}
+export function useGravityPostTypePathsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GravityPostTypePathsQuery,
+    GravityPostTypePathsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GravityPostTypePathsQuery,
+    GravityPostTypePathsQueryVariables
+  >(GravityPostTypePathsDocument, options);
+}
+export type GravityPostTypePathsQueryHookResult = ReturnType<
+  typeof useGravityPostTypePathsQuery
+>;
+export type GravityPostTypePathsLazyQueryHookResult = ReturnType<
+  typeof useGravityPostTypePathsLazyQuery
+>;
+export type GravityPostTypePathsQueryResult = Apollo.QueryResult<
+  GravityPostTypePathsQuery,
+  GravityPostTypePathsQueryVariables
+>;
+export function refetchGravityPostTypePathsQuery(
+  variables: GravityPostTypePathsQueryVariables
+) {
+  return { query: GravityPostTypePathsDocument, variables: variables };
+}
+export const GravityPostTypeDocument = gql`
+  query GravityPostType($id: ID!, $idType: GformIdType!) {
+    gform(id: $id, idType: $idType) {
+      ...GformPartial
+      featuredImage {
+        node {
+          ...MediaItemPartial
+          mediaDetails {
+            ...MediaDetailsPartial
+            sizes {
+              ...MediaSizePartial
+            }
+          }
+        }
+      }
+    }
+  }
+  ${GformPartialFragmentDoc}
+  ${MediaItemPartialFragmentDoc}
+  ${MediaDetailsPartialFragmentDoc}
+  ${MediaSizePartialFragmentDoc}
+`;
+
+/**
+ * __useGravityPostTypeQuery__
+ *
+ * To run a query within a React component, call `useGravityPostTypeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGravityPostTypeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGravityPostTypeQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      idType: // value for 'idType'
+ *   },
+ * });
+ */
+export function useGravityPostTypeQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GravityPostTypeQuery,
+    GravityPostTypeQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GravityPostTypeQuery, GravityPostTypeQueryVariables>(
+    GravityPostTypeDocument,
+    options
+  );
+}
+export function useGravityPostTypeLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GravityPostTypeQuery,
+    GravityPostTypeQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GravityPostTypeQuery,
+    GravityPostTypeQueryVariables
+  >(GravityPostTypeDocument, options);
+}
+export type GravityPostTypeQueryHookResult = ReturnType<
+  typeof useGravityPostTypeQuery
+>;
+export type GravityPostTypeLazyQueryHookResult = ReturnType<
+  typeof useGravityPostTypeLazyQuery
+>;
+export type GravityPostTypeQueryResult = Apollo.QueryResult<
+  GravityPostTypeQuery,
+  GravityPostTypeQueryVariables
+>;
+export function refetchGravityPostTypeQuery(
+  variables: GravityPostTypeQueryVariables
+) {
+  return { query: GravityPostTypeDocument, variables: variables };
+}
 export const SubmitGravityFormDocument = gql`
   mutation SubmitGravityForm($input: SubmitGfFormInput!) {
     submitGfForm(input: $input) {
@@ -41288,6 +43742,8 @@ export const namedOperations = {
   Query: {
     ContentNodePaths: "ContentNodePaths",
     ContentNodes: "ContentNodes",
+    GravityPostTypePaths: "GravityPostTypePaths",
+    GravityPostType: "GravityPostType",
     GetGravityForm: "GetGravityForm"
   },
   Mutation: {
@@ -41300,9 +43756,14 @@ export const namedOperations = {
     CommentPartial: "CommentPartial",
     CommenterPartial: "CommenterPartial",
     ContentNodePartial: "ContentNodePartial",
+    GformPartial: "GformPartial",
+    RootQueryToGformConnectionEdgePartial:
+      "RootQueryToGformConnectionEdgePartial",
+    GformPathPartial: "GformPathPartial",
     LoginPayloadPartial: "LoginPayloadPartial",
     MediaDetailsPartial: "MediaDetailsPartial",
     MediaItemPartial: "MediaItemPartial",
+    MediaSizePartial: "MediaSizePartial",
     MenuFragment: "MenuFragment",
     NodeWithCommentsPartial: "NodeWithCommentsPartial",
     PageInfoPartial: "PageInfoPartial",

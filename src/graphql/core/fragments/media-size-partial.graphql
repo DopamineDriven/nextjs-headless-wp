@@ -1,0 +1,10 @@
+fragment MediaSizePartial on MediaSize {
+  file
+  fileSize
+  height
+  width
+  sourceUrl
+  name
+  mimeType
+  __typename
+}

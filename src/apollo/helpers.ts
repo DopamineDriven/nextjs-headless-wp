@@ -201,6 +201,7 @@ export type CategoryKeySpecifier = (
   | "description"
   | "enqueuedScripts"
   | "enqueuedStylesheets"
+  | "gforms"
   | "id"
   | "isContentNode"
   | "isRestricted"
@@ -230,6 +231,7 @@ export type CategoryFieldPolicy = {
   description?: FieldPolicy<any> | FieldReadFunction<any>;
   enqueuedScripts?: FieldPolicy<any> | FieldReadFunction<any>;
   enqueuedStylesheets?: FieldPolicy<any> | FieldReadFunction<any>;
+  gforms?: FieldPolicy<any> | FieldReadFunction<any>;
   id?: FieldPolicy<any> | FieldReadFunction<any>;
   isContentNode?: FieldPolicy<any> | FieldReadFunction<any>;
   isRestricted?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -305,6 +307,26 @@ export type CategoryToContentNodeConnectionEdgeKeySpecifier = (
   | CategoryToContentNodeConnectionEdgeKeySpecifier
 )[];
 export type CategoryToContentNodeConnectionEdgeFieldPolicy = {
+  cursor?: FieldPolicy<any> | FieldReadFunction<any>;
+  node?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type CategoryToGformConnectionKeySpecifier = (
+  | "edges"
+  | "nodes"
+  | "pageInfo"
+  | CategoryToGformConnectionKeySpecifier
+)[];
+export type CategoryToGformConnectionFieldPolicy = {
+  edges?: FieldPolicy<any> | FieldReadFunction<any>;
+  nodes?: FieldPolicy<any> | FieldReadFunction<any>;
+  pageInfo?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type CategoryToGformConnectionEdgeKeySpecifier = (
+  | "cursor"
+  | "node"
+  | CategoryToGformConnectionEdgeKeySpecifier
+)[];
+export type CategoryToGformConnectionEdgeFieldPolicy = {
   cursor?: FieldPolicy<any> | FieldReadFunction<any>;
   node?: FieldPolicy<any> | FieldReadFunction<any>;
 };
@@ -877,6 +899,15 @@ export type CreateCommentPayloadFieldPolicy = {
   comment?: FieldPolicy<any> | FieldReadFunction<any>;
   success?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type CreateGformPayloadKeySpecifier = (
+  | "clientMutationId"
+  | "gform"
+  | CreateGformPayloadKeySpecifier
+)[];
+export type CreateGformPayloadFieldPolicy = {
+  clientMutationId?: FieldPolicy<any> | FieldReadFunction<any>;
+  gform?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type CreateMediaItemPayloadKeySpecifier = (
   | "clientMutationId"
   | "mediaItem"
@@ -1070,6 +1101,17 @@ export type DeleteGfEntryPayloadFieldPolicy = {
   clientMutationId?: FieldPolicy<any> | FieldReadFunction<any>;
   deletedId?: FieldPolicy<any> | FieldReadFunction<any>;
   entry?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type DeleteGformPayloadKeySpecifier = (
+  | "clientMutationId"
+  | "deletedId"
+  | "gform"
+  | DeleteGformPayloadKeySpecifier
+)[];
+export type DeleteGformPayloadFieldPolicy = {
+  clientMutationId?: FieldPolicy<any> | FieldReadFunction<any>;
+  deletedId?: FieldPolicy<any> | FieldReadFunction<any>;
+  gform?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type DeleteMediaItemPayloadKeySpecifier = (
   | "clientMutationId"
@@ -2124,6 +2166,222 @@ export type GfSubmittedEntryFieldPolicy = {
   sourceUrl?: FieldPolicy<any> | FieldReadFunction<any>;
   status?: FieldPolicy<any> | FieldReadFunction<any>;
   userAgent?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type GformKeySpecifier = (
+  | "author"
+  | "authorDatabaseId"
+  | "authorId"
+  | "categories"
+  | "commentCount"
+  | "commentStatus"
+  | "comments"
+  | "content"
+  | "contentType"
+  | "contentTypeName"
+  | "databaseId"
+  | "date"
+  | "dateGmt"
+  | "desiredSlug"
+  | "editingLockedBy"
+  | "enclosure"
+  | "enqueuedScripts"
+  | "enqueuedStylesheets"
+  | "excerpt"
+  | "featuredImage"
+  | "featuredImageDatabaseId"
+  | "featuredImageId"
+  | "gformId"
+  | "guid"
+  | "id"
+  | "isContentNode"
+  | "isPreview"
+  | "isRestricted"
+  | "isRevision"
+  | "isTermNode"
+  | "lastEditedBy"
+  | "link"
+  | "modified"
+  | "modifiedGmt"
+  | "pingStatus"
+  | "pinged"
+  | "postFormats"
+  | "preview"
+  | "previewRevisionDatabaseId"
+  | "previewRevisionId"
+  | "revisionOf"
+  | "revisions"
+  | "seo"
+  | "slug"
+  | "status"
+  | "template"
+  | "terms"
+  | "title"
+  | "toPing"
+  | "uri"
+  | GformKeySpecifier
+)[];
+export type GformFieldPolicy = {
+  author?: FieldPolicy<any> | FieldReadFunction<any>;
+  authorDatabaseId?: FieldPolicy<any> | FieldReadFunction<any>;
+  authorId?: FieldPolicy<any> | FieldReadFunction<any>;
+  categories?: FieldPolicy<any> | FieldReadFunction<any>;
+  commentCount?: FieldPolicy<any> | FieldReadFunction<any>;
+  commentStatus?: FieldPolicy<any> | FieldReadFunction<any>;
+  comments?: FieldPolicy<any> | FieldReadFunction<any>;
+  content?: FieldPolicy<any> | FieldReadFunction<any>;
+  contentType?: FieldPolicy<any> | FieldReadFunction<any>;
+  contentTypeName?: FieldPolicy<any> | FieldReadFunction<any>;
+  databaseId?: FieldPolicy<any> | FieldReadFunction<any>;
+  date?: FieldPolicy<any> | FieldReadFunction<any>;
+  dateGmt?: FieldPolicy<any> | FieldReadFunction<any>;
+  desiredSlug?: FieldPolicy<any> | FieldReadFunction<any>;
+  editingLockedBy?: FieldPolicy<any> | FieldReadFunction<any>;
+  enclosure?: FieldPolicy<any> | FieldReadFunction<any>;
+  enqueuedScripts?: FieldPolicy<any> | FieldReadFunction<any>;
+  enqueuedStylesheets?: FieldPolicy<any> | FieldReadFunction<any>;
+  excerpt?: FieldPolicy<any> | FieldReadFunction<any>;
+  featuredImage?: FieldPolicy<any> | FieldReadFunction<any>;
+  featuredImageDatabaseId?: FieldPolicy<any> | FieldReadFunction<any>;
+  featuredImageId?: FieldPolicy<any> | FieldReadFunction<any>;
+  gformId?: FieldPolicy<any> | FieldReadFunction<any>;
+  guid?: FieldPolicy<any> | FieldReadFunction<any>;
+  id?: FieldPolicy<any> | FieldReadFunction<any>;
+  isContentNode?: FieldPolicy<any> | FieldReadFunction<any>;
+  isPreview?: FieldPolicy<any> | FieldReadFunction<any>;
+  isRestricted?: FieldPolicy<any> | FieldReadFunction<any>;
+  isRevision?: FieldPolicy<any> | FieldReadFunction<any>;
+  isTermNode?: FieldPolicy<any> | FieldReadFunction<any>;
+  lastEditedBy?: FieldPolicy<any> | FieldReadFunction<any>;
+  link?: FieldPolicy<any> | FieldReadFunction<any>;
+  modified?: FieldPolicy<any> | FieldReadFunction<any>;
+  modifiedGmt?: FieldPolicy<any> | FieldReadFunction<any>;
+  pingStatus?: FieldPolicy<any> | FieldReadFunction<any>;
+  pinged?: FieldPolicy<any> | FieldReadFunction<any>;
+  postFormats?: FieldPolicy<any> | FieldReadFunction<any>;
+  preview?: FieldPolicy<any> | FieldReadFunction<any>;
+  previewRevisionDatabaseId?: FieldPolicy<any> | FieldReadFunction<any>;
+  previewRevisionId?: FieldPolicy<any> | FieldReadFunction<any>;
+  revisionOf?: FieldPolicy<any> | FieldReadFunction<any>;
+  revisions?: FieldPolicy<any> | FieldReadFunction<any>;
+  seo?: FieldPolicy<any> | FieldReadFunction<any>;
+  slug?: FieldPolicy<any> | FieldReadFunction<any>;
+  status?: FieldPolicy<any> | FieldReadFunction<any>;
+  template?: FieldPolicy<any> | FieldReadFunction<any>;
+  terms?: FieldPolicy<any> | FieldReadFunction<any>;
+  title?: FieldPolicy<any> | FieldReadFunction<any>;
+  toPing?: FieldPolicy<any> | FieldReadFunction<any>;
+  uri?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type GformToCategoryConnectionKeySpecifier = (
+  | "edges"
+  | "nodes"
+  | "pageInfo"
+  | GformToCategoryConnectionKeySpecifier
+)[];
+export type GformToCategoryConnectionFieldPolicy = {
+  edges?: FieldPolicy<any> | FieldReadFunction<any>;
+  nodes?: FieldPolicy<any> | FieldReadFunction<any>;
+  pageInfo?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type GformToCategoryConnectionEdgeKeySpecifier = (
+  | "cursor"
+  | "isPrimary"
+  | "node"
+  | GformToCategoryConnectionEdgeKeySpecifier
+)[];
+export type GformToCategoryConnectionEdgeFieldPolicy = {
+  cursor?: FieldPolicy<any> | FieldReadFunction<any>;
+  isPrimary?: FieldPolicy<any> | FieldReadFunction<any>;
+  node?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type GformToCommentConnectionKeySpecifier = (
+  | "edges"
+  | "nodes"
+  | "pageInfo"
+  | GformToCommentConnectionKeySpecifier
+)[];
+export type GformToCommentConnectionFieldPolicy = {
+  edges?: FieldPolicy<any> | FieldReadFunction<any>;
+  nodes?: FieldPolicy<any> | FieldReadFunction<any>;
+  pageInfo?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type GformToCommentConnectionEdgeKeySpecifier = (
+  | "cursor"
+  | "node"
+  | GformToCommentConnectionEdgeKeySpecifier
+)[];
+export type GformToCommentConnectionEdgeFieldPolicy = {
+  cursor?: FieldPolicy<any> | FieldReadFunction<any>;
+  node?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type GformToPostFormatConnectionKeySpecifier = (
+  | "edges"
+  | "nodes"
+  | "pageInfo"
+  | GformToPostFormatConnectionKeySpecifier
+)[];
+export type GformToPostFormatConnectionFieldPolicy = {
+  edges?: FieldPolicy<any> | FieldReadFunction<any>;
+  nodes?: FieldPolicy<any> | FieldReadFunction<any>;
+  pageInfo?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type GformToPostFormatConnectionEdgeKeySpecifier = (
+  | "cursor"
+  | "isPrimary"
+  | "node"
+  | GformToPostFormatConnectionEdgeKeySpecifier
+)[];
+export type GformToPostFormatConnectionEdgeFieldPolicy = {
+  cursor?: FieldPolicy<any> | FieldReadFunction<any>;
+  isPrimary?: FieldPolicy<any> | FieldReadFunction<any>;
+  node?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type GformToPreviewConnectionEdgeKeySpecifier = (
+  | "node"
+  | GformToPreviewConnectionEdgeKeySpecifier
+)[];
+export type GformToPreviewConnectionEdgeFieldPolicy = {
+  node?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type GformToRevisionConnectionKeySpecifier = (
+  | "edges"
+  | "nodes"
+  | "pageInfo"
+  | GformToRevisionConnectionKeySpecifier
+)[];
+export type GformToRevisionConnectionFieldPolicy = {
+  edges?: FieldPolicy<any> | FieldReadFunction<any>;
+  nodes?: FieldPolicy<any> | FieldReadFunction<any>;
+  pageInfo?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type GformToRevisionConnectionEdgeKeySpecifier = (
+  | "cursor"
+  | "node"
+  | GformToRevisionConnectionEdgeKeySpecifier
+)[];
+export type GformToRevisionConnectionEdgeFieldPolicy = {
+  cursor?: FieldPolicy<any> | FieldReadFunction<any>;
+  node?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type GformToTermNodeConnectionKeySpecifier = (
+  | "edges"
+  | "nodes"
+  | "pageInfo"
+  | GformToTermNodeConnectionKeySpecifier
+)[];
+export type GformToTermNodeConnectionFieldPolicy = {
+  edges?: FieldPolicy<any> | FieldReadFunction<any>;
+  nodes?: FieldPolicy<any> | FieldReadFunction<any>;
+  pageInfo?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type GformToTermNodeConnectionEdgeKeySpecifier = (
+  | "cursor"
+  | "node"
+  | GformToTermNodeConnectionEdgeKeySpecifier
+)[];
+export type GformToTermNodeConnectionEdgeFieldPolicy = {
+  cursor?: FieldPolicy<any> | FieldReadFunction<any>;
+  node?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type HiddenFieldKeySpecifier = (
   | "canPrepopulate"
@@ -5146,6 +5404,7 @@ export type PostFormatKeySpecifier = (
   | "description"
   | "enqueuedScripts"
   | "enqueuedStylesheets"
+  | "gforms"
   | "id"
   | "isContentNode"
   | "isRestricted"
@@ -5170,6 +5429,7 @@ export type PostFormatFieldPolicy = {
   description?: FieldPolicy<any> | FieldReadFunction<any>;
   enqueuedScripts?: FieldPolicy<any> | FieldReadFunction<any>;
   enqueuedStylesheets?: FieldPolicy<any> | FieldReadFunction<any>;
+  gforms?: FieldPolicy<any> | FieldReadFunction<any>;
   id?: FieldPolicy<any> | FieldReadFunction<any>;
   isContentNode?: FieldPolicy<any> | FieldReadFunction<any>;
   isRestricted?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -5203,6 +5463,26 @@ export type PostFormatToContentNodeConnectionEdgeKeySpecifier = (
   | PostFormatToContentNodeConnectionEdgeKeySpecifier
 )[];
 export type PostFormatToContentNodeConnectionEdgeFieldPolicy = {
+  cursor?: FieldPolicy<any> | FieldReadFunction<any>;
+  node?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type PostFormatToGformConnectionKeySpecifier = (
+  | "edges"
+  | "nodes"
+  | "pageInfo"
+  | PostFormatToGformConnectionKeySpecifier
+)[];
+export type PostFormatToGformConnectionFieldPolicy = {
+  edges?: FieldPolicy<any> | FieldReadFunction<any>;
+  nodes?: FieldPolicy<any> | FieldReadFunction<any>;
+  pageInfo?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type PostFormatToGformConnectionEdgeKeySpecifier = (
+  | "cursor"
+  | "node"
+  | PostFormatToGformConnectionEdgeKeySpecifier
+)[];
+export type PostFormatToGformConnectionEdgeFieldPolicy = {
   cursor?: FieldPolicy<any> | FieldReadFunction<any>;
   node?: FieldPolicy<any> | FieldReadFunction<any>;
 };
@@ -6599,6 +6879,7 @@ export type RestoreCommentPayloadFieldPolicy = {
 export type RootMutationKeySpecifier = (
   | "createCategory"
   | "createComment"
+  | "createGform"
   | "createMediaItem"
   | "createPage"
   | "createPost"
@@ -6609,6 +6890,7 @@ export type RootMutationKeySpecifier = (
   | "deleteComment"
   | "deleteGfDraftEntry"
   | "deleteGfEntry"
+  | "deleteGform"
   | "deleteMediaItem"
   | "deletePage"
   | "deletePost"
@@ -6628,6 +6910,7 @@ export type RootMutationKeySpecifier = (
   | "updateComment"
   | "updateGfDraftEntry"
   | "updateGfEntry"
+  | "updateGform"
   | "updateMediaItem"
   | "updatePage"
   | "updatePost"
@@ -6640,6 +6923,7 @@ export type RootMutationKeySpecifier = (
 export type RootMutationFieldPolicy = {
   createCategory?: FieldPolicy<any> | FieldReadFunction<any>;
   createComment?: FieldPolicy<any> | FieldReadFunction<any>;
+  createGform?: FieldPolicy<any> | FieldReadFunction<any>;
   createMediaItem?: FieldPolicy<any> | FieldReadFunction<any>;
   createPage?: FieldPolicy<any> | FieldReadFunction<any>;
   createPost?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -6650,6 +6934,7 @@ export type RootMutationFieldPolicy = {
   deleteComment?: FieldPolicy<any> | FieldReadFunction<any>;
   deleteGfDraftEntry?: FieldPolicy<any> | FieldReadFunction<any>;
   deleteGfEntry?: FieldPolicy<any> | FieldReadFunction<any>;
+  deleteGform?: FieldPolicy<any> | FieldReadFunction<any>;
   deleteMediaItem?: FieldPolicy<any> | FieldReadFunction<any>;
   deletePage?: FieldPolicy<any> | FieldReadFunction<any>;
   deletePost?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -6669,6 +6954,7 @@ export type RootMutationFieldPolicy = {
   updateComment?: FieldPolicy<any> | FieldReadFunction<any>;
   updateGfDraftEntry?: FieldPolicy<any> | FieldReadFunction<any>;
   updateGfEntry?: FieldPolicy<any> | FieldReadFunction<any>;
+  updateGform?: FieldPolicy<any> | FieldReadFunction<any>;
   updateMediaItem?: FieldPolicy<any> | FieldReadFunction<any>;
   updatePage?: FieldPolicy<any> | FieldReadFunction<any>;
   updatePost?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -6699,6 +6985,9 @@ export type RootQueryKeySpecifier = (
   | "gfSettings"
   | "gfSubmittedEntries"
   | "gfSubmittedEntry"
+  | "gform"
+  | "gformBy"
+  | "gforms"
   | "mediaItem"
   | "mediaItemBy"
   | "mediaItems"
@@ -6765,6 +7054,9 @@ export type RootQueryFieldPolicy = {
   gfSettings?: FieldPolicy<any> | FieldReadFunction<any>;
   gfSubmittedEntries?: FieldPolicy<any> | FieldReadFunction<any>;
   gfSubmittedEntry?: FieldPolicy<any> | FieldReadFunction<any>;
+  gform?: FieldPolicy<any> | FieldReadFunction<any>;
+  gformBy?: FieldPolicy<any> | FieldReadFunction<any>;
+  gforms?: FieldPolicy<any> | FieldReadFunction<any>;
   mediaItem?: FieldPolicy<any> | FieldReadFunction<any>;
   mediaItemBy?: FieldPolicy<any> | FieldReadFunction<any>;
   mediaItems?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -7001,6 +7293,26 @@ export type RootQueryToGfSubmittedEntryConnectionEdgeKeySpecifier = (
   | RootQueryToGfSubmittedEntryConnectionEdgeKeySpecifier
 )[];
 export type RootQueryToGfSubmittedEntryConnectionEdgeFieldPolicy = {
+  cursor?: FieldPolicy<any> | FieldReadFunction<any>;
+  node?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type RootQueryToGformConnectionKeySpecifier = (
+  | "edges"
+  | "nodes"
+  | "pageInfo"
+  | RootQueryToGformConnectionKeySpecifier
+)[];
+export type RootQueryToGformConnectionFieldPolicy = {
+  edges?: FieldPolicy<any> | FieldReadFunction<any>;
+  nodes?: FieldPolicy<any> | FieldReadFunction<any>;
+  pageInfo?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type RootQueryToGformConnectionEdgeKeySpecifier = (
+  | "cursor"
+  | "node"
+  | RootQueryToGformConnectionEdgeKeySpecifier
+)[];
+export type RootQueryToGformConnectionEdgeFieldPolicy = {
   cursor?: FieldPolicy<any> | FieldReadFunction<any>;
   node?: FieldPolicy<any> | FieldReadFunction<any>;
 };
@@ -7343,12 +7655,14 @@ export type SEOContentTypeArchiveFieldPolicy = {
   title?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type SEOContentTypesKeySpecifier = (
+  | "gform"
   | "mediaItem"
   | "page"
   | "post"
   | SEOContentTypesKeySpecifier
 )[];
 export type SEOContentTypesFieldPolicy = {
+  gform?: FieldPolicy<any> | FieldReadFunction<any>;
   mediaItem?: FieldPolicy<any> | FieldReadFunction<any>;
   page?: FieldPolicy<any> | FieldReadFunction<any>;
   post?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -8442,6 +8756,15 @@ export type UpdateGfEntryPayloadFieldPolicy = {
   entry?: FieldPolicy<any> | FieldReadFunction<any>;
   errors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type UpdateGformPayloadKeySpecifier = (
+  | "clientMutationId"
+  | "gform"
+  | UpdateGformPayloadKeySpecifier
+)[];
+export type UpdateGformPayloadFieldPolicy = {
+  clientMutationId?: FieldPolicy<any> | FieldReadFunction<any>;
+  gform?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type UpdateMediaItemPayloadKeySpecifier = (
   | "clientMutationId"
   | "mediaItem"
@@ -8533,6 +8856,7 @@ export type UserKeySpecifier = (
   | "enqueuedStylesheets"
   | "extraCapabilities"
   | "firstName"
+  | "gforms"
   | "id"
   | "isContentNode"
   | "isJwtAuthSecretRevoked"
@@ -8573,6 +8897,7 @@ export type UserFieldPolicy = {
   enqueuedStylesheets?: FieldPolicy<any> | FieldReadFunction<any>;
   extraCapabilities?: FieldPolicy<any> | FieldReadFunction<any>;
   firstName?: FieldPolicy<any> | FieldReadFunction<any>;
+  gforms?: FieldPolicy<any> | FieldReadFunction<any>;
   id?: FieldPolicy<any> | FieldReadFunction<any>;
   isContentNode?: FieldPolicy<any> | FieldReadFunction<any>;
   isJwtAuthSecretRevoked?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -8692,6 +9017,26 @@ export type UserToEnqueuedStylesheetConnectionEdgeKeySpecifier = (
   | UserToEnqueuedStylesheetConnectionEdgeKeySpecifier
 )[];
 export type UserToEnqueuedStylesheetConnectionEdgeFieldPolicy = {
+  cursor?: FieldPolicy<any> | FieldReadFunction<any>;
+  node?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type UserToGformConnectionKeySpecifier = (
+  | "edges"
+  | "nodes"
+  | "pageInfo"
+  | UserToGformConnectionKeySpecifier
+)[];
+export type UserToGformConnectionFieldPolicy = {
+  edges?: FieldPolicy<any> | FieldReadFunction<any>;
+  nodes?: FieldPolicy<any> | FieldReadFunction<any>;
+  pageInfo?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type UserToGformConnectionEdgeKeySpecifier = (
+  | "cursor"
+  | "node"
+  | UserToGformConnectionEdgeKeySpecifier
+)[];
+export type UserToGformConnectionEdgeFieldPolicy = {
   cursor?: FieldPolicy<any> | FieldReadFunction<any>;
   node?: FieldPolicy<any> | FieldReadFunction<any>;
 };
@@ -9024,6 +9369,20 @@ export type StrictTypedTypePolicies = {
       | (() => undefined | CategoryToContentNodeConnectionEdgeKeySpecifier);
     fields?: CategoryToContentNodeConnectionEdgeFieldPolicy;
   };
+  CategoryToGformConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | CategoryToGformConnectionKeySpecifier
+      | (() => undefined | CategoryToGformConnectionKeySpecifier);
+    fields?: CategoryToGformConnectionFieldPolicy;
+  };
+  CategoryToGformConnectionEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | CategoryToGformConnectionEdgeKeySpecifier
+      | (() => undefined | CategoryToGformConnectionEdgeKeySpecifier);
+    fields?: CategoryToGformConnectionEdgeFieldPolicy;
+  };
   CategoryToParentCategoryConnectionEdge?: Omit<
     TypePolicy,
     "fields" | "keyFields"
@@ -9320,6 +9679,13 @@ export type StrictTypedTypePolicies = {
       | (() => undefined | CreateCommentPayloadKeySpecifier);
     fields?: CreateCommentPayloadFieldPolicy;
   };
+  CreateGformPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | CreateGformPayloadKeySpecifier
+      | (() => undefined | CreateGformPayloadKeySpecifier);
+    fields?: CreateGformPayloadFieldPolicy;
+  };
   CreateMediaItemPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
@@ -9417,6 +9783,13 @@ export type StrictTypedTypePolicies = {
       | DeleteGfEntryPayloadKeySpecifier
       | (() => undefined | DeleteGfEntryPayloadKeySpecifier);
     fields?: DeleteGfEntryPayloadFieldPolicy;
+  };
+  DeleteGformPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | DeleteGformPayloadKeySpecifier
+      | (() => undefined | DeleteGformPayloadKeySpecifier);
+    fields?: DeleteGformPayloadFieldPolicy;
   };
   DeleteMediaItemPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
@@ -9837,6 +10210,90 @@ export type StrictTypedTypePolicies = {
       | GfSubmittedEntryKeySpecifier
       | (() => undefined | GfSubmittedEntryKeySpecifier);
     fields?: GfSubmittedEntryFieldPolicy;
+  };
+  Gform?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | GformKeySpecifier
+      | (() => undefined | GformKeySpecifier);
+    fields?: GformFieldPolicy;
+  };
+  GformToCategoryConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | GformToCategoryConnectionKeySpecifier
+      | (() => undefined | GformToCategoryConnectionKeySpecifier);
+    fields?: GformToCategoryConnectionFieldPolicy;
+  };
+  GformToCategoryConnectionEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | GformToCategoryConnectionEdgeKeySpecifier
+      | (() => undefined | GformToCategoryConnectionEdgeKeySpecifier);
+    fields?: GformToCategoryConnectionEdgeFieldPolicy;
+  };
+  GformToCommentConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | GformToCommentConnectionKeySpecifier
+      | (() => undefined | GformToCommentConnectionKeySpecifier);
+    fields?: GformToCommentConnectionFieldPolicy;
+  };
+  GformToCommentConnectionEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | GformToCommentConnectionEdgeKeySpecifier
+      | (() => undefined | GformToCommentConnectionEdgeKeySpecifier);
+    fields?: GformToCommentConnectionEdgeFieldPolicy;
+  };
+  GformToPostFormatConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | GformToPostFormatConnectionKeySpecifier
+      | (() => undefined | GformToPostFormatConnectionKeySpecifier);
+    fields?: GformToPostFormatConnectionFieldPolicy;
+  };
+  GformToPostFormatConnectionEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | GformToPostFormatConnectionEdgeKeySpecifier
+      | (() => undefined | GformToPostFormatConnectionEdgeKeySpecifier);
+    fields?: GformToPostFormatConnectionEdgeFieldPolicy;
+  };
+  GformToPreviewConnectionEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | GformToPreviewConnectionEdgeKeySpecifier
+      | (() => undefined | GformToPreviewConnectionEdgeKeySpecifier);
+    fields?: GformToPreviewConnectionEdgeFieldPolicy;
+  };
+  GformToRevisionConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | GformToRevisionConnectionKeySpecifier
+      | (() => undefined | GformToRevisionConnectionKeySpecifier);
+    fields?: GformToRevisionConnectionFieldPolicy;
+  };
+  GformToRevisionConnectionEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | GformToRevisionConnectionEdgeKeySpecifier
+      | (() => undefined | GformToRevisionConnectionEdgeKeySpecifier);
+    fields?: GformToRevisionConnectionEdgeFieldPolicy;
+  };
+  GformToTermNodeConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | GformToTermNodeConnectionKeySpecifier
+      | (() => undefined | GformToTermNodeConnectionKeySpecifier);
+    fields?: GformToTermNodeConnectionFieldPolicy;
+  };
+  GformToTermNodeConnectionEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | GformToTermNodeConnectionEdgeKeySpecifier
+      | (() => undefined | GformToTermNodeConnectionEdgeKeySpecifier);
+    fields?: GformToTermNodeConnectionEdgeFieldPolicy;
   };
   HiddenField?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
@@ -10577,6 +11034,20 @@ export type StrictTypedTypePolicies = {
       | (() => undefined | PostFormatToContentNodeConnectionEdgeKeySpecifier);
     fields?: PostFormatToContentNodeConnectionEdgeFieldPolicy;
   };
+  PostFormatToGformConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | PostFormatToGformConnectionKeySpecifier
+      | (() => undefined | PostFormatToGformConnectionKeySpecifier);
+    fields?: PostFormatToGformConnectionFieldPolicy;
+  };
+  PostFormatToGformConnectionEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | PostFormatToGformConnectionEdgeKeySpecifier
+      | (() => undefined | PostFormatToGformConnectionEdgeKeySpecifier);
+    fields?: PostFormatToGformConnectionEdgeFieldPolicy;
+  };
   PostFormatToPostConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
@@ -11150,6 +11621,20 @@ export type StrictTypedTypePolicies = {
           | undefined
           | RootQueryToGfSubmittedEntryConnectionEdgeKeySpecifier);
     fields?: RootQueryToGfSubmittedEntryConnectionEdgeFieldPolicy;
+  };
+  RootQueryToGformConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | RootQueryToGformConnectionKeySpecifier
+      | (() => undefined | RootQueryToGformConnectionKeySpecifier);
+    fields?: RootQueryToGformConnectionFieldPolicy;
+  };
+  RootQueryToGformConnectionEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | RootQueryToGformConnectionEdgeKeySpecifier
+      | (() => undefined | RootQueryToGformConnectionEdgeKeySpecifier);
+    fields?: RootQueryToGformConnectionEdgeFieldPolicy;
   };
   RootQueryToMediaItemConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
@@ -11799,6 +12284,13 @@ export type StrictTypedTypePolicies = {
       | (() => undefined | UpdateGfEntryPayloadKeySpecifier);
     fields?: UpdateGfEntryPayloadFieldPolicy;
   };
+  UpdateGformPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | UpdateGformPayloadKeySpecifier
+      | (() => undefined | UpdateGformPayloadKeySpecifier);
+    fields?: UpdateGformPayloadFieldPolicy;
+  };
   UpdateMediaItemPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
@@ -11931,6 +12423,20 @@ export type StrictTypedTypePolicies = {
       | UserToEnqueuedStylesheetConnectionEdgeKeySpecifier
       | (() => undefined | UserToEnqueuedStylesheetConnectionEdgeKeySpecifier);
     fields?: UserToEnqueuedStylesheetConnectionEdgeFieldPolicy;
+  };
+  UserToGformConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | UserToGformConnectionKeySpecifier
+      | (() => undefined | UserToGformConnectionKeySpecifier);
+    fields?: UserToGformConnectionFieldPolicy;
+  };
+  UserToGformConnectionEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | UserToGformConnectionEdgeKeySpecifier
+      | (() => undefined | UserToGformConnectionEdgeKeySpecifier);
+    fields?: UserToGformConnectionEdgeFieldPolicy;
   };
   UserToMediaItemConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:

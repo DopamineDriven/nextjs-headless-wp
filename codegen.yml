@@ -45,7 +45,7 @@ generates:
           nonOptionalTypename: true
       - add:
           content:
-            - "import {ResolverContext} from '@/types/resolver-context';"
+            - "import { ResolverContext } from '@/types/resolver-context';"
             - "import { Upload } from 'graphql-upload'"
             - "import { GraphQLDate, GraphQLDateTime, GraphQLTime, GraphQLHexadecimal, GraphQLJSON,GraphQLPhoneNumber,GraphQLUUID, GraphQLJSONObject, JSONResolver, GraphQLBigInt } from 'graphql-scalars';"
             - "import { DeepPartial } from 'utility-types';"

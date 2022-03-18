@@ -1,12 +1,33 @@
-import { initializeApollo } from "@/apollo/apollo";
+import { addApolloState, initializeApollo } from "@/apollo/apollo";
 import { ParsedUrlQuery } from "@/types/query-parser";
 import { NormalizedCacheObject } from "@apollo/client";
-import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
+import {
+  GetServerSidePropsContext,
+  GetServerSidePropsResult,
+  GetStaticPropsContext,
+  GetStaticPropsResult,
+  InferGetServerSidePropsType,
+  InferGetStaticPropsType
+} from "next";
 import React, { VFC } from "react";
-import { World, Code } from "@/components/UI";
+import { World, Code, Inspector } from "@/components/UI";
+import {
+  FormIdTypeEnum,
+  FormFieldTypeEnum,
+  GravityPostTypePathsQuery,
+  GravityPostTypePathsQueryVariables,
+  GravityPostTypeQuery,
+  GravityPostTypeQueryVariables,
+  GetGravityFormQuery,
+  GetGravityFormQueryVariables,
+  GformIdType,
+  GetGravityForm,
+  GravityPostType,
+  GravityPostTypePaths
+} from "@/graphql/generated/graphql";
 
 export type IndexProps = {
-  apolloClient: NormalizedCacheObject;
+  gform?: GravityPostTypeQuery | null;
 };
 
 import type { UnwrapPickOneInUnion } from "@/types/unwrap-react";
@@ -56,7 +77,10 @@ export const customHeading = ({
   );
 };
 
-export default function IndexPage(): JSX.Element {
+export default function IndexPage<T extends typeof getStaticProps>({
+  gform
+}: InferGetStaticPropsType<T>) {
+  console.log(gform?.gform ?? "no gform")
   return (
     <>
       <div className='min-h-screen bg-gradient-to-tl from-gray-700 via-slate-800 to-gray-900 flex text-stone-200 fit '>
@@ -69,13 +93,26 @@ export default function IndexPage(): JSX.Element {
   );
 }
 
-export const getServerSideProps = async (
-  ctx: GetServerSidePropsContext<ParsedUrlQuery>
-): Promise<GetServerSidePropsResult<IndexProps>> => {
-  const apolloClient = initializeApollo({}, { req: ctx.req, res: ctx.res });
-  const AuthHeaderPresent = ctx.req.headers.authorization;
+export const getStaticProps = async (
+  ctx: GetStaticPropsContext<ParsedUrlQuery>
+): Promise<GetStaticPropsResult<IndexProps>> => {
+  const apolloClient = initializeApollo();
+  const { data: gform} = await apolloClient.query<GravityPostTypeQuery, GravityPostTypeQueryVariables>(
+    {
+      query: GravityPostType,
+      variables: {
+        idType: GformIdType.SLUG,
+        id: "create-an-account"
+      },
+      notifyOnNetworkStatusChange: true,
 
-  return {
-    props: { apolloClient: apolloClient.cache.extract(true) }
-  };
+      fetchPolicy: "cache-first"
+    }
+  );
+
+  return addApolloState(apolloClient, {
+    props: {
+      gform
+    }
+  });
 };

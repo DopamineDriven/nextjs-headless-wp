@@ -1,0 +1,21 @@
+# import GformPartial from "../fragments/gform-partial.graphql";
+# import MediaDetailsPartial from "../fragments/media-details-partial.graphql";
+# import MediaItemPartial from "../fragments/media-item-partial.graphql";
+# import MediaSizePartial from "../fragments/media-size-partial.graphql";
+
+query GravityPostType($id: ID!, $idType: GformIdType!) {
+  gform(id: $id, idType: $idType) {
+    ...GformPartial
+    featuredImage {
+      node {
+        ...MediaItemPartial
+        mediaDetails {
+          ...MediaDetailsPartial
+          sizes {
+            ...MediaSizePartial
+          }
+        }
+      }
+    }
+  }
+}

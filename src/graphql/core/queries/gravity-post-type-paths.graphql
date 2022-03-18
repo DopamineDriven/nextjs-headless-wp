@@ -1,0 +1,17 @@
+# import RootQueryToGformConnectionEdgePartial from "../fragments/gform-path-partial.graphql";
+# import GformPathPartial from "../fragments/gform-path-partial.graphql";
+# import PageInfoPartial from "../fragments/page-info-partial.graphql";
+
+query GravityPostTypePaths($first: Int!) {
+  gforms(first: $first) {
+    pageInfo {
+      ...PageInfoPartial
+    }
+    edges {
+      ...RootQueryToGformConnectionEdgePartial
+      node {
+        ...GformPathPartial
+      }
+    }
+  }
+}
