@@ -1,10 +1,13 @@
-import { initializeApollo } from "@/apollo/apollo";
+import { addApolloState, initializeApollo } from "@/apollo/apollo";
 import { ParsedUrlQuery } from "@/types/query-parser";
 import { NormalizedCacheObject } from "@apollo/client";
 import {
   GetServerSidePropsContext,
   GetServerSidePropsResult,
-  InferGetServerSidePropsType
+  GetStaticPropsContext,
+  GetStaticPropsResult,
+  InferGetServerSidePropsType,
+  InferGetStaticPropsType
 } from "next";
 import React, { VFC } from "react";
 import { World, Code, Inspector } from "@/components/UI";
@@ -24,7 +27,6 @@ import {
 } from "@/graphql/generated/graphql";
 
 export type IndexProps = {
-  apolloClient: NormalizedCacheObject;
   gform?: GravityPostTypeQuery | null;
 };
 
@@ -75,11 +77,10 @@ export const customHeading = ({
   );
 };
 
-export default function IndexPage<T extends typeof getServerSideProps>({
-  apolloClient,
+export default function IndexPage<T extends typeof getStaticProps>({
   gform
-}: InferGetServerSidePropsType<T>) {
-  console.log(gform ?? "no gform")
+}: InferGetStaticPropsType<T>) {
+  console.log(gform?.gform ?? "no gform")
   return (
     <>
       <div className='min-h-screen bg-gradient-to-tl from-gray-700 via-slate-800 to-gray-900 flex text-stone-200 fit '>
@@ -92,11 +93,11 @@ export default function IndexPage<T extends typeof getServerSideProps>({
   );
 }
 
-export const getServerSideProps = async (
-  ctx: GetServerSidePropsContext<ParsedUrlQuery>
-): Promise<GetServerSidePropsResult<IndexProps>> => {
-  const apolloClient = initializeApollo(null, { req: ctx.req, res: ctx.res });
-  await apolloClient.query<GravityPostTypeQuery, GravityPostTypeQueryVariables>(
+export const getStaticProps = async (
+  ctx: GetStaticPropsContext<ParsedUrlQuery>
+): Promise<GetStaticPropsResult<IndexProps>> => {
+  const apolloClient = initializeApollo();
+  const { data: gform} = await apolloClient.query<GravityPostTypeQuery, GravityPostTypeQueryVariables>(
     {
       query: GravityPostType,
       variables: {
@@ -108,20 +109,10 @@ export const getServerSideProps = async (
       fetchPolicy: "cache-first"
     }
   );
-  const cachedClient = apolloClient.cache.extract(true);
-  return {
+
+  return addApolloState(apolloClient, {
     props: {
-      apolloClient: cachedClient,
-      gform: apolloClient.readQuery<
-        GravityPostTypeQuery,
-        GravityPostTypeQueryVariables
-      >({
-        query: GravityPostType,
-        variables: {
-          idType: GformIdType.SLUG,
-          id: "create-an-account"
-        }
-      })
+      gform
     }
-  };
+  });
 };

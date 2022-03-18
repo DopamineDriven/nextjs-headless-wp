@@ -52,10 +52,7 @@ export default function HeadlessWordPressNext<P = Record<string, unknown>>({
 
   const router = useRouter();
 
-  const apolloClient = useApollo(
-    pageProps.initialApolloState ?? null,
-    pageProps.resolverContext ? (pageProps.resolverContext) : {}
-  );
+  const apolloClient = useApollo(pageProps);
 
   useEffect(() => {
     document.body.classList?.remove("loading");
@@ -107,9 +104,7 @@ export default function HeadlessWordPressNext<P = Record<string, unknown>>({
           <Head nextSeoProps={NextSEO} />
 
       <ApolloProvider client={apolloClient}>
-        <LayoutGlobal {...pageProps}>
           <Component {...pageProps} />
-        </LayoutGlobal>
       </ApolloProvider>
     </>
   );

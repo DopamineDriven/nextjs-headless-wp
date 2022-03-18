@@ -19,7 +19,7 @@ import {
   GravityPostType,
   GravityPostTypePaths
 } from "@/graphql/generated/graphql";
-import { initializeApollo } from "@/apollo/apollo";
+import { addApolloState, initializeApollo } from "@/apollo/apollo";
 import { useRouter } from "next/router";
 import type { ParsedUrlQuery } from "@/types/query-parser";
 import { NormalizedCacheObject } from "@apollo/client";
@@ -31,14 +31,13 @@ export type DynamicGravityProps = {
   serverSlug: string;
   gform: GravityPostTypeQuery;
   register: GetGravityFormQuery;
-  cache: NormalizedCacheObject;
 };
 
 export const getStaticPaths = async ({
   locales,
   defaultLocale
 }: GetStaticPathsContext): Promise<GetStaticPathsResult<ParsedUrlQuery>> => {
-  const apolloClientGravity = initializeApollo(null, {});
+  const apolloClientGravity = initializeApollo();
   const { data } = await apolloClientGravity.query<
     GravityPostTypePathsQuery,
     GravityPostTypePathsQueryVariables
@@ -78,7 +77,7 @@ export const getStaticPaths = async ({
 export const getStaticProps = async (
   ctx: GetStaticPropsContext<ParsedUrlQuery>
 ): Promise<GetStaticPropsResult<DynamicGravityProps>> => {
-  const apolloClientGravity = initializeApollo(null, { ctx });
+  const apolloClientGravity = initializeApollo();
   const slug = ctx.params ? (ctx.params.slug as string) : "";
   const { data: gform } = await apolloClientGravity.query<
     GravityPostTypeQuery,
@@ -112,19 +111,18 @@ export const getStaticProps = async (
     }
   });
 
-  return {
+  return addApolloState(apolloClientGravity, {
     props: {
-      cache: apolloClientGravity.extract(true),
+
       gform,
       register,
       serverSlug: slug
     },
     revalidate: 600
-  };
+  });
 };
 
 const DynamicGravity = <T extends typeof getStaticProps>({
-  cache,
   gform,
   register,
   serverSlug
