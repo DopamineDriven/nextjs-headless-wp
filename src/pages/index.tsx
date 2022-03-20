@@ -7,8 +7,7 @@ import {
   GetStaticPropsContext,
   GetStaticPropsResult,
   InferGetServerSidePropsType,
-  InferGetStaticPropsType,
-  NextPage
+  InferGetStaticPropsType
 } from "next";
 import React, { VFC } from "react";
 import { World, Code, Inspector } from "@/components/UI";
@@ -28,7 +27,8 @@ import {
 } from "@/graphql/generated/graphql";
 
 export type IndexProps = {
-  gform?: GravityPostTypeQuery | null;
+  // gform?: GravityPostTypeQuery | null;
+  params: ParsedUrlQuery
 };
 // Proof of Concept
 import type { UnwrapHtmlPickOneUnion } from "@/types/unwrap-react";
@@ -79,7 +79,10 @@ export const CustomHeading = ({
   );
 };
 
-export default function IndexPage() {
+export default function IndexPage<T extends typeof getStaticProps>({
+  params
+}: InferGetStaticPropsType<T>) {
+  console.log(params ?? "no params")
   return (
     <>
       <div className='min-h-screen bg-gradient-to-tl from-gray-700 via-slate-800 to-gray-900 flex text-stone-200 fit '>
@@ -92,27 +95,27 @@ export default function IndexPage() {
   );
 }
 
-// export const getStaticProps = async (
-//   ctx: GetStaticPropsContext<ParsedUrlQuery>
-// ): Promise<GetStaticPropsResult<IndexProps>> => {
-//   const apolloClient = initializeApollo();
-//   const { data: gform } = await apolloClient.query<
-//     GravityPostTypeQuery,
-//     GravityPostTypeQueryVariables
-//   >({
-//     query: GravityPostType,
-//     variables: {
-//       idType: GformIdType.SLUG,
-//       id: "create-an-account"
-//     },
-//     notifyOnNetworkStatusChange: true,
-//     fetchPolicy: "cache-first"
-//   });
+export const getStaticProps = async (
+  ctx: GetStaticPropsContext<ParsedUrlQuery>
+): Promise<GetStaticPropsResult<IndexProps>> => {
+  const apolloClient = initializeApollo();
+  const params = ctx.params ?? 'no params';
+  // const { data: gform} = await apolloClient.query<GravityPostTypeQuery, GravityPostTypeQueryVariables>(
+  //   {
+  //     query: GravityPostType,
+  //     variables: {
+  //       idType: GformIdType.SLUG,
+  //       id: "create-an-account"
+  //     },
+  //     notifyOnNetworkStatusChange: true,
+  //     fetchPolicy: "cache-first"
+  //   }
+  // );
 
-//   return addApolloState(apolloClient, {
-//     props: {
-//       gform
-//     },
-//     revalidate: 600
-//   });
-// };
+  return addApolloState(apolloClient, {
+    props: {
+      params
+    },
+    revalidate: 600
+  });
+};
