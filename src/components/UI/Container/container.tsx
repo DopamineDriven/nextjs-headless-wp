@@ -1,7 +1,7 @@
 import cn from "classnames";
 import { VFC, ComponentType, HTMLAttributes } from "react";
 
-interface Props {
+export interface Props {
   className?: string;
   children?: any;
   el?: ComponentType<HTMLAttributes<HTMLDivElement>>;
@@ -16,7 +16,7 @@ const Container: VFC<Props> = ({ children, className, el = "div", clean }) => {
   const Component: ComponentType<HTMLAttributes<HTMLDivElement>> =
     el as ComponentType<HTMLAttributes<HTMLDivElement>>;
 
-  return <Component className={rootClassName}>{children}</Component>;
+  return <Component className={rootClassName} {...el}>{children}</Component>;
 };
 
 export default Container;

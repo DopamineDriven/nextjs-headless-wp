@@ -1,0 +1,21 @@
+.root {
+  @apply mx-auto py-[3.3125rem] bg-white/100 font-interVar;
+  & > *:nth-child(6n+1) {
+    
+  }
+  & > *:nth-child(6n+2) {
+
+  }
+  & > *:nth-child(6n+3) {
+
+  }
+  & > *:nth-child(6n+4) {
+
+  }
+  & > *:nth-child(6n+5) {
+
+  }
+  & > *:nth-child(6n+6) {
+
+  }
+}
