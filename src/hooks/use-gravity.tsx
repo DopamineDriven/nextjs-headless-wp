@@ -7,10 +7,12 @@ import {
 } from "react";
 import {
   AddressFieldInput,
+  PasswordInputProperty,
   EmailFieldInput,
   NameFieldInput,
   CheckboxFieldInput,
   ImageInput,
+
   InputMaybe,
   Scalars,
   ListFieldInput
@@ -19,6 +21,11 @@ import {
 export enum FormIdCounter {
   signUp = 1,
   login = 2
+}
+
+export type PasswordFieldInput = {
+  confirmationValue?: InputMaybe<string> | undefined;
+  value?: InputMaybe<string> | undefined;
 }
 
 export type Enumerable<T> = T | Array<T>;
@@ -36,7 +43,7 @@ export interface CheckboxFieldValues extends BaseFieldValue {
 }
 
 export interface EmailFieldValues extends BaseFieldValue {
-  emailValues: InputMaybe<EmailFieldInput>;
+  emailValues: EmailFieldInput;
 }
 
 export interface FileUploadFieldValues extends BaseFieldValue {
@@ -48,7 +55,11 @@ export interface ListFieldValues extends BaseFieldValue {
 }
 
 export interface NameFieldValues extends BaseFieldValue {
-  nameValues: InputMaybe<NameFieldInput>;
+  nameValues: NameFieldInput;
+}
+
+export interface PasswordFieldValues extends BaseFieldValue {
+  passwordValues: PasswordFieldInput
 }
 
 export interface PostImageFieldValue extends BaseFieldValue {
@@ -61,7 +72,7 @@ export interface StringFieldValue extends BaseFieldValue {
 
 // used by Multiselect, Post Category, Post Custom, & Post Tags fields
 export interface StringFieldValues extends BaseFieldValue {
-  values: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  values: Array<Scalars['String']>;
 }
 
 export type FieldValueUnion =
@@ -70,6 +81,7 @@ export type FieldValueUnion =
   | EmailFieldValues
   | FileUploadFieldValues
   | NameFieldValues
+  | PasswordFieldValues
   | PostImageFieldValue
   | StringFieldValue
   | StringFieldValues;
@@ -120,10 +132,11 @@ export function reducer(state: FieldValueUnion[], action: Action) {
         action.fieldValue as FileUploadFieldValues;
       return [...getOtherFieldValues(id), { id, fileUploadValues }];
     }
-    case ACTION_TYPES.updateMultiSelectFieldValue: {
-      const { id, values } = action.fieldValue as StringFieldValues;
-      return [...getOtherFieldValues(id), { id, values }];
+    case ACTION_TYPES.updatePasswordFieldValue: {
+      const { id, passwordValues } = action.fieldValue as PasswordFieldValues;
+      return [...getOtherFieldValues(id), { id, passwordValues }];
     }
+
     case ACTION_TYPES.updateNameFieldValue: {
       const { id, nameValues } = action.fieldValue as NameFieldValues;
       return [...getOtherFieldValues(id), { id, nameValues }];
@@ -171,9 +184,6 @@ export function GravityFormProvider({ children }: { children: ReactNode }) {
   );
 }
 
-const useGravityForm = (): {
-  state: FieldValueUnion[];
-  dispatch: Dispatch<Action>;
-} => useContext(GravityFormContext);
+const useGravityForm = () => useContext(GravityFormContext);
 
 export default useGravityForm;

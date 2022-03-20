@@ -3,24 +3,12 @@
 # import CaptchaPartial from "../fragments/captcha-partial.graphql";
 # import CheckboxFieldsGravityPartial from "../fragments/checkbox-fields-gravity-partial.graphql";
 # import CheckboxFieldValuePartial from "../fragments/checkbox-fields-gravity-partial.graphql";
-# import ConditionalLogicPartial from "../fragments/conditional-logic-partial.graphql";
-# import ConditionalLogicRulePartial from "../fragments/conditional-logic-rule-partial.graphql";
 # import DateFieldsGravityPartial from "../fragments/date-fields-gravity-partial.graphql";
 # import EmailFieldsGravityPartial from "../fragments/email-fields-gravity-partial.graphql";
 # import FileUploadFieldsGravityPartial from "../fragments/file-upload-fields-gravity-partial.graphql";
 # import FormConfirmationGravityPartial from "../fragments/form-confirmation-gravity-partial.graphql";
-# import FormEntryDataPolicyPartial from "../fragments/form-entry-data-policy-partial.graphql";
 # import FormFieldDataPolicyPartial from "../fragments/form-field-data-policy-partial.graphql";
-# import FormDataPoliciesPartial from "../fragments/form-data-policies-partial.graphql";
 # import FormFieldsGravityPartial from "../fragments/form-fields-gravity-partial.graphql";
-# import FormLastPageButtonPartial from "../fragments/form-last-page-button-partial.graphql";
-# import FormLoginPartial from "../fragments/form-login-partial.graphql";
-# import FormNotificationPartial from "../fragments/form-notification-partial.graphql";
-# import FormNotificationRoutingPartial from "../fragments/form-notification-routing-partial.graphql";
-# import FormPersonalDataPartial from "../fragments/form-personal-data-partial.graphql";
-# import FormSaveAndContinuePartial from "../fragments/form-save-and-continue-partial.graphql";
-# import FormScheduleDetailsPartial from "../fragments/form-schedule-details-partial.graphql";
-# import FormSchedulePartial from "../fragments/form-schedule-partial.graphql";
 # import GravityFormsFormPartial from "../fragments/gravity-forms-form-partial.graphql";
 # import LikertFieldPartial from "../fragments/likert-field-partial.graphql";
 # import ListFieldsGravityPartial from "../fragments/list-fields-gravity-partial.graphql";
@@ -31,17 +19,10 @@
 # import PageInfoPartial from "../../core/fragments/page-info-partial.graphql";
 # import PaginationPartial from "../fragments/pagination-partial.graphql";
 # import PasswordFieldPartial from "../fragments/password-field-partial.graphql";
-# import PasswordFieldInputPartial from "../fragments/password-field-partial.graphql";
 # import PhoneFieldsGravityPartial from "../fragments/phone-fields-gravity-partial.graphql";
 # import PollFieldPartial from "../fragments/poll-field-partial.graphql";
 # import PostContentFieldsGravityPartial from "../fragments/post-content-fields-gravity-partial.graphql";
 # import PostImageFieldsGravityPartial from "../fragments/post-image-fields-gravity-partial.graphql";
-# import QuizInputPropertyPartial from "../fragments/quiz-field-partial.graphql";
-# import QuizFieldChoicePartial from "../fragments/quiz-field-partial.graphql";
-# import QuizRadioFieldPartial from "../fragments/quiz-field-partial.graphql";
-# import QuizSelectFieldPartial from "../fragments/quiz-field-partial.graphql";
-# import QuizFieldPartial from "../fragments/quiz-field-partial.graphql";
-# import QuizCheckboxFieldPartial from "../fragments/quiz-field-partial.graphql";
 # import RadioFieldsGravityPartial from "../fragments/radio-fields-gravity-partial.graphql";
 # import RecaptchaPartial from "../fragments/recaptcha-partial.graphql";
 # import SelectFieldsGravityPartial from "../fragments/select-fields-gravity-partial.graphql";
@@ -62,57 +43,12 @@ query GetGravityForm(
     ...GravityFormsFormPartial
     button {
       ...ButtonFieldsGravityPartial
-      conditionalLogic {
-        ...ConditionalLogicPartial
-        rules {
-          ...ConditionalLogicRulePartial
-        }
-      }
-    }
-    personalData {
-      dataPolicies {
-        entryData {
-          ...FormEntryDataPolicyPartial
-        }
-        ...FormDataPoliciesPartial
-      }
-      ...FormPersonalDataPartial
-    }
-    saveAndContinue {
-      ...FormSaveAndContinuePartial
-    }
-    lastPageButton {
-      ...FormLastPageButtonPartial
-    }
-    login {
-      ...FormLoginPartial
     }
     confirmations {
       ...FormConfirmationGravityPartial
     }
     pagination {
       ...PaginationPartial
-    }
-    notifications {
-      ...FormNotificationPartial
-      conditionalLogic {
-        ...ConditionalLogicPartial
-        rules {
-          ...ConditionalLogicRulePartial
-        }
-      }
-      routing {
-        ...FormNotificationRoutingPartial
-      }
-    }
-    scheduling {
-      ...FormSchedulePartial
-      endDetails {
-        ...FormScheduleDetailsPartial
-      }
-      startDetails {
-        ...FormScheduleDetailsPartial
-      }
     }
     formFields(
       first: $first
@@ -164,9 +100,6 @@ query GetGravityForm(
           ...NameFieldsGravityPartial
         }
         ... on PasswordField {
-          inputs {
-            ...PasswordFieldInputPartial
-          }
           ...PasswordFieldPartial
         }
         ... on PhoneField {
@@ -180,36 +113,6 @@ query GetGravityForm(
         }
         ... on PostImageField {
           ...PostImageFieldsGravityPartial
-        }
-        ... on QuizField {
-          ...QuizFieldPartial
-          choices {
-            ...QuizFieldChoicePartial
-          }
-          ... on QuizSelectField {
-            ...QuizSelectFieldPartial
-            choices {
-              ...QuizFieldChoicePartial
-            }
-          }
-          ... on QuizRadioField {
-            ...QuizRadioFieldPartial
-            choices {
-              ...QuizFieldChoicePartial
-            }
-          }
-          ... on QuizCheckboxField {
-            choices {
-              ...QuizFieldChoicePartial
-            }
-            inputs {
-              ...QuizInputPropertyPartial
-            }
-            checkboxValues {
-              ...CheckboxFieldValuePartial
-            }
-            ...QuizCheckboxFieldPartial
-          }
         }
         ... on RadioField {
           ...RadioFieldsGravityPartial

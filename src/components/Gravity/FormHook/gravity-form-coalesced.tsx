@@ -3,25 +3,30 @@ import {
   FormIdTypeEnum,
   useGetGravityFormQuery,
   GetGravityForm,
-  GetGravityFormQuery
+  GetGravityFormQuery,
+  FormFieldTypeEnum
 } from "@/graphql/generated/graphql";
 import { GravityFormSubmit } from "../FormSubmit";
 import { useState, useRef, useEffect, VFC, ReactNode } from "react";
 import { LoadingSpinner } from "@/components/UI";
+import { GravityFieldErrors } from "@/types/error-helpers";
+import { htmlToReact } from "@/lib/html-to-react";
 
-export type GravityFormProps = {
+export type Enumerable<T> = T | Array<T>;
+export interface GravityFormProps extends GravityFieldErrors {
   form: GetGravityFormQuery["gfForm"];
   formId: string;
   text?: string;
   className?: string;
-  children?: ReactNode;
-};
+  children?: Iterable<ReactNode>
+}
 
 const GravityFormCoalesced: VFC<GravityFormProps> = ({
   form,
   formId,
   text,
   className,
+  fieldErrors,
   children
 }) => {
   const [formIdState, setFormIdState] = useState(formId);
@@ -34,8 +39,9 @@ const GravityFormCoalesced: VFC<GravityFormProps> = ({
     fetchPolicy: "cache-first",
     query: GetGravityForm,
     variables: {
+      formFieldType: [FormFieldTypeEnum.NAME, FormFieldTypeEnum.EMAIL, FormFieldTypeEnum.PASSWORD],
       formId: formIdState.toString(),
-      first: 100,
+      first: 300,
       idType: FormIdTypeEnum.DATABASE_ID
     }
   });
@@ -51,7 +57,7 @@ const GravityFormCoalesced: VFC<GravityFormProps> = ({
     })();
   }, [formId, formIdState]);
 
-  form = dataForm?.gfForm ? (form = dataForm.gfForm) : dataForm?.gfForm;
+  form = dataForm?.gfForm;
 
   return (
     <GravityFormProvider>
@@ -64,17 +70,21 @@ const GravityFormCoalesced: VFC<GravityFormProps> = ({
       ) : (
         <GravityFormSubmit
           id={
-            dataForm?.gfForm?.id
-              ? Number.parseInt(dataForm.gfForm.id, 10)
+            dataForm?.gfForm?.databaseId
+              ? dataForm.gfForm.databaseId
+              : form?.databaseId
+              ? form.databaseId
               : Number.parseInt(stateRef.current, 10)
           }
-          form={dataForm?.gfForm || form}
+          fieldErrors={fieldErrors}
+          form={form}
           text={text ?? ""}
-          className={className ?? ""}>
-          {children ?? <></>}
+              className={className ?? ""}>
+              <div>          {children ?? <></>}</div>
         </GravityFormSubmit>
       )}
     </GravityFormProvider>
   );
 };
+
 export default GravityFormCoalesced;
