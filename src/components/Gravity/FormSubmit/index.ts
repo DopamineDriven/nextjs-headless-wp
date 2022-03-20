@@ -1,1 +1,1 @@
-export { default as GravityFormSubmit } from "./form-submit";
+export { default } from "./form-submit";

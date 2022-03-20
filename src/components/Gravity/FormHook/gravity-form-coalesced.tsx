@@ -6,7 +6,7 @@ import {
   GetGravityFormQuery,
   FormFieldTypeEnum
 } from "@/graphql/generated/graphql";
-import { GravityFormSubmit } from "../FormSubmit";
+import { GravityFormSubmit } from "..";
 import { useState, useRef, useEffect, VFC, ReactNode } from "react";
 import { LoadingSpinner } from "@/components/UI";
 import { GravityFieldErrors } from "@/types/error-helpers";
