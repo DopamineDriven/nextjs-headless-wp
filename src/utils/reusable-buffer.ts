@@ -13,12 +13,23 @@ export enum BufferEncodingOptions {
 }
 
 export default function buf<
-  T extends WithImplicitCoercion<string | Uint8Array | readonly number[]>,
-  K extends keyof typeof BufferEncodingOptions,
-  S extends number | undefined,
-  E extends number | undefined
->(data: T, encodingFrom: K, encodingTo: K, start?: S, end?: E): string {
-  return Buffer.from(data as string, encodingFrom).toString(encodingTo, start, end);
+  TData extends WithImplicitCoercion<string | Uint8Array | readonly number[]>,
+  From extends keyof typeof BufferEncodingOptions,
+  To extends keyof typeof BufferEncodingOptions,
+  StartNum extends number | undefined,
+  StopNum extends number | undefined
+>(
+  data: TData,
+  encodingFrom: From,
+  encodingTo: To,
+  start?: StartNum,
+  end?: StopNum
+): string {
+  return Buffer.from(data as string, encodingFrom).toString(
+    encodingTo,
+    start,
+    end
+  );
 }
 /**
  * "ascii" | "utf8" | "utf-8" | "utf16le" | "ucs2" | "ucs-2" | "base64" | "base64url" | "latin1" | "binary" | "hex"

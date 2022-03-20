@@ -31,19 +31,7 @@ export interface PasswordFieldProps extends GravityFieldErrors {
 
 const DEFAULT_VALUE: PasswordFieldInput = {};
 
-export const InjectTextInput = ({
-  ...props
-}: UnwrapInputProps<
-  | "className"
-  | "type"
-  | "name"
-  | "id"
-  | "required"
-  | "value"
-  | "min"
-  | "onChange"
-  | "placeholder"
->) => <input {...props} />;
+
 
 const PasswordField = ({
   field,
@@ -103,12 +91,13 @@ const PasswordField = ({
         }
       }
     });
-  }
+  }// note -- VALUE is defined (the prop passed in) -- passwordValues IS NOT DEFINED
+  // TODO FIX &uarr;
   return (
     <div
       className={`gfield_${formIdRef.current}_${id} ${cssClass ?? ""}`.trim()}>
       <label htmlFor={htmlId}>{label}</label>
-      <InjectTextInput
+      <input
         type={"password"}
         name={String(id)}
         placeholder={inputs![0]?.placeholder as string ?? ""}
@@ -135,7 +124,7 @@ const PasswordField = ({
             <label htmlFor={`input_${formIdRef.current}_${id}_${key}`}>
               {inputLabel.includes("Enter Password") ? inputLabel : ""}
             </label>
-            <InjectTextInput
+            <input
               className={cn(
                 `gform_${formIdRef.current}_gfield_nameinput_${
                   router.query.slug as string

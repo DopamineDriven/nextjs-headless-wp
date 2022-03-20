@@ -1,6 +1,9 @@
 # nextjs-headless-wp
 Nextjs, Headless WordPress, TypeScript, GraphQL, TailwindCSS
 
+```ts
+```
+
 #### On Demand Revalidation (ISR)
 - can be a web hook, a click event, etc -- now ISR can be manually toggled only WHEN data changes
 ```ts
