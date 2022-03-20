@@ -47,7 +47,7 @@
         "src/apollo/*"
       ],
       "@/cache/*": [
-        "src/.cache/*"
+        ".cache/*"
       ],
       "@/components/*": [
         "src/components/*"
@@ -89,6 +89,7 @@
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.graphqls.d.ts",
+    "src/**/*.graphql.d.ts",
     "src/**/*.graphqls",
     "src/**/*.graphql",
     "src/**/*.tsx",

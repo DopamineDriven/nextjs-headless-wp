@@ -26,6 +26,8 @@ import { NormalizedCacheObject } from "@apollo/client";
 import { LoadingSpinner, Inspector } from "@/components/UI";
 import GravityFormCoalesced from "@/components/Gravity/FormHook/gravity-form-coalesced";
 import { htmlToReact } from "@/lib/html-to-react";
+import dynamic from "next/dynamic";
+import { ComponentType } from "react";
 
 export type DynamicGravityProps = {
   serverSlug: string;
@@ -78,7 +80,7 @@ export const getStaticProps = async (
   ctx: GetStaticPropsContext<ParsedUrlQuery>
 ): Promise<GetStaticPropsResult<DynamicGravityProps>> => {
   const apolloClientGravity = initializeApollo();
-  const slug = ctx.params ? (ctx.params.slug as string) : "";
+  const serverSlug = ctx.params ? (ctx.params.uri as string) : "";
   const { data: gform } = await apolloClientGravity.query<
     GravityPostTypeQuery,
     GravityPostTypeQueryVariables
@@ -86,7 +88,7 @@ export const getStaticProps = async (
     query: GravityPostType,
     variables: {
       idType: GformIdType.SLUG,
-      id: slug
+      id: serverSlug
     },
     notifyOnNetworkStatusChange: true,
     context: { ...ctx },
@@ -105,7 +107,7 @@ export const getStaticProps = async (
     query: GetGravityForm,
     variables: {
       formFieldType: [CAPTCHA, EMAIL, NAME, PASSWORD, RECAPTCHA],
-      first: 10,
+      first: 300,
       formId: "1",
       idType: FormIdTypeEnum.DATABASE_ID
     }
@@ -113,37 +115,47 @@ export const getStaticProps = async (
 
   return addApolloState(apolloClientGravity, {
     props: {
-
       gform,
       register,
-      serverSlug: slug
+      serverSlug
     },
     revalidate: 600
   });
 };
+
+const RegisterLazy = dynamic<
+  import("../../components/Gravity/FormHook/gravity-form-coalesced").GravityFormProps
+>(() => import("../../components/Gravity/FormHook/gravity-form-coalesced"), {
+  loading: () => <LoadingSpinner />
+});
 
 const DynamicGravity = <T extends typeof getStaticProps>({
   gform,
   register,
   serverSlug
 }: InferGetStaticPropsType<T>) => {
+  console.log(register ?? "no register");
   const router = useRouter();
   const isomorphicSlug =
     typeof window === "undefined"
       ? serverSlug
-      : (router.query.slug as string) ?? serverSlug;
+      : (router.query.uri as string) ?? serverSlug;
   return (
     <>
       {router.isFallback ? (
         <LoadingSpinner />
       ) : (
         <div className='font-interVar mx-auto mt-10'>
-          {JSON.stringify(`${gform.gform?.content ?? "no content"}`)}
-          {/* {isomorphicSlug === "create-an-account" ? (
-            <GravityFormCoalesced form={register.gfForm} formId='1' />
+          <Inspector>{JSON.stringify(register, null, 2)}</Inspector>
+          {isomorphicSlug === "create-an-account" ? (
+            <RegisterLazy
+              form={register.gfForm}
+                formId='1'
+
+              />
           ) : (
             <div>{"hmm...something went wrong..."} </div>
-          )} */}
+          )}
         </div>
       )}
     </>

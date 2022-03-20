@@ -1,4 +1,4 @@
-import { ResolverContext } from "@/types/resolver-context";
+import { ResolverContext } from "@/apollo/middleware";
 import { Upload } from "graphql-upload";
 import {
   GraphQLDate,
@@ -16896,6 +16896,9 @@ export const PasswordFieldInputPartial = gql`
 `;
 export const PasswordFieldPartial = gql`
   fragment PasswordFieldPartial on PasswordField {
+    inputs {
+      ...PasswordFieldInputPartial
+    }
     adminLabel
     cssClass
     visibility
@@ -16917,6 +16920,7 @@ export const PasswordFieldPartial = gql`
     value
     __typename
   }
+  ${PasswordFieldInputPartial}
 `;
 export const PhoneFieldsGravityPartial = gql`
   fragment PhoneFieldsGravityPartial on PhoneField {
@@ -17541,57 +17545,12 @@ export const GetGravityForm = gql`
       ...GravityFormsFormPartial
       button {
         ...ButtonFieldsGravityPartial
-        conditionalLogic {
-          ...ConditionalLogicPartial
-          rules {
-            ...ConditionalLogicRulePartial
-          }
-        }
-      }
-      personalData {
-        dataPolicies {
-          entryData {
-            ...FormEntryDataPolicyPartial
-          }
-          ...FormDataPoliciesPartial
-        }
-        ...FormPersonalDataPartial
-      }
-      saveAndContinue {
-        ...FormSaveAndContinuePartial
-      }
-      lastPageButton {
-        ...FormLastPageButtonPartial
-      }
-      login {
-        ...FormLoginPartial
       }
       confirmations {
         ...FormConfirmationGravityPartial
       }
       pagination {
         ...PaginationPartial
-      }
-      notifications {
-        ...FormNotificationPartial
-        conditionalLogic {
-          ...ConditionalLogicPartial
-          rules {
-            ...ConditionalLogicRulePartial
-          }
-        }
-        routing {
-          ...FormNotificationRoutingPartial
-        }
-      }
-      scheduling {
-        ...FormSchedulePartial
-        endDetails {
-          ...FormScheduleDetailsPartial
-        }
-        startDetails {
-          ...FormScheduleDetailsPartial
-        }
       }
       formFields(
         first: $first
@@ -17643,9 +17602,6 @@ export const GetGravityForm = gql`
             ...NameFieldsGravityPartial
           }
           ... on PasswordField {
-            inputs {
-              ...PasswordFieldInputPartial
-            }
             ...PasswordFieldPartial
           }
           ... on PhoneField {
@@ -17659,36 +17615,6 @@ export const GetGravityForm = gql`
           }
           ... on PostImageField {
             ...PostImageFieldsGravityPartial
-          }
-          ... on QuizField {
-            ...QuizFieldPartial
-            choices {
-              ...QuizFieldChoicePartial
-            }
-            ... on QuizSelectField {
-              ...QuizSelectFieldPartial
-              choices {
-                ...QuizFieldChoicePartial
-              }
-            }
-            ... on QuizRadioField {
-              ...QuizRadioFieldPartial
-              choices {
-                ...QuizFieldChoicePartial
-              }
-            }
-            ... on QuizCheckboxField {
-              choices {
-                ...QuizFieldChoicePartial
-              }
-              inputs {
-                ...QuizInputPropertyPartial
-              }
-              checkboxValues {
-                ...CheckboxFieldValuePartial
-              }
-              ...QuizCheckboxFieldPartial
-            }
           }
           ... on RadioField {
             ...RadioFieldsGravityPartial
@@ -17720,20 +17646,8 @@ export const GetGravityForm = gql`
   }
   ${GravityFormsFormPartial}
   ${ButtonFieldsGravityPartial}
-  ${ConditionalLogicPartial}
-  ${ConditionalLogicRulePartial}
-  ${FormEntryDataPolicyPartial}
-  ${FormDataPoliciesPartial}
-  ${FormPersonalDataPartial}
-  ${FormSaveAndContinuePartial}
-  ${FormLastPageButtonPartial}
-  ${FormLoginPartial}
   ${FormConfirmationGravityPartial}
   ${PaginationPartial}
-  ${FormNotificationPartial}
-  ${FormNotificationRoutingPartial}
-  ${FormSchedulePartial}
-  ${FormScheduleDetailsPartial}
   ${PageInfoPartial}
   ${FormFieldsGravityPartial}
   ${AddressFieldsGravityPartial}
@@ -17749,19 +17663,11 @@ export const GetGravityForm = gql`
   ${ListChoicePropertyFieldsGravityPartial}
   ${MultiSelectFieldsGravityPartial}
   ${NameFieldsGravityPartial}
-  ${PasswordFieldInputPartial}
   ${PasswordFieldPartial}
   ${PhoneFieldsGravityPartial}
   ${PollFieldPartial}
   ${PostContentFieldsGravityPartial}
   ${PostImageFieldsGravityPartial}
-  ${QuizFieldPartial}
-  ${QuizFieldChoicePartial}
-  ${QuizSelectFieldPartial}
-  ${QuizRadioFieldPartial}
-  ${QuizInputPropertyPartial}
-  ${CheckboxFieldValuePartial}
-  ${QuizCheckboxFieldPartial}
   ${RadioFieldsGravityPartial}
   ${RecaptchaPartial}
   ${SelectFieldsGravityPartial}
@@ -39885,6 +39791,14 @@ export type PasswordFieldPartialFragment = {
   size?: FormFieldSizeEnum | null;
   subLabelPlacement?: FormFieldSubLabelPlacementEnum | null;
   value?: string | null;
+  inputs?: Array<{
+    __typename: "PasswordInputProperty";
+    customLabel?: string | null;
+    id?: number | null;
+    isHidden?: boolean | null;
+    label?: string | null;
+    placeholder?: string | null;
+  } | null> | null;
 };
 
 export type PasswordFieldPartialFragmentVariables = Exact<{
@@ -40568,50 +40482,6 @@ export type GetGravityFormQuery = {
       text?: string | null;
       imageUrl?: string | null;
       type?: FormButtonTypeEnum | null;
-      conditionalLogic?: {
-        __typename: "ConditionalLogic";
-        actionType?: ConditionalLogicActionTypeEnum | null;
-        logicType?: ConditionalLogicLogicTypeEnum | null;
-        rules?: Array<{
-          __typename: "ConditionalLogicRule";
-          fieldId?: number | null;
-          operator?: FormRuleOperatorEnum | null;
-          value?: string | null;
-        } | null> | null;
-      } | null;
-    } | null;
-    personalData?: {
-      __typename: "FormPersonalData";
-      retentionPolicy?: FormRetentionPolicyEnum | null;
-      daysToRetain?: number | null;
-      shouldSaveIP?: boolean | null;
-      dataPolicies?: {
-        __typename: "FormDataPolicies";
-        identificationFieldDatabaseId?: number | null;
-        canExportAndErase?: boolean | null;
-        entryData?: Array<{
-          __typename: "FormEntryDataPolicy";
-          key?: string | null;
-          shouldErase?: boolean | null;
-          shouldExport?: boolean | null;
-        } | null> | null;
-      } | null;
-    } | null;
-    saveAndContinue?: {
-      __typename: "FormSaveAndContinue";
-      buttonText?: string | null;
-      hasSaveAndContinue?: boolean | null;
-    } | null;
-    lastPageButton?: {
-      __typename: "FormLastPageButton";
-      imageUrl?: string | null;
-      text?: string | null;
-      type?: FormButtonTypeEnum | null;
-    } | null;
-    login?: {
-      __typename: "FormLogin";
-      isLoginRequired?: boolean | null;
-      loginRequiredMessage?: string | null;
     } | null;
     confirmations?: Array<{
       __typename: "FormConfirmation";
@@ -40634,64 +40504,6 @@ export type GetGravityFormQuery = {
       progressbarCompletionText?: string | null;
       style?: FormPageProgressStyleEnum | null;
       type?: FormPageProgressTypeEnum | null;
-    } | null;
-    notifications?: Array<{
-      __typename: "FormNotification";
-      bcc?: string | null;
-      event?: string | null;
-      from?: string | null;
-      fromName?: string | null;
-      isAutoformatted?: boolean | null;
-      id?: string | null;
-      isActive?: boolean | null;
-      message?: string | null;
-      name?: string | null;
-      replyTo?: string | null;
-      service?: string | null;
-      shouldSendAttachments?: boolean | null;
-      subject?: string | null;
-      to?: string | null;
-      toType?: FormNotificationToTypeEnum | null;
-      conditionalLogic?: {
-        __typename: "ConditionalLogic";
-        actionType?: ConditionalLogicActionTypeEnum | null;
-        logicType?: ConditionalLogicLogicTypeEnum | null;
-        rules?: Array<{
-          __typename: "ConditionalLogicRule";
-          fieldId?: number | null;
-          operator?: FormRuleOperatorEnum | null;
-          value?: string | null;
-        } | null> | null;
-      } | null;
-      routing?: Array<{
-        __typename: "FormNotificationRouting";
-        email?: string | null;
-        fieldId?: number | null;
-        operator?: FormRuleOperatorEnum | null;
-        value?: string | null;
-      } | null> | null;
-    } | null> | null;
-    scheduling?: {
-      __typename: "FormSchedule";
-      closedMessage?: string | null;
-      hasSchedule?: boolean | null;
-      pendingMessage?: string | null;
-      endDetails?: {
-        __typename: "FormScheduleDetails";
-        amPm?: AmPmEnum | null;
-        date?: string | null;
-        dateGmt?: string | null;
-        hour?: number | null;
-        minute?: number | null;
-      } | null;
-      startDetails?: {
-        __typename: "FormScheduleDetails";
-        amPm?: AmPmEnum | null;
-        date?: string | null;
-        dateGmt?: string | null;
-        hour?: number | null;
-        minute?: number | null;
-      } | null;
     } | null;
     formFields?: {
       __typename: "GfFormToFormFieldConnection";
@@ -41353,105 +41165,30 @@ export type GetGravityFormQuery = {
           }
         | {
             __typename: "QuizCheckboxField";
-            adminLabel?: string | null;
-            answerExplanation?: string | null;
-            canPrepopulate?: boolean | null;
-            cssClass?: string | null;
-            description?: string | null;
-            descriptionPlacement?: FormFieldDescriptionPlacementEnum | null;
-            displayOnly?: boolean | null;
-            errorMessage?: string | null;
-            hasChoiceValue?: boolean | null;
-            hasWeightedScore?: boolean | null;
             id: number;
-            inputName?: string | null;
+            displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
-            isRequired?: boolean | null;
-            label?: string | null;
-            labelPlacement?: FormFieldLabelPlacementEnum | null;
             pageNumber?: number | null;
-            shouldRandomizeQuizChoices?: boolean | null;
-            shouldShowAnswerExplanation?: boolean | null;
-            type?: FormFieldTypeEnum | null;
-            value?: string | null;
             visibility?: FormFieldVisibilityEnum | null;
-            choices?: Array<{
-              __typename: "QuizFieldChoice";
-              isCorrect?: boolean | null;
-              isOtherChoice?: boolean | null;
-              isSelected?: boolean | null;
-              text?: string | null;
-              value?: string | null;
-              weight?: number | null;
-            } | null> | null;
+            type?: FormFieldTypeEnum | null;
           }
         | {
             __typename: "QuizRadioField";
-            adminLabel?: string | null;
-            answerExplanation?: string | null;
-            canPrepopulate?: boolean | null;
-            cssClass?: string | null;
-            description?: string | null;
-            descriptionPlacement?: FormFieldDescriptionPlacementEnum | null;
-            displayOnly?: boolean | null;
-            errorMessage?: string | null;
-            hasChoiceValue?: boolean | null;
-            hasWeightedScore?: boolean | null;
             id: number;
-            inputName?: string | null;
+            displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
-            isRequired?: boolean | null;
-            label?: string | null;
-            labelPlacement?: FormFieldLabelPlacementEnum | null;
             pageNumber?: number | null;
-            shouldRandomizeQuizChoices?: boolean | null;
-            shouldShowAnswerExplanation?: boolean | null;
-            type?: FormFieldTypeEnum | null;
-            value?: string | null;
             visibility?: FormFieldVisibilityEnum | null;
-            choices?: Array<{
-              __typename: "QuizFieldChoice";
-              isCorrect?: boolean | null;
-              isOtherChoice?: boolean | null;
-              isSelected?: boolean | null;
-              text?: string | null;
-              value?: string | null;
-              weight?: number | null;
-            } | null> | null;
+            type?: FormFieldTypeEnum | null;
           }
         | {
             __typename: "QuizSelectField";
-            adminLabel?: string | null;
-            answerExplanation?: string | null;
-            canPrepopulate?: boolean | null;
-            cssClass?: string | null;
-            description?: string | null;
-            descriptionPlacement?: FormFieldDescriptionPlacementEnum | null;
-            displayOnly?: boolean | null;
-            errorMessage?: string | null;
-            hasChoiceValue?: boolean | null;
-            hasWeightedScore?: boolean | null;
             id: number;
-            inputName?: string | null;
+            displayOnly?: boolean | null;
             inputType?: FormFieldTypeEnum | null;
-            isRequired?: boolean | null;
-            label?: string | null;
-            labelPlacement?: FormFieldLabelPlacementEnum | null;
             pageNumber?: number | null;
-            shouldRandomizeQuizChoices?: boolean | null;
-            shouldShowAnswerExplanation?: boolean | null;
-            type?: FormFieldTypeEnum | null;
-            value?: string | null;
             visibility?: FormFieldVisibilityEnum | null;
-            choices?: Array<{
-              __typename: "QuizFieldChoice";
-              isCorrect?: boolean | null;
-              isOtherChoice?: boolean | null;
-              isSelected?: boolean | null;
-              text?: string | null;
-              value?: string | null;
-              weight?: number | null;
-            } | null> | null;
+            type?: FormFieldTypeEnum | null;
           }
         | {
             __typename: "RadioField";
@@ -42488,6 +42225,9 @@ export const PasswordFieldInputPartialFragmentDoc = gql`
 `;
 export const PasswordFieldPartialFragmentDoc = gql`
   fragment PasswordFieldPartial on PasswordField {
+    inputs {
+      ...PasswordFieldInputPartial
+    }
     adminLabel
     cssClass
     visibility
@@ -42509,6 +42249,7 @@ export const PasswordFieldPartialFragmentDoc = gql`
     value
     __typename
   }
+  ${PasswordFieldInputPartialFragmentDoc}
 `;
 export const PhoneFieldsGravityPartialFragmentDoc = gql`
   fragment PhoneFieldsGravityPartial on PhoneField {
@@ -43448,57 +43189,12 @@ export const GetGravityFormDocument = gql`
       ...GravityFormsFormPartial
       button {
         ...ButtonFieldsGravityPartial
-        conditionalLogic {
-          ...ConditionalLogicPartial
-          rules {
-            ...ConditionalLogicRulePartial
-          }
-        }
-      }
-      personalData {
-        dataPolicies {
-          entryData {
-            ...FormEntryDataPolicyPartial
-          }
-          ...FormDataPoliciesPartial
-        }
-        ...FormPersonalDataPartial
-      }
-      saveAndContinue {
-        ...FormSaveAndContinuePartial
-      }
-      lastPageButton {
-        ...FormLastPageButtonPartial
-      }
-      login {
-        ...FormLoginPartial
       }
       confirmations {
         ...FormConfirmationGravityPartial
       }
       pagination {
         ...PaginationPartial
-      }
-      notifications {
-        ...FormNotificationPartial
-        conditionalLogic {
-          ...ConditionalLogicPartial
-          rules {
-            ...ConditionalLogicRulePartial
-          }
-        }
-        routing {
-          ...FormNotificationRoutingPartial
-        }
-      }
-      scheduling {
-        ...FormSchedulePartial
-        endDetails {
-          ...FormScheduleDetailsPartial
-        }
-        startDetails {
-          ...FormScheduleDetailsPartial
-        }
       }
       formFields(
         first: $first
@@ -43550,9 +43246,6 @@ export const GetGravityFormDocument = gql`
             ...NameFieldsGravityPartial
           }
           ... on PasswordField {
-            inputs {
-              ...PasswordFieldInputPartial
-            }
             ...PasswordFieldPartial
           }
           ... on PhoneField {
@@ -43566,36 +43259,6 @@ export const GetGravityFormDocument = gql`
           }
           ... on PostImageField {
             ...PostImageFieldsGravityPartial
-          }
-          ... on QuizField {
-            ...QuizFieldPartial
-            choices {
-              ...QuizFieldChoicePartial
-            }
-            ... on QuizSelectField {
-              ...QuizSelectFieldPartial
-              choices {
-                ...QuizFieldChoicePartial
-              }
-            }
-            ... on QuizRadioField {
-              ...QuizRadioFieldPartial
-              choices {
-                ...QuizFieldChoicePartial
-              }
-            }
-            ... on QuizCheckboxField {
-              choices {
-                ...QuizFieldChoicePartial
-              }
-              inputs {
-                ...QuizInputPropertyPartial
-              }
-              checkboxValues {
-                ...CheckboxFieldValuePartial
-              }
-              ...QuizCheckboxFieldPartial
-            }
           }
           ... on RadioField {
             ...RadioFieldsGravityPartial
@@ -43627,20 +43290,8 @@ export const GetGravityFormDocument = gql`
   }
   ${GravityFormsFormPartialFragmentDoc}
   ${ButtonFieldsGravityPartialFragmentDoc}
-  ${ConditionalLogicPartialFragmentDoc}
-  ${ConditionalLogicRulePartialFragmentDoc}
-  ${FormEntryDataPolicyPartialFragmentDoc}
-  ${FormDataPoliciesPartialFragmentDoc}
-  ${FormPersonalDataPartialFragmentDoc}
-  ${FormSaveAndContinuePartialFragmentDoc}
-  ${FormLastPageButtonPartialFragmentDoc}
-  ${FormLoginPartialFragmentDoc}
   ${FormConfirmationGravityPartialFragmentDoc}
   ${PaginationPartialFragmentDoc}
-  ${FormNotificationPartialFragmentDoc}
-  ${FormNotificationRoutingPartialFragmentDoc}
-  ${FormSchedulePartialFragmentDoc}
-  ${FormScheduleDetailsPartialFragmentDoc}
   ${PageInfoPartialFragmentDoc}
   ${FormFieldsGravityPartialFragmentDoc}
   ${AddressFieldsGravityPartialFragmentDoc}
@@ -43656,19 +43307,11 @@ export const GetGravityFormDocument = gql`
   ${ListChoicePropertyFieldsGravityPartialFragmentDoc}
   ${MultiSelectFieldsGravityPartialFragmentDoc}
   ${NameFieldsGravityPartialFragmentDoc}
-  ${PasswordFieldInputPartialFragmentDoc}
   ${PasswordFieldPartialFragmentDoc}
   ${PhoneFieldsGravityPartialFragmentDoc}
   ${PollFieldPartialFragmentDoc}
   ${PostContentFieldsGravityPartialFragmentDoc}
   ${PostImageFieldsGravityPartialFragmentDoc}
-  ${QuizFieldPartialFragmentDoc}
-  ${QuizFieldChoicePartialFragmentDoc}
-  ${QuizSelectFieldPartialFragmentDoc}
-  ${QuizRadioFieldPartialFragmentDoc}
-  ${QuizInputPropertyPartialFragmentDoc}
-  ${CheckboxFieldValuePartialFragmentDoc}
-  ${QuizCheckboxFieldPartialFragmentDoc}
   ${RadioFieldsGravityPartialFragmentDoc}
   ${RecaptchaPartialFragmentDoc}
   ${SelectFieldsGravityPartialFragmentDoc}

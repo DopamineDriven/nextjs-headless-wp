@@ -21,6 +21,7 @@ export interface FormSubmitProps extends GravityFieldErrors {
   children?: ReactNode;
   saveAsDraft?: boolean;
 }
+
 export const InjectButton = ({
   ...props
 }: UnwrapButtonProps<
@@ -71,7 +72,7 @@ const GravityFormSubmit: VFC<FormSubmitProps> = ({
     event.preventDefault();
     if (loading) return;
 
-    submitForm({
+   submitForm({
       variables: {
         input: {
           saveAsDraft: saveAsDraft ? saveAsDraft : false,
@@ -81,7 +82,7 @@ const GravityFormSubmit: VFC<FormSubmitProps> = ({
                 ? window.location.href
                 : router.pathname
           },
-          id: form?.id ? form.id : "",
+          id: form?.databaseId ? form.databaseId.toString() : "",
           fieldValues: state
         }
       }
@@ -158,34 +159,37 @@ const GravityFormSubmit: VFC<FormSubmitProps> = ({
       </div>
     );
   }
-  let __typename:
-    | "EmailField"
-    | "FileUploadField"
-    | "NameField"
-    | "PasswordField"
-    | "RadioField";
+
   return (
     <form id={`gform_${id}`} method='post' onSubmit={handleSubmit} className=''>
-      {formFields.map((field, i) => (
-        <FieldCaseSwitch
-          formId={id}
-          key={parseInt(`${field?.id ?? 2}`, 10) ** -++i}
-          field={
-            field!.__typename === "EmailField"
-              ? field!
-              : field!.__typename === "FileUploadField"
-              ? field
-              : field!.__typename === "NameField"
-              ? field!
-              : field!.__typename === "RadioField"
-              ? field!
-              : field!.__typename === "PasswordField"
-              ? field!
-              : (field as NonNullable<FormField> as unknown as FormFieldsGravityPartialFragment)
-          }
-          fieldErrors={data?.submitGfForm?.errors?.filter(id => id?.id === id)}
-        />
-      ))}
+      {formFields.map((field, i) =>
+        field ? (
+          <FieldCaseSwitch
+            formId={id}
+            key={parseInt(`${field?.id ?? 2}`, 10) ** -++i}
+            field={
+              field.__typename === "CaptchaField"
+                ? field
+                : field.__typename === "EmailField"
+                ? field
+                : field.__typename === "FileUploadField"
+                ? field
+                : field.__typename === "NameField"
+                ? field
+                : field.__typename === "RadioField"
+                ? field
+                : field.__typename === "PasswordField"
+                ? field
+                : form?.formFields?.nodes ? form.formFields.nodes.pop()! : field
+            }
+            fieldErrors={data?.submitGfForm?.errors?.filter(
+              id => id?.id === id
+            )}
+          />
+        ) : (
+          <></>
+        )
+      )}
       <div
         id={`gform_${id}_div_${formFields.length}`}
         className={cn(`gform_${id}_${router.query.slug as string}-rootDiv`)}>

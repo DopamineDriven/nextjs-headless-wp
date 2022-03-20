@@ -21,9 +21,14 @@ config:
   useIndexSignature: true
   withHooks: true
   withRefetchFn: true
+  flattenGeneratedTypes: true
+  flattenGeneratedTypesIncludeFragments: true
 plugins:
   - typescript-operations:
       dedupeFragments: true
+      experimentalFragmentVariables: true
+      useTypeImports: true
+      useExplicitTyping: true
     config:
       maybeValue: "T"
   - typescript-react-apollo:
@@ -32,6 +37,9 @@ plugins:
       withRefetchFn: true
       withHooks: true
       experimentalFragmentVariables: true
-      useTypeImports: true
-cacheDir: "./src/.cache"
-TSConfigFile: "./tsconfig.json"
+      exportFragmentSpreadSubTypes: true
+
+
+cacheDir: ".cache"
+TSConfigFile: "tsconfig.json"
+typeInjectEntrypoint: node_modules/@types/graphql-let/index.d.ts

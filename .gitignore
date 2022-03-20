@@ -108,5 +108,5 @@ dist
 src/graphql/**/*.d.ts
 src/graphql/generated/introspection.schema.json
 src/graphql/generated/graphql.schema.graphql
-
+notes.md
 .vercel

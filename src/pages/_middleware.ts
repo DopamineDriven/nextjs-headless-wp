@@ -40,7 +40,7 @@ export default function Middleware(req: NextRequest) {
   response.headers.set("X-DNS-Prefetch-Control", "On");
   response.headers.set(
     "Access-Control-Allow-Headers",
-    " Authorization, *, authorization"
+    " Authorization, *, authorization, apollographql-client-name"
   );
 
   return response

@@ -39,7 +39,7 @@ function createApolloClient(
 ): ApolloClient<NormalizedCacheObject> {
   return new ApolloClient({
     ssrMode: typeof window === "undefined",
-    name: "nextjs-headless-wp",
+    // name: "nextjs-headless-wp",
     link: sessionMiddleware
       .concat(sessionAfterware)
       .concat(httpLink || errorLink),

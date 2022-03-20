@@ -33,7 +33,7 @@
         "src/apollo/*"
       ],
       "@/cache/*": [
-        "src/.cache/*"
+        ".cache/*"
       ],
       "@/components/*": [
         "src/components/*"
