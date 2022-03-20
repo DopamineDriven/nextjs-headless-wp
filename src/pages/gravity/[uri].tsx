@@ -123,11 +123,25 @@ export const getStaticProps = async (
   });
 };
 
-const RegisterLazy = dynamic<
+const RegisterLazy: ComponentType<
   import("../../components/Gravity/FormHook/gravity-form-coalesced").GravityFormProps
->(() => import("../../components/Gravity/FormHook/gravity-form-coalesced"), {
-  loading: () => <LoadingSpinner />
-});
+> = dynamic<
+  import("../../components/Gravity/FormHook/gravity-form-coalesced").GravityFormProps
+>(
+  async () =>
+    (await import("../../components/Gravity/FormHook/gravity-form-coalesced"))
+      .default,
+  {
+    loading: ({ error, isLoading, pastDelay, retry, timedOut }) =>
+      isLoading ? (
+        <LoadingSpinner />
+      ) : error ? (
+        <pre>{JSON.stringify(new Error(`${{ ...error }}`), null, 2)}</pre>
+      ) : (
+        <LoadingSpinner />
+      )
+  }
+);
 
 const DynamicGravity = <T extends typeof getStaticProps>({
   gform,
@@ -150,9 +164,9 @@ const DynamicGravity = <T extends typeof getStaticProps>({
           {isomorphicSlug === "create-an-account" ? (
             <RegisterLazy
               form={register.gfForm}
-                formId='1'
-
-              />
+              formId='1'
+              key={register.gfForm?.id}
+            />
           ) : (
             <div>{"hmm...something went wrong..."} </div>
           )}

@@ -94,7 +94,7 @@ export function addApolloState(
   pageProps: AppInitialProps["pageProps"]
 ) {
   if (pageProps?.props) {
-    pageProps.props[typeof APOLLO_STATE_PROP_NAME] = client.cache.extract();
+    pageProps.props[typeof APOLLO_STATE_PROP_NAME] = client.cache.extract(true);
   }
   return pageProps;
 }

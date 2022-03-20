@@ -16,7 +16,7 @@ const Container: VFC<Props> = ({ children, className, el = "div", clean }) => {
   const Component: ComponentType<HTMLAttributes<HTMLDivElement>> =
     el as ComponentType<HTMLAttributes<HTMLDivElement>>;
 
-  return <Component className={rootClassName} {...el}>{children}</Component>;
+  return <Component className={rootClassName}>{children}</Component>;
 };
 
 export default Container;

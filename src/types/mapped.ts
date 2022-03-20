@@ -12,7 +12,7 @@ import {
 } from "react";
 import { NextApiHandler } from "next";
 import { ImageProps } from "next/image";
-import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
+import { ApolloCache, ApolloClient, NormalizedCacheObject } from "@apollo/client";
 import { OneOf, RequireOnlyOne } from "./helpers";
 
 export type LiteralUnion<T extends U, U = string> =
@@ -44,7 +44,7 @@ export const ApolloClientProps = async ({
   apolloProps: { ...props }
 }: {
   apolloProps: RecursiveAmbivalent<ApolloClient<NormalizedCacheObject>>;
-}) => ({ ...props });
+}) => ({ ...props});
 
 export type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
 
@@ -81,7 +81,8 @@ const ApolloClientUnwrapped = ({
   watchQuery,
   writeFragment,
   writeQuery
-}: UnwrapPromise<ReturnType<typeof ApolloClientProps>>) => {};
+}: UnwrapPromise<ReturnType<typeof ApolloClientProps>>) => {
+};
 
 // <svg/> props
 export type SVGAttribs<T extends keyof SVGAttributes<SVGSVGElement>> = {
