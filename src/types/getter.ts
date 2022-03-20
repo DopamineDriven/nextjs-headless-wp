@@ -4,12 +4,12 @@ export type PropGetters<TObj extends Record<string, any>> = {
 
 // Record<string, any> extended by TObj to resolve a type error on line 16 in its absence
 // pertaining to: newObj[getterKey] = () => obj[key]
-export function createGetterObject<TObj extends Record<string, any>>(
+export function createGetterObject<TObj extends Record<string, unknown>>(
   obj: TObj
 ): PropGetters<TObj> {
   const newObj: any = {};
   for (const key of Object.keys(obj)) {
-    const capitalizedKey = key.toUpperCase() + key.substr(1);
+    const capitalizedKey = key.toUpperCase() + key.substring(1);
     const getterKey = `get${capitalizedKey}`;
     newObj[getterKey] = () => obj[key];
   }
