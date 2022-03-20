@@ -15,7 +15,7 @@ import {
 } from "@apollo/client/react/context";
 
 export const Noop: FC = ({ children }) => <>{children}</>;
-export interface HandleRouteChangeExtended<T extends (url: URL) => void> {
+export interface HandleRouteChangeExtended<T extends (url: URL) => ReturnType<T>> {
   shallow: LinkProps["shallow"];
 }
 export const Page: FC<HTMLAttributes<HTMLElement>> = ({

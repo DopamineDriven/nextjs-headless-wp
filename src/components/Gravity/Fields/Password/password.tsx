@@ -103,7 +103,8 @@ const PasswordField = ({
         }
       }
     });
-  }
+  }// note -- VALUE is defined (the prop passed in) -- passwordValues IS NOT DEFINED
+  // TODO FIX &uarr;
   return (
     <div
       className={`gfield_${formIdRef.current}_${id} ${cssClass ?? ""}`.trim()}>
