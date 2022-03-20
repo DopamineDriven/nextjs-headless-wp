@@ -30,11 +30,11 @@ export type IndexProps = {
   gform?: GravityPostTypeQuery | null;
 };
 // Proof of Concept
-import type { UnwrapPickOneHtmlUnion } from "@/types/unwrap-react";
+import type { UnwrapHtmlPickOneUnion } from "@/types/unwrap-react";
 
 export const CustomDiv = ({
   ...props
-}: UnwrapPickOneHtmlUnion<
+}: UnwrapHtmlPickOneUnion<
   HTMLDivElement,
   | "about"
   | "accessKey"
@@ -47,7 +47,7 @@ export const CustomDiv = ({
 
 export const CustomCanvasFtw = ({
   ...props
-}: UnwrapPickOneHtmlUnion<
+}: UnwrapHtmlPickOneUnion<
   HTMLCanvasElement,
   | "contentEditable"
   | "placeholder"
@@ -61,7 +61,7 @@ export const CustomCanvasFtw = ({
 
 export const CustomHeading = ({
   ...props
-}: UnwrapPickOneHtmlUnion<
+}: UnwrapHtmlPickOneUnion<
   HTMLHeadingElement,
   "typeof" | "title" | "children" | "is" | "role" | "className"
 >) => {
