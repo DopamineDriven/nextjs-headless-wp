@@ -7,7 +7,8 @@ import {
   GetStaticPropsContext,
   GetStaticPropsResult,
   InferGetServerSidePropsType,
-  InferGetStaticPropsType
+  InferGetStaticPropsType,
+  NextPage
 } from "next";
 import React, { VFC } from "react";
 import { World, Code, Inspector } from "@/components/UI";
@@ -78,10 +79,7 @@ export const CustomHeading = ({
   );
 };
 
-export default function IndexPage<T extends typeof getStaticProps>({
-  gform
-}: InferGetStaticPropsType<T>) {
-  console.log(gform?.gform ?? "no gform")
+export default function IndexPage() {
   return (
     <>
       <div className='min-h-screen bg-gradient-to-tl from-gray-700 via-slate-800 to-gray-900 flex text-stone-200 fit '>
@@ -94,26 +92,27 @@ export default function IndexPage<T extends typeof getStaticProps>({
   );
 }
 
-export const getStaticProps = async (
-  ctx: GetStaticPropsContext<ParsedUrlQuery>
-): Promise<GetStaticPropsResult<IndexProps>> => {
-  const apolloClient = initializeApollo();
-  const { data: gform} = await apolloClient.query<GravityPostTypeQuery, GravityPostTypeQueryVariables>(
-    {
-      query: GravityPostType,
-      variables: {
-        idType: GformIdType.SLUG,
-        id: "create-an-account"
-      },
-      notifyOnNetworkStatusChange: true,
+// export const getStaticProps = async (
+//   ctx: GetStaticPropsContext<ParsedUrlQuery>
+// ): Promise<GetStaticPropsResult<IndexProps>> => {
+//   const apolloClient = initializeApollo();
+//   const { data: gform } = await apolloClient.query<
+//     GravityPostTypeQuery,
+//     GravityPostTypeQueryVariables
+//   >({
+//     query: GravityPostType,
+//     variables: {
+//       idType: GformIdType.SLUG,
+//       id: "create-an-account"
+//     },
+//     notifyOnNetworkStatusChange: true,
+//     fetchPolicy: "cache-first"
+//   });
 
-      fetchPolicy: "cache-first"
-    }
-  );
-
-  return addApolloState(apolloClient, {
-    props: {
-      gform
-    }
-  });
-};
+//   return addApolloState(apolloClient, {
+//     props: {
+//       gform
+//     },
+//     revalidate: 600
+//   });
+// };
