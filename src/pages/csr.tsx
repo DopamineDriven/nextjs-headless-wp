@@ -34,27 +34,22 @@ const RegisterLazy: ComponentType<
   import("../components/Gravity/FormHook/gravity-form-coalesced").GravityFormProps
 > = dynamic<
   import("../components/Gravity/FormHook/gravity-form-coalesced").GravityFormProps
->(
-  async () =>
-    (await import("../components/Gravity/FormHook/gravity-form-coalesced"))
-      .default,
-  {
-    loading: ({ error, isLoading, pastDelay, retry, timedOut }) =>
-      isLoading ? (
-        <LoadingSpinner />
-      ) : error ? (
-        <pre>{JSON.stringify(new Error(`${{ ...error }}`), null, 2)}</pre>
-      ) : timedOut ? (
-        <pre>{JSON.stringify(`timed out: ${timedOut}`, null, 2)}</pre>
-      ) : pastDelay ? (
-        <pre>{JSON.stringify(`past delay: ${pastDelay}`, null, 2)}</pre>
-      ) : !!isLoading && !error && !timedOut && !!pastDelay ? (
-        <pre>{JSON.stringify(retry, null, 2)}</pre>
-      ) : (
-        <LoadingSpinner />
-      )
-  }
-);
+>(() => import("../components/Gravity/FormHook/gravity-form-coalesced"), {
+  loading: ({ error, isLoading, pastDelay, retry, timedOut }) =>
+    isLoading ? (
+      <LoadingSpinner />
+    ) : error ? (
+      <pre>{JSON.stringify(new Error(`${{ ...error }}`), null, 2)}</pre>
+    ) : timedOut ? (
+      <pre>{JSON.stringify(`timed out: ${timedOut}`, null, 2)}</pre>
+    ) : pastDelay ? (
+      <pre>{JSON.stringify(`past delay: ${pastDelay}`, null, 2)}</pre>
+    ) : !!isLoading && !error && !timedOut && !!pastDelay ? (
+      <pre>{JSON.stringify(retry, null, 2)}</pre>
+    ) : (
+      <LoadingSpinner />
+    )
+});
 
 function Csr<T extends typeof getStaticProps>({
   register,
@@ -62,8 +57,10 @@ function Csr<T extends typeof getStaticProps>({
 }: InferGetStaticPropsType<T>) {
   return (
     <>
-      <CreateAnAccountWrapper wrapper={gravity} className="mx-auto max-w-7xl fit">
-        <RegisterLazy form={register} formId={"1"} />
+      <CreateAnAccountWrapper
+        wrapper={gravity}
+        className='mx-auto max-w-7xl fit'>
+        <RegisterLazy  form={register} formId={"1"} />
       </CreateAnAccountWrapper>
     </>
   );
