@@ -2,12 +2,7 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "ES2020",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext",
-      "ESNext.AsyncIterable"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "ESNext.AsyncIterable"],
     "declaration": true,
     "strict": true,
     "pretty": true,
@@ -43,49 +38,21 @@
     "isolatedModules": true,
     "incremental": true,
     "paths": {
-      "@/apollo/*": [
-        "src/apollo/*"
-      ],
-      "@/cache/*": [
-        ".cache/*"
-      ],
-      "@/components/*": [
-        "src/components/*"
-      ],
-      "@/context/*": [
-        "src/context/*"
-      ],
-      "@/graphql/*": [
-        "src/graphql/*"
-      ],
-      "@/hooks/*": [
-        "src/hooks/*"
-      ],
-      "@/lib/*": [
-        "src/lib/*"
-      ],
-      "@/pages/*": [
-        "src/pages/*"
-      ],
-      "@/server/*": [
-        "src/server/*"
-      ],
-      "@/styles/*": [
-        "src/styles/*"
-      ],
-      "@/types/*": [
-        "src/types/*"
-      ],
-      "@/utils/*": [
-        "src/utils/*"
-      ]
+      "@/apollo/*": ["src/apollo/*"],
+      "@/components/*": ["src/components/*"],
+      "@/graphql/*": ["src/graphql/*"],
+      "@/hooks/*": ["src/hooks/*"],
+      "@/lib/*": ["src/lib/*"],
+      "@/pages/*": ["src/pages/*"],
+      "@/styles/*": ["src/styles/*"],
+      "@/types/*": ["src/types/*"],
+      "@/utils/*": ["src/utils/*"]
     }
   },
   "include": [
     "next-env.d.ts",
     "index.d.ts",
     "graphqls.d.ts",
-    "src/seeds/**/*.ts",
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.graphqls.d.ts",
@@ -94,9 +61,7 @@
     "src/**/*.graphql",
     "src/**/*.tsx",
     "src/**/*.js",
-    "schema.gql"
+    "src/**/*.gql"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
