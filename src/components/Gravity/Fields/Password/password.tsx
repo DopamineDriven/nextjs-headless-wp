@@ -8,7 +8,7 @@ import useGravityForm, {
   ACTION_TYPES,
   BaseFieldValue,
   PasswordFieldInput,
-  PasswordFieldValues,
+  StringFieldValue,
   StringFieldValues
 } from "@/hooks/use-gravity";
 import { GravityFieldErrors } from "@/types/error-helpers";
@@ -17,7 +17,8 @@ import {
   useEffect,
   useRef,
   useState,
-  HTMLInputTypeAttribute
+  HTMLInputTypeAttribute,
+  useCallback
 } from "react";
 import { UnwrapInputProps } from "@/types/mapped";
 import { PasswordFieldPartialFragment } from "@/graphql/gravity/queries/get-gravity-form.graphql";
@@ -29,9 +30,7 @@ export interface PasswordFieldProps extends GravityFieldErrors {
   formId?: number | null;
 }
 
-const DEFAULT_VALUE: PasswordFieldInput = {};
-
-
+const DEFAULT_VALUE: StringFieldValue['value'] = "";
 
 const PasswordField = ({
   field,
@@ -49,12 +48,12 @@ const PasswordField = ({
     isRequired,
     errorMessage,
     inputs,
-    value,
+    value: value = DEFAULT_VALUE,
     inputType,
     minPasswordStrength
   } = field;
   const [formIdState, setFormIdState] = useState(id || formmId);
-
+const [passwordValState, setPasswordValState] = useState(value)
   const formIdRef = useRef(formIdState);
   formmId = id;
 
@@ -62,9 +61,9 @@ const PasswordField = ({
 
   const fieldValue = state.find(
     (fieldValue: BaseFieldValue) => fieldValue.id === id
-  ) as PasswordFieldValues | undefined;
+  ) as StringFieldValue | undefined;
 
-  const passwordValues = fieldValue?.passwordValues ?? DEFAULT_VALUE;
+  const passwordVal = fieldValue ? fieldValue : DEFAULT_VALUE;
 
   useEffect(() => {
     const formIdInnerRef = formIdRef.current;
@@ -77,82 +76,38 @@ const PasswordField = ({
   //   (fieldValue?.passwordValues || passwordValues) ?? DEFAULT_VALUE;
 
   const htmlId = `field_${formIdRef.current}_${id}`;
-// const [targetValue, setTargetValue] = useState<ChangeEvent<HTMLInputElement>['target']['value']>("")
-  function HandleChange(event: ChangeEvent<HTMLInputElement>) {
-    const { name, value } = event.target;
-    // const newPasswordValues = { ...fieldValue?.passwordValues, [name]: value };
-    dispatch({
-      type: ACTION_TYPES.updatePasswordFieldValue,
-      fieldValue: {
-        id,
-        passwordValues: {
-          value: event.target.value,
-          confirmationValue: event.target.value
+
+  const HandleChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setPasswordValState(event.target.value);
+      dispatch({
+        type: ACTION_TYPES.updatePasswordFieldValue,
+        fieldValue: {
+          id,
+          value: event.target.value
         }
-      }
-    });
-  }// note -- VALUE is defined (the prop passed in) -- passwordValues IS NOT DEFINED
-  // TODO FIX &uarr;
+      });
+    },
+    [dispatch, id]
+  );
+
   return (
     <div
       className={`gfield_${formIdRef.current}_${id} ${cssClass ?? ""}`.trim()}>
       <label htmlFor={htmlId}>{label}</label>
       <input
         type={"password"}
-        name={String(id)}
-        placeholder={inputs![0]?.placeholder as string ?? ""}
+        name={id.toString()}
+        placeholder={(inputs![0]?.placeholder as string) ?? ""}
         id={htmlId}
-        required={Boolean(isRequired)}
-        value={passwordValues.value as string ?? value as string}
+        required={isRequired ? isRequired : false}
+        value={passwordValState ? passwordValState : undefined}
         className={`gfield_${formIdRef.current}_${id}_input_text`}
-        onChange={HandleChange}
+        onChange={e => HandleChange(e)}
       />
-      {/* {inputs?.map((input, h) => {
-        const key = input?.id || h++;
-        const inputLabel = input?.label || "";
-        const placeholder = input?.placeholder || "";
-        const inputId = input?.id ? input.id : h++;
-        return (
-          <div
-            key={key.toString()}
-            id={`gform_${formIdRef.current}_field_${id}_rootDiv_${h++}`}
-            className={cn(
-              `gform_${formIdRef.current}_gfield-rootDiv_${
-                router.query.slug as string
-              } ${cssClass ?? ""}`.trim()
-            )}>
-            <label htmlFor={`input_${formIdRef.current}_${id}_${key}`}>
-              {inputLabel.includes("Enter Password") ? inputLabel : ""}
-            </label>
-            <input
-              className={cn(
-                `gform_${formIdRef.current}_gfield_nameinput_${
-                  router.query.slug as string
-                }`,
-                placeholder !=null
-                  ? "not-sr-only min-w-full"
-                  : placeholder == null
-                  ? "sr-only"
-                  : ""
-              )}
-              type={type ? FormFieldTypeEnum.PASSWORD : "password"}
-              name={String(key)}
-              id={`input_${formIdRef.current}_${id}_${key}`}
-              placeholder={`${
-                inputs[Number(key)]
-                  ? inputs[Number(key)]?.placeholder
-                  : placeholder
-                }`}
-              onChange={e => {
-                e.preventDefault();
-                setTargetValue(value ? value : targetValue!);
-              }}
-              value={targetValue}
-            />
-          </div>
-        );
-      })} */}
-      {description ? <p className='field-description hidden'>{description}</p> : null}
+      {description ? (
+        <p className='field-description hidden'>{description}</p>
+      ) : null}
       {fieldErrors?.length
         ? fieldErrors.map(fieldError => (
             <p key={fieldError?.id} className='error-message'>

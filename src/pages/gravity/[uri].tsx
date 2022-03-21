@@ -123,6 +123,26 @@ export const getStaticProps = async (
   });
 };
 
+// const RegisterLazy = dynamic(
+//   () => import("../components/Gravity/FormHook/gravity-form-coalesced"),
+//   {
+//     loading: ({ error, isLoading, pastDelay, retry, timedOut }) =>
+//       isLoading ? (
+//         <LoadingSpinner />
+//       ) : error ? (
+//         <pre>{JSON.stringify(new Error(`${{ ...error }}`), null, 2)}</pre>
+//       ) : timedOut ? (
+//         <pre>{JSON.stringify(`timed out: ${timedOut}`, null, 2)}</pre>
+//       ) : pastDelay ? (
+//         <pre>{JSON.stringify(`past delay: ${pastDelay}`, null, 2)}</pre>
+//       ) : !!isLoading && !error && !timedOut && !!pastDelay ? (
+//         <pre>{JSON.stringify(retry, null, 2)}</pre>
+//       ) : (
+//         <LoadingSpinner />
+//       )
+//   }
+// );
+
 const RegisterLazy: ComponentType<
   import("../../components/Gravity/FormHook/gravity-form-coalesced").GravityFormProps
 > = dynamic<

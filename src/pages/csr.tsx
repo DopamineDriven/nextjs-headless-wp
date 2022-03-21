@@ -25,18 +25,10 @@ import {
   NormalizedCacheObject,
   ApolloError
 } from "@apollo/client";
-// import dynamic, {
-//   Loader,
-//   LoaderMap,
-//   LoadableGeneratedOptions,
-//   LoaderComponent,
-//   DynamicOptions
-// } from "next/dynamic";
-// import { LoadingSpinner } from "@/components/UI";
 import Image from "next/image";
 import { blurDataURLShimmer } from "@/lib/shimmer";
 import buf from "@/utils/reusable-buffer";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { GravityFormCoalesced } from "@/components/Gravity";
 
 export interface CsrProps {
@@ -72,15 +64,22 @@ function Csr<T extends typeof getStaticProps>({
   gravity,
   toGlobalId
 }: InferGetStaticPropsType<T>) {
-  const [getIdFromDbId, setGetIdFromDbId] = useState<string>(toGlobalId);
-  const initialState = getIdFromDbId;
+  const [globalId, setGlobalId] = useState<string>(toGlobalId);
+
+  const globalIdRef = useRef<string>(globalId);
+
   useEffect(() => {
+    const globalIdInnerRef = globalIdRef.current;
     (async function cbIIFE() {
-      return initialState.length < 1
-        ? setGetIdFromDbId(buf("gf_form:1", "utf-8", "base64").trim())
+      return globalIdInnerRef !== globalId ||
+        (globalId || globalIdInnerRef).length <= 1
+        ? typeof window === "undefined"
+          ? setGlobalId(buf("gf_form:1", "utf-8", "base64").trim())
+          : setGlobalId(window.btoa("gf_form:1").trim())
         : () => {};
     })();
-  }, [setGetIdFromDbId, initialState]);
+  }, [setGlobalId, globalId]);
+
   const {
     data: formData = register,
     loading: formLoading,
@@ -91,7 +90,7 @@ function Csr<T extends typeof getStaticProps>({
     variables: {
       formFieldType: [EMAIL, NAME, PASSWORD],
       first: 300,
-      formId: getIdFromDbId || toGlobalId,
+      formId: globalId || toGlobalId,
       pageNumber: 1,
       idType: FormIdTypeEnum.ID
     },
