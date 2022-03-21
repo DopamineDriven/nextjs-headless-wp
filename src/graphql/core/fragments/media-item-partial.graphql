@@ -17,5 +17,6 @@ fragment MediaItemPartial on MediaItem {
   mimeType
   altText
   sizes
+
   mediaType
 }

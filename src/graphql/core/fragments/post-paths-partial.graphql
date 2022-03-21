@@ -1,8 +1,16 @@
 fragment PostPathsPartial on Post {
+  __typename
+  featuredImageDatabaseId
+  featuredImageId
+  authorId
+  authorDatabaseId
+  isTermNode
+  contentTypeName
+  modified
   id
   databaseId
   guid
   uri
   slug
-  desiredSlug
+  title
 }

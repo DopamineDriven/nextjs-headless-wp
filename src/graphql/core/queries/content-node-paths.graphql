@@ -1,6 +1,10 @@
+# import GformPathPartial from "../fragments/gform-path-partial.graphql";
+# import NodeWithFeaturedImagePathsPartial from "../fragments/node-with-featured-image-partial.graphql";
 # import PageInfoPartial from "../fragments/page-info-partial.graphql";
 # import PagePathsPartial from "../fragments/page-paths-partial.graphql";
 # import PostPathsPartial from "../fragments/post-paths-partial.graphql";
+# import MediaItemPathsPartial from "../fragments/media-item-paths-partial.graphql";
+
 query ContentNodePaths(
   $first: Int
   $search: String
@@ -28,12 +32,25 @@ query ContentNodePaths(
     nodes {
       contentTypeName
       __typename
+      ... on Gform {
+        ...GformPathPartial
+      }
+      ... on MediaItem {
+        ...MediaItemPathsPartial
+      }
+      ... on NodeWithFeaturedImage {
+        ...NodeWithFeaturedImagePathsPartial
+        featuredImage {
+          __typename
+          node {
+            ...MediaItemPathsPartial
+          }
+        }
+      }
       ... on Page {
-        __typename
         ...PagePathsPartial
       }
       ... on Post {
-        __typename
         ...PostPathsPartial
       }
     }

@@ -1,7 +1,7 @@
-import { FC } from "react";
+import { VFC, ReactNode } from "react";
 import cn from "classnames";
 
-const DataInspector: FC<{ className?: string }> = ({
+const DataInspector: VFC<{ className?: string; children?: ReactNode }> = ({
   children,
   className
 }) => {

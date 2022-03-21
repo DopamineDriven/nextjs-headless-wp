@@ -1,0 +1,32 @@
+fragment NodeWithFeaturedImagePartial on NodeWithFeaturedImage {
+  __typename
+  id
+  slug
+  databaseId
+  featuredImageId
+  featuredImageDatabaseId
+  slug
+  enclosure
+  guid
+  isPreview
+  uri
+  date
+  modified
+  contentTypeName
+}
+
+fragment NodeWithFeaturedImagePathsPartial on NodeWithFeaturedImage {
+  __typename
+  featuredImageId
+  featuredImageDatabaseId
+  previewRevisionId
+  previewRevisionDatabaseId
+  isPreview
+  uri
+  modified
+  slug
+  contentTypeName
+  databaseId
+  id
+  guid
+}

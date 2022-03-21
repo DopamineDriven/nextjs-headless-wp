@@ -58,10 +58,6 @@ export interface NameFieldValues extends BaseFieldValue {
   nameValues: NameFieldInput;
 }
 
-export interface PasswordFieldValues extends BaseFieldValue {
-  passwordValues: PasswordFieldInput
-}
-
 export interface PostImageFieldValue extends BaseFieldValue {
   postImageValues: InputMaybe<ImageInput>;
 }
@@ -81,7 +77,6 @@ export type FieldValueUnion =
   | EmailFieldValues
   | FileUploadFieldValues
   | NameFieldValues
-  | PasswordFieldValues
   | PostImageFieldValue
   | StringFieldValue
   | StringFieldValues;
@@ -133,8 +128,8 @@ export function reducer(state: FieldValueUnion[], action: Action) {
       return [...getOtherFieldValues(id), { id, fileUploadValues }];
     }
     case ACTION_TYPES.updatePasswordFieldValue: {
-      const { id, passwordValues } = action.fieldValue as PasswordFieldValues;
-      return [...getOtherFieldValues(id), { id, passwordValues }];
+      const { id, value } = action.fieldValue as StringFieldValue;
+      return [...getOtherFieldValues(id), { id, value }];
     }
 
     case ACTION_TYPES.updateNameFieldValue: {

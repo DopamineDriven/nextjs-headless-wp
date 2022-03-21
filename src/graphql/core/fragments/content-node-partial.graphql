@@ -17,4 +17,5 @@ fragment ContentNodePartial on ContentNode {
   status
   date
   modified
+  __typename
 }
