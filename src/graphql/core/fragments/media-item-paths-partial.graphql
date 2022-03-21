@@ -1,0 +1,19 @@
+fragment MediaItemPathsPartial on MediaItem {
+  __typename
+  authorId
+  authorDatabaseId
+  commentCount
+  commentStatus
+  isPreview
+  previewRevisionDatabaseId
+  previewRevisionId
+  isTermNode
+  contentTypeName
+  id
+  databaseId
+  guid
+  modified
+  uri
+  slug
+  title
+}

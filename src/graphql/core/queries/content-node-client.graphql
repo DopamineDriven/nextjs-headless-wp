@@ -1,0 +1,74 @@
+# import GformPartial from "../fragments/gform-partial.graphql";
+# import NodeWithFeaturedImagePartial from "../fragments/node-with-featured-image-partial.graphql";
+# import PageInfoPartial from "../fragments/page-info-partial.graphql";
+# import PagePartial from "../fragments/page-partial.graphql";
+# import PostPartial from "../fragments/post-partial.graphql";
+# import MediaDetailsPartial from "../fragments/media-details-partial.graphql";
+# import MediaItemPartial from "../fragments/media-item-partial.graphql";
+# import MediaSizePartial from "../fragments/media-size-partial.graphql";
+
+query ContentNodeClient(
+  $first: Int
+  $search: String
+  $contentTypes: [ContentTypeEnum!]
+  $fieldOrderBy: PostObjectsConnectionOrderbyEnum!
+  $orderOrderBy: OrderEnum!
+  $parentIn: [ID]
+  $stati: [PostStatusEnum]
+  $status: PostStatusEnum
+) {
+  contentNodes(
+    first: $first
+    where: {
+      search: $search
+      contentTypes: $contentTypes
+      orderby: { field: $fieldOrderBy, order: $orderOrderBy }
+      parentIn: $parentIn
+      stati: $stati
+      status: $status
+    }
+  ) {
+    pageInfo {
+      ...PageInfoPartial
+    }
+    nodes {
+      slug
+      contentTypeName
+      __typename
+      ... on Gform {
+        __typename
+        ...GformPartial
+      }
+      ... on MediaItem {
+        ...MediaItemPartial
+        mediaDetails {
+          ...MediaDetailsPartial
+          sizes {
+            ...MediaSizePartial
+          }
+        }
+      }
+      ... on NodeWithFeaturedImage {
+        ...NodeWithFeaturedImagePartial
+        featuredImage {
+          __typename
+          node {
+            ...MediaItemPartial
+            mediaDetails {
+              ...MediaDetailsPartial
+              sizes {
+                ...MediaSizePartial
+              }
+            }
+          }
+        }
+      }
+      ... on Page {
+        ...PagePartial
+      }
+      ... on Post {
+        ...PostPartial
+      }
+    }
+  }
+}

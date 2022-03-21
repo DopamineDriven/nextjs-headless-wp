@@ -16155,10 +16155,12 @@ export const ContentNodePartial = gql`
     status
     date
     modified
+    __typename
   }
 `;
 export const GformPartial = gql`
   fragment GformPartial on Gform {
+    __typename
     authorId
     authorDatabaseId
     content
@@ -16189,13 +16191,20 @@ export const RootQueryToGformConnectionEdgePartial = gql`
 `;
 export const GformPathPartial = gql`
   fragment GformPathPartial on Gform {
+    __typename
+    featuredImageDatabaseId
+    featuredImageId
+    authorId
+    authorDatabaseId
+    isTermNode
+    contentTypeName
+    id
+    databaseId
+    guid
     uri
+    modified
     slug
     title
-    contentTypeName
-    databaseId
-    id
-    guid
   }
 `;
 export const LoginPayloadPartial = gql`
@@ -16237,6 +16246,27 @@ export const MediaItemPartial = gql`
     mediaType
   }
 `;
+export const MediaItemPathsPartial = gql`
+  fragment MediaItemPathsPartial on MediaItem {
+    __typename
+    authorId
+    authorDatabaseId
+    commentCount
+    commentStatus
+    isPreview
+    previewRevisionDatabaseId
+    previewRevisionId
+    isTermNode
+    contentTypeName
+    id
+    databaseId
+    guid
+    modified
+    uri
+    slug
+    title
+  }
+`;
 export const MediaSizePartial = gql`
   fragment MediaSizePartial on MediaSize {
     file
@@ -16264,6 +16294,41 @@ export const NodeWithCommentsPartial = gql`
     commentCount
     commentStatus
     __typename
+  }
+`;
+export const NodeWithFeaturedImagePartial = gql`
+  fragment NodeWithFeaturedImagePartial on NodeWithFeaturedImage {
+    __typename
+    id
+    slug
+    databaseId
+    featuredImageId
+    featuredImageDatabaseId
+    slug
+    enclosure
+    guid
+    isPreview
+    uri
+    date
+    modified
+    contentTypeName
+  }
+`;
+export const NodeWithFeaturedImagePathsPartial = gql`
+  fragment NodeWithFeaturedImagePathsPartial on NodeWithFeaturedImage {
+    __typename
+    featuredImageId
+    featuredImageDatabaseId
+    previewRevisionId
+    previewRevisionDatabaseId
+    isPreview
+    uri
+    modified
+    slug
+    contentTypeName
+    databaseId
+    id
+    guid
   }
 `;
 export const PageInfoPartial = gql`
@@ -16294,11 +16359,20 @@ export const PagePartial = gql`
 `;
 export const PagePathsPartial = gql`
   fragment PagePathsPartial on Page {
-    uri
-    databaseId
+    __typename
+    featuredImageDatabaseId
+    featuredImageId
+    authorId
+    authorDatabaseId
+    isTermNode
+    contentTypeName
     id
+    databaseId
+    modified
+    guid
+    uri
     slug
-    desiredSlug
+    title
   }
 `;
 export const PostPartial = gql`
@@ -16324,12 +16398,20 @@ export const PostPartial = gql`
 `;
 export const PostPathsPartial = gql`
   fragment PostPathsPartial on Post {
+    __typename
+    featuredImageDatabaseId
+    featuredImageId
+    authorId
+    authorDatabaseId
+    isTermNode
+    contentTypeName
+    modified
     id
     databaseId
     guid
     uri
     slug
-    desiredSlug
+    title
   }
 `;
 export const SEOPageInfoSchemaPartial = gql`
@@ -17376,6 +17458,172 @@ export const login = gql`
   ${PagePartial}
   ${NodeWithCommentsPartial}
 `;
+export const ContentNodeByPath = gql`
+  query ContentNodeByPath(
+    $id: ID!
+    $idType: ContentNodeIdTypeEnum
+    $contentType: ContentTypeEnum
+    $asPreview: Boolean
+  ) {
+    contentNode(
+      id: $id
+      idType: $idType
+      contentType: $contentType
+      asPreview: $asPreview
+    ) {
+      ...ContentNodePartial
+      ... on Gform {
+        ...GformPartial
+        featuredImage {
+          node {
+            ...MediaItemPartial
+            mediaDetails {
+              ...MediaDetailsPartial
+              sizes {
+                ...MediaSizePartial
+              }
+            }
+          }
+        }
+      }
+      ... on MediaItem {
+        ...MediaItemPartial
+        mediaDetails {
+          ...MediaDetailsPartial
+          sizes {
+            ...MediaSizePartial
+          }
+        }
+      }
+      ... on NodeWithFeaturedImage {
+        ...NodeWithFeaturedImagePartial
+        featuredImage {
+          __typename
+          node {
+            ...MediaItemPartial
+            mediaDetails {
+              ...MediaDetailsPartial
+              sizes {
+                ...MediaSizePartial
+              }
+            }
+          }
+        }
+      }
+      ... on Page {
+        ...PagePartial
+        featuredImage {
+          node {
+            ...MediaItemPartial
+            mediaDetails {
+              ...MediaDetailsPartial
+              sizes {
+                ...MediaSizePartial
+              }
+            }
+          }
+        }
+      }
+      ... on Post {
+        ...PostPartial
+        featuredImage {
+          node {
+            ...MediaItemPartial
+            mediaDetails {
+              ...MediaDetailsPartial
+              sizes {
+                ...MediaSizePartial
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  ${ContentNodePartial}
+  ${GformPartial}
+  ${MediaItemPartial}
+  ${MediaDetailsPartial}
+  ${MediaSizePartial}
+  ${NodeWithFeaturedImagePartial}
+  ${PagePartial}
+  ${PostPartial}
+`;
+export const ContentNodeClient = gql`
+  query ContentNodeClient(
+    $first: Int
+    $search: String
+    $contentTypes: [ContentTypeEnum!]
+    $fieldOrderBy: PostObjectsConnectionOrderbyEnum!
+    $orderOrderBy: OrderEnum!
+    $parentIn: [ID]
+    $stati: [PostStatusEnum]
+    $status: PostStatusEnum
+  ) {
+    contentNodes(
+      first: $first
+      where: {
+        search: $search
+        contentTypes: $contentTypes
+        orderby: { field: $fieldOrderBy, order: $orderOrderBy }
+        parentIn: $parentIn
+        stati: $stati
+        status: $status
+      }
+    ) {
+      pageInfo {
+        ...PageInfoPartial
+      }
+      nodes {
+        slug
+        contentTypeName
+        __typename
+        ... on Gform {
+          __typename
+          ...GformPartial
+        }
+        ... on MediaItem {
+          ...MediaItemPartial
+          mediaDetails {
+            ...MediaDetailsPartial
+            sizes {
+              ...MediaSizePartial
+            }
+          }
+        }
+        ... on NodeWithFeaturedImage {
+          ...NodeWithFeaturedImagePartial
+          featuredImage {
+            __typename
+            node {
+              ...MediaItemPartial
+              mediaDetails {
+                ...MediaDetailsPartial
+                sizes {
+                  ...MediaSizePartial
+                }
+              }
+            }
+          }
+        }
+        ... on Page {
+          ...PagePartial
+        }
+        ... on Post {
+          ...PostPartial
+        }
+      }
+    }
+  }
+  ${PageInfoPartial}
+  ${GformPartial}
+  ${MediaItemPartial}
+  ${MediaDetailsPartial}
+  ${MediaSizePartial}
+  ${NodeWithFeaturedImagePartial}
+  ${PagePartial}
+  ${PostPartial}
+`;
 export const ContentNodePaths = gql`
   query ContentNodePaths(
     $first: Int
@@ -17404,18 +17652,34 @@ export const ContentNodePaths = gql`
       nodes {
         contentTypeName
         __typename
+        ... on Gform {
+          ...GformPathPartial
+        }
+        ... on MediaItem {
+          ...MediaItemPathsPartial
+        }
+        ... on NodeWithFeaturedImage {
+          ...NodeWithFeaturedImagePathsPartial
+          featuredImage {
+            __typename
+            node {
+              ...MediaItemPathsPartial
+            }
+          }
+        }
         ... on Page {
-          __typename
           ...PagePathsPartial
         }
         ... on Post {
-          __typename
           ...PostPathsPartial
         }
       }
     }
   }
   ${PageInfoPartial}
+  ${GformPathPartial}
+  ${MediaItemPathsPartial}
+  ${NodeWithFeaturedImagePathsPartial}
   ${PagePathsPartial}
   ${PostPathsPartial}
 `;
@@ -37611,7 +37875,7 @@ export type CommenterPartialFragment =
 export type CommenterPartialFragmentVariables = Exact<{ [key: string]: never }>;
 
 type ContentNodePartial_Gform_Fragment = {
-  __typename?: "Gform";
+  __typename: "Gform";
   guid?: string | null;
   slug?: string | null;
   isContentNode: boolean;
@@ -37632,7 +37896,7 @@ type ContentNodePartial_Gform_Fragment = {
 };
 
 type ContentNodePartial_MediaItem_Fragment = {
-  __typename?: "MediaItem";
+  __typename: "MediaItem";
   guid?: string | null;
   slug?: string | null;
   isContentNode: boolean;
@@ -37653,7 +37917,7 @@ type ContentNodePartial_MediaItem_Fragment = {
 };
 
 type ContentNodePartial_Page_Fragment = {
-  __typename?: "Page";
+  __typename: "Page";
   guid?: string | null;
   slug?: string | null;
   isContentNode: boolean;
@@ -37674,7 +37938,7 @@ type ContentNodePartial_Page_Fragment = {
 };
 
 type ContentNodePartial_Post_Fragment = {
-  __typename?: "Post";
+  __typename: "Post";
   guid?: string | null;
   slug?: string | null;
   isContentNode: boolean;
@@ -37705,7 +37969,7 @@ export type ContentNodePartialFragmentVariables = Exact<{
 }>;
 
 export type GformPartialFragment = {
-  __typename?: "Gform";
+  __typename: "Gform";
   authorId?: string | null;
   authorDatabaseId?: number | null;
   content?: string | null;
@@ -37740,14 +38004,20 @@ export type RootQueryToGformConnectionEdgePartialFragmentVariables = Exact<{
 }>;
 
 export type GformPathPartialFragment = {
-  __typename?: "Gform";
+  __typename: "Gform";
+  featuredImageDatabaseId?: number | null;
+  featuredImageId?: string | null;
+  authorId?: string | null;
+  authorDatabaseId?: number | null;
+  isTermNode: boolean;
+  contentTypeName: string;
+  id: string;
+  databaseId: number;
+  guid?: string | null;
   uri?: string | null;
+  modified?: string | null;
   slug?: string | null;
   title?: string | null;
-  contentTypeName: string;
-  databaseId: number;
-  id: string;
-  guid?: string | null;
 };
 
 export type GformPathPartialFragmentVariables = Exact<{ [key: string]: never }>;
@@ -37797,6 +38067,30 @@ export type MediaItemPartialFragment = {
 };
 
 export type MediaItemPartialFragmentVariables = Exact<{ [key: string]: never }>;
+
+export type MediaItemPathsPartialFragment = {
+  __typename: "MediaItem";
+  authorId?: string | null;
+  authorDatabaseId?: number | null;
+  commentCount?: number | null;
+  commentStatus?: string | null;
+  isPreview?: boolean | null;
+  previewRevisionDatabaseId?: number | null;
+  previewRevisionId?: string | null;
+  isTermNode: boolean;
+  contentTypeName: string;
+  id: string;
+  databaseId: number;
+  guid?: string | null;
+  modified?: string | null;
+  uri?: string | null;
+  slug?: string | null;
+  title?: string | null;
+};
+
+export type MediaItemPathsPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type MediaSizePartialFragment = {
   __typename: "MediaSize";
@@ -37857,6 +38151,120 @@ export type NodeWithCommentsPartialFragmentVariables = Exact<{
   [key: string]: never;
 }>;
 
+type NodeWithFeaturedImagePartial_Gform_Fragment = {
+  __typename: "Gform";
+  id: string;
+  slug?: string | null;
+  databaseId: number;
+  featuredImageId?: string | null;
+  featuredImageDatabaseId?: number | null;
+  enclosure?: string | null;
+  guid?: string | null;
+  isPreview?: boolean | null;
+  uri?: string | null;
+  date?: string | null;
+  modified?: string | null;
+  contentTypeName: string;
+};
+
+type NodeWithFeaturedImagePartial_Page_Fragment = {
+  __typename: "Page";
+  id: string;
+  slug?: string | null;
+  databaseId: number;
+  featuredImageId?: string | null;
+  featuredImageDatabaseId?: number | null;
+  enclosure?: string | null;
+  guid?: string | null;
+  isPreview?: boolean | null;
+  uri?: string | null;
+  date?: string | null;
+  modified?: string | null;
+  contentTypeName: string;
+};
+
+type NodeWithFeaturedImagePartial_Post_Fragment = {
+  __typename: "Post";
+  id: string;
+  slug?: string | null;
+  databaseId: number;
+  featuredImageId?: string | null;
+  featuredImageDatabaseId?: number | null;
+  enclosure?: string | null;
+  guid?: string | null;
+  isPreview?: boolean | null;
+  uri?: string | null;
+  date?: string | null;
+  modified?: string | null;
+  contentTypeName: string;
+};
+
+export type NodeWithFeaturedImagePartialFragment =
+  | NodeWithFeaturedImagePartial_Gform_Fragment
+  | NodeWithFeaturedImagePartial_Page_Fragment
+  | NodeWithFeaturedImagePartial_Post_Fragment;
+
+export type NodeWithFeaturedImagePartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
+type NodeWithFeaturedImagePathsPartial_Gform_Fragment = {
+  __typename: "Gform";
+  featuredImageId?: string | null;
+  featuredImageDatabaseId?: number | null;
+  previewRevisionId?: string | null;
+  previewRevisionDatabaseId?: number | null;
+  isPreview?: boolean | null;
+  uri?: string | null;
+  modified?: string | null;
+  slug?: string | null;
+  contentTypeName: string;
+  databaseId: number;
+  id: string;
+  guid?: string | null;
+};
+
+type NodeWithFeaturedImagePathsPartial_Page_Fragment = {
+  __typename: "Page";
+  featuredImageId?: string | null;
+  featuredImageDatabaseId?: number | null;
+  previewRevisionId?: string | null;
+  previewRevisionDatabaseId?: number | null;
+  isPreview?: boolean | null;
+  uri?: string | null;
+  modified?: string | null;
+  slug?: string | null;
+  contentTypeName: string;
+  databaseId: number;
+  id: string;
+  guid?: string | null;
+};
+
+type NodeWithFeaturedImagePathsPartial_Post_Fragment = {
+  __typename: "Post";
+  featuredImageId?: string | null;
+  featuredImageDatabaseId?: number | null;
+  previewRevisionId?: string | null;
+  previewRevisionDatabaseId?: number | null;
+  isPreview?: boolean | null;
+  uri?: string | null;
+  modified?: string | null;
+  slug?: string | null;
+  contentTypeName: string;
+  databaseId: number;
+  id: string;
+  guid?: string | null;
+};
+
+export type NodeWithFeaturedImagePathsPartialFragment =
+  | NodeWithFeaturedImagePathsPartial_Gform_Fragment
+  | NodeWithFeaturedImagePathsPartial_Page_Fragment
+  | NodeWithFeaturedImagePathsPartial_Post_Fragment;
+
+export type NodeWithFeaturedImagePathsPartialFragmentVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type PageInfoPartialFragment = {
   __typename: "WPPageInfo";
   endCursor?: string | null;
@@ -37886,12 +38294,20 @@ export type PagePartialFragment = {
 export type PagePartialFragmentVariables = Exact<{ [key: string]: never }>;
 
 export type PagePathsPartialFragment = {
-  __typename?: "Page";
-  uri?: string | null;
-  databaseId: number;
+  __typename: "Page";
+  featuredImageDatabaseId?: number | null;
+  featuredImageId?: string | null;
+  authorId?: string | null;
+  authorDatabaseId?: number | null;
+  isTermNode: boolean;
+  contentTypeName: string;
   id: string;
+  databaseId: number;
+  modified?: string | null;
+  guid?: string | null;
+  uri?: string | null;
   slug?: string | null;
-  desiredSlug?: string | null;
+  title?: string | null;
 };
 
 export type PagePathsPartialFragmentVariables = Exact<{ [key: string]: never }>;
@@ -37919,13 +38335,20 @@ export type PostPartialFragment = {
 export type PostPartialFragmentVariables = Exact<{ [key: string]: never }>;
 
 export type PostPathsPartialFragment = {
-  __typename?: "Post";
+  __typename: "Post";
+  featuredImageDatabaseId?: number | null;
+  featuredImageId?: string | null;
+  authorId?: string | null;
+  authorDatabaseId?: number | null;
+  isTermNode: boolean;
+  contentTypeName: string;
+  modified?: string | null;
   id: string;
   databaseId: number;
   guid?: string | null;
   uri?: string | null;
   slug?: string | null;
-  desiredSlug?: string | null;
+  title?: string | null;
 };
 
 export type PostPathsPartialFragmentVariables = Exact<{ [key: string]: never }>;
@@ -38149,6 +38572,531 @@ export type loginMutation = {
   } | null;
 };
 
+export type ContentNodeByPathQueryVariables = Exact<{
+  id: Scalars["ID"];
+  idType?: InputMaybe<ContentNodeIdTypeEnum>;
+  contentType?: InputMaybe<ContentTypeEnum>;
+  asPreview?: InputMaybe<Scalars["Boolean"]>;
+}>;
+
+export type ContentNodeByPathQuery = {
+  __typename?: "RootQuery";
+  contentNode?:
+    | {
+        __typename: "Gform";
+        authorId?: string | null;
+        authorDatabaseId?: number | null;
+        content?: string | null;
+        databaseId: number;
+        title?: string | null;
+        toPing?: Array<string | null> | null;
+        status?: string | null;
+        slug?: string | null;
+        desiredSlug?: string | null;
+        enclosure?: string | null;
+        featuredImageDatabaseId?: number | null;
+        featuredImageId?: string | null;
+        guid?: string | null;
+        id: string;
+        isPreview?: boolean | null;
+        isRevision?: boolean | null;
+        isRestricted?: boolean | null;
+        isContentNode: boolean;
+        modified?: string | null;
+        date?: string | null;
+        uri?: string | null;
+        contentTypeName: string;
+        isTermNode: boolean;
+        previewRevisionId?: string | null;
+        previewRevisionDatabaseId?: number | null;
+        featuredImage?: {
+          __typename: "NodeWithFeaturedImageToMediaItemConnectionEdge";
+          node?: {
+            __typename: "MediaItem";
+            id: string;
+            databaseId: number;
+            authorDatabaseId?: number | null;
+            authorId?: string | null;
+            caption?: string | null;
+            enclosure?: string | null;
+            title?: string | null;
+            date?: string | null;
+            modified?: string | null;
+            uri?: string | null;
+            sourceUrl?: string | null;
+            srcSet?: string | null;
+            description?: string | null;
+            fileSize?: number | null;
+            mimeType?: string | null;
+            altText?: string | null;
+            sizes?: string | null;
+            mediaType?: string | null;
+            mediaDetails?: {
+              __typename: "MediaDetails";
+              height?: number | null;
+              width?: number | null;
+              file?: string | null;
+              sizes?: Array<{
+                __typename: "MediaSize";
+                file?: string | null;
+                fileSize?: number | null;
+                height?: string | null;
+                width?: string | null;
+                sourceUrl?: string | null;
+                name?: string | null;
+                mimeType?: string | null;
+              } | null> | null;
+            } | null;
+          } | null;
+        } | null;
+      }
+    | {
+        __typename: "MediaItem";
+        id: string;
+        databaseId: number;
+        authorDatabaseId?: number | null;
+        authorId?: string | null;
+        caption?: string | null;
+        enclosure?: string | null;
+        title?: string | null;
+        date?: string | null;
+        modified?: string | null;
+        uri?: string | null;
+        sourceUrl?: string | null;
+        srcSet?: string | null;
+        description?: string | null;
+        fileSize?: number | null;
+        mimeType?: string | null;
+        altText?: string | null;
+        sizes?: string | null;
+        mediaType?: string | null;
+        guid?: string | null;
+        slug?: string | null;
+        isContentNode: boolean;
+        isPreview?: boolean | null;
+        isRestricted?: boolean | null;
+        isTermNode: boolean;
+        previewRevisionId?: string | null;
+        contentTypeName: string;
+        desiredSlug?: string | null;
+        status?: string | null;
+        previewRevisionDatabaseId?: number | null;
+        mediaDetails?: {
+          __typename: "MediaDetails";
+          height?: number | null;
+          width?: number | null;
+          file?: string | null;
+          sizes?: Array<{
+            __typename: "MediaSize";
+            file?: string | null;
+            fileSize?: number | null;
+            height?: string | null;
+            width?: string | null;
+            sourceUrl?: string | null;
+            name?: string | null;
+            mimeType?: string | null;
+          } | null> | null;
+        } | null;
+      }
+    | {
+        __typename: "Page";
+        id: string;
+        slug?: string | null;
+        databaseId: number;
+        featuredImageId?: string | null;
+        featuredImageDatabaseId?: number | null;
+        enclosure?: string | null;
+        guid?: string | null;
+        isPreview?: boolean | null;
+        uri?: string | null;
+        date?: string | null;
+        modified?: string | null;
+        contentTypeName: string;
+        title?: string | null;
+        parentId?: string | null;
+        content?: string | null;
+        status?: string | null;
+        isRestricted?: boolean | null;
+        isContentNode: boolean;
+        isTermNode: boolean;
+        previewRevisionId?: string | null;
+        desiredSlug?: string | null;
+        previewRevisionDatabaseId?: number | null;
+        featuredImage?: {
+          __typename: "NodeWithFeaturedImageToMediaItemConnectionEdge";
+          node?: {
+            __typename: "MediaItem";
+            id: string;
+            databaseId: number;
+            authorDatabaseId?: number | null;
+            authorId?: string | null;
+            caption?: string | null;
+            enclosure?: string | null;
+            title?: string | null;
+            date?: string | null;
+            modified?: string | null;
+            uri?: string | null;
+            sourceUrl?: string | null;
+            srcSet?: string | null;
+            description?: string | null;
+            fileSize?: number | null;
+            mimeType?: string | null;
+            altText?: string | null;
+            sizes?: string | null;
+            mediaType?: string | null;
+            mediaDetails?: {
+              __typename: "MediaDetails";
+              height?: number | null;
+              width?: number | null;
+              file?: string | null;
+              sizes?: Array<{
+                __typename: "MediaSize";
+                file?: string | null;
+                fileSize?: number | null;
+                height?: string | null;
+                width?: string | null;
+                sourceUrl?: string | null;
+                name?: string | null;
+                mimeType?: string | null;
+              } | null> | null;
+            } | null;
+          } | null;
+        } | null;
+      }
+    | {
+        __typename: "Post";
+        id: string;
+        slug?: string | null;
+        databaseId: number;
+        featuredImageId?: string | null;
+        featuredImageDatabaseId?: number | null;
+        enclosure?: string | null;
+        guid?: string | null;
+        isPreview?: boolean | null;
+        uri?: string | null;
+        date?: string | null;
+        modified?: string | null;
+        contentTypeName: string;
+        authorDatabaseId?: number | null;
+        authorId?: string | null;
+        commentCount?: number | null;
+        toPing?: Array<string | null> | null;
+        title?: string | null;
+        status?: string | null;
+        pinged?: Array<string | null> | null;
+        pingStatus?: string | null;
+        link?: string | null;
+        isContentNode: boolean;
+        isRestricted?: boolean | null;
+        isTermNode: boolean;
+        previewRevisionId?: string | null;
+        desiredSlug?: string | null;
+        previewRevisionDatabaseId?: number | null;
+        featuredImage?: {
+          __typename: "NodeWithFeaturedImageToMediaItemConnectionEdge";
+          node?: {
+            __typename: "MediaItem";
+            id: string;
+            databaseId: number;
+            authorDatabaseId?: number | null;
+            authorId?: string | null;
+            caption?: string | null;
+            enclosure?: string | null;
+            title?: string | null;
+            date?: string | null;
+            modified?: string | null;
+            uri?: string | null;
+            sourceUrl?: string | null;
+            srcSet?: string | null;
+            description?: string | null;
+            fileSize?: number | null;
+            mimeType?: string | null;
+            altText?: string | null;
+            sizes?: string | null;
+            mediaType?: string | null;
+            mediaDetails?: {
+              __typename: "MediaDetails";
+              height?: number | null;
+              width?: number | null;
+              file?: string | null;
+              sizes?: Array<{
+                __typename: "MediaSize";
+                file?: string | null;
+                fileSize?: number | null;
+                height?: string | null;
+                width?: string | null;
+                sourceUrl?: string | null;
+                name?: string | null;
+                mimeType?: string | null;
+              } | null> | null;
+            } | null;
+          } | null;
+        } | null;
+      }
+    | null;
+};
+
+export type ContentNodeClientQueryVariables = Exact<{
+  first?: InputMaybe<Scalars["Int"]>;
+  search?: InputMaybe<Scalars["String"]>;
+  contentTypes?: InputMaybe<Array<ContentTypeEnum> | ContentTypeEnum>;
+  fieldOrderBy: PostObjectsConnectionOrderbyEnum;
+  orderOrderBy: OrderEnum;
+  parentIn?: InputMaybe<
+    Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>
+  >;
+  stati?: InputMaybe<
+    Array<InputMaybe<PostStatusEnum>> | InputMaybe<PostStatusEnum>
+  >;
+  status?: InputMaybe<PostStatusEnum>;
+}>;
+
+export type ContentNodeClientQuery = {
+  __typename?: "RootQuery";
+  contentNodes?: {
+    __typename?: "RootQueryToContentNodeConnection";
+    pageInfo?: {
+      __typename: "WPPageInfo";
+      endCursor?: string | null;
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor?: string | null;
+      total?: number | null;
+    } | null;
+    nodes?: Array<
+      | {
+          __typename: "Gform";
+          slug?: string | null;
+          contentTypeName: string;
+          authorId?: string | null;
+          authorDatabaseId?: number | null;
+          content?: string | null;
+          databaseId: number;
+          title?: string | null;
+          toPing?: Array<string | null> | null;
+          status?: string | null;
+          desiredSlug?: string | null;
+          enclosure?: string | null;
+          featuredImageDatabaseId?: number | null;
+          featuredImageId?: string | null;
+          guid?: string | null;
+          id: string;
+          isPreview?: boolean | null;
+          isRevision?: boolean | null;
+          isRestricted?: boolean | null;
+          isContentNode: boolean;
+          modified?: string | null;
+          date?: string | null;
+          uri?: string | null;
+          featuredImage?: {
+            __typename: "NodeWithFeaturedImageToMediaItemConnectionEdge";
+            node?: {
+              __typename: "MediaItem";
+              id: string;
+              databaseId: number;
+              authorDatabaseId?: number | null;
+              authorId?: string | null;
+              caption?: string | null;
+              enclosure?: string | null;
+              title?: string | null;
+              date?: string | null;
+              modified?: string | null;
+              uri?: string | null;
+              sourceUrl?: string | null;
+              srcSet?: string | null;
+              description?: string | null;
+              fileSize?: number | null;
+              mimeType?: string | null;
+              altText?: string | null;
+              sizes?: string | null;
+              mediaType?: string | null;
+              mediaDetails?: {
+                __typename: "MediaDetails";
+                height?: number | null;
+                width?: number | null;
+                file?: string | null;
+                sizes?: Array<{
+                  __typename: "MediaSize";
+                  file?: string | null;
+                  fileSize?: number | null;
+                  height?: string | null;
+                  width?: string | null;
+                  sourceUrl?: string | null;
+                  name?: string | null;
+                  mimeType?: string | null;
+                } | null> | null;
+              } | null;
+            } | null;
+          } | null;
+        }
+      | {
+          __typename: "MediaItem";
+          slug?: string | null;
+          contentTypeName: string;
+          id: string;
+          databaseId: number;
+          authorDatabaseId?: number | null;
+          authorId?: string | null;
+          caption?: string | null;
+          enclosure?: string | null;
+          title?: string | null;
+          date?: string | null;
+          modified?: string | null;
+          uri?: string | null;
+          sourceUrl?: string | null;
+          srcSet?: string | null;
+          description?: string | null;
+          fileSize?: number | null;
+          mimeType?: string | null;
+          altText?: string | null;
+          sizes?: string | null;
+          mediaType?: string | null;
+          mediaDetails?: {
+            __typename: "MediaDetails";
+            height?: number | null;
+            width?: number | null;
+            file?: string | null;
+            sizes?: Array<{
+              __typename: "MediaSize";
+              file?: string | null;
+              fileSize?: number | null;
+              height?: string | null;
+              width?: string | null;
+              sourceUrl?: string | null;
+              name?: string | null;
+              mimeType?: string | null;
+            } | null> | null;
+          } | null;
+        }
+      | {
+          __typename: "Page";
+          slug?: string | null;
+          contentTypeName: string;
+          id: string;
+          databaseId: number;
+          featuredImageId?: string | null;
+          featuredImageDatabaseId?: number | null;
+          enclosure?: string | null;
+          guid?: string | null;
+          isPreview?: boolean | null;
+          uri?: string | null;
+          date?: string | null;
+          modified?: string | null;
+          title?: string | null;
+          parentId?: string | null;
+          content?: string | null;
+          status?: string | null;
+          isRestricted?: boolean | null;
+          featuredImage?: {
+            __typename: "NodeWithFeaturedImageToMediaItemConnectionEdge";
+            node?: {
+              __typename: "MediaItem";
+              id: string;
+              databaseId: number;
+              authorDatabaseId?: number | null;
+              authorId?: string | null;
+              caption?: string | null;
+              enclosure?: string | null;
+              title?: string | null;
+              date?: string | null;
+              modified?: string | null;
+              uri?: string | null;
+              sourceUrl?: string | null;
+              srcSet?: string | null;
+              description?: string | null;
+              fileSize?: number | null;
+              mimeType?: string | null;
+              altText?: string | null;
+              sizes?: string | null;
+              mediaType?: string | null;
+              mediaDetails?: {
+                __typename: "MediaDetails";
+                height?: number | null;
+                width?: number | null;
+                file?: string | null;
+                sizes?: Array<{
+                  __typename: "MediaSize";
+                  file?: string | null;
+                  fileSize?: number | null;
+                  height?: string | null;
+                  width?: string | null;
+                  sourceUrl?: string | null;
+                  name?: string | null;
+                  mimeType?: string | null;
+                } | null> | null;
+              } | null;
+            } | null;
+          } | null;
+        }
+      | {
+          __typename: "Post";
+          slug?: string | null;
+          contentTypeName: string;
+          id: string;
+          databaseId: number;
+          featuredImageId?: string | null;
+          featuredImageDatabaseId?: number | null;
+          enclosure?: string | null;
+          guid?: string | null;
+          isPreview?: boolean | null;
+          uri?: string | null;
+          date?: string | null;
+          modified?: string | null;
+          authorDatabaseId?: number | null;
+          authorId?: string | null;
+          commentCount?: number | null;
+          toPing?: Array<string | null> | null;
+          title?: string | null;
+          status?: string | null;
+          pinged?: Array<string | null> | null;
+          pingStatus?: string | null;
+          link?: string | null;
+          featuredImage?: {
+            __typename: "NodeWithFeaturedImageToMediaItemConnectionEdge";
+            node?: {
+              __typename: "MediaItem";
+              id: string;
+              databaseId: number;
+              authorDatabaseId?: number | null;
+              authorId?: string | null;
+              caption?: string | null;
+              enclosure?: string | null;
+              title?: string | null;
+              date?: string | null;
+              modified?: string | null;
+              uri?: string | null;
+              sourceUrl?: string | null;
+              srcSet?: string | null;
+              description?: string | null;
+              fileSize?: number | null;
+              mimeType?: string | null;
+              altText?: string | null;
+              sizes?: string | null;
+              mediaType?: string | null;
+              mediaDetails?: {
+                __typename: "MediaDetails";
+                height?: number | null;
+                width?: number | null;
+                file?: string | null;
+                sizes?: Array<{
+                  __typename: "MediaSize";
+                  file?: string | null;
+                  fileSize?: number | null;
+                  height?: string | null;
+                  width?: string | null;
+                  sourceUrl?: string | null;
+                  name?: string | null;
+                  mimeType?: string | null;
+                } | null> | null;
+              } | null;
+            } | null;
+          } | null;
+        }
+      | null
+    > | null;
+  } | null;
+};
+
 export type ContentNodePathsQueryVariables = Exact<{
   first?: InputMaybe<Scalars["Int"]>;
   search?: InputMaybe<Scalars["String"]>;
@@ -38177,26 +39125,147 @@ export type ContentNodePathsQuery = {
       total?: number | null;
     } | null;
     nodes?: Array<
-      | { __typename: "Gform"; contentTypeName: string }
-      | { __typename: "MediaItem"; contentTypeName: string }
       | {
-          __typename: "Page";
+          __typename: "Gform";
           contentTypeName: string;
-          uri?: string | null;
-          databaseId: number;
-          id: string;
-          slug?: string | null;
-          desiredSlug?: string | null;
-        }
-      | {
-          __typename: "Post";
-          contentTypeName: string;
+          featuredImageDatabaseId?: number | null;
+          featuredImageId?: string | null;
+          authorId?: string | null;
+          authorDatabaseId?: number | null;
+          isTermNode: boolean;
           id: string;
           databaseId: number;
           guid?: string | null;
           uri?: string | null;
+          modified?: string | null;
           slug?: string | null;
-          desiredSlug?: string | null;
+          title?: string | null;
+          previewRevisionId?: string | null;
+          previewRevisionDatabaseId?: number | null;
+          isPreview?: boolean | null;
+          featuredImage?: {
+            __typename: "NodeWithFeaturedImageToMediaItemConnectionEdge";
+            node?: {
+              __typename: "MediaItem";
+              authorId?: string | null;
+              authorDatabaseId?: number | null;
+              commentCount?: number | null;
+              commentStatus?: string | null;
+              isPreview?: boolean | null;
+              previewRevisionDatabaseId?: number | null;
+              previewRevisionId?: string | null;
+              isTermNode: boolean;
+              contentTypeName: string;
+              id: string;
+              databaseId: number;
+              guid?: string | null;
+              modified?: string | null;
+              uri?: string | null;
+              slug?: string | null;
+              title?: string | null;
+            } | null;
+          } | null;
+        }
+      | {
+          __typename: "MediaItem";
+          contentTypeName: string;
+          authorId?: string | null;
+          authorDatabaseId?: number | null;
+          commentCount?: number | null;
+          commentStatus?: string | null;
+          isPreview?: boolean | null;
+          previewRevisionDatabaseId?: number | null;
+          previewRevisionId?: string | null;
+          isTermNode: boolean;
+          id: string;
+          databaseId: number;
+          guid?: string | null;
+          modified?: string | null;
+          uri?: string | null;
+          slug?: string | null;
+          title?: string | null;
+        }
+      | {
+          __typename: "Page";
+          contentTypeName: string;
+          featuredImageId?: string | null;
+          featuredImageDatabaseId?: number | null;
+          previewRevisionId?: string | null;
+          previewRevisionDatabaseId?: number | null;
+          isPreview?: boolean | null;
+          uri?: string | null;
+          modified?: string | null;
+          slug?: string | null;
+          databaseId: number;
+          id: string;
+          guid?: string | null;
+          authorId?: string | null;
+          authorDatabaseId?: number | null;
+          isTermNode: boolean;
+          title?: string | null;
+          featuredImage?: {
+            __typename: "NodeWithFeaturedImageToMediaItemConnectionEdge";
+            node?: {
+              __typename: "MediaItem";
+              authorId?: string | null;
+              authorDatabaseId?: number | null;
+              commentCount?: number | null;
+              commentStatus?: string | null;
+              isPreview?: boolean | null;
+              previewRevisionDatabaseId?: number | null;
+              previewRevisionId?: string | null;
+              isTermNode: boolean;
+              contentTypeName: string;
+              id: string;
+              databaseId: number;
+              guid?: string | null;
+              modified?: string | null;
+              uri?: string | null;
+              slug?: string | null;
+              title?: string | null;
+            } | null;
+          } | null;
+        }
+      | {
+          __typename: "Post";
+          contentTypeName: string;
+          featuredImageId?: string | null;
+          featuredImageDatabaseId?: number | null;
+          previewRevisionId?: string | null;
+          previewRevisionDatabaseId?: number | null;
+          isPreview?: boolean | null;
+          uri?: string | null;
+          modified?: string | null;
+          slug?: string | null;
+          databaseId: number;
+          id: string;
+          guid?: string | null;
+          authorId?: string | null;
+          authorDatabaseId?: number | null;
+          isTermNode: boolean;
+          title?: string | null;
+          featuredImage?: {
+            __typename: "NodeWithFeaturedImageToMediaItemConnectionEdge";
+            node?: {
+              __typename: "MediaItem";
+              authorId?: string | null;
+              authorDatabaseId?: number | null;
+              commentCount?: number | null;
+              commentStatus?: string | null;
+              isPreview?: boolean | null;
+              previewRevisionDatabaseId?: number | null;
+              previewRevisionId?: string | null;
+              isTermNode: boolean;
+              contentTypeName: string;
+              id: string;
+              databaseId: number;
+              guid?: string | null;
+              modified?: string | null;
+              uri?: string | null;
+              slug?: string | null;
+              title?: string | null;
+            } | null;
+          } | null;
         }
       | null
     > | null;
@@ -38353,14 +39422,20 @@ export type GravityPostTypePathsQuery = {
       __typename: "RootQueryToGformConnectionEdge";
       cursor?: string | null;
       node?: {
-        __typename?: "Gform";
+        __typename: "Gform";
+        featuredImageDatabaseId?: number | null;
+        featuredImageId?: string | null;
+        authorId?: string | null;
+        authorDatabaseId?: number | null;
+        isTermNode: boolean;
+        contentTypeName: string;
+        id: string;
+        databaseId: number;
+        guid?: string | null;
         uri?: string | null;
+        modified?: string | null;
         slug?: string | null;
         title?: string | null;
-        contentTypeName: string;
-        databaseId: number;
-        id: string;
-        guid?: string | null;
       } | null;
     } | null> | null;
   } | null;
@@ -38374,7 +39449,7 @@ export type GravityPostTypeQueryVariables = Exact<{
 export type GravityPostTypeQuery = {
   __typename?: "RootQuery";
   gform?: {
-    __typename?: "Gform";
+    __typename: "Gform";
     authorId?: string | null;
     authorDatabaseId?: number | null;
     content?: string | null;
@@ -41484,10 +42559,12 @@ export const ContentNodePartialFragmentDoc = gql`
     status
     date
     modified
+    __typename
   }
 `;
 export const GformPartialFragmentDoc = gql`
   fragment GformPartial on Gform {
+    __typename
     authorId
     authorDatabaseId
     content
@@ -41518,13 +42595,20 @@ export const RootQueryToGformConnectionEdgePartialFragmentDoc = gql`
 `;
 export const GformPathPartialFragmentDoc = gql`
   fragment GformPathPartial on Gform {
+    __typename
+    featuredImageDatabaseId
+    featuredImageId
+    authorId
+    authorDatabaseId
+    isTermNode
+    contentTypeName
+    id
+    databaseId
+    guid
     uri
+    modified
     slug
     title
-    contentTypeName
-    databaseId
-    id
-    guid
   }
 `;
 export const LoginPayloadPartialFragmentDoc = gql`
@@ -41566,6 +42650,27 @@ export const MediaItemPartialFragmentDoc = gql`
     mediaType
   }
 `;
+export const MediaItemPathsPartialFragmentDoc = gql`
+  fragment MediaItemPathsPartial on MediaItem {
+    __typename
+    authorId
+    authorDatabaseId
+    commentCount
+    commentStatus
+    isPreview
+    previewRevisionDatabaseId
+    previewRevisionId
+    isTermNode
+    contentTypeName
+    id
+    databaseId
+    guid
+    modified
+    uri
+    slug
+    title
+  }
+`;
 export const MediaSizePartialFragmentDoc = gql`
   fragment MediaSizePartial on MediaSize {
     file
@@ -41593,6 +42698,41 @@ export const NodeWithCommentsPartialFragmentDoc = gql`
     commentCount
     commentStatus
     __typename
+  }
+`;
+export const NodeWithFeaturedImagePartialFragmentDoc = gql`
+  fragment NodeWithFeaturedImagePartial on NodeWithFeaturedImage {
+    __typename
+    id
+    slug
+    databaseId
+    featuredImageId
+    featuredImageDatabaseId
+    slug
+    enclosure
+    guid
+    isPreview
+    uri
+    date
+    modified
+    contentTypeName
+  }
+`;
+export const NodeWithFeaturedImagePathsPartialFragmentDoc = gql`
+  fragment NodeWithFeaturedImagePathsPartial on NodeWithFeaturedImage {
+    __typename
+    featuredImageId
+    featuredImageDatabaseId
+    previewRevisionId
+    previewRevisionDatabaseId
+    isPreview
+    uri
+    modified
+    slug
+    contentTypeName
+    databaseId
+    id
+    guid
   }
 `;
 export const PageInfoPartialFragmentDoc = gql`
@@ -41623,11 +42763,20 @@ export const PagePartialFragmentDoc = gql`
 `;
 export const PagePathsPartialFragmentDoc = gql`
   fragment PagePathsPartial on Page {
-    uri
-    databaseId
+    __typename
+    featuredImageDatabaseId
+    featuredImageId
+    authorId
+    authorDatabaseId
+    isTermNode
+    contentTypeName
     id
+    databaseId
+    modified
+    guid
+    uri
     slug
-    desiredSlug
+    title
   }
 `;
 export const PostPartialFragmentDoc = gql`
@@ -41653,12 +42802,20 @@ export const PostPartialFragmentDoc = gql`
 `;
 export const PostPathsPartialFragmentDoc = gql`
   fragment PostPathsPartial on Post {
+    __typename
+    featuredImageDatabaseId
+    featuredImageId
+    authorId
+    authorDatabaseId
+    isTermNode
+    contentTypeName
+    modified
     id
     databaseId
     guid
     uri
     slug
-    desiredSlug
+    title
   }
 `;
 export const SEOPageInfoSchemaPartialFragmentDoc = gql`
@@ -42746,6 +43903,294 @@ export type loginMutationOptions = Apollo.BaseMutationOptions<
   loginMutation,
   loginMutationVariables
 >;
+export const ContentNodeByPathDocument = gql`
+  query ContentNodeByPath(
+    $id: ID!
+    $idType: ContentNodeIdTypeEnum
+    $contentType: ContentTypeEnum
+    $asPreview: Boolean
+  ) {
+    contentNode(
+      id: $id
+      idType: $idType
+      contentType: $contentType
+      asPreview: $asPreview
+    ) {
+      ...ContentNodePartial
+      ... on Gform {
+        ...GformPartial
+        featuredImage {
+          node {
+            ...MediaItemPartial
+            mediaDetails {
+              ...MediaDetailsPartial
+              sizes {
+                ...MediaSizePartial
+              }
+            }
+          }
+        }
+      }
+      ... on MediaItem {
+        ...MediaItemPartial
+        mediaDetails {
+          ...MediaDetailsPartial
+          sizes {
+            ...MediaSizePartial
+          }
+        }
+      }
+      ... on NodeWithFeaturedImage {
+        ...NodeWithFeaturedImagePartial
+        featuredImage {
+          __typename
+          node {
+            ...MediaItemPartial
+            mediaDetails {
+              ...MediaDetailsPartial
+              sizes {
+                ...MediaSizePartial
+              }
+            }
+          }
+        }
+      }
+      ... on Page {
+        ...PagePartial
+        featuredImage {
+          node {
+            ...MediaItemPartial
+            mediaDetails {
+              ...MediaDetailsPartial
+              sizes {
+                ...MediaSizePartial
+              }
+            }
+          }
+        }
+      }
+      ... on Post {
+        ...PostPartial
+        featuredImage {
+          node {
+            ...MediaItemPartial
+            mediaDetails {
+              ...MediaDetailsPartial
+              sizes {
+                ...MediaSizePartial
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  ${ContentNodePartialFragmentDoc}
+  ${GformPartialFragmentDoc}
+  ${MediaItemPartialFragmentDoc}
+  ${MediaDetailsPartialFragmentDoc}
+  ${MediaSizePartialFragmentDoc}
+  ${NodeWithFeaturedImagePartialFragmentDoc}
+  ${PagePartialFragmentDoc}
+  ${PostPartialFragmentDoc}
+`;
+
+/**
+ * __useContentNodeByPathQuery__
+ *
+ * To run a query within a React component, call `useContentNodeByPathQuery` and pass it any options that fit your needs.
+ * When your component renders, `useContentNodeByPathQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useContentNodeByPathQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      idType: // value for 'idType'
+ *      contentType: // value for 'contentType'
+ *      asPreview: // value for 'asPreview'
+ *   },
+ * });
+ */
+export function useContentNodeByPathQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    ContentNodeByPathQuery,
+    ContentNodeByPathQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    ContentNodeByPathQuery,
+    ContentNodeByPathQueryVariables
+  >(ContentNodeByPathDocument, options);
+}
+export function useContentNodeByPathLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ContentNodeByPathQuery,
+    ContentNodeByPathQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    ContentNodeByPathQuery,
+    ContentNodeByPathQueryVariables
+  >(ContentNodeByPathDocument, options);
+}
+export type ContentNodeByPathQueryHookResult = ReturnType<
+  typeof useContentNodeByPathQuery
+>;
+export type ContentNodeByPathLazyQueryHookResult = ReturnType<
+  typeof useContentNodeByPathLazyQuery
+>;
+export type ContentNodeByPathQueryResult = Apollo.QueryResult<
+  ContentNodeByPathQuery,
+  ContentNodeByPathQueryVariables
+>;
+export function refetchContentNodeByPathQuery(
+  variables: ContentNodeByPathQueryVariables
+) {
+  return { query: ContentNodeByPathDocument, variables: variables };
+}
+export const ContentNodeClientDocument = gql`
+  query ContentNodeClient(
+    $first: Int
+    $search: String
+    $contentTypes: [ContentTypeEnum!]
+    $fieldOrderBy: PostObjectsConnectionOrderbyEnum!
+    $orderOrderBy: OrderEnum!
+    $parentIn: [ID]
+    $stati: [PostStatusEnum]
+    $status: PostStatusEnum
+  ) {
+    contentNodes(
+      first: $first
+      where: {
+        search: $search
+        contentTypes: $contentTypes
+        orderby: { field: $fieldOrderBy, order: $orderOrderBy }
+        parentIn: $parentIn
+        stati: $stati
+        status: $status
+      }
+    ) {
+      pageInfo {
+        ...PageInfoPartial
+      }
+      nodes {
+        slug
+        contentTypeName
+        __typename
+        ... on Gform {
+          __typename
+          ...GformPartial
+        }
+        ... on MediaItem {
+          ...MediaItemPartial
+          mediaDetails {
+            ...MediaDetailsPartial
+            sizes {
+              ...MediaSizePartial
+            }
+          }
+        }
+        ... on NodeWithFeaturedImage {
+          ...NodeWithFeaturedImagePartial
+          featuredImage {
+            __typename
+            node {
+              ...MediaItemPartial
+              mediaDetails {
+                ...MediaDetailsPartial
+                sizes {
+                  ...MediaSizePartial
+                }
+              }
+            }
+          }
+        }
+        ... on Page {
+          ...PagePartial
+        }
+        ... on Post {
+          ...PostPartial
+        }
+      }
+    }
+  }
+  ${PageInfoPartialFragmentDoc}
+  ${GformPartialFragmentDoc}
+  ${MediaItemPartialFragmentDoc}
+  ${MediaDetailsPartialFragmentDoc}
+  ${MediaSizePartialFragmentDoc}
+  ${NodeWithFeaturedImagePartialFragmentDoc}
+  ${PagePartialFragmentDoc}
+  ${PostPartialFragmentDoc}
+`;
+
+/**
+ * __useContentNodeClientQuery__
+ *
+ * To run a query within a React component, call `useContentNodeClientQuery` and pass it any options that fit your needs.
+ * When your component renders, `useContentNodeClientQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useContentNodeClientQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      search: // value for 'search'
+ *      contentTypes: // value for 'contentTypes'
+ *      fieldOrderBy: // value for 'fieldOrderBy'
+ *      orderOrderBy: // value for 'orderOrderBy'
+ *      parentIn: // value for 'parentIn'
+ *      stati: // value for 'stati'
+ *      status: // value for 'status'
+ *   },
+ * });
+ */
+export function useContentNodeClientQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    ContentNodeClientQuery,
+    ContentNodeClientQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    ContentNodeClientQuery,
+    ContentNodeClientQueryVariables
+  >(ContentNodeClientDocument, options);
+}
+export function useContentNodeClientLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ContentNodeClientQuery,
+    ContentNodeClientQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    ContentNodeClientQuery,
+    ContentNodeClientQueryVariables
+  >(ContentNodeClientDocument, options);
+}
+export type ContentNodeClientQueryHookResult = ReturnType<
+  typeof useContentNodeClientQuery
+>;
+export type ContentNodeClientLazyQueryHookResult = ReturnType<
+  typeof useContentNodeClientLazyQuery
+>;
+export type ContentNodeClientQueryResult = Apollo.QueryResult<
+  ContentNodeClientQuery,
+  ContentNodeClientQueryVariables
+>;
+export function refetchContentNodeClientQuery(
+  variables: ContentNodeClientQueryVariables
+) {
+  return { query: ContentNodeClientDocument, variables: variables };
+}
 export const ContentNodePathsDocument = gql`
   query ContentNodePaths(
     $first: Int
@@ -42774,18 +44219,34 @@ export const ContentNodePathsDocument = gql`
       nodes {
         contentTypeName
         __typename
+        ... on Gform {
+          ...GformPathPartial
+        }
+        ... on MediaItem {
+          ...MediaItemPathsPartial
+        }
+        ... on NodeWithFeaturedImage {
+          ...NodeWithFeaturedImagePathsPartial
+          featuredImage {
+            __typename
+            node {
+              ...MediaItemPathsPartial
+            }
+          }
+        }
         ... on Page {
-          __typename
           ...PagePathsPartial
         }
         ... on Post {
-          __typename
           ...PostPathsPartial
         }
       }
     }
   }
   ${PageInfoPartialFragmentDoc}
+  ${GformPathPartialFragmentDoc}
+  ${MediaItemPathsPartialFragmentDoc}
+  ${NodeWithFeaturedImagePathsPartialFragmentDoc}
   ${PagePathsPartialFragmentDoc}
   ${PostPathsPartialFragmentDoc}
 `;
@@ -43383,6 +44844,8 @@ export function refetchGetGravityFormQuery(
 }
 export const namedOperations = {
   Query: {
+    ContentNodeByPath: "ContentNodeByPath",
+    ContentNodeClient: "ContentNodeClient",
     ContentNodePaths: "ContentNodePaths",
     ContentNodes: "ContentNodes",
     GravityPostTypePaths: "GravityPostTypePaths",
@@ -43406,9 +44869,12 @@ export const namedOperations = {
     LoginPayloadPartial: "LoginPayloadPartial",
     MediaDetailsPartial: "MediaDetailsPartial",
     MediaItemPartial: "MediaItemPartial",
+    MediaItemPathsPartial: "MediaItemPathsPartial",
     MediaSizePartial: "MediaSizePartial",
     MenuFragment: "MenuFragment",
     NodeWithCommentsPartial: "NodeWithCommentsPartial",
+    NodeWithFeaturedImagePartial: "NodeWithFeaturedImagePartial",
+    NodeWithFeaturedImagePathsPartial: "NodeWithFeaturedImagePathsPartial",
     PageInfoPartial: "PageInfoPartial",
     PagePartial: "PagePartial",
     PagePathsPartial: "PagePathsPartial",

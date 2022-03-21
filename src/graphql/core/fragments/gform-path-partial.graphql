@@ -4,11 +4,18 @@ fragment RootQueryToGformConnectionEdgePartial on RootQueryToGformConnectionEdge
 }
 
 fragment GformPathPartial on Gform {
+  __typename
+  featuredImageDatabaseId
+  featuredImageId
+  authorId
+  authorDatabaseId
+  isTermNode
+  contentTypeName
+  id
+  databaseId
+  guid
   uri
+  modified
   slug
   title
-  contentTypeName
-  databaseId
-  id
-  guid
 }

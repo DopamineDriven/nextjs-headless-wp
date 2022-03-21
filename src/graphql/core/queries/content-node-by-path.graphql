@@ -1,0 +1,91 @@
+# import ContentNodePartial from "../fragments/content-node-partial.graphql";
+# import GformPartial from "../fragments/gform-partial.graphql";
+# import NodeWithFeaturedImagePartial from "../fragments/node-with-featured-image-partial.graphql";
+# import PageInfoPartial from "../fragments/page-info-partial.graphql";
+# import PagePartial from "../fragments/page-partial.graphql";
+# import PostPartial from "../fragments/post-partial.graphql";
+# import MediaDetailsPartial from "../fragments/media-details-partial.graphql";
+# import MediaItemPartial from "../fragments/media-item-partial.graphql";
+# import MediaSizePartial from "../fragments/media-size-partial.graphql";
+
+query ContentNodeByPath(
+  $id: ID!
+  $idType: ContentNodeIdTypeEnum
+  $contentType: ContentTypeEnum
+  $asPreview: Boolean
+) {
+  contentNode(
+    id: $id
+    idType: $idType
+    contentType: $contentType
+    asPreview: $asPreview
+  ) {
+    ...ContentNodePartial
+    ... on Gform {
+      ...GformPartial
+      featuredImage {
+        node {
+          ...MediaItemPartial
+          mediaDetails {
+            ...MediaDetailsPartial
+            sizes {
+              ...MediaSizePartial
+            }
+          }
+        }
+      }
+    }
+    ... on MediaItem {
+      ...MediaItemPartial
+      mediaDetails {
+        ...MediaDetailsPartial
+        sizes {
+          ...MediaSizePartial
+        }
+      }
+    }
+    ... on NodeWithFeaturedImage {
+      ...NodeWithFeaturedImagePartial
+      featuredImage {
+        __typename
+        node {
+          ...MediaItemPartial
+          mediaDetails {
+            ...MediaDetailsPartial
+            sizes {
+              ...MediaSizePartial
+            }
+          }
+        }
+      }
+    }
+    ... on Page {
+      ...PagePartial
+      featuredImage {
+        node {
+          ...MediaItemPartial
+          mediaDetails {
+            ...MediaDetailsPartial
+            sizes {
+              ...MediaSizePartial
+            }
+          }
+        }
+      }
+    }
+    ... on Post {
+      ...PostPartial
+      featuredImage {
+        node {
+          ...MediaItemPartial
+          mediaDetails {
+            ...MediaDetailsPartial
+            sizes {
+              ...MediaSizePartial
+            }
+          }
+        }
+      }
+    }
+  }
+}

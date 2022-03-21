@@ -1,7 +1,16 @@
 fragment PagePathsPartial on Page {
-  uri
-  databaseId
+  __typename
+  featuredImageDatabaseId
+  featuredImageId
+  authorId
+  authorDatabaseId
+  isTermNode
+  contentTypeName
   id
+  databaseId
+  modified
+  guid
+  uri
   slug
-  desiredSlug
+  title
 }
