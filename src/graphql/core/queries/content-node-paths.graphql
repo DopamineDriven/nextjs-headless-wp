@@ -1,3 +1,4 @@
+# import GformPathPartial from "../fragments/gform-path-partial.graphql";
 # import PageInfoPartial from "../fragments/page-info-partial.graphql";
 # import PagePathsPartial from "../fragments/page-paths-partial.graphql";
 # import PostPathsPartial from "../fragments/post-paths-partial.graphql";
@@ -28,6 +29,10 @@ query ContentNodePaths(
     nodes {
       contentTypeName
       __typename
+      ... on Gform {
+        __typename
+        ...GformPathPartial
+      }
       ... on Page {
         __typename
         ...PagePathsPartial
