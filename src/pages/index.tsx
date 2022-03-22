@@ -31,27 +31,26 @@ export type IndexProps = {
   params: ParsedUrlQuery;
 };
 // Proof of Concept
-import type { UnwrapHtmlPickOneUnion } from "@/types/unwrap-react";
+import type { UnwrapHtmlUnion } from "@/types/unwrap-react";
 
 export const CustomDiv = ({
   children,
   ...props
-}: UnwrapHtmlPickOneUnion<
-  HTMLDivElement,
-  keyof HTMLAttributes<HTMLDivElement>
->) => <div {...props}>{children}</div>;
+}: UnwrapHtmlUnion<HTMLDivElement, keyof HTMLAttributes<HTMLDivElement>>) => (
+  <div {...props}>{children}</div>
+);
 
 export const CustomCanvasFtw = ({
   children,
   ...props
-}: UnwrapHtmlPickOneUnion<
+}: UnwrapHtmlUnion<
   HTMLCanvasElement,
   keyof HTMLAttributes<HTMLCanvasElement>
 >) => <canvas {...props} />;
 
 export const CustomHeading = ({
   ...props
-}: UnwrapHtmlPickOneUnion<
+}: UnwrapHtmlUnion<
   HTMLHeadingElement,
   keyof HTMLAttributes<HTMLHeadingElement>
 >) => {

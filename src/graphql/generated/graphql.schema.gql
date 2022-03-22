@@ -2851,6 +2851,231 @@ type CategoryToTaxonomyConnectionEdge {
 """
 A Gravity Forms   field.
 """
+type ChainedSelectField implements FormField {
+  """
+  When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels.
+  """
+  adminLabel: String
+
+  """
+  Determines if the field’s value can be pre-populated dynamically.
+  """
+  canPrepopulate: Boolean
+
+  """
+  Alignment of the dropdown fields.
+  """
+  chainedSelectsAlignment: ChainedSelectFieldAlignmentEnum
+
+  """
+  The available choices for the chainedselect field.
+  """
+  choices: [ChainedSelectFieldChoice]
+
+  """
+  Controls the visibility of the field based on values selected by the user.
+  """
+  conditionalLogic: ConditionalLogic
+
+  """
+  String containing the custom CSS classes to be added to the &lt;li&gt; tag that contains the field. Useful for applying custom formatting to specific fields.
+  """
+  cssClass: String
+
+  """
+  Field description.
+  """
+  description: String
+
+  """
+  The placement of the field description.
+  """
+  descriptionPlacement: FormFieldDescriptionPlacementEnum
+
+  """
+  Indicates the field is only displayed and its contents are not submitted with the form/saved with the entry. This is set to true.
+  """
+  displayOnly: Boolean
+
+  """
+  Contains the message that is displayed for fields that fail validation.
+  """
+  errorMessage: String
+
+  """
+  Determines if the field (checkbox, select or radio) have choice values enabled, which allows the field to have choice values different from the labels that are displayed to the user.
+  """
+  hasChoiceValue: Boolean
+
+  """
+  Field ID.
+  """
+  id: Int!
+
+  """
+  Assigns a name to this field so that it can be populated dynamically via this input name. Only applicable when canPrepopulate is `true`.
+  """
+  inputName: String
+
+  """
+  The base form field type used to display the input. A good example is the Post Custom Field that can be displayed as various different types of fields.
+  """
+  inputType: FormFieldTypeEnum
+
+  """
+  An array of the available properties for each input of the chainedselect field.
+  """
+  inputs: [ChainedSelectInputProperty]
+
+  """
+  Determines if the field requires the user to enter a value. Fields marked as required will prevent the form from being submitted if the user has not entered a value in it.
+  """
+  isRequired: Boolean
+
+  """
+  Field label that will be displayed on the form and on the admin pages.
+  """
+  label: String
+
+  """
+  The field label position.
+  """
+  labelPlacement: FormFieldLabelPlacementEnum
+
+  """
+  The number of CSS grid columns the field should span.
+  """
+  layoutGridColumnSpan: Int
+
+  """
+  The number of CSS grid columns the spacer field following this one should span.
+  """
+  layoutSpacerGridColumnSpan: Int
+
+  """
+  The form page this field is located on. Default is 1.
+  """
+  pageNumber: Int
+
+  """
+  The form field-specifc policies for exporting and erasing personal data.
+  """
+  personalData: FormFieldDataPolicy
+
+  """
+  Determines if the field allows duplicate submissions.
+  """
+  shouldAllowDuplicates: Boolean
+
+  """
+  Whether inactive dropdowns should be hidden.
+  """
+  shouldHideInactiveChoices: Boolean
+
+  """
+  The placement of the labels for the subfields within the group. This setting controls all of the subfields, they cannot be set individually. They may be aligned above or below the inputs. If this property is not set, the “Sub-Label Placement” setting on the Form Settings-&gt;Form Layout page is used. If no setting is specified, the default is above inputs.
+  """
+  subLabelPlacement: FormFieldSubLabelPlacementEnum
+
+  """
+  The type of field to be displayed.
+  """
+  type: FormFieldTypeEnum
+
+  """
+  The string-formatted entry value for the `formField`. For complex fields this might be a JSON-encoded or serialized array.
+  """
+  value: String
+
+  """
+  ChainedSelect field value.
+  """
+  values: [String]
+
+  """
+  Field visibility.
+  """
+  visibility: FormFieldVisibilityEnum
+}
+
+"""
+Alignment of the dropdown fields.
+"""
+enum ChainedSelectFieldAlignmentEnum {
+  """
+  Horizontal alignment (in a row).
+  """
+  HORIZONTAL
+
+  """
+  Vertical alignment (in a column).
+  """
+  VERTICAL
+}
+
+"""
+Chainedselect choice values.
+"""
+type ChainedSelectFieldChoice {
+  """
+  The available choices for the chainedselect field.
+  """
+  choices: [ChainedSelectFieldChoice]
+
+  """
+  Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected.
+  """
+  isSelected: Boolean
+
+  """
+  The text to be displayed to the user when displaying this choice.
+  """
+  text: String
+
+  """
+  The value to be stored in the database when this choice is selected. Note: This property is only supported by the Drop Down and Post Category fields. Checkboxes and Radio fields will store the text property in the database regardless of the value property.
+  """
+  value: String
+}
+
+"""
+Input fields for a single ChainedSelect.
+"""
+input ChainedSelectFieldInput {
+  """
+  Input ID.
+  """
+  inputId: Float
+
+  """
+  Input value.
+  """
+  value: String
+}
+
+"""
+Chainedselect input values.
+"""
+type ChainedSelectInputProperty {
+  """
+  The input ID. Input IDs follow the following naming convention: FIELDID.INPUTID (i.e. 5.1), where FIELDID is the id of the containing field and INPUTID specifies the input field.
+  """
+  id: Float
+
+  """
+  Field label that will be displayed on the form and on the admin pages.
+  """
+  label: String
+
+  """
+  Assigns a name to this field so that it can be populated dynamically via this input name. Only applicable when canPrepopulate is `true`.
+  """
+  name: String
+}
+
+"""
+A Gravity Forms   field.
+"""
 type CheckboxField implements FormField {
   """
   When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels.
@@ -5308,7 +5533,7 @@ input CreateUserInput {
   email: String
 
   """
-  	The user's first name.
+  The user's first name.
   """
   firstName: String
 
@@ -7343,6 +7568,11 @@ enum FormFieldTypeEnum {
   CAPTCHA
 
   """
+  A Gravity Forms chainedselect field.
+  """
+  CHAINEDSELECT
+
+  """
   A Gravity Forms checkbox field.
   """
   CHECKBOX
@@ -7541,6 +7771,11 @@ input FormFieldValuesInput {
   The form field values for Address fields.
   """
   addressValues: AddressFieldInput
+
+  """
+  The form field values for ChainedSelect fields.
+  """
+  chainedSelectValues: [ChainedSelectFieldInput]
 
   """
   The form field values for Checkbox fields.
@@ -24409,7 +24644,7 @@ input RegisterUserInput {
   email: String
 
   """
-  	The user's first name.
+  The user's first name.
   """
   firstName: String
 
@@ -32210,7 +32445,7 @@ input UpdateUserInput {
   email: String
 
   """
-  	The user's first name.
+  The user's first name.
   """
   firstName: String
 

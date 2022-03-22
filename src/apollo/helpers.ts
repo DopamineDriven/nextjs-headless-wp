@@ -364,6 +364,93 @@ export type CategoryToTaxonomyConnectionEdgeKeySpecifier = (
 export type CategoryToTaxonomyConnectionEdgeFieldPolicy = {
   node?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type ChainedSelectFieldKeySpecifier = (
+  | "adminLabel"
+  | "canPrepopulate"
+  | "chainedSelectsAlignment"
+  | "choices"
+  | "conditionalLogic"
+  | "cssClass"
+  | "description"
+  | "descriptionPlacement"
+  | "displayOnly"
+  | "errorMessage"
+  | "hasChoiceValue"
+  | "id"
+  | "inputName"
+  | "inputType"
+  | "inputs"
+  | "isRequired"
+  | "label"
+  | "labelPlacement"
+  | "layoutGridColumnSpan"
+  | "layoutSpacerGridColumnSpan"
+  | "pageNumber"
+  | "personalData"
+  | "shouldAllowDuplicates"
+  | "shouldHideInactiveChoices"
+  | "subLabelPlacement"
+  | "type"
+  | "value"
+  | "values"
+  | "visibility"
+  | ChainedSelectFieldKeySpecifier
+)[];
+export type ChainedSelectFieldFieldPolicy = {
+  adminLabel?: FieldPolicy<any> | FieldReadFunction<any>;
+  canPrepopulate?: FieldPolicy<any> | FieldReadFunction<any>;
+  chainedSelectsAlignment?: FieldPolicy<any> | FieldReadFunction<any>;
+  choices?: FieldPolicy<any> | FieldReadFunction<any>;
+  conditionalLogic?: FieldPolicy<any> | FieldReadFunction<any>;
+  cssClass?: FieldPolicy<any> | FieldReadFunction<any>;
+  description?: FieldPolicy<any> | FieldReadFunction<any>;
+  descriptionPlacement?: FieldPolicy<any> | FieldReadFunction<any>;
+  displayOnly?: FieldPolicy<any> | FieldReadFunction<any>;
+  errorMessage?: FieldPolicy<any> | FieldReadFunction<any>;
+  hasChoiceValue?: FieldPolicy<any> | FieldReadFunction<any>;
+  id?: FieldPolicy<any> | FieldReadFunction<any>;
+  inputName?: FieldPolicy<any> | FieldReadFunction<any>;
+  inputType?: FieldPolicy<any> | FieldReadFunction<any>;
+  inputs?: FieldPolicy<any> | FieldReadFunction<any>;
+  isRequired?: FieldPolicy<any> | FieldReadFunction<any>;
+  label?: FieldPolicy<any> | FieldReadFunction<any>;
+  labelPlacement?: FieldPolicy<any> | FieldReadFunction<any>;
+  layoutGridColumnSpan?: FieldPolicy<any> | FieldReadFunction<any>;
+  layoutSpacerGridColumnSpan?: FieldPolicy<any> | FieldReadFunction<any>;
+  pageNumber?: FieldPolicy<any> | FieldReadFunction<any>;
+  personalData?: FieldPolicy<any> | FieldReadFunction<any>;
+  shouldAllowDuplicates?: FieldPolicy<any> | FieldReadFunction<any>;
+  shouldHideInactiveChoices?: FieldPolicy<any> | FieldReadFunction<any>;
+  subLabelPlacement?: FieldPolicy<any> | FieldReadFunction<any>;
+  type?: FieldPolicy<any> | FieldReadFunction<any>;
+  value?: FieldPolicy<any> | FieldReadFunction<any>;
+  values?: FieldPolicy<any> | FieldReadFunction<any>;
+  visibility?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type ChainedSelectFieldChoiceKeySpecifier = (
+  | "choices"
+  | "isSelected"
+  | "text"
+  | "value"
+  | ChainedSelectFieldChoiceKeySpecifier
+)[];
+export type ChainedSelectFieldChoiceFieldPolicy = {
+  choices?: FieldPolicy<any> | FieldReadFunction<any>;
+  isSelected?: FieldPolicy<any> | FieldReadFunction<any>;
+  text?: FieldPolicy<any> | FieldReadFunction<any>;
+  value?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type ChainedSelectInputPropertyKeySpecifier = (
+  | "id"
+  | "label"
+  | "name"
+  | ChainedSelectInputPropertyKeySpecifier
+)[];
+export type ChainedSelectInputPropertyFieldPolicy = {
+  id?: FieldPolicy<any> | FieldReadFunction<any>;
+  label?: FieldPolicy<any> | FieldReadFunction<any>;
+  name?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type CheckboxFieldKeySpecifier = (
   | "adminLabel"
   | "canPrepopulate"
@@ -9416,6 +9503,27 @@ export type StrictTypedTypePolicies = {
       | CategoryToTaxonomyConnectionEdgeKeySpecifier
       | (() => undefined | CategoryToTaxonomyConnectionEdgeKeySpecifier);
     fields?: CategoryToTaxonomyConnectionEdgeFieldPolicy;
+  };
+  ChainedSelectField?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | ChainedSelectFieldKeySpecifier
+      | (() => undefined | ChainedSelectFieldKeySpecifier);
+    fields?: ChainedSelectFieldFieldPolicy;
+  };
+  ChainedSelectFieldChoice?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | ChainedSelectFieldChoiceKeySpecifier
+      | (() => undefined | ChainedSelectFieldChoiceKeySpecifier);
+    fields?: ChainedSelectFieldChoiceFieldPolicy;
+  };
+  ChainedSelectInputProperty?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | ChainedSelectInputPropertyKeySpecifier
+      | (() => undefined | ChainedSelectInputPropertyKeySpecifier);
+    fields?: ChainedSelectInputPropertyFieldPolicy;
   };
   CheckboxField?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
