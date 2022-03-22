@@ -4,11 +4,9 @@ import {
   NormalizedCacheObject,
   TypedDocumentNode
 } from "@apollo/client";
-import { Cache } from "@apollo/client/cache/core/types/Cache";
 import merge from "deepmerge";
 import isEqual from "lodash/isEqual";
 import {
-  createBatch,
   ResolverContext,
   sessionMiddleware,
   sessionAfterware,
@@ -17,16 +15,12 @@ import {
   xResolvers
 } from "./middleware";
 import { useMemo } from "react";
-import { relayStylePagination } from "@apollo/client/utilities";
+import {} from "@apollo/client/utilities";
 import { RootQueryKeySpecifier, TypedTypePolicies } from "./helpers";
 import emittedIntrospection from "./fragment-matcher";
-import { Resolvers } from "@/graphql/generated/graphql";
 import { AppInitialProps, AppProps } from "next/app";
-import { AppPropsType } from "next/dist/shared/lib/utils";
+// import { AppPropsType } from "next/dist/shared/lib/utils";
 
-export type CacheDerivedPropName<T extends keyof NormalizedCacheObject> = {
-  [P in keyof T]?: T[P];
-};
 export let APOLLO_STATE_PROP_NAME: keyof NormalizedCacheObject;
 
 export type DocumentType<TDocumentNode extends TypedDocumentNode<any, any>> =
@@ -44,7 +38,7 @@ function createApolloClient(
       .concat(sessionAfterware)
       .concat(httpLink || errorLink),
     connectToDevTools: true,
-    resolvers: xResolvers(context ?? {}),
+    resolvers: xResolvers<ResolverContext>(context ?? {}),
     cache: new InMemoryCache({
       possibleTypes: emittedIntrospection.possibleTypes,
       typePolicies: {
@@ -66,7 +60,7 @@ export function initializeApollo(initialState: InitialState = null) {
   // Hydrate Initial State of Apollo Client Data Fetching Methods Here
   if (initialState) {
     // Get existing cache, loaded only during client side data fetching
-    const existingCache = _apolloClient.extract();
+    const existingCache = _apolloClient.extract(true);
 
     // Merge existing cache into data passed from getStaticProps/getServerSideProps
     const data = merge(initialState, existingCache, {
@@ -99,38 +93,8 @@ export function addApolloState(
   return pageProps;
 }
 
-export function useApollo(pageProps: AppProps['pageProps']) {
-  const state = pageProps[APOLLO_STATE_PROP_NAME]
+export function useApollo(pageProps: AppProps["pageProps"]) {
+  const state = pageProps[APOLLO_STATE_PROP_NAME];
   const store = useMemo(() => initializeApollo(state), [state]);
   return store;
 }
-// export type InitialState = NormalizedCacheObject | null;
-
-// // Pages with Next.js data fetching methods, like `getStaticProps`, can send
-// // a custom context which will be used by `SchemaLink` to server render pages
-// export function initializeApollo<T extends ResolverContext>(
-//   initialState: InitialState = null,
-//   context?: T
-// ): ApolloClient<NormalizedCacheObject> {
-//   const _apolloClient = apolloClient ?? createApolloClient(context);
-//   if (initialState) {
-//     _apolloClient.cache.restore(initialState);
-//   }
-//   // always create a new ApolloClient for SSG/SSR
-//   if (typeof window === "undefined") return _apolloClient;
-
-//   // Create the Apollo Client once in the Client
-//   if (!apolloClient) apolloClient = _apolloClient;
-//   return _apolloClient;
-// }
-
-// export function useApollo<T extends ResolverContext>(
-//   initialState: InitialState,
-//   context?: T
-// ): ApolloClient<NormalizedCacheObject> {
-//   const store = useMemo<ApolloClient<NormalizedCacheObject>>(
-//     () => initializeApollo<T>(initialState, context),
-//     [initialState, context]
-//   );
-//   return store;
-// }

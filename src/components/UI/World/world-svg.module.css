@@ -1,3 +1,24 @@
 .land {
   @apply fill-[#CCCCCC]/100 stroke-white/100 stroke-[0.5px];
 }
+.path {
+  @apply flex-shrink container mx-auto align-top my-0 justify-start
+  -translate-y-20 sm:-translate-y-10 md:-translate-y-5 lg:-translate-y-0;
+}
+
+.path g > path {
+  @apply transition-transform transform-gpu
+  duration-150 ease-linear hover:scale-[1.00025] hover:opacity-[0.85];
+}
+
+.path
+  g
+  > path
+  > *:matches([type="active"], [type="data-active"]) {
+  @apply invisible absolute transition-transform ease-in-out transform-gpu;
+  &:hover {
+    @apply visible z-50 border-collapse
+  rounded-lg bg-opacity-75 translate-x-3 -mt-1.5
+  text-xxs text-white my-auto p-2 font-medium;
+  }
+}

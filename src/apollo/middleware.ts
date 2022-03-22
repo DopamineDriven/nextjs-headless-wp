@@ -4,10 +4,12 @@ import { onError } from "@apollo/client/link/error";
 import { Resolvers } from "@/graphql/generated/graphql";
 import { ApolloLink, FetchResult } from "@apollo/client";
 import { createUploadLink } from "apollo-upload-client";
+
 export type ResolverContext = {
   req?: IncomingMessage;
   res?: ServerResponse;
 };
+
 const token = process.env.GRAPHQL_JWT_AUTH_SECRET_KEY_YML ?? "";
 // https://github.com/unjs/ohmyfetch/blob/main/src/types.ts
 
@@ -40,26 +42,12 @@ export const httpLink = createUploadLink({
     Accept: "*/*"
   }
 });
-export const xResolvers = (props: Resolvers<ResolverContext>) => ({
+export const xResolvers = <T extends ResolverContext>(props: Resolvers<T>) => ({
   ...props
 });
 
 const envEndpoint =
   process.env.NEXT_GQL_ENDPOINT ?? "https://www.andrewross.engineer/graphql";
-
-// export const enhancedFetch = async (url: RequestInfo, init: RequestInit) => {
-//   return await fetch(url, {
-//     ...init,
-//     headers: {
-//       Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvd3d3LmFuZHJld3Jvc3MuZW5naW5lZXIiLCJpYXQiOjE2NDcyMzA5OTMsIm5iZiI6MTY0NzIzMDk5MywiZXhwIjoxNjc4NzY2OTkzLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIiwidXNlcl9zZWNyZXQiOiJncmFwaHFsX2p3dF82MjJlYWFlMzkzMzU5In19fQ.ruUZAzyHOTydRr783PCw1B2cwSbKf6yhZIQ2k9yUHvA"
-// ,
-//       ...init.headers,
-//     },
-//     credentials: "include",
-//     keepalive: true,
-//     method: "POST"
-//   }).then(response => response);
-// };
 
 export function createBatch<T extends ResolverContext>(context?: T) {
   return createUploadLink({
@@ -71,8 +59,7 @@ export function createBatch<T extends ResolverContext>(context?: T) {
     },
     fetch: enhancedFetch,
     headers: {
-      Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvd3d3LmFuZHJld3Jvc3MuZW5naW5lZXIiLCJpYXQiOjE2NDcyMzA5OTMsIm5iZiI6MTY0NzIzMDk5MywiZXhwIjoxNjc4NzY2OTkzLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIiwidXNlcl9zZWNyZXQiOiJncmFwaHFsX2p3dF82MjJlYWFlMzkzMzU5In19fQ.ruUZAzyHOTydRr783PCw1B2cwSbKf6yhZIQ2k9yUHvA`,
-      "x-jwt-auth": `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvd3d3LmFuZHJld3Jvc3MuZW5naW5lZXIiLCJpYXQiOjE2NDcyMzA5OTMsIm5iZiI6MTY0NzIzMDk5MywiZXhwIjoxNjc4NzY2OTkzLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIiwidXNlcl9zZWNyZXQiOiJncmFwaHFsX2p3dF82MjJlYWFlMzkzMzU5In19fQ.ruUZAzyHOTydRr783PCw1B2cwSbKf6yhZIQ2k9yUHvA`,
+      Authorization: `Bearer `,
       "Accept-Encoding": "gzip, deflate, br",
       "Transfer-Encoding": "chunked",
       "Content-Type": "application/json; charset=utf-8",
@@ -96,7 +83,7 @@ export const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError)
     console.log(
       JSON.stringify(
-        `[Network error]: Nest is unreachable... \n
+        `[Network error]: Next is unreachable... \n
           [name]: ${networkError.name} \n
           [message]: ${networkError.message} \n
           [stack]: ${networkError.stack}`,
@@ -109,12 +96,12 @@ export const errorLink = onError(({ graphQLErrors, networkError }) => {
 const isBrowser = typeof window !== "undefined";
 export const sessionMiddleware = new ApolloLink((operation, forward) => {
   // if session exists in LS, set value as session header
-  const token = isBrowser ? window.localStorage.getItem("authorization") : "";
+  const token = isBrowser ? window.localStorage.getItem("Authorization") : "";
   if (token) {
     operation.setContext(({ headers = {} }) => ({
       headers: {
         ...headers,
-        "authorization": `Bearer ${process.env.GRAPHQL_JWT_AUTH_SECRET_KEY_YML}`
+        Authorization: `Bearer ${token}`
       }
     }));
   }
@@ -131,18 +118,20 @@ export const sessionAfterware = new ApolloLink((operation, forward) => {
     } = context;
     const session = headers.get("Authorization");
     if (session && isBrowser) {
-      if (window.localStorage.getItem("authorization") !== session) {
-        isBrowser && window.localStorage.removeItem("authorization");
+      if (window.localStorage.getItem("Authorization") !== session) {
+        isBrowser && window.localStorage.removeItem("Authorization");
         window.localStorage.setItem(
-          "authorization",
-          headers.get("authorization")
+          "Authorization",
+          headers.get("Authorization")
         );
       }
     }
     return response;
   });
 });
-// under construction
+
+// SubmitGravityFormMutation, GetGravityFormQuery, loginMutation, ContentNodeByPathQuery, ContentNodePathsQuery, GravityPostTypeQuery, GravityPostTypePathsQuery
+// // under construction
 // export const nextSesh = new ApolloLink((operation, forward) => {
 //   return forward(operation).map(response => {
 //     // parses incoming session token to store in LS
@@ -153,7 +142,7 @@ export const sessionAfterware = new ApolloLink((operation, forward) => {
 
 //     // const header = req?.headers.authorization?.split(/([ ])/)[1];
 //     const { data, context, errors, extensions } = response as FetchResult<
-//       signInUserMutation | unknown,
+//     SubmitGravityFormMutation,
 //       Record<string, any>,
 //       Record<string, any>
 //     >;
@@ -161,8 +150,8 @@ export const sessionAfterware = new ApolloLink((operation, forward) => {
 //     console.log("context: " + context ?? "no context");
 //     console.log("errors: " + errors ?? "no errors");
 //     console.log("extensions: " + extensions ?? "no extensions");
-//     const session = (data as signInUserMutation).signin;
-//     if (session?.auth?.accessToken && !!browser) {
+//     const session = (data as SubmitGravityFormMutation).submitGfForm;
+//     if (session?.entry?.formDatabaseId && !!browser) {
 //       if (
 //         window.localStorage.getItem("authorization") !==
 //         session.auth.accessToken

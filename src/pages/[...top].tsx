@@ -168,7 +168,7 @@ export default function TopLevelCatchAllContentNodes<
               src={
                 contentNode?.contentNode?.sourceUrl
                   ? contentNode.contentNode.sourceUrl
-                  : archer
+                  : archer.src
               }
               width={
                 contentNode.contentNode.mediaDetails?.width
@@ -189,6 +189,8 @@ export default function TopLevelCatchAllContentNodes<
                   ? contentNode.contentNode.mediaDetails.height
                   : archer.height
               })}
+              placeholder='blur'
+              id={contentNode.contentNode.id}
               alt={
                 contentNode.contentNode?.altText
                   ? contentNode.contentNode.altText
