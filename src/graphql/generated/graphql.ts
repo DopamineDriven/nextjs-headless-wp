@@ -1277,6 +1277,111 @@ export type CategoryToTaxonomyConnectionEdge = {
 };
 
 /** A Gravity Forms   field. */
+export type ChainedSelectField = FormField & {
+  __typename: "ChainedSelectField";
+  /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
+  adminLabel?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** Determines if the field’s value can be pre-populated dynamically. */
+  canPrepopulate?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
+  /** Alignment of the dropdown fields. */
+  chainedSelectsAlignment?: Maybe<
+    FieldWrapper<ChainedSelectFieldAlignmentEnum>
+  >;
+  /** The available choices for the chainedselect field. */
+  choices?: Maybe<Array<Maybe<FieldWrapper<ChainedSelectFieldChoice>>>>;
+  /** Controls the visibility of the field based on values selected by the user. */
+  conditionalLogic?: Maybe<FieldWrapper<ConditionalLogic>>;
+  /** String containing the custom CSS classes to be added to the &lt;li&gt; tag that contains the field. Useful for applying custom formatting to specific fields. */
+  cssClass?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** Field description. */
+  description?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** The placement of the field description. */
+  descriptionPlacement?: Maybe<FieldWrapper<FormFieldDescriptionPlacementEnum>>;
+  /** Indicates the field is only displayed and its contents are not submitted with the form/saved with the entry. This is set to true. */
+  displayOnly?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
+  /** Contains the message that is displayed for fields that fail validation. */
+  errorMessage?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** Determines if the field (checkbox, select or radio) have choice values enabled, which allows the field to have choice values different from the labels that are displayed to the user. */
+  hasChoiceValue?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
+  /** Field ID. */
+  id: FieldWrapper<Scalars["Int"]>;
+  /** Assigns a name to this field so that it can be populated dynamically via this input name. Only applicable when canPrepopulate is `true`. */
+  inputName?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** The base form field type used to display the input. A good example is the Post Custom Field that can be displayed as various different types of fields. */
+  inputType?: Maybe<FieldWrapper<FormFieldTypeEnum>>;
+  /** An array of the available properties for each input of the chainedselect field. */
+  inputs?: Maybe<Array<Maybe<FieldWrapper<ChainedSelectInputProperty>>>>;
+  /** Determines if the field requires the user to enter a value. Fields marked as required will prevent the form from being submitted if the user has not entered a value in it. */
+  isRequired?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
+  /** Field label that will be displayed on the form and on the admin pages. */
+  label?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** The field label position. */
+  labelPlacement?: Maybe<FieldWrapper<FormFieldLabelPlacementEnum>>;
+  /** The number of CSS grid columns the field should span. */
+  layoutGridColumnSpan?: Maybe<FieldWrapper<Scalars["Int"]>>;
+  /** The number of CSS grid columns the spacer field following this one should span. */
+  layoutSpacerGridColumnSpan?: Maybe<FieldWrapper<Scalars["Int"]>>;
+  /** The form page this field is located on. Default is 1. */
+  pageNumber?: Maybe<FieldWrapper<Scalars["Int"]>>;
+  /** The form field-specifc policies for exporting and erasing personal data. */
+  personalData?: Maybe<FieldWrapper<FormFieldDataPolicy>>;
+  /** Determines if the field allows duplicate submissions. */
+  shouldAllowDuplicates?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
+  /** Whether inactive dropdowns should be hidden. */
+  shouldHideInactiveChoices?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
+  /** The placement of the labels for the subfields within the group. This setting controls all of the subfields, they cannot be set individually. They may be aligned above or below the inputs. If this property is not set, the “Sub-Label Placement” setting on the Form Settings-&gt;Form Layout page is used. If no setting is specified, the default is above inputs. */
+  subLabelPlacement?: Maybe<FieldWrapper<FormFieldSubLabelPlacementEnum>>;
+  /** The type of field to be displayed. */
+  type?: Maybe<FieldWrapper<FormFieldTypeEnum>>;
+  /** The string-formatted entry value for the `formField`. For complex fields this might be a JSON-encoded or serialized array. */
+  value?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** ChainedSelect field value. */
+  values?: Maybe<Array<Maybe<FieldWrapper<Scalars["String"]>>>>;
+  /** Field visibility. */
+  visibility?: Maybe<FieldWrapper<FormFieldVisibilityEnum>>;
+};
+
+/** Alignment of the dropdown fields. */
+export enum ChainedSelectFieldAlignmentEnum {
+  /** Horizontal alignment (in a row). */
+  HORIZONTAL = "HORIZONTAL",
+  /** Vertical alignment (in a column). */
+  VERTICAL = "VERTICAL"
+}
+
+/** Chainedselect choice values. */
+export type ChainedSelectFieldChoice = {
+  __typename: "ChainedSelectFieldChoice";
+  /** The available choices for the chainedselect field. */
+  choices?: Maybe<Array<Maybe<FieldWrapper<ChainedSelectFieldChoice>>>>;
+  /** Determines if this choice should be selected by default when displayed. The value true will select the choice, whereas false will display it unselected. */
+  isSelected?: Maybe<FieldWrapper<Scalars["Boolean"]>>;
+  /** The text to be displayed to the user when displaying this choice. */
+  text?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** The value to be stored in the database when this choice is selected. Note: This property is only supported by the Drop Down and Post Category fields. Checkboxes and Radio fields will store the text property in the database regardless of the value property. */
+  value?: Maybe<FieldWrapper<Scalars["String"]>>;
+};
+
+/** Input fields for a single ChainedSelect. */
+export type ChainedSelectFieldInput = {
+  /** Input ID. */
+  inputId?: InputMaybe<Scalars["Float"]>;
+  /** Input value. */
+  value?: InputMaybe<Scalars["String"]>;
+};
+
+/** Chainedselect input values. */
+export type ChainedSelectInputProperty = {
+  __typename: "ChainedSelectInputProperty";
+  /** The input ID. Input IDs follow the following naming convention: FIELDID.INPUTID (i.e. 5.1), where FIELDID is the id of the containing field and INPUTID specifies the input field. */
+  id?: Maybe<FieldWrapper<Scalars["Float"]>>;
+  /** Field label that will be displayed on the form and on the admin pages. */
+  label?: Maybe<FieldWrapper<Scalars["String"]>>;
+  /** Assigns a name to this field so that it can be populated dynamically via this input name. Only applicable when canPrepopulate is `true`. */
+  name?: Maybe<FieldWrapper<Scalars["String"]>>;
+};
+
+/** A Gravity Forms   field. */
 export type CheckboxField = FormField & {
   __typename: "CheckboxField";
   /** When specified, the value of this property will be used on the admin pages instead of the label. It is useful for fields with long labels. */
@@ -3414,6 +3519,8 @@ export enum FormFieldTypeEnum {
   ADDRESS = "ADDRESS",
   /** A Gravity Forms captcha field. */
   CAPTCHA = "CAPTCHA",
+  /** A Gravity Forms chainedselect field. */
+  CHAINEDSELECT = "CHAINEDSELECT",
   /** A Gravity Forms checkbox field. */
   CHECKBOX = "CHECKBOX",
   /** A Gravity Forms consent field. */
@@ -3496,6 +3603,8 @@ export enum FormFieldTypeEnum {
 export type FormFieldValuesInput = {
   /** The form field values for Address fields. */
   addressValues?: InputMaybe<AddressFieldInput>;
+  /** The form field values for ChainedSelect fields. */
+  chainedSelectValues?: InputMaybe<Array<InputMaybe<ChainedSelectFieldInput>>>;
   /** The form field values for Checkbox fields. */
   checkboxValues?: InputMaybe<Array<InputMaybe<CheckboxFieldInput>>>;
   /** The form field values for Email fields. */
@@ -18130,6 +18239,19 @@ export type ResolversTypes = ResolversObject<{
   CategoryToTaxonomyConnectionEdge: ResolverTypeWrapper<
     DeepPartial<CategoryToTaxonomyConnectionEdge>
   >;
+  ChainedSelectField: ResolverTypeWrapper<DeepPartial<ChainedSelectField>>;
+  ChainedSelectFieldAlignmentEnum: ResolverTypeWrapper<
+    DeepPartial<ChainedSelectFieldAlignmentEnum>
+  >;
+  ChainedSelectFieldChoice: ResolverTypeWrapper<
+    DeepPartial<ChainedSelectFieldChoice>
+  >;
+  ChainedSelectFieldInput: ResolverTypeWrapper<
+    DeepPartial<ChainedSelectFieldInput>
+  >;
+  ChainedSelectInputProperty: ResolverTypeWrapper<
+    DeepPartial<ChainedSelectInputProperty>
+  >;
   CheckboxField: ResolverTypeWrapper<DeepPartial<CheckboxField>>;
   CheckboxFieldChoice: ResolverTypeWrapper<DeepPartial<CheckboxFieldChoice>>;
   CheckboxFieldInput: ResolverTypeWrapper<DeepPartial<CheckboxFieldInput>>;
@@ -18364,6 +18486,7 @@ export type ResolversTypes = ResolversObject<{
   FormField:
     | ResolversTypes["AddressField"]
     | ResolversTypes["CaptchaField"]
+    | ResolversTypes["ChainedSelectField"]
     | ResolversTypes["CheckboxField"]
     | ResolversTypes["ConsentField"]
     | ResolversTypes["DateField"]
@@ -19611,6 +19734,10 @@ export type ResolversParentTypes = ResolversObject<{
   CategoryToPostConnectionEdge: DeepPartial<CategoryToPostConnectionEdge>;
   CategoryToPostConnectionWhereArgs: DeepPartial<CategoryToPostConnectionWhereArgs>;
   CategoryToTaxonomyConnectionEdge: DeepPartial<CategoryToTaxonomyConnectionEdge>;
+  ChainedSelectField: DeepPartial<ChainedSelectField>;
+  ChainedSelectFieldChoice: DeepPartial<ChainedSelectFieldChoice>;
+  ChainedSelectFieldInput: DeepPartial<ChainedSelectFieldInput>;
+  ChainedSelectInputProperty: DeepPartial<ChainedSelectInputProperty>;
   CheckboxField: DeepPartial<CheckboxField>;
   CheckboxFieldChoice: DeepPartial<CheckboxFieldChoice>;
   CheckboxFieldInput: DeepPartial<CheckboxFieldInput>;
@@ -19741,6 +19868,7 @@ export type ResolversParentTypes = ResolversObject<{
   FormField:
     | ResolversParentTypes["AddressField"]
     | ResolversParentTypes["CaptchaField"]
+    | ResolversParentTypes["ChainedSelectField"]
     | ResolversParentTypes["CheckboxField"]
     | ResolversParentTypes["ConsentField"]
     | ResolversParentTypes["DateField"]
@@ -20978,6 +21106,167 @@ export type CategoryToTaxonomyConnectionEdgeResolvers<
   ParentType extends ResolversParentTypes["CategoryToTaxonomyConnectionEdge"] = ResolversParentTypes["CategoryToTaxonomyConnectionEdge"]
 > = ResolversObject<{
   node?: Resolver<Maybe<ResolversTypes["Taxonomy"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type ChainedSelectFieldResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["ChainedSelectField"] = ResolversParentTypes["ChainedSelectField"]
+> = ResolversObject<{
+  adminLabel?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  canPrepopulate?: Resolver<
+    Maybe<ResolversTypes["Boolean"]>,
+    ParentType,
+    ContextType
+  >;
+  chainedSelectsAlignment?: Resolver<
+    Maybe<ResolversTypes["ChainedSelectFieldAlignmentEnum"]>,
+    ParentType,
+    ContextType
+  >;
+  choices?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["ChainedSelectFieldChoice"]>>>,
+    ParentType,
+    ContextType
+  >;
+  conditionalLogic?: Resolver<
+    Maybe<ResolversTypes["ConditionalLogic"]>,
+    ParentType,
+    ContextType
+  >;
+  cssClass?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  description?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  descriptionPlacement?: Resolver<
+    Maybe<ResolversTypes["FormFieldDescriptionPlacementEnum"]>,
+    ParentType,
+    ContextType
+  >;
+  displayOnly?: Resolver<
+    Maybe<ResolversTypes["Boolean"]>,
+    ParentType,
+    ContextType
+  >;
+  errorMessage?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  hasChoiceValue?: Resolver<
+    Maybe<ResolversTypes["Boolean"]>,
+    ParentType,
+    ContextType
+  >;
+  id?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  inputName?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  inputType?: Resolver<
+    Maybe<ResolversTypes["FormFieldTypeEnum"]>,
+    ParentType,
+    ContextType
+  >;
+  inputs?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["ChainedSelectInputProperty"]>>>,
+    ParentType,
+    ContextType
+  >;
+  isRequired?: Resolver<
+    Maybe<ResolversTypes["Boolean"]>,
+    ParentType,
+    ContextType
+  >;
+  label?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  labelPlacement?: Resolver<
+    Maybe<ResolversTypes["FormFieldLabelPlacementEnum"]>,
+    ParentType,
+    ContextType
+  >;
+  layoutGridColumnSpan?: Resolver<
+    Maybe<ResolversTypes["Int"]>,
+    ParentType,
+    ContextType
+  >;
+  layoutSpacerGridColumnSpan?: Resolver<
+    Maybe<ResolversTypes["Int"]>,
+    ParentType,
+    ContextType
+  >;
+  pageNumber?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  personalData?: Resolver<
+    Maybe<ResolversTypes["FormFieldDataPolicy"]>,
+    ParentType,
+    ContextType
+  >;
+  shouldAllowDuplicates?: Resolver<
+    Maybe<ResolversTypes["Boolean"]>,
+    ParentType,
+    ContextType
+  >;
+  shouldHideInactiveChoices?: Resolver<
+    Maybe<ResolversTypes["Boolean"]>,
+    ParentType,
+    ContextType
+  >;
+  subLabelPlacement?: Resolver<
+    Maybe<ResolversTypes["FormFieldSubLabelPlacementEnum"]>,
+    ParentType,
+    ContextType
+  >;
+  type?: Resolver<
+    Maybe<ResolversTypes["FormFieldTypeEnum"]>,
+    ParentType,
+    ContextType
+  >;
+  value?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  values?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["String"]>>>,
+    ParentType,
+    ContextType
+  >;
+  visibility?: Resolver<
+    Maybe<ResolversTypes["FormFieldVisibilityEnum"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type ChainedSelectFieldChoiceResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["ChainedSelectFieldChoice"] = ResolversParentTypes["ChainedSelectFieldChoice"]
+> = ResolversObject<{
+  choices?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["ChainedSelectFieldChoice"]>>>,
+    ParentType,
+    ContextType
+  >;
+  isSelected?: Resolver<
+    Maybe<ResolversTypes["Boolean"]>,
+    ParentType,
+    ContextType
+  >;
+  text?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  value?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type ChainedSelectInputPropertyResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["ChainedSelectInputProperty"] = ResolversParentTypes["ChainedSelectInputProperty"]
+> = ResolversObject<{
+  id?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  label?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -22868,6 +23157,7 @@ export type FormFieldResolvers<
   __resolveType: TypeResolveFn<
     | "AddressField"
     | "CaptchaField"
+    | "ChainedSelectField"
     | "CheckboxField"
     | "ConsentField"
     | "DateField"
@@ -37374,6 +37664,9 @@ export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   CategoryToPostConnection?: CategoryToPostConnectionResolvers<ContextType>;
   CategoryToPostConnectionEdge?: CategoryToPostConnectionEdgeResolvers<ContextType>;
   CategoryToTaxonomyConnectionEdge?: CategoryToTaxonomyConnectionEdgeResolvers<ContextType>;
+  ChainedSelectField?: ChainedSelectFieldResolvers<ContextType>;
+  ChainedSelectFieldChoice?: ChainedSelectFieldChoiceResolvers<ContextType>;
+  ChainedSelectInputProperty?: ChainedSelectInputPropertyResolvers<ContextType>;
   CheckboxField?: CheckboxFieldResolvers<ContextType>;
   CheckboxFieldChoice?: CheckboxFieldChoiceResolvers<ContextType>;
   CheckboxFieldValue?: CheckboxFieldValueResolvers<ContextType>;
@@ -39843,6 +40136,16 @@ type FormFieldsGravityPartial_CaptchaField_Fragment = {
   type?: FormFieldTypeEnum | null;
 };
 
+type FormFieldsGravityPartial_ChainedSelectField_Fragment = {
+  __typename: "ChainedSelectField";
+  id: number;
+  displayOnly?: boolean | null;
+  inputType?: FormFieldTypeEnum | null;
+  pageNumber?: number | null;
+  visibility?: FormFieldVisibilityEnum | null;
+  type?: FormFieldTypeEnum | null;
+};
+
 type FormFieldsGravityPartial_CheckboxField_Fragment = {
   __typename: "CheckboxField";
   id: number;
@@ -40456,6 +40759,7 @@ type FormFieldsGravityPartial_WebsiteField_Fragment = {
 export type FormFieldsGravityPartialFragment =
   | FormFieldsGravityPartial_AddressField_Fragment
   | FormFieldsGravityPartial_CaptchaField_Fragment
+  | FormFieldsGravityPartial_ChainedSelectField_Fragment
   | FormFieldsGravityPartial_CheckboxField_Fragment
   | FormFieldsGravityPartial_ConsentField_Fragment
   | FormFieldsGravityPartial_DateField_Fragment
@@ -41653,6 +41957,15 @@ export type GetGravityFormQuery = {
             simpleCaptchaFontColor?: string | null;
             simpleCaptchaSize?: FormFieldSizeEnum | null;
             pageNumber?: number | null;
+          }
+        | {
+            __typename: "ChainedSelectField";
+            id: number;
+            displayOnly?: boolean | null;
+            inputType?: FormFieldTypeEnum | null;
+            pageNumber?: number | null;
+            visibility?: FormFieldVisibilityEnum | null;
+            type?: FormFieldTypeEnum | null;
           }
         | {
             __typename: "CheckboxField";

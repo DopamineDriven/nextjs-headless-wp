@@ -23,6 +23,7 @@ export type PossibleTypesResultData = {
     FormField: [
       "AddressField",
       "CaptchaField",
+      "ChainedSelectField",
       "CheckboxField",
       "ConsentField",
       "DateField",
@@ -195,6 +196,7 @@ const result: PossibleTypesResultData = {
     FormField: [
       "AddressField",
       "CaptchaField",
+      "ChainedSelectField",
       "CheckboxField",
       "ConsentField",
       "DateField",

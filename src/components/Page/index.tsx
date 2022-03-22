@@ -1,6 +1,6 @@
 import type { FC, ComponentType, HTMLAttributes } from "react";
 import cn from "classnames";
-import { UnwrapHtmlPickOneUnion } from "@/types/unwrap-react";
+import type { UnwrapHtmlUnion } from "@/types/unwrap-react";
 
 export { default as Text } from "@/components/UI/Text/text";
 export { default as LoadingSpinner } from "@/components/UI/LoadingSpinner";
@@ -10,7 +10,7 @@ export { default as Container } from "@/components/UI/Container";
 const Noop: FC = ({ children }) => <>{children}</>;
 
 export const Page: FC<
-  UnwrapHtmlPickOneUnion<HTMLElement, keyof HTMLAttributes<HTMLElement>>
+  UnwrapHtmlUnion<HTMLElement, keyof HTMLAttributes<HTMLElement>>
 > = ({ children, className, ...props }) => (
   <main
     {...props}
@@ -20,7 +20,7 @@ export const Page: FC<
 );
 
 export default function getLayout<
-  LP extends Record<string, unknown extends infer U ? U : any>
+  LP extends Record<string | number | symbol, unknown extends infer U ? U : any>
 >(
   Component: ComponentType<unknown extends infer U ? U : any>
 ): ComponentType<LP> {

@@ -1,6 +1,6 @@
 import type { DetailedHTMLProps, HTMLAttributes, SVGProps } from "react";
-// let mixin: ARIAMixin
-export type UnwrapHtmlPickOneUnion<
+
+export type UnwrapHtmlUnion<
   T extends
     | HTMLAnchorElement
     | HTMLAreaElement
@@ -30,6 +30,12 @@ export type UnwrapHtmlPickOneUnion<
     | HTMLLabelElement
     | HTMLLegendElement
     | HTMLLinkElement
+    | HTMLMapElement
+    | HTMLMediaElement
+    | HTMLMenuElement
+    | HTMLMetaElement
+    | HTMLMeterElement
+    | HTMLModElement
     | HTMLOListElement
     | HTMLObjectElement
     | HTMLOptGroupElement
@@ -59,14 +65,13 @@ export type UnwrapHtmlPickOneUnion<
     | HTMLUListElement
     | HTMLUnknownElement
     | HTMLVideoElement
-    | HTMLWebViewElement
     | HTMLWebViewElement,
   P extends keyof DetailedHTMLProps<HTMLAttributes<T>, T>
 > = {
   [R in P]?: DetailedHTMLProps<HTMLAttributes<T>, T>[R];
 };
 
-export type UnwrapSvgPickOneUnion<
+export type UnwrapSvgUnion<
   T extends
     | SVGAElement
     | SVGAnimateElement
