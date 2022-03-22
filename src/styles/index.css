@@ -110,6 +110,13 @@
 /* Start purging... */
 @tailwind components;
 @layer components {
+  .tooltip {
+    @apply invisible absolute transition-transform ease-in-out transform-gpu;
+  }
+
+  .has-tooltip {
+    @apply visible z-50 border-collapse rounded-lg bg-opacity-75 translate-x-3 -mt-1.5 text-xxs text-white my-auto p-2 font-medium;
+  }
   .fit {
     min-height: calc(100vh - 88px);
   }
@@ -137,7 +144,13 @@
     --webkit-animation-name: fadeIn;
     animation-name: fadeIn;
   }
+  .tooltip {
+    @apply invisible absolute transition-transform ease-in-out transform-gpu;
+  }
 
+  .has-tooltip:hover .tooltip {
+    @apply visible z-50 border-collapse rounded-lg bg-opacity-75 translate-x-3 -mt-1.5 text-xxs text-white my-auto p-2 font-medium;
+  }
   .lineClampCustom p:nth-child(n) {
     overflow: hidden !important;
     overflow-y: hidden !important;
@@ -171,6 +184,13 @@
 /* Start purging... */
 @tailwind utilities;
 @layer utilities {
+  .tooltip {
+    @apply invisible absolute transition-transform ease-in-out transform-gpu;
+  }
+
+  .has-tooltip:hover .tooltip {
+    @apply visible z-50 border-collapse rounded-lg bg-opacity-75 translate-x-3 -mt-1.5 text-xxs text-white my-auto p-2 font-medium;
+  }
   .skeleton {
     display: block;
     width: 100%;
@@ -199,13 +219,6 @@
     @apply sm:m-3 m-4 relative inline-flex items-center px-4 py-2 border-blue-800 text-sm font-medium rounded-md text-gray-50 bg-basicallyBlack hover:bg-iconGray;
   }
 
-  .tooltip {
-    @apply invisible absolute origin-bottom  transition-transform ease-in-out duration-150 transform-gpu;
-  }
-
-  .has-tooltip:hover .tooltip {
-    @apply visible z-[150] border-collapse rounded-lg mt-2 bg-opacity-75 text-xxs text-gray-800 my-auto p-2 font-medium;
-  }
   #floating-panel {
     position: absolute;
     top: 10px;
@@ -290,4 +303,11 @@
       transform: rotate(360deg);
     }
   }
+}
+.tooltip {
+  @apply invisible absolute transition-transform ease-in-out transform-gpu;
+}
+
+.has-tooltip {
+  @apply visible z-50 border-collapse rounded-lg bg-opacity-75 translate-x-3 -mt-1.5 text-xxs text-white my-auto p-2 font-medium;
 }

@@ -14,3 +14,4 @@ export { default as StarRating } from "./StarRatingScaffold";
 export { default as Table } from "./Table";
 export { default as ThreadTime } from "./ThreadTime";
 export { default as World } from "./World";
+export { default as WorldWrapper } from "./WorldWrapper";

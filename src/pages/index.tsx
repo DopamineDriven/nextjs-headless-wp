@@ -9,7 +9,7 @@ import {
   InferGetServerSidePropsType,
   InferGetStaticPropsType
 } from "next";
-import React, { VFC } from "react";
+import React, { HTMLAttributes, VFC } from "react";
 import { World, Code, Inspector } from "@/components/UI";
 import {
   FormIdTypeEnum,
@@ -28,43 +28,32 @@ import {
 
 export type IndexProps = {
   // gform?: GravityPostTypeQuery | null;
-  params: ParsedUrlQuery
+  params: ParsedUrlQuery;
 };
 // Proof of Concept
 import type { UnwrapHtmlPickOneUnion } from "@/types/unwrap-react";
 
 export const CustomDiv = ({
+  children,
   ...props
 }: UnwrapHtmlPickOneUnion<
   HTMLDivElement,
-  | "about"
-  | "accessKey"
-  | "className"
-  | "onChange"
-  | "children"
-  | "ref"
-  | "dangerouslySetInnerHTML"
->) => <div {...props}>{props.children}</div>;
+  keyof HTMLAttributes<HTMLDivElement>
+>) => <div {...props}>{children}</div>;
 
 export const CustomCanvasFtw = ({
+  children,
   ...props
 }: UnwrapHtmlPickOneUnion<
   HTMLCanvasElement,
-  | "contentEditable"
-  | "placeholder"
-  | "onCopyCapture"
-  | "className"
-  | "aria-hidden"
-  | "onTouchMove"
-  | "onChange"
-  | "onMouseOverCapture"
+  keyof HTMLAttributes<HTMLCanvasElement>
 >) => <canvas {...props} />;
 
 export const CustomHeading = ({
   ...props
 }: UnwrapHtmlPickOneUnion<
   HTMLHeadingElement,
-  "typeof" | "title" | "children" | "is" | "role" | "className"
+  keyof HTMLAttributes<HTMLHeadingElement>
 >) => {
   return (
     <CustomDiv about='this div was unwrapped, stripped to its essential bits, and forced into this custom existence'>
@@ -82,14 +71,14 @@ export const CustomHeading = ({
 export default function IndexPage<T extends typeof getStaticProps>({
   params
 }: InferGetStaticPropsType<T>) {
-  console.log(params ?? "no params")
+  console.log(params ?? "no params");
   return (
     <>
       <div className='min-h-screen bg-gradient-to-tl from-gray-700 via-slate-800 to-gray-900 flex text-stone-200 fit '>
-        <h2 className='lg:text-[1.025rem] text-[0.45rem] 5xs:text-[0.50rem] 4xs:text-[0.625rem] 3xs:text-[0.70rem] 2xs:text-[0.8rem] absolute top-10 origin-center right-[40%] tracking-[0.25rem] leading-[2.34rem] font-extralight font-interVar text-stone-200'>
+        <h2 className='lg:text-[1.025rem] z-10 text-[0.45rem] 5xs:text-[0.50rem] 4xs:text-[0.625rem] 3xs:text-[0.70rem] 2xs:text-[0.8rem] absolute top-100 origin-right left-[70%] tracking-[0.25rem] leading-[2.34rem] font-extralight font-interVar text-stone-200'>
           Headless WordPress Scaffold Init
         </h2>
-        <World className='mt-10 scale-[0.8] relative origin-center -right-48' />
+        <World />
       </div>
     </>
   );
@@ -99,7 +88,7 @@ export const getStaticProps = async (
   ctx: GetStaticPropsContext<ParsedUrlQuery>
 ): Promise<GetStaticPropsResult<IndexProps>> => {
   const apolloClient = initializeApollo();
-  const params = ctx.params ?? 'no params';
+  const params = ctx.params ?? "no params";
   // const { data: gform} = await apolloClient.query<GravityPostTypeQuery, GravityPostTypeQueryVariables>(
   //   {
   //     query: GravityPostType,

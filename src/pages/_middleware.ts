@@ -1,23 +1,37 @@
-import { NextFetchEvent, NextRequest } from "next/server";
-import { NextResponse } from "next/server";
+import { INTERNALS } from "next/dist/server/web/spec-extension/request";
+import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
+
+const allowedParams = ["allowed"];
 
 export default function Middleware(req: NextRequest) {
-  // // todo this new NextRequest("", {})ADD OPTIONS -- can conidtionally query pages before completion of req/res
-  const { ua, geo, ip, headers } = req;
-  const nonProxiedIp = headers.get("x-forwarded-for") as string;
-  const returnFirstRealIp = nonProxiedIp
-    ? nonProxiedIp.split(/([,])/)[0]
-    : ip ?? "no ip";
-  const userData = {
-    city: geo?.city ?? "no ciudad",
-    lat: geo?.latitude ?? "no lat",
-    lng: geo?.longitude ?? "no lng",
-    country: geo?.country ?? "no pais",
-    region: geo?.region ?? "no region",
-    userAgent: ua ?? "no ua",
-    ipAddress: returnFirstRealIp
-  };
-  console.log(userData ?? "no userData");
+  const url = req.nextUrl;
+  // const { ua, geo, ip, headers } = req;
+  // const nonProxiedIp = headers.get("x-forwarded-for") as string;
+  // const returnFirstRealIp = nonProxiedIp
+  //   ? nonProxiedIp.split(/([,])/)[0]
+  //   : ip ?? "no ip";
+  // const userData = {
+  //   city: geo?.city ?? "no ciudad",
+  //   lat: geo?.latitude ?? "no lat",
+  //   lng: geo?.longitude ?? "no lng",
+  //   country: geo?.country ?? "no pais",
+  //   region: geo?.region ?? "no region",
+  //   userAgent: ua ?? "no ua",
+  //   ipAddress: returnFirstRealIp
+  // };
+  // console.log(userData ?? "no userData");
+
+  let changed = false;
+  url.searchParams.forEach((_, key) => {
+    if (!allowedParams.includes(key)) {
+      url.searchParams.delete(key);
+      changed = true;
+    }
+  });
+
+  if (changed) {
+    console.log(url ?? "no next url");
+  }
   const response = NextResponse.next();
   // response.headers.set("Authorization", `Bearer ${process.env.GRAPHQL_JWT_AUTH_SECRET_KEY_YML ?? ""}`)
   response.headers.set("Referrer-Policy", "Strict-Origin-When-Cross-Origin");
@@ -43,5 +57,5 @@ export default function Middleware(req: NextRequest) {
     " Authorization, *, authorization, apollographql-client-name"
   );
 
-  return response
+  return response;
 }
