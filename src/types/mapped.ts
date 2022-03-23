@@ -12,7 +12,11 @@ import {
 } from "react";
 import { NextApiHandler } from "next";
 import { ImageProps } from "next/image";
-import { ApolloCache, ApolloClient, NormalizedCacheObject } from "@apollo/client";
+import {
+  ApolloCache,
+  ApolloClient,
+  NormalizedCacheObject
+} from "@apollo/client";
 import { OneOf, RequireOnlyOne } from "./helpers";
 
 export type LiteralUnion<T extends U, U = string> =
@@ -40,11 +44,31 @@ export type ApolloRecursive<
   >
 > = RecursiveAmbivalent<ApolloClient<NormalizedCacheObject>>;
 
+export type RecursiveOptional<T> = {
+  [P in keyof T]?: RecursiveOptional<T[P]>;
+};
+export type ReactRecursive<
+  T,
+  _implements = ({
+    ...props
+  }: JSX.IntrinsicElements) => T extends Record<keyof T, infer U>
+    ? Record<keyof U, U>
+    : Record<keyof T, T>
+> = RecursiveOptional<JSX.IntrinsicElements>;
+export const ReactRecursiveUnwrapped = ({
+  jsxProps
+}: {
+  jsxProps: RecursiveOptional<JSX.IntrinsicElements>;
+}) => ({ ...jsxProps });
+
+export type UnwrapReactProps<
+  T extends ReturnType<typeof ReactRecursiveUnwrapped>
+> = T;
 export const ApolloClientProps = async ({
   apolloProps: { ...props }
 }: {
   apolloProps: RecursiveAmbivalent<ApolloClient<NormalizedCacheObject>>;
-}) => ({ ...props});
+}) => ({ ...props });
 
 export type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
 
@@ -81,8 +105,7 @@ const ApolloClientUnwrapped = ({
   watchQuery,
   writeFragment,
   writeQuery
-}: UnwrapPromise<ReturnType<typeof ApolloClientProps>>) => {
-};
+}: UnwrapPromise<ReturnType<typeof ApolloClientProps>>) => {};
 
 // <svg/> props
 export type SVGAttribs<T extends keyof SVGAttributes<SVGSVGElement>> = {
@@ -158,8 +181,6 @@ export type UnwrapLI<
 > = {
   [P in T]?: DetailedHTMLProps<HTMLAttributes<HTMLLIElement>, HTMLLIElement>[P];
 };
-
-
 
 // span (span)
 export type UnwrapSpan<

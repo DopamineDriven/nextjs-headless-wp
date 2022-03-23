@@ -9,7 +9,7 @@ import {
   InferGetServerSidePropsType,
   InferGetStaticPropsType
 } from "next";
-import React, { HTMLAttributes, VFC } from "react";
+import React, { HTMLAttributes, VFC, CanvasHTMLAttributes } from "react";
 import { World, Code, Inspector } from "@/components/UI";
 import {
   FormIdTypeEnum,
@@ -25,6 +25,7 @@ import {
   GravityPostType,
   GravityPostTypePaths
 } from "@/graphql/generated/graphql";
+import cn from "classnames";
 
 export type IndexProps = {
   // gform?: GravityPostTypeQuery | null;
@@ -32,36 +33,37 @@ export type IndexProps = {
 };
 // Proof of Concept
 import type { UnwrapHtmlUnion } from "@/types/unwrap-react";
+import * as UnwrapReact from "@/types/unwrap-react";
 
-export const CustomDiv = ({
-  children,
-  ...props
-}: UnwrapHtmlUnion<HTMLDivElement, keyof HTMLAttributes<HTMLDivElement>>) => (
-  <div {...props}>{children}</div>
+export const CustomDiv = ({ div }: ReactUnwrapped<"div">) => (
+  <div {...div}>{div?.children}</div>
 );
 
-export const CustomCanvasFtw = ({
-  children,
-  ...props
-}: UnwrapHtmlUnion<
-  HTMLCanvasElement,
-  keyof HTMLAttributes<HTMLCanvasElement>
->) => <canvas {...props} />;
+export const CustomCanvasFtw = ({ canvas }: ReactUnwrapped<"canvas">) => (
+  <canvas {...canvas} />
+);
 
 export const CustomHeading = ({
-  ...props
-}: UnwrapHtmlUnion<
-  HTMLHeadingElement,
-  keyof HTMLAttributes<HTMLHeadingElement>
->) => {
+  h2,
+  div,
+  p,
+  canvas
+}: ReactUnwrapped<"h2" | "div" | "p" | "canvas">) => {
   return (
-    <CustomDiv about='this div was unwrapped, stripped to its essential bits, and forced into this custom existence'>
-      <h2 {...props}>
+    <CustomDiv {...div}>
+      <h2 {...h2}>
         <CustomCanvasFtw
-          contentEditable='inherit'
-          className='leading-[1.22rem] tracking-[0.019rem] text-[#885833]/90'
+          canvas={{
+            contentEditable: canvas?.contentEditable ?? "inherit",
+            className: cn(
+              "leading-[1.22rem] tracking-[0.019rem] text-[#885833]/90",
+              canvas?.className
+            ),
+            ...canvas
+          }}
         />
-        {props.children}
+        <p {...p}>{p?.children}</p>
+        {h2?.children}
       </h2>
     </CustomDiv>
   );
