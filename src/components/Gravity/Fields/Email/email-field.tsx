@@ -5,21 +5,22 @@ import useGravityForm, {
   EmailFieldValues
 } from "@/hooks/use-gravity";
 import { GravityFieldErrors } from "@/types/error-helpers";
-import { useEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  HTMLAttributes,
+  InputHTMLAttributes
+} from "react";
 import { useRouter } from "next/router";
 import { UnwrapInputProps } from "@/types/mapped";
+import { UnwrapHtmlUnion } from "@/types/unwrap-react";
 
 export const InjectEmailInput = ({
   ...props
-}: UnwrapInputProps<
-  | "className"
-  | "type"
-  | "name"
-  | "id"
-  | "required"
-  | "value"
-  | "onChange"
-  | "placeholder"
+}: UnwrapHtmlUnion<
+  HTMLInputElement,
+  InputHTMLAttributes<HTMLInputElement>
 >) => <input {...props} />;
 
 interface EmailFieldProps extends GravityFieldErrors {
@@ -35,7 +36,15 @@ export default function EmailField({
   formId: formmId
 }: EmailFieldProps) {
   const router = useRouter();
-  const { id, value: fragmentValue, type, label, description, isRequired, placeholder } = field;
+  const {
+    id,
+    value: fragmentValue,
+    type,
+    label,
+    description,
+    isRequired,
+    placeholder
+  } = field;
   formmId = id;
 
   const [formIdState, setFormIdState] = useState(id || formmId);
@@ -66,10 +75,10 @@ export default function EmailField({
         name={String(id)}
         id={htmlId}
         className={`gfield_${formIdRef.current}_field_${id}_email_${
-          router.query.slug as string
+          router.query.uri as string
         }`}
         placeholder={placeholder ?? "Enter Email"}
-        required={Boolean(isRequired)}
+        required={isRequired ? isRequired : !isRequired}
         value={value}
         onChange={event => {
           dispatch({

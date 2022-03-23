@@ -10,9 +10,10 @@ export { default as Container } from "@/components/UI/Container";
 const Noop: FC = ({ children }) => <>{children}</>;
 
 export const Page: FC<
-  UnwrapHtmlUnion<HTMLElement, keyof HTMLAttributes<HTMLElement>>
+  UnwrapHtmlUnion<HTMLElement, HTMLAttributes<HTMLElement>>
 > = ({ children, className, ...props }) => (
   <main
+    typeof='main'
     {...props}
     className={cn("w-full max-w-3xl mx-auto py-16", className ?? "")}>
     {children}
