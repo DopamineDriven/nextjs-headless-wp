@@ -26,6 +26,7 @@ import {
   GravityPostTypePaths
 } from "@/graphql/generated/graphql";
 import cn from "classnames";
+import GitHubIcon from "@/components/Icons/github-nav";
 
 export type IndexProps = {
   // gform?: GravityPostTypeQuery | null;
@@ -36,7 +37,29 @@ import type { UnwrapHtmlUnion } from "@/types/unwrap-react";
 import * as UnwrapReact from "@/types/unwrap-react";
 
 export const CustomDiv = ({ div }: ReactUnwrapped<"div">) => (
-  <div {...div}>{div?.children}</div>
+  <div {...div}>
+    <GitHubIcon
+      svg={{
+        "aria-hidden": true,
+        "aria-label": "GitHubIcon",
+        onChange: e => {
+          e.preventDefault();
+          e.currentTarget.style.cssText.replace(
+            "GitHubIcon",
+            "Changing Text Underway"
+          );
+        }
+      }}
+      path={{
+        name: "GitHubIconPath",
+        onMouseOver: e => {
+          e.preventDefault();
+          // do things
+        }
+      }}
+    />
+    {div?.children}
+  </div>
 );
 
 export const CustomCanvasFtw = ({ canvas }: ReactUnwrapped<"canvas">) => (

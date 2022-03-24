@@ -12,7 +12,11 @@ export type ReturnTypeMixinV2<
   ? R
   : T;
 
-export type ExtractPromiseType<T> = T extends PromiseLike<infer U> ? U : T;
+export type ExtractPromiseType<T> = T extends
+  | PromiseLike<infer U>
+  | Promise<infer U>
+  ? U
+  : T;
 
 export type TalVez<T> = T extends PromiseLike<infer U>
   ? PromiseLike<U | Record<keyof T, U>>
@@ -373,7 +377,7 @@ export type Constructor = { new (...args: any[]): any };
 
 export type MaybeEnumerable<T> = (T | Array<T>) | null;
 
-export type UnEnumerate<T> = T extends Array<infer U> ? U : T;
+export type UnEnumerate<T> = T extends ArrayLike<infer U> ? U : T;
 
 export type GetScalarType<T, O> = O extends Record<string, unknown>
   ? { [P in keyof T]: P extends keyof O ? O[P] : never }

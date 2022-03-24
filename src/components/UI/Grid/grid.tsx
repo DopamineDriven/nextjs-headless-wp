@@ -1,19 +1,20 @@
 import cn from "classnames";
-import { FC, ReactNode, Component } from "react";
+import { ReactNode, Component, VFC } from "react";
 import css from "./grid.module.css";
+import type { Enumerable } from "@/types/helpers";
 
 export interface GridProps {
-  className?: string;
-  children?: Array<ReactNode> | Component[] | any[];
+  children?: Enumerable<ReactNode> | Enumerable<Component> | Enumerable<any>;
   layout?: "A" | "B" | "C" | "D" | "normal";
   variant?: "default" | "filled";
+  divProps?: ReactUnwrapped<"div">;
 }
 
-const Grid: FC<GridProps> = ({
-  className,
+const Grid: VFC<GridProps> = ({
   layout = "A",
   children,
-  variant = "default"
+  variant = "default",
+  divProps
 }) => {
   const rootClassName = cn(
     css.root,
@@ -26,9 +27,13 @@ const Grid: FC<GridProps> = ({
       [css.default]: variant === "default",
       [css.filled]: variant === "filled"
     },
-    className ?? ""
+    divProps?.div?.className ?? ""
   );
-  return <div className={rootClassName}>{children}</div>;
+  return (
+    <div className={rootClassName} {...divProps?.div}>
+      {divProps?.div?.children || children}
+    </div>
+  );
 };
 
 export default Grid;
