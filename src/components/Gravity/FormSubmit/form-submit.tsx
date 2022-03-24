@@ -2,15 +2,12 @@ import { FieldCaseSwitch } from "../FieldCaseSwitch";
 import {
   SubmitGravityFormDocument,
   useSubmitGravityFormMutation,
-  GetGravityFormQuery,
-  FormField,
-  FormFieldsGravityPartialFragment
+  GetGravityFormQuery
 } from "@/graphql/generated/graphql";
 import useGravityForm from "@/hooks/use-gravity";
 import cn from "classnames";
 import { useRouter } from "next/router";
 import { VFC, FormEvent, ReactNode } from "react";
-import type { UnwrapButtonProps } from "@/types/mapped";
 import type { GravityFieldErrors } from "@/types/error-helpers";
 
 export interface FormSubmitProps extends GravityFieldErrors {
@@ -20,24 +17,8 @@ export interface FormSubmitProps extends GravityFieldErrors {
   className?: string;
   children?: ReactNode;
   saveAsDraft?: boolean;
+  intrinsicProps?: ReactUnwrapped<"button" | "form">;
 }
-
-export const InjectButton = ({
-  ...props
-}: UnwrapButtonProps<
-  | "className"
-  | "id"
-  | "type"
-  | "disabled"
-  | "onClick"
-  | "onLoad"
-  | "aria-hidden"
-  | "aria-describedby"
-  | "aria-hidden"
-  | "children"
-  | "role"
-  | "onKeyUp"
->) => <button {...props} />;
 
 const GravityFormSubmit: VFC<FormSubmitProps> = ({
   className,
@@ -46,7 +27,8 @@ const GravityFormSubmit: VFC<FormSubmitProps> = ({
   id,
   text,
   children,
-  saveAsDraft
+  saveAsDraft,
+  intrinsicProps
 }) => {
   const router = useRouter();
   const [submitForm, { data, loading, error, called, client, reset }] =
@@ -72,7 +54,7 @@ const GravityFormSubmit: VFC<FormSubmitProps> = ({
     event.preventDefault();
     if (loading) return;
 
-   submitForm({
+    submitForm({
       variables: {
         input: {
           saveAsDraft: saveAsDraft ? saveAsDraft : false,
@@ -92,18 +74,27 @@ const GravityFormSubmit: VFC<FormSubmitProps> = ({
   }
 
   const GlobalButton = (
-    <InjectButton
+    <button
+      {...intrinsicProps?.button}
       id={`gform_${id}_button_${formFields.length}`}
-      type={!wasSuccessfullySubmitted ? "submit" : "button"}
+      type={
+        !wasSuccessfullySubmitted
+          ? "submit"
+          : !!wasSuccessfullySubmitted
+          ? "reset"
+          : "button"
+      }
       disabled={!!loading}
       className={
         className != null
           ? className + cn(`gform_${id}_${router.query.slug as string}-Button`)
           : cn(`gform_${id}_${router.query.slug as string}-button`)
       }>
-      {text ? text : "submit"}
+      {intrinsicProps?.button?.["aria-valuetext"]
+        ? intrinsicProps.button["aria-valuetext"]
+        : text ?? "Submit"}
       {children ?? <></>}
-    </InjectButton>
+    </button>
   );
 
   if (wasSuccessfullySubmitted) {
@@ -161,7 +152,14 @@ const GravityFormSubmit: VFC<FormSubmitProps> = ({
   }
 
   return (
-    <form id={`gform_${id}`} method='post' onSubmit={handleSubmit} className=''>
+    <form
+      id={`gform_${id}`}
+      method='post'
+      onSubmit={handleSubmit}
+      className={cn(
+        intrinsicProps?.form?.className ? intrinsicProps.form.className : ""
+      )}
+      {...intrinsicProps?.form}>
       {formFields.map((field, i) =>
         field ? (
           <FieldCaseSwitch
@@ -180,7 +178,9 @@ const GravityFormSubmit: VFC<FormSubmitProps> = ({
                 ? field
                 : field.__typename === "PasswordField"
                 ? field
-                : form?.formFields?.nodes ? form.formFields.nodes.pop()! : field
+                : form?.formFields?.nodes
+                ? form.formFields.nodes.pop()!
+                : field
             }
             fieldErrors={data?.submitGfForm?.errors?.filter(
               id => id?.id === id

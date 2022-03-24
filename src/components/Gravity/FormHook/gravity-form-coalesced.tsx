@@ -9,16 +9,15 @@ import {
 import { GravityFormSubmit } from "..";
 import { useState, useRef, useEffect, VFC, ReactNode } from "react";
 import { LoadingSpinner } from "@/components/UI";
-import { GravityFieldErrors } from "@/types/error-helpers";
-import { htmlToReact } from "@/lib/html-to-react";
+import type { GravityFieldErrors } from "@/types/error-helpers";
 
-export type Enumerable<T> = T | Array<T>;
 export interface GravityFormProps extends GravityFieldErrors {
   form: GetGravityFormQuery["gfForm"];
   formId: string;
   text?: string;
   className?: string;
-  children?: Iterable<ReactNode>
+  children?: Iterable<ReactNode>;
+  divProps?: ReactUnwrapped<"div">;
 }
 
 const GravityFormCoalesced: VFC<GravityFormProps> = ({
@@ -27,7 +26,8 @@ const GravityFormCoalesced: VFC<GravityFormProps> = ({
   text,
   className,
   fieldErrors,
-  children
+  children,
+  divProps
 }) => {
   const [formIdState, setFormIdState] = useState(formId);
 
@@ -39,7 +39,11 @@ const GravityFormCoalesced: VFC<GravityFormProps> = ({
     fetchPolicy: "cache-first",
     query: GetGravityForm,
     variables: {
-      formFieldType: [FormFieldTypeEnum.NAME, FormFieldTypeEnum.EMAIL, FormFieldTypeEnum.PASSWORD],
+      formFieldType: [
+        FormFieldTypeEnum.NAME,
+        FormFieldTypeEnum.EMAIL,
+        FormFieldTypeEnum.PASSWORD
+      ],
       formId: formIdState.toString(),
       first: 300,
       idType: FormIdTypeEnum.DATABASE_ID
@@ -79,8 +83,8 @@ const GravityFormCoalesced: VFC<GravityFormProps> = ({
           fieldErrors={fieldErrors}
           form={form}
           text={text ?? ""}
-              className={className ?? ""}>
-              <div>          {children ?? <></>}</div>
+          className={className ?? ""}>
+          <div {...divProps?.div}>{children ?? <></>}</div>
         </GravityFormSubmit>
       )}
     </GravityFormProvider>

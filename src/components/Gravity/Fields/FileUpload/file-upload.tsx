@@ -2,6 +2,7 @@ import {
   FileUploadField as FileUploadFieldType,
   Maybe
 } from "@/graphql/generated/graphql";
+import { HTMLInputTypeAttribs } from "@/types/enums";
 import useGravityForm, {
   ACTION_TYPES,
   BaseFieldValue,
@@ -17,6 +18,8 @@ import { format } from "date-fns";
 export interface FileUploadFieldProps extends GravityFieldErrors {
   field: FileUploadFieldType;
   formId?: number | null;
+  inputProps?: ReactUnwrapped<"input">;
+  inputTypeOptions?: keyof typeof HTMLInputTypeAttribs;
 }
 
 const DEFAULT_FILE_STATE = [] as Maybe<File>[];
@@ -53,7 +56,9 @@ const fileTypeValidator = (type: File["type"]): boolean => {
 const FileUploadField = ({
   field,
   fieldErrors,
-  formId: formmId
+  formId: formmId,
+  inputTypeOptions,
+  inputProps
 }: FileUploadFieldProps) => {
   const { id, errorMessage, value, values, description } = field;
 
@@ -111,13 +116,20 @@ const FileUploadField = ({
       ? setFieldValueState(targetFile)
       : setFieldValueState(targetFile);
 
-    console.log(fileValue.push(e.currentTarget.files && e.currentTarget.files?.item(0)).toString());
+    console.log(
+      fileValue
+        .push(e.currentTarget.files && e.currentTarget.files?.item(0))
+        .toString()
+    );
     console.log({ ...(fileValue ?? "") });
     return dispatch({
       type: ACTION_TYPES.updateFileFieldValue,
       fieldValue: {
         id,
-        fileUploadValues: e.currentTarget.files !=null ? [e.currentTarget.files?.item(0)] : [null]
+        fileUploadValues:
+          e.currentTarget.files != null
+            ? [e.currentTarget.files?.item(0)]
+            : [null]
       }
     });
   };
@@ -155,9 +167,12 @@ const FileUploadField = ({
             <label htmlFor={htmlId}>
               <span>{"Upload a File"}</span>
               <input
-                id={htmlId}
-                accept='*'
-                type='file'
+                {...inputProps?.input}
+                id={inputProps?.input?.id ?? htmlId}
+                accept={inputProps?.input?.accept ?? "*"}
+                type={
+                  inputTypeOptions?.includes("file") ? "file" : inputTypeOptions
+                }
                 onChangeCapture={e => {
                   const targetFile =
                     e.currentTarget.files && e.currentTarget.files.item(0);

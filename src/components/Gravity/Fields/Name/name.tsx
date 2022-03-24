@@ -1,4 +1,8 @@
-import { NameFieldsGravityPartialFragment, NameInputProperty, NameFieldInput } from "@/graphql/generated/graphql";
+import {
+  NameFieldsGravityPartialFragment,
+  NameInputProperty,
+  NameFieldInput
+} from "@/graphql/generated/graphql";
 import useGravityForm, {
   ACTION_TYPES,
   BaseFieldValue,
@@ -149,7 +153,7 @@ export default function NameField({
                   : ""
               )}
               type='text'
-              name={String(key)}
+              name={key}
               id={`input_${formIdRef.current}_${id}_${key}`}
               placeholder={placeholder}
               autoComplete={AUTOCOMPLETE_ATTRIBUTES[key]}
