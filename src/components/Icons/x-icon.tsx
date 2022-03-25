@@ -1,6 +1,6 @@
 import { VFC } from "react";
 
-const X: VFC<ReactUnwrapped<"svg" | "path">> = ({ svg, path }) => {
+const X: VFC<Unwrap.ReactUnwrapped<"svg" | "path">> = ({ svg, path }) => {
   return (
     <svg
       width={svg?.width ? svg.width : 24}

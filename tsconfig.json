@@ -23,7 +23,6 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "inlineSources": true,
-    "experimentalDecorators": true,
     "strictPropertyInitialization": true,
     "baseUrl": "./",
     "allowJs": true,

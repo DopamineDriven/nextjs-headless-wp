@@ -17,7 +17,7 @@ export interface GravityFormProps extends GravityFieldErrors {
   text?: string;
   className?: string;
   children?: Iterable<ReactNode>;
-  divProps?: ReactUnwrapped<"div">;
+  divProps?: Unwrap.ReactUnwrapped<"div">;
 }
 
 const GravityFormCoalesced: VFC<GravityFormProps> = ({

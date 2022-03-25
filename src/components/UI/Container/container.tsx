@@ -6,7 +6,7 @@ export interface ContainerProps {
   children?: any;
   el?: ComponentType<HTMLAttributes<HTMLDivElement>>;
   clean?: boolean;
-  props?: ReactUnwrapped<"div">;
+  props?: Unwrap.ReactUnwrapped<"div">;
 }
 
 const Container: VFC<ContainerProps> = ({

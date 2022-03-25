@@ -3,7 +3,7 @@ import cn from "classnames";
 
 export type ThreadTimeProps = {
   time: Date | number;
-  props?: ReactUnwrapped<"p" | "span" | "time">;
+  props?: Unwrap.ReactUnwrapped<"p" | "span" | "time">;
   precedingDescription?: string;
 };
 

@@ -17,7 +17,7 @@ export interface FormSubmitProps extends GravityFieldErrors {
   className?: string;
   children?: ReactNode;
   saveAsDraft?: boolean;
-  intrinsicProps?: ReactUnwrapped<"button" | "form">;
+  intrinsicProps?: Unwrap.ReactUnwrapped<"button" | "form">;
 }
 
 const GravityFormSubmit: VFC<FormSubmitProps> = ({

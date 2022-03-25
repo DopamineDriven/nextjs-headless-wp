@@ -1,4 +1,6 @@
-const ExpressVpn = ({ ...props }: ReactUnwrapped<"svg" | "g" | "path">) => (
+const ExpressVpn = ({
+  ...props
+}: Unwrap.ReactUnwrapped<"svg" | "g" | "path">) => (
   <svg
     {...props.svg}
     xmlns='http://www.w3.org/2000/svg'

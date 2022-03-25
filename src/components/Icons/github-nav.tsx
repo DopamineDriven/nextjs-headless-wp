@@ -1,6 +1,9 @@
 import type { VFC } from "react";
 
-const GitHubIcon: VFC<ReactUnwrapped<"svg" | "path">> = ({ svg, path }) => (
+const GitHubIcon: VFC<Unwrap.ReactUnwrapped<"svg" | "path">> = ({
+  svg,
+  path
+}) => (
   <svg
     {...svg}
     className={svg?.className ? svg.className : "h-6 w-6"}
