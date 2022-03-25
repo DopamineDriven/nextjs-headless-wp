@@ -18,7 +18,7 @@ import { format } from "date-fns";
 export interface FileUploadFieldProps extends GravityFieldErrors {
   field: FileUploadFieldType;
   formId?: number | null;
-  inputProps?: ReactUnwrapped<"input">;
+  inputProps?: Unwrap.ReactUnwrapped<"input">;
   inputTypeOptions?: keyof typeof HTMLInputTypeAttribs;
 }
 

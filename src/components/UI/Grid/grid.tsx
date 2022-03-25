@@ -7,7 +7,7 @@ export interface GridProps {
   children?: Enumerable<ReactNode> | Enumerable<Component> | Enumerable<any>;
   layout?: "A" | "B" | "C" | "D" | "normal";
   variant?: "default" | "filled";
-  divProps?: ReactUnwrapped<"div">;
+  divProps?: Unwrap.ReactUnwrapped<"div">;
 }
 
 const Grid: VFC<GridProps> = ({

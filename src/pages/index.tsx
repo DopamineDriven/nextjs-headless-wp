@@ -9,7 +9,6 @@ import {
   InferGetServerSidePropsType,
   InferGetStaticPropsType
 } from "next";
-import React, { HTMLAttributes, VFC, CanvasHTMLAttributes } from "react";
 import { World, Code, Inspector } from "@/components/UI";
 import {
   FormIdTypeEnum,
@@ -36,7 +35,7 @@ export type IndexProps = {
 import type { UnwrapHtmlUnion } from "@/types/unwrap-react";
 import * as UnwrapReact from "@/types/unwrap-react";
 
-export const CustomDiv = ({ div }: ReactUnwrapped<"div">) => (
+export const CustomDiv = ({ div }: Unwrap.ReactUnwrapped<"div">) => (
   <div {...div}>
     <GitHubIcon
       svg={{
@@ -62,16 +61,16 @@ export const CustomDiv = ({ div }: ReactUnwrapped<"div">) => (
   </div>
 );
 
-export const CustomCanvasFtw = ({ canvas }: ReactUnwrapped<"canvas">) => (
-  <canvas {...canvas} />
-);
+export const CustomCanvasFtw = ({
+  canvas
+}: Unwrap.ReactUnwrapped<"canvas">) => <canvas {...canvas} />;
 
 export const CustomHeading = ({
   h2,
   div,
   p,
   canvas
-}: ReactUnwrapped<"h2" | "div" | "p" | "canvas">) => {
+}: Unwrap.ReactUnwrapped<"h2" | "div" | "p" | "canvas">) => {
   return (
     <CustomDiv {...div}>
       <h2 {...h2}>

@@ -8,7 +8,7 @@ export { default as Container } from "@/components/UI/Container";
 
 const Noop: FC = ({ children }) => <>{children}</>;
 
-export const Page: VFC<ReactUnwrapped<"main">> = ({ ...props }) => (
+export const Page: VFC<Unwrap.ReactUnwrapped<"main">> = ({ ...props }) => (
   <main
     typeof='main'
     {...props.main}
