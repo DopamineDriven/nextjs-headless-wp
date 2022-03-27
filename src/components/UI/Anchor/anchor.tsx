@@ -14,7 +14,7 @@ import { Url, UrlObject } from "url";
 // Omit intrinsic href to reinject with conditional Url interface to accept query hrefs from next/link
 // query hrefs, e.g.: href={{ query: { slug }, pathname: '', href: '', { ...options, etc } }}
 
-export interface ForwardedAnchorProps<T = HTMLAnchorElement>
+export interface ForwardedAnchorProps<T extends Unwrap.ReactUnwrapped<"a">>
   extends Omit<AnchorHTMLAttributes<T>, "href"> {
   className?: string;
   Component?: string | JSXElementConstructor<any>;
@@ -31,8 +31,11 @@ export interface ForwardedAnchorProps<T = HTMLAnchorElement>
 // this component serves to wrap imported functional components -- allows for proper embedding of href in browser when
 // wrapping functional components with Link and anchor, respectively
 
-const Anchor: FC<ForwardedAnchorProps<HTMLAnchorElement>> =
-  React.forwardRef((props, aRef) => {
+const Anchor: FC<ForwardedAnchorProps<Unwrap.ReactUnwrapped<"a">>> =
+  React.forwardRef<
+    unknown extends infer U ? U : unknown,
+    ForwardedAnchorProps<Unwrap.ReactUnwrapped<"a">>
+  >((props, aRef) => {
     const {
       onClick,
       width,
