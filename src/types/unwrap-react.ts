@@ -59,12 +59,6 @@ import type {
 import { DeepPartial } from "utility-types";
 import { ImmutablePick } from "./helpers";
 
-// naked 'any' type in a conditional type will short circuit and union both the then/else branches
-// so boolean is only resolved for T = any
-type IsExactlyAny<T> = boolean extends (T extends never ? true : false)
-  ? true
-  : false;
-
 // export type TestingSOmething<T extends JSX.IntrinsicElements> = T[keyof T]
 // let x = ({ ...props }: TestingSOmething<JSX.IntrinsicElements>) => ({ ...props });
 export type HTMLElementUnion =

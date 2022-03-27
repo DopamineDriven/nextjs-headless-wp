@@ -1,6 +1,13 @@
 export type ReturnTypeMixinOg<T extends (...args: any) => any> = T extends (
-  ...args: any
-) => infer R
+  ...args: Array<T extends infer U ? U : T>
+) =>
+  | infer R
+  | Array<infer R>
+  | Promise<infer R>
+  | Record<string | number | symbol, infer R>
+  | PromiseLike<infer R>
+  | ArrayLike<infer R>
+  | Awaited<infer R>
   ? R
   : any;
 
