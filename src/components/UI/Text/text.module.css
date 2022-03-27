@@ -21,6 +21,6 @@
 }
 
 .smallText {
-  @apply tracking-[0.1rem] mt-0 pl-[0.2rem] leading[1.25rem] text-[0.875rem]
+  @apply tracking-[0.1rem] mt-0 pl-[0.2rem] leading-[1.25rem] text-[0.875rem]
   uppercase text-blue-500/100 font-semibold block mb-4;
 }

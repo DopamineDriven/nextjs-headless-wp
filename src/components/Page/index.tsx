@@ -8,7 +8,10 @@ export { default as Container } from "@/components/UI/Container";
 
 const Noop: FC = ({ children }) => <>{children}</>;
 
-export const Page: VFC<Unwrap.ReactUnwrapped<"main">> = ({ ...props }) => (
+export const Page: FC<Unwrap.ReactUnwrapped<"main">> = ({
+  children,
+  ...props
+}) => (
   <main
     typeof='main'
     {...props.main}
@@ -16,7 +19,7 @@ export const Page: VFC<Unwrap.ReactUnwrapped<"main">> = ({ ...props }) => (
       "w-full max-w-3xl mx-auto py-16",
       props.main?.className ?? ""
     )}>
-    {props.main?.children}
+    {children ?? <></>}
   </main>
 );
 

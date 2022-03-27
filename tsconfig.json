@@ -52,6 +52,7 @@
     "next-env.d.ts",
     "index.d.ts",
     "graphqls.d.ts",
+    "unwrap.d.ts",
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.graphqls.d.ts",
