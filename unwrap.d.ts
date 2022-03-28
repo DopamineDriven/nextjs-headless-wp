@@ -135,13 +135,11 @@ export declare module Unwrap {
       OmitRecursiveOptionalRecursionAgent<
         RecursiveOptional<JSX.IntrinsicElements>
       >
-    >) => T extends Record<keyof T, infer U>
-      ? Record<keyof U, U>
-      : Record<keyof T, T>
+    >) => typeof props extends infer U ? U : typeof props
   > = T;
 
   type HTMLElementUnion =
-    | React.HTMLAnchorElement
+    | HTMLAnchorElement
     | HTMLAreaElement
     | HTMLAudioElement
     | HTMLBRElement
