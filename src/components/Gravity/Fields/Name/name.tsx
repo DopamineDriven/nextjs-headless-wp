@@ -1,7 +1,7 @@
 import {
   NameFieldsGravityPartialFragment,
-  NameInputProperty,
-  NameFieldInput
+  NameFieldInput,
+  InputMaybe
 } from "@/graphql/generated/graphql";
 import useGravityForm, {
   ACTION_TYPES,
@@ -9,32 +9,22 @@ import useGravityForm, {
   NameFieldValues
 } from "@/hooks/use-gravity";
 import { GravityFieldErrors } from "@/types/error-helpers";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, VFC } from "react";
 import cn from "classnames";
 import { useRouter } from "next/router";
-import { UnwrapInputProps } from "@/types/mapped";
+import Unwrap from "unwrap";
 
-export const InjectNameInput = ({
-  ...props
-}: UnwrapInputProps<
-  | "className"
-  | "type"
-  | "name"
-  | "autoComplete"
-  | "id"
-  | "required"
-  | "value"
-  | "onChange"
-  | "placeholder"
->) => <input {...props} />;
+export const InjectNameInput: VFC<Unwrap.ReactUnwrapped<"input">> = ({
+  input
+}) => <input {...input} />;
 
-interface GravityNameProps extends GravityFieldErrors {
+export interface GravityNameProps extends GravityFieldErrors {
   field: NameFieldsGravityPartialFragment;
   formId?: number | null;
 }
 
 const DEFAULT_VALUE: NameFieldInput = {};
-
+type OmitInputMaybe<T> = T extends InputMaybe<infer U> ? U : T;
 const AUTOCOMPLETE_ATTRIBUTES: { [key: string]: string } = {
   prefix: "honorific-prefix",
   first: "given-name",
@@ -142,23 +132,25 @@ export default function NameField({
                 : ""}
             </label>
             <InjectNameInput
-              className={cn(
-                `gform_${formIdRef.current}_gfield_nameinput_${
-                  router.query.slug as string
-                }`,
-                placeholder.includes("Given Name")
-                  ? "visible min-w-full"
-                  : placeholder.includes("Surname")
-                  ? "visible min-w-full"
-                  : ""
-              )}
-              type='text'
-              name={key}
-              id={`input_${formIdRef.current}_${id}_${key}`}
-              placeholder={placeholder}
-              autoComplete={AUTOCOMPLETE_ATTRIBUTES[key]}
-              value={nameValues?.[key] || ""}
-              onChange={handleChange}
+              input={{
+                type: "text",
+                className: cn(
+                  `gform_${formIdRef.current}_gfield_nameinput_${
+                    router.query.slug as string
+                  }`,
+                  placeholder.includes("Given Name")
+                    ? "visible min-w-full"
+                    : placeholder.includes("Surname")
+                    ? "visible min-w-full"
+                    : ""
+                ),
+                name: key,
+                id: `input_${formIdRef.current}_${id}_${key}`,
+                placeholder: placeholder,
+                autoComplete: AUTOCOMPLETE_ATTRIBUTES[key],
+                value: nameValues?.[key] || "",
+                onChange: handleChange
+              }}
             />
           </div>
         );

@@ -1,5 +1,61 @@
-/// <reference types="react" />
-
+import type {
+  DetailedHTMLProps,
+  HTMLAttributes,
+  SVGProps,
+  DetailedHTMLFactory,
+  AreaHTMLAttributes,
+  AudioHTMLAttributes,
+  AnchorHTMLAttributes,
+  AllHTMLAttributes,
+  BaseHTMLAttributes,
+  BlockquoteHTMLAttributes,
+  ButtonHTMLAttributes,
+  CanvasHTMLAttributes,
+  ColHTMLAttributes,
+  ColgroupHTMLAttributes,
+  DataHTMLAttributes,
+  DetailsHTMLAttributes,
+  DelHTMLAttributes,
+  EmbedHTMLAttributes,
+  FieldsetHTMLAttributes,
+  DialogHTMLAttributes,
+  FormHTMLAttributes,
+  HtmlHTMLAttributes,
+  IframeHTMLAttributes,
+  ImgHTMLAttributes,
+  InsHTMLAttributes,
+  InputHTMLAttributes,
+  KeygenHTMLAttributes,
+  LabelHTMLAttributes,
+  LiHTMLAttributes,
+  LinkHTMLAttributes,
+  MapHTMLAttributes,
+  MenuHTMLAttributes,
+  MediaHTMLAttributes,
+  MetaHTMLAttributes,
+  MeterHTMLAttributes,
+  QuoteHTMLAttributes,
+  ObjectHTMLAttributes,
+  OlHTMLAttributes,
+  OptgroupHTMLAttributes,
+  OptionHTMLAttributes,
+  OutputHTMLAttributes,
+  ParamHTMLAttributes,
+  ProgressHTMLAttributes,
+  SlotHTMLAttributes,
+  ScriptHTMLAttributes,
+  SelectHTMLAttributes,
+  SourceHTMLAttributes,
+  StyleHTMLAttributes,
+  TableHTMLAttributes,
+  TextareaHTMLAttributes,
+  TdHTMLAttributes,
+  ThHTMLAttributes,
+  TimeHTMLAttributes,
+  TrackHTMLAttributes,
+  VideoHTMLAttributes,
+  WebViewHTMLAttributes
+} from "react";
 export declare module Unwrap {
   /**
    * @type ExciseEnumerble<T> = T extends Array<infer U> ? U : T;
@@ -85,7 +141,7 @@ export declare module Unwrap {
   > = T;
 
   type HTMLElementUnion =
-    | HTMLAnchorElement
+    | React.HTMLAnchorElement
     | HTMLAreaElement
     | HTMLAudioElement
     | HTMLBRElement
