@@ -59,8 +59,8 @@ export const getStaticPaths = async ({
         ContentTypeEnum.PAGE,
         ContentTypeEnum.POST
       ],
-      status: PostStatusEnum.PUBLISH,
-      parentIn: [null] // top level
+      status: PostStatusEnum.PUBLISH
+      // parentIn: [null] // top level
     }
   });
   return {

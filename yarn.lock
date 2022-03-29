@@ -9066,6 +9066,11 @@ unpipe@1.0.0:
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
   integrity sha1-sr9O6FFKrmFltIF4KdIbLvSZBOw=
 
+unwrap-react@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/unwrap-react/-/unwrap-react-0.2.1.tgz#49298d5b8725bf60b375deb999c04d66892dd3de"
+  integrity sha512-goLTKpRrDGG0/RcktAcY+JS2o29Px+l9FjeCT8wb/7l7Hh7qdHEbR8AkQKeWhcGvzvrrwslDBOPItEtOkV6HDg==
+
 upper-case-first@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/upper-case-first/-/upper-case-first-2.0.2.tgz#992c3273f882abd19d1e02894cc147117f844324"
