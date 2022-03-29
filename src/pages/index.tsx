@@ -10,24 +10,23 @@ import {
   InferGetStaticPropsType
 } from "next";
 import { World, Code, Inspector } from "@/components/UI";
-import {
-  FormIdTypeEnum,
-  FormFieldTypeEnum,
-  GravityPostTypePathsQuery,
-  GravityPostTypePathsQueryVariables,
-  GravityPostTypeQuery,
-  GravityPostTypeQueryVariables,
-  GetGravityFormQuery,
-  GetGravityFormQueryVariables,
-  GformIdType,
-  GetGravityForm,
-  GravityPostType,
-  GravityPostTypePaths
-} from "@/graphql/generated/graphql";
+// import {
+//   FormIdTypeEnum,
+//   FormFieldTypeEnum,
+//   GravityPostTypePathsQuery,
+//   GravityPostTypePathsQueryVariables,
+//   GravityPostTypeQuery,
+//   GravityPostTypeQueryVariables,
+//   GetGravityFormQuery,
+//   GetGravityFormQueryVariables,
+//   GformIdType,
+//   GetGravityForm,
+//   GravityPostType,
+//   GravityPostTypePaths
+// } from "@/graphql/generated/graphql";
 import cn from "classnames";
 import GitHubIcon from "@/components/Icons/github-nav";
-import ExpressVpn from "@/components/Icons/express-vpn";
-import { HorizontalWave } from "@/components/Icons/horizontal-wave";
+import Unwrap from "unwrap-react";
 
 export type IndexProps = {
   // gform?: GravityPostTypeQuery | null;

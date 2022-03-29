@@ -1,16 +1,16 @@
 import World from "@/components/UI/World";
-import { UnwrapDivProps } from "@/types/mapped";
 import cn from "classnames";
-const WorldWrapper = ({
-  ...props
-}: UnwrapDivProps<"className" | "onChange">) => {
+import Unwrap from "unwrap-react";
+
+const WorldWrapper = ({ div }: Unwrap.ReactUnwrapped<"div">) => {
   return (
     <>
       <World />
       <div
-        {...props}
+        {...div}
         className={cn(
-          " relative lg:block font-extralight lg:max-w-8xl lg:mx-auto mx-auto font-interVar transform-gpu mt-6 mb-12"
+          " relative lg:block font-extralight lg:max-w-8xl lg:mx-auto mx-auto font-interVar transform-gpu mt-6 mb-12",
+          div?.className ? div.className : ""
         )}>
         <div className='max-w-7xl mx-auto sm:px-6 lg:px-8 md:grid md:grid-cols-5'>
           <div className='max-w-3xl z-10 mx-auto md:col-span-5'>

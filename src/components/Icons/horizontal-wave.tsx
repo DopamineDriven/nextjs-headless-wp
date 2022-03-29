@@ -6,6 +6,7 @@ import dogeTroubleshoot from "public/doge-troubleshoot.jpg";
 import { Code } from "../UI";
 import { useRouter } from "next/router";
 import { Page } from "@/components/Page/index";
+import Unwrap from "unwrap-react";
 
 export const HorizontalWave: FC<
   Unwrap.ReactUnwrapped<"svg" | "path" | "foreignObject">
@@ -59,7 +60,26 @@ const OOIntrinsicElements: VFC<
                         className:
                           "motion-safe:animate-pulse duration-300 ease-in-out transform-gpu bg-blend-luminosity min-w-full transition-transform"
                       }}>
-                      <Code {...code} lang='typescript' />
+                      <Code
+                        code={{
+                          lang: "typescript",
+                          dangerouslySetInnerHTML: {
+                            __html: `<HorizontalWave
+                          svg={{ ...svg }}
+                          foreignObject={{ renderingIntent: "video" }}
+                          path={{
+                            "aria-activedescendant": "",
+                            onChange: e => {
+                              e.preventDefault();
+                            }
+                          }}>
+                          {/** Access Deeply nested props, eg: <OOIntrinsicElements video={{src: "your-video-source"}} /> */}
+                          <video {...video} />
+                        </HorizontalWave>`
+                          },
+                          ...code
+                        }}
+                      />
                     </HorizontalWave>;
                   }
                 }
