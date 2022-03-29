@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "git@github.com:DopamineDriven/nextjs-headless-wp.git",
-  "author": "Andrew Ross <andrew.ross@cortinahealth.com>",
+  "author": "Andrew Ross <andrew@windycitydevs.io>",
   "license": "MIT",
   "scripts": {
     "postinstall": "npx patch-package",
