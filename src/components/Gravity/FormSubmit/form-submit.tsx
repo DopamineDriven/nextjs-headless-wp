@@ -30,6 +30,7 @@ const GravityFormSubmit: VFC<FormSubmitProps> = ({
   saveAsDraft,
   intrinsicProps
 }) => {
+  const { button, form: unwrapForm } = intrinsicProps!;
   const router = useRouter();
   const [submitForm, { data, loading, error, called, client, reset }] =
     useSubmitGravityFormMutation({
@@ -75,7 +76,7 @@ const GravityFormSubmit: VFC<FormSubmitProps> = ({
 
   const GlobalButton = (
     <button
-      {...intrinsicProps?.button}
+      {...button}
       id={`gform_${id}_button_${formFields.length}`}
       type={
         !wasSuccessfullySubmitted
@@ -90,9 +91,7 @@ const GravityFormSubmit: VFC<FormSubmitProps> = ({
           ? className + cn(`gform_${id}_${router.query.slug as string}-Button`)
           : cn(`gform_${id}_${router.query.slug as string}-button`)
       }>
-      {intrinsicProps?.button?.["aria-valuetext"]
-        ? intrinsicProps.button["aria-valuetext"]
-        : text ?? "Submit"}
+      {button?.["aria-valuetext"] ? button["aria-valuetext"] : text ?? "Submit"}
       {children ?? <></>}
     </button>
   );
@@ -156,10 +155,8 @@ const GravityFormSubmit: VFC<FormSubmitProps> = ({
       id={`gform_${id}`}
       method='post'
       onSubmit={handleSubmit}
-      className={cn(
-        intrinsicProps?.form?.className ? intrinsicProps.form.className : ""
-      )}
-      {...intrinsicProps?.form}>
+      className={cn(unwrapForm?.className ? unwrapForm.className : "")}
+      {...unwrapForm}>
       {formFields.map((field, i) =>
         field ? (
           <FieldCaseSwitch

@@ -3,6 +3,7 @@ import {
   fractionateCommaDelimitedData,
   fractionateDashSymbol
 } from "./helpers";
+import Unwrap from "unwrap-react/unwrap";
 
 export const toBase64 = (
   str: WithImplicitCoercion<string | Uint8Array | readonly number[]>,
@@ -17,12 +18,32 @@ export const toBase64 = (
  * @returns a human readable timestamp with extended locale/TZ options
  */
 
+export type FormatDateTimeLocally =
+  Intl.DateTimeFormat[keyof Intl.DateTimeFormat];
+declare const dateTimeHelper: (
+  tz: FormatDateTimeLocally
+) => ReturnType<typeof tz>;
+export type DateFormatOptionsRecursive =
+  Unwrap.RecursiveOptional<Intl.DateTimeFormatOptions>;
+
 export const localDateTimeFormatter = (
   dateField: Date,
+  locales: string[],
+  intlDateTimeOptions: Unwrap.RecursiveOptional<Intl.DateTimeFormatOptions>,
   tz: typeof Intl.DateTimeFormat[keyof typeof Intl.DateTimeFormat]
   // date?: { new (args: Date[keyof typeof Date.prototype]): any }
-): string => {
-  const newDateTZOffset = new Date(dateField).toLocaleString(typeof tz);
+) => {
+  tz(locales, { ...intlDateTimeOptions });
+  const newDateTZOffset = new Date(dateField).toLocaleString(
+    tz(locales, {
+      formatMatcher: "best fit",
+      hour: "2-digit",
+      hourCycle: "h24",
+      localeMatcher: "best fit",
+      timeZoneName: "short",
+      year: "numeric"
+    })
+  );
   const fragment = fractionateDateTime(newDateTZOffset);
   const yrTimeFragment = fractionateCommaDelimitedData(fragment[2]);
   const formattedLocalTime = `${yrTimeFragment[0]}-${fragment[1]}-${fragment[0]} at ${yrTimeFragment[1]} GMT-5`;

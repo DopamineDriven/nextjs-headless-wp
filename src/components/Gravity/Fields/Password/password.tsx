@@ -12,7 +12,7 @@ import useGravityForm, {
   StringFieldValues
 } from "@/hooks/use-gravity";
 import { GravityFieldErrors } from "@/types/error-helpers";
-import {
+import React, {
   ChangeEvent,
   useEffect,
   useRef,
@@ -20,21 +20,34 @@ import {
   HTMLInputTypeAttribute,
   useCallback
 } from "react";
-import { UnwrapInputProps } from "@/types/mapped";
+import {
+  OmitRecursiveOptionalRecursionAgent,
+  RecursiveOptional
+} from "unwrap-react/unwrap";
 import { PasswordFieldPartialFragment } from "@/graphql/gravity/queries/get-gravity-form.graphql";
 import { useRouter } from "next/router";
 import cn from "classnames";
 
+export interface InputProps extends Unwrap.ReactUnwrapped<"input"> {}
+
 export interface PasswordFieldProps extends GravityFieldErrors {
   field: PasswordFieldType;
   formId?: number | null;
+  input?: Unwrap.ReactUnwrapped<"input">;
+  fieldProps?: ({
+    input
+  }: Unwrap.ReactUnwrapped<"input">) => OmitRecursiveOptionalRecursionAgent<
+    RecursiveOptional<JSX.IntrinsicElements["input"]>
+  >;
 }
 
-const DEFAULT_VALUE: StringFieldValue['value'] = "";
+const DEFAULT_VALUE: StringFieldValue["value"] = "";
 
 const PasswordField = ({
   field,
   fieldErrors,
+  fieldProps,
+  input,
   formId: formmId
 }: PasswordFieldProps) => {
   const router = useRouter();
@@ -53,7 +66,7 @@ const PasswordField = ({
     minPasswordStrength
   } = field;
   const [formIdState, setFormIdState] = useState(id || formmId);
-const [passwordValState, setPasswordValState] = useState(value)
+  const [passwordValState, setPasswordValState] = useState(value);
   const formIdRef = useRef(formIdState);
   formmId = id;
 
@@ -95,16 +108,34 @@ const [passwordValState, setPasswordValState] = useState(value)
     <div
       className={`gfield_${formIdRef.current}_${id} ${cssClass ?? ""}`.trim()}>
       <label htmlFor={htmlId}>{label}</label>
-      <input
-        type={"password"}
-        name={id.toString()}
-        placeholder={(inputs![0]?.placeholder as string) ?? ""}
-        id={htmlId}
-        required={isRequired ? isRequired : false}
-        value={passwordValState ? passwordValState : undefined}
-        className={`gfield_${formIdRef.current}_${id}_input_text`}
-        onChange={e => HandleChange(e)}
-      />
+      {fieldProps ? (
+        fieldProps({
+          input: {
+            name: id.toString(),
+            placeholder: (inputs![0]?.placeholder as string) ?? "",
+            id: htmlId,
+            required: isRequired ? isRequired : false,
+            value: passwordValState ? passwordValState : undefined,
+            className:
+              input?.input?.className ??
+              `gfield_${formIdRef.current}_${id}_input_text`,
+            onChange: e => HandleChange(e),
+            ...input?.input
+          }
+        })
+      ) : (
+        <input
+          type={"password"}
+          name={id.toString()}
+          placeholder={(inputs![0]?.placeholder as string) ?? ""}
+          id={htmlId}
+          required={isRequired ? isRequired : false}
+          value={passwordValState ? passwordValState : undefined}
+          className={`gfield_${formIdRef.current}_${id}_input_text`}
+          onChange={e => HandleChange(e)}
+          {...input?.input}
+        />
+      )}
       {description ? (
         <p className='field-description hidden'>{description}</p>
       ) : null}

@@ -5,20 +5,12 @@ import useGravityForm, {
   EmailFieldValues
 } from "@/hooks/use-gravity";
 import { GravityFieldErrors } from "@/types/error-helpers";
-import {
-  useEffect,
-  useRef,
-  useState,
-  HTMLAttributes,
-  InputHTMLAttributes
-} from "react";
+import { useEffect, useRef, useState, InputHTMLAttributes } from "react";
 import { useRouter } from "next/router";
-import { UnwrapInputProps } from "@/types/mapped";
-import { UnwrapHtmlUnion } from "@/types/unwrap-react";
 
 export const InjectEmailInput = ({
   ...props
-}: UnwrapHtmlUnion<
+}: Unwrap.UnwrapHtmlUnion<
   HTMLInputElement,
   InputHTMLAttributes<HTMLInputElement>
 >) => <input {...props} />;
