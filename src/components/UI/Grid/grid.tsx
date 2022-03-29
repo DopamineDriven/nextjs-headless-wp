@@ -2,6 +2,7 @@ import cn from "classnames";
 import { ReactNode, Component, VFC } from "react";
 import css from "./grid.module.css";
 import type { Enumerable } from "@/types/helpers";
+import Unwrap from "unwrap-react";
 
 export interface GridProps {
   children?: Enumerable<ReactNode> | Enumerable<Component> | Enumerable<any>;

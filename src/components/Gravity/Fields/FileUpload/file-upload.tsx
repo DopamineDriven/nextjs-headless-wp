@@ -14,6 +14,7 @@ import { blurDataURLShimmer } from "@/lib/shimmer";
 import Image from "next/image";
 import cn from "classnames";
 import { format } from "date-fns";
+import Unwrap from "unwrap-react";
 
 export interface FileUploadFieldProps extends GravityFieldErrors {
   field: FileUploadFieldType;

@@ -1,4 +1,5 @@
 import { VFC } from "react";
+import Unwrap from "unwrap-react";
 
 const X: VFC<Unwrap.ReactUnwrapped<"svg" | "path">> = ({ svg, path }) => {
   return (

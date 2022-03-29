@@ -296,7 +296,71 @@ export type ConditionalSansOne<T, Keys extends keyof T = keyof T> = Pick<
   }[Keys];
 
 export type PickJustOne<
-  T extends HTMLElementUnion,
+  T extends
+    | HTMLAnchorElement
+    | HTMLAreaElement
+    | HTMLAudioElement
+    | HTMLBRElement
+    | HTMLBaseElement
+    | HTMLBodyElement
+    | HTMLButtonElement
+    | HTMLCanvasElement
+    | HTMLDListElement
+    | HTMLDataElement
+    | HTMLDataListElement
+    | HTMLDetailsElement
+    | HTMLDivElement
+    | HTMLElement
+    | HTMLEmbedElement
+    | HTMLFieldSetElement
+    | HTMLFormElement
+    | HTMLHRElement
+    | HTMLHeadElement
+    | HTMLHeadingElement
+    | HTMLHtmlElement
+    | HTMLIFrameElement
+    | HTMLImageElement
+    | HTMLInputElement
+    | HTMLLIElement
+    | HTMLLabelElement
+    | HTMLLegendElement
+    | HTMLLinkElement
+    | HTMLMapElement
+    | HTMLMediaElement
+    | HTMLMenuElement
+    | HTMLMetaElement
+    | HTMLMeterElement
+    | HTMLModElement
+    | HTMLOListElement
+    | HTMLObjectElement
+    | HTMLOptGroupElement
+    | HTMLOptionElement
+    | HTMLParagraphElement
+    | HTMLParamElement
+    | HTMLPictureElement
+    | HTMLProgressElement
+    | HTMLQuoteElement
+    | HTMLScriptElement
+    | HTMLSelectElement
+    | HTMLSlotElement
+    | HTMLSourceElement
+    | HTMLSpanElement
+    | HTMLStyleElement
+    | HTMLTableCaptionElement
+    | HTMLTableCellElement
+    | HTMLTableColElement
+    | HTMLTableElement
+    | HTMLTableRowElement
+    | HTMLTableSectionElement
+    | HTMLTemplateElement
+    | HTMLTextAreaElement
+    | HTMLTimeElement
+    | HTMLTitleElement
+    | HTMLTrackElement
+    | HTMLUListElement
+    | HTMLUnknownElement
+    | HTMLVideoElement
+    | HTMLWebViewElement,
   S extends HTMLAttributesUnion<T>
 > = DeepPartial<DetailedHTMLProps<S, T>>;
 
@@ -305,4 +369,6 @@ export const yy = ({
 }: PickJustOne<
   HTMLButtonElement,
   ButtonHTMLAttributes<HTMLButtonElement>
->) => ({ ...props });
+>) => ({
+  ...props
+});
