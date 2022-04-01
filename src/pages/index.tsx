@@ -32,9 +32,6 @@ export type IndexProps = {
   // gform?: GravityPostTypeQuery | null;
   params: ParsedUrlQuery;
 };
-// Proof of Concept
-import type { UnwrapHtmlUnion } from "@/types/unwrap-react";
-import * as UnwrapReact from "@/types/unwrap-react";
 
 export const CustomDiv = ({ div }: Unwrap.ReactUnwrapped<"div">) => (
   <div {...div}>

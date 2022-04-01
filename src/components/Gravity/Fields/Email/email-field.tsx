@@ -8,6 +8,7 @@ import { GravityFieldErrors } from "@/types/error-helpers";
 import { useEffect, useRef, useState, InputHTMLAttributes } from "react";
 import { useRouter } from "next/router";
 import Unwrap from "unwrap-react";
+import { JSXIntrinsicPropsConstruct } from "unwrap-react/unwrap";
 
 export const InjectEmailInput = ({
   ...props
@@ -57,7 +58,13 @@ export default function EmailField({
     (fieldValue: BaseFieldValue) => fieldValue.id === id
   ) as EmailFieldValues | undefined;
   const value = fieldValue?.emailValues?.value || DEFAULT_VALUE;
-
+  new JSXIntrinsicPropsConstruct({
+    base: { href: "/" },
+    a: {
+      "aria-activedescendant": "hello from an active descendant",
+      onLoadedMetadata: e => {}
+    }
+  });
   return (
     <>
       <label htmlFor={htmlId} className='sr-only'>
