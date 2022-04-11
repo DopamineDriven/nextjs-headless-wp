@@ -26,7 +26,6 @@ import type { ParsedUrlQuery } from "@/types/query-parser";
 import { useRouter } from "next/router";
 import { initializeApollo, addApolloState } from "@/apollo/apollo";
 import { pathDeduplication } from "@/lib/path-deduplication";
-import { UnwrapPromise } from "@/types/helpers";
 import { LoadingSpinner, Inspector } from "@/components/UI";
 import archer from "../../public/archer.gif";
 import Image from "next/image";
@@ -160,40 +159,51 @@ export default function TopLevelCatchAllContentNodes<
           <LoadingSpinner />
         </>
       ) : contentNode.contentNode?.slug?.includes(isomorphicSlug) &&
-        contentNode.contentNode.__typename === "MediaItem" ? (
+        contentNode.contentNode.__typename === "Post" ? (
         <>
           <div className='relative origin-center my-12 mx-auto w-full right-1/3'>
             <Image
               className='object-center object-cover absolute'
               src={
-                contentNode?.contentNode?.sourceUrl
-                  ? contentNode.contentNode.sourceUrl
+                contentNode?.contentNode?.featuredImage?.node?.sourceUrl
+                  ? contentNode.contentNode.featuredImage.node.sourceUrl
                   : archer.src
               }
               width={
-                contentNode.contentNode.mediaDetails?.width
-                  ? contentNode.contentNode.mediaDetails.width
+                contentNode.contentNode.featuredImage?.node?.mediaDetails?.width
+                  ? contentNode.contentNode.featuredImage.node.mediaDetails
+                      .width
                   : archer.width
               }
               height={
-                contentNode.contentNode?.mediaDetails?.height
-                  ? contentNode.contentNode.mediaDetails.height
+                contentNode.contentNode?.featuredImage?.node?.mediaDetails
+                  ?.height
+                  ? contentNode.contentNode.featuredImage.node.mediaDetails
+                      .height
                   : archer.height
               }
               quality={100}
               blurDataURL={ShimmerEffect({
-                w: contentNode.contentNode.mediaDetails?.width
-                  ? contentNode.contentNode.mediaDetails.width
+                w: contentNode.contentNode.featuredImage?.node?.mediaDetails
+                  ?.width
+                  ? contentNode.contentNode.featuredImage.node.mediaDetails
+                      .width
                   : archer.width,
-                h: contentNode.contentNode.mediaDetails?.height
-                  ? contentNode.contentNode.mediaDetails.height
+                h: contentNode.contentNode?.featuredImage?.node?.mediaDetails
+                  ?.height
+                  ? contentNode.contentNode.featuredImage.node.mediaDetails
+                      .height
                   : archer.height
               })}
               placeholder='blur'
-              id={contentNode.contentNode.id}
+              id={
+                contentNode.contentNode.featuredImage?.node?.id
+                  ? contentNode.contentNode.featuredImage.node.id
+                  : contentNode.contentNode.id
+              }
               alt={
-                contentNode.contentNode?.altText
-                  ? contentNode.contentNode.altText
+                contentNode.contentNode?.featuredImage?.node?.altText
+                  ? contentNode.contentNode.featuredImage.node.altText
                   : `Alt Text for Path ${isomorphicSlug}`
               }
               layout='responsive'

@@ -11,11 +11,8 @@ import Unwrap from "unwrap-react";
 import { JSXIntrinsicPropsConstruct } from "unwrap-react/unwrap";
 
 export const InjectEmailInput = ({
-  ...props
-}: Unwrap.UnwrapHtmlUnion<
-  HTMLInputElement,
-  InputHTMLAttributes<HTMLInputElement>
->) => <input {...props} />;
+  input
+}: Required<Unwrap.ReactUnwrapped<"input">>) => <input {...input} />;
 
 interface EmailFieldProps extends GravityFieldErrors {
   field: EmailFieldsGravityPartialFragment;
@@ -58,38 +55,34 @@ export default function EmailField({
     (fieldValue: BaseFieldValue) => fieldValue.id === id
   ) as EmailFieldValues | undefined;
   const value = fieldValue?.emailValues?.value || DEFAULT_VALUE;
-  new JSXIntrinsicPropsConstruct({
-    base: { href: "/" },
-    a: {
-      "aria-activedescendant": "hello from an active descendant",
-      onLoadedMetadata: e => {}
-    }
-  });
   return (
     <>
       <label htmlFor={htmlId} className='sr-only'>
         {label}
       </label>
       <InjectEmailInput
-        type='email'
-        name={String(id)}
-        id={htmlId}
-        className={`gfield_${formIdRef.current}_field_${id}_email_${
-          router.query.uri as string
-        }`}
-        placeholder={placeholder ?? "Enter Email"}
-        required={isRequired ? isRequired : !isRequired}
-        value={value}
-        onChange={event => {
-          dispatch({
-            type: ACTION_TYPES.updateEmailFieldValue,
-            fieldValue: {
-              id,
-              emailValues: {
-                value: event.target.value
+        input={{
+          type: "email",
+          name: String(id),
+          id: htmlId,
+          className: `gfield_${formIdRef.current}_field_${id}_email_${
+            router.query.uri as string
+          }`,
+          placeholder: `${placeholder ?? "Enter Email"}`,
+          value: value,
+          required: isRequired ? isRequired : !isRequired,
+          onChange: e => {
+            e.preventDefault();
+            dispatch({
+              type: ACTION_TYPES.updateEmailFieldValue,
+              fieldValue: {
+                id,
+                emailValues: {
+                  value: e.target.value
+                }
               }
-            }
-          });
+            });
+          }
         }}
       />
       {description ? (

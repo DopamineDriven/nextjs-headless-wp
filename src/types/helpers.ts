@@ -41,6 +41,7 @@ export type UnionToIntersection<U> = (
 ) extends (k: infer I) => void
   ? I
   : never;
+
 export type PromiseOrPromiseLike<T> = Promise<T> | PromiseLike<T>;
 export type UnwrapPromise<T> = T extends PromiseOrPromiseLike<infer U> ? U : T;
 
