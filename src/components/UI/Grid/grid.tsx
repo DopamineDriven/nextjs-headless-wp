@@ -8,7 +8,7 @@ export interface GridProps {
   children?: Enumerable<ReactNode> | Enumerable<Component> | Enumerable<any>;
   layout?: "A" | "B" | "C" | "D" | "normal";
   variant?: "default" | "filled";
-  divProps?: Unwrap.ReactUnwrapped<"div">;
+  divProps?: Unwrap.ReactUnwrapped<"div">["div"];
 }
 
 const Grid: VFC<GridProps> = ({
@@ -28,11 +28,11 @@ const Grid: VFC<GridProps> = ({
       [css.default]: variant === "default",
       [css.filled]: variant === "filled"
     },
-    divProps?.div?.className ?? ""
+    divProps?.className ?? ""
   );
   return (
-    <div className={rootClassName} {...divProps?.div}>
-      {divProps?.div?.children || children}
+    <div className={rootClassName} {...divProps}>
+      {children}
     </div>
   );
 };

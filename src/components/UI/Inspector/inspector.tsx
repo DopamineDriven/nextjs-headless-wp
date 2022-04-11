@@ -2,16 +2,10 @@ import type {
   AnchorHTMLAttributes,
   ButtonHTMLAttributes,
   FC,
-  FormEventHandler,
   HTMLAttributes
 } from "react";
 import cn from "classnames";
 import Unwrap from "unwrap-react";
-import {
-  SelectTargetedElementOOP,
-  OOElementSelection,
-  PickElementSelection
-} from "unwrap-react/unwrap";
 
 const DataInspector: FC<Unwrap.ReactUnwrapped<"div" | "pre">> = ({
   div,
@@ -43,7 +37,7 @@ export const PureOOPHandlesMultipleElementsGracefully = ({
   button,
   pre,
   i
-}: OOElementSelection) => {
+}: Unwrap.ReactUnwrapped<"a" | "div" | "button" | "pre" | "i">) => {
   return (
     <i {...i}>
       <pre {...pre}>
@@ -63,7 +57,7 @@ export const PureOOPHandlesMultipleElementsGracefully = ({
 
 export const SingletonUnionizesDomAttributesErroneously = ({
   ...rest
-}: PickElementSelection<"a" | "div" | "button" | "pre" | "i">) => {
+}: Unwrap.ReactUnwrapped<"a" | "div" | "button" | "pre" | "i">) => {
   return (
     <i {...(rest as HTMLAttributes<HTMLElement>)}>
       <pre {...(rest as HTMLAttributes<HTMLPreElement>)}>

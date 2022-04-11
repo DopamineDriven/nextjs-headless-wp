@@ -1,18 +1,11 @@
 import { SVGAttribs } from "@/types/mapped";
+import { FC } from "react";
+import Unwrap from "unwrap-react";
 
-const PhoneShell = ({
+const PhoneShell: FC<Unwrap.ReactUnwrapped<"svg">["svg"]> = ({
   children,
   ...props
-}: SVGAttribs<
-  | "className"
-  | "aria-hidden"
-  | "style"
-  | "onMouseOver"
-  | "onClick"
-  | "children"
-  | "width"
-  | "height"
->) => (
+}) => (
   <>
     {children}
     <svg
@@ -592,16 +585,3 @@ const PhoneShell = ({
 );
 
 export default PhoneShell;
-// export default(): ({
-//   children,
-//   ...props
-// }: SVGAttribs<
-//   | "className"
-//   | "aria-hidden"
-//   | "style"
-//   | "onMouseOver"
-//   | "onClick"
-//   | "children"
-//   | "width"
-//   | "height"
-// >) => JSX.Element;

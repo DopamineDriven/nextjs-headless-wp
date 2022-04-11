@@ -1,26 +1,6 @@
 import { NextSeo, NextSeoProps } from "next-seo";
 import NextHead from "next/head";
-import { Component } from "react";
 
-// export class CustomSeoComponent extends Component<NextSeoProps, {}> {
-//   constructor() {
-//     super({});
-//     const render = this.render();
-//   }
-//   render(): JSX.Element {
-//     return this.render();
-//   }
-// }
-
-// export class NextHeadExtended extends NextSeo implements Component<NextSeoProps, {}> {
-//   constructor() {
-//     super({additionalLinkTags: [""]})
-//   }
-
-// }
-
-// export interface HeadProps extends NextSeoProps {}
-// export type HeadPropsMapped<T extends keyof HeadProps> = { [P in keyof T]: T[P] };
 const Head = ({ ...props }: NextSeoProps) => {
   return (
     <>
