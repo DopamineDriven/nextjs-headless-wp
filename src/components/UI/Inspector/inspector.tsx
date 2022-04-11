@@ -1,4 +1,9 @@
-import type { FC } from "react";
+import type {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  FC,
+  HTMLAttributes
+} from "react";
 import cn from "classnames";
 import Unwrap from "unwrap-react";
 
@@ -26,12 +31,46 @@ const DataInspector: FC<Unwrap.ReactUnwrapped<"div" | "pre">> = ({
 
 export default DataInspector;
 
-// const example = <T extends string | number | bigint | boolean | null | undefined extends infer U ? U : T>(replacer?: ((this: typeof globalThis, key: string, value: any) => any) | undefined) => {
-//   return (
-//     <>
-//       <DataInspector>{JSON.stringify(``, ((key, value) => {
+export const PureOOPHandlesMultipleElementsGracefully = ({
+  a,
+  div,
+  button,
+  pre,
+  i
+}: Unwrap.ReactUnwrapped<"a" | "div" | "button" | "pre" | "i">) => {
+  return (
+    <i {...i}>
+      <pre {...pre}>
+        {JSON.stringify(
+          {
+            exhaustive: <a {...a} />,
+            divExhaustive: <div {...div}>{div?.children ?? <></>}</div>,
+            buttonExhaustive: <button {...button}></button>
+          },
+          null,
+          2
+        )}
+      </pre>
+    </i>
+  );
+};
 
-//       }), 2) }</DataInspector>
-//     </>
-//   )
-// }
+export const SingletonUnionizesDomAttributesErroneously = ({
+  ...rest
+}: Unwrap.ReactUnwrapped<"a" | "div" | "button" | "pre" | "i">) => {
+  return (
+    <i {...(rest as HTMLAttributes<HTMLElement>)}>
+      <pre {...(rest as HTMLAttributes<HTMLPreElement>)}>
+        {JSON.stringify({
+          exhaustive: (
+            <a {...(rest as AnchorHTMLAttributes<HTMLAnchorElement>)} />
+          ),
+          divExhaustive: <div {...(rest as HTMLAttributes<HTMLDivElement>)} />,
+          buttonExhaustive: (
+            <button {...(rest as ButtonHTMLAttributes<HTMLButtonElement>)} />
+          )
+        })}
+      </pre>
+    </i>
+  );
+};

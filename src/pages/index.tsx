@@ -26,21 +26,20 @@ import { World, Code, Inspector } from "@/components/UI";
 // } from "@/graphql/generated/graphql";
 import cn from "classnames";
 import GitHubIcon from "@/components/Icons/github-nav";
+import { FC } from "react";
 import Unwrap from "unwrap-react";
 
 export type IndexProps = {
   // gform?: GravityPostTypeQuery | null;
   params: ParsedUrlQuery;
 };
-// Proof of Concept
-import type { UnwrapHtmlUnion } from "@/types/unwrap-react";
-import * as UnwrapReact from "@/types/unwrap-react";
 
-export const CustomDiv = ({ div }: Unwrap.ReactUnwrapped<"div">) => (
+export const CustomDiv: FC<Unwrap.ReactUnwrapped<"div">["div"]> = ({
+  ...div
+}) => (
   <div {...div}>
     <GitHubIcon
       svg={{
-        "aria-hidden": true,
         "aria-label": "GitHubIcon",
         onChange: e => {
           e.preventDefault();

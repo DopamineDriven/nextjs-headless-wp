@@ -1,30 +1,19 @@
-import { useEffect, KeyboardEvent } from "react";
+import { useEffect, KeyboardEvent, FC, VFC } from "react";
 import cn from "classnames";
 import css from "./search.module.css";
 import { useRouter } from "next/router";
 import type { UnwrapInputProps, UnwrapDivProps } from "@/types/mapped";
 import { filterQuery } from "@/lib/filter-query";
+import Unwrap from "unwrap-react";
 
-const InjectInput = ({
+const InjectInput: VFC<Unwrap.ReactUnwrapped<"input">["input"]> = ({
   ...props
-}: UnwrapInputProps<
-  | "id"
-  | "name"
-  | "onChange"
-  | "className"
-  | "aria-hidden"
-  | "defaultValue"
-  | "placeholder"
-  | "onKeyUp"
-  | "key"
->) => <input {...props} />;
+}) => <input {...props} />;
 
-const InjectDiv = ({
+const InjectDiv: FC<Unwrap.ReactUnwrapped<"div">["div"]> = ({
   children,
   ...props
-}: UnwrapDivProps<"children" | "className">) => (
-  <div {...props}>{children}</div>
-);
+}) => <div {...props}>{children}</div>;
 
 export type SearchProps = {
   className?: string;

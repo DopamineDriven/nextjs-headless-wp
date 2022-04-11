@@ -1,3 +1,5 @@
+import Unwrap from "unwrap-react";
+
 const ExpressVpn = ({
   ...props
 }: Unwrap.ReactUnwrapped<"svg" | "g" | "path">) => (

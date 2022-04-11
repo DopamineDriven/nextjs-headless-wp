@@ -10,12 +10,12 @@ import { LinkProps } from "next/link";
 import NextSEO from "@/lib/next-seo";
 import Script from "next/script";
 import { useApollo } from "@/apollo/apollo";
-import {
-  ApolloProvider
-} from "@apollo/client/react/context";
+import { ApolloProvider } from "@apollo/client/react/context";
 
 export const Noop: FC = ({ children }) => <>{children}</>;
-export interface HandleRouteChangeExtended<T extends (url: URL) => ReturnType<T>> {
+export interface HandleRouteChangeExtended<
+  T extends (url: URL) => ReturnType<T>
+> {
   shallow: LinkProps["shallow"];
 }
 export const Page: FC<HTMLAttributes<HTMLElement>> = ({
@@ -101,10 +101,10 @@ export default function HeadlessWordPressNext<P = Record<string, unknown>>({
          `
         }}
       />
-          <Head nextSeoProps={NextSEO} />
+      <Head />
 
       <ApolloProvider client={apolloClient}>
-          <Component {...pageProps} />
+        <Component {...pageProps} />
       </ApolloProvider>
     </>
   );
@@ -124,7 +124,7 @@ export function reportGAVitals({
       value: Math.round(name === "CLS" ? value * 1000 : value), // values must be integers
       event_label: id, // id unique to current page load
       non_interaction: true // avoids affecting bounce rate.
-      });
+    });
 }
 
 export function reportWebVitals(metric: NextWebVitalsMetric): void {

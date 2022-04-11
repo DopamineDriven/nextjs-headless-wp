@@ -4,7 +4,7 @@ import React, { FC, ReactNode, Component, Children } from "react";
 import { default as FastMarquee } from "react-fast-marquee";
 
 export type EnumerableMarqueee<T> = T | Array<T>;
-export interface MarqueeeProps {
+export type MarqueeeProps = FC<{
   /**
    * Inline style for the container div
    * Type: object
@@ -100,9 +100,9 @@ export interface MarqueeeProps {
    * Custom css variants
    */
   variant?: "primary" | "secondary";
-}
+}>;
 
-const Marquee: FC<MarqueeeProps> = ({
+const Marquee: MarqueeeProps = ({
   className = "",
   children,
   variant = "primary",
